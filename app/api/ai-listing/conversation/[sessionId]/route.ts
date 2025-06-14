@@ -16,7 +16,7 @@ export async function GET(request: NextRequest, { params }: { params: { sessionI
     const { data: conversation, error } = await supabase
       .from("listing_conversations")
       .select("*")
-      .eq("session_id", sessionId)
+      .eq("session_id", sessionId as string)
       .eq("user_id", user.id)
       .single()
 
@@ -30,8 +30,8 @@ export async function GET(request: NextRequest, { params }: { params: { sessionI
       userId: conversation.user_id,
       messages: conversation.conversation_data || [],
       formState: conversation.form_state || {},
-      createdAt: new Date(conversation.created_at),
-      updatedAt: new Date(conversation.updated_at),
+      createdAt: new Date(conversation.created_at || new Date().toISOString()),
+      updatedAt: new Date(conversation.updated_at || new Date().toISOString()),
     }
 
     return NextResponse.json(session)
@@ -54,7 +54,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { sessi
     const { error } = await supabase
       .from("listing_conversations")
       .delete()
-      .eq("session_id", sessionId)
+      .eq("session_id", sessionId as string)
       .eq("user_id", user.id)
 
     if (error) {

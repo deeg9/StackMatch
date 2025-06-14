@@ -792,27 +792,30 @@ export type Database = {
       listing_conversations: {
         Row: {
           id: string
-          session_id: string
           user_id: string
+          session_id: string
           conversation_data: Json
-          created_at: string
-          updated_at: string
+          form_state: Json
+          created_at: string | null
+          updated_at: string | null
         }
         Insert: {
           id?: string
-          session_id: string
           user_id: string
+          session_id: string
           conversation_data?: Json
-          created_at?: string
-          updated_at?: string
+          form_state?: Json
+          created_at?: string | null
+          updated_at?: string | null
         }
         Update: {
           id?: string
-          session_id?: string
           user_id?: string
+          session_id?: string
           conversation_data?: Json
-          created_at?: string
-          updated_at?: string
+          form_state?: Json
+          created_at?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
