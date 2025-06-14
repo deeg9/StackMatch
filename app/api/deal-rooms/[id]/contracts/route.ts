@@ -3,9 +3,9 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import type { Contract } from "@/types"
 
-export async function GET(request: Request, { params }: { params: { dealRoomId: string } }) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
   const supabase = createRouteHandlerClient({ cookies })
-  const { dealRoomId } = params
+  const dealRoomId = params.id
 
   if (!dealRoomId) {
     return NextResponse.json({ error: "Deal Room ID is required" }, { status: 400 })

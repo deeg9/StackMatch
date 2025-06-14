@@ -14,7 +14,7 @@ const getCurrentUserId = () => "mock-user-id-replace-me"
 
 export default function ContractManagementPage() {
   const params = useParams()
-  const dealRoomId = params.dealRoomId as string
+  const dealRoomId = params.id as string
   const [contracts, setContracts] = useState<Contract[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const { toast } = useToast()
