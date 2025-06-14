@@ -40,7 +40,7 @@ export async function GET() {
 
     let listingResult: any = { found: false }
     const fileColumns: string[] = []
-    const jsonFileColumns: string[] = []
+    const jsonFileColumns: any[] = []
 
     if (listing && !listingError) {
       listingResult = {
