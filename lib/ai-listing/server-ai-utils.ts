@@ -10,7 +10,7 @@ export async function generateAIResponseServer(prompt: string, sessionId: string
   try {
     // Dynamically import AI SDK to prevent client-side bundling
     const { generateText } = await import("ai")
-    const { deepinfra } = await import("@ai-sdk/deepinfra")
+    const { deepinfra } = await // import("@ai-sdk/deepinfra")
 
     if (!process.env.DEEPINFRA_API_KEY) {
       console.error("[SERVER] ❌ AI UTILS: Missing DEEPINFRA_API_KEY")
@@ -128,7 +128,7 @@ export async function enhanceFieldServer(field: string, content: string) {
   try {
     // Dynamically import AI SDK to prevent client-side bundling
     const { generateText } = await import("ai")
-    const { deepinfra } = await import("@ai-sdk/deepinfra")
+    const { deepinfra } = await // import("@ai-sdk/deepinfra")
 
     if (!process.env.DEEPINFRA_API_KEY) {
       console.error("[SERVER] ❌ AI UTILS: Missing DEEPINFRA_API_KEY")

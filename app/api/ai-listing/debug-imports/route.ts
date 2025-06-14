@@ -40,7 +40,7 @@ export async function GET() {
   try {
     console.log("[SERVER] 🔍 DEBUG IMPORTS: Testing AI SDK imports...")
     const aiModule = await import("ai")
-    const deepinfraModule = await import("@ai-sdk/deepinfra")
+    const deepinfraModule = await // import("@ai-sdk/deepinfra")
     results.imports.aiSdk = {
       success: true,
       generateText: typeof aiModule.generateText,

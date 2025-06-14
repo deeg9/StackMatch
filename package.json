@@ -32,7 +32,6 @@
     "@mui/material": "^5.15.0",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@ai-sdk/deepinfra": "^0.0.11",
     "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.0",
     "ai": "^3.0.0",

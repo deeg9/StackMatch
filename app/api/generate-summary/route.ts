@@ -1,4 +1,4 @@
-import { deepinfra } from "@ai-sdk/deepinfra"
+// import { deepinfra } from "@ai-sdk/deepinfra"
 import { streamText, type CoreMessage } from "ai"
 
 // Allow streaming responses up to 30 seconds
