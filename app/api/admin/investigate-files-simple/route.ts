@@ -38,7 +38,7 @@ export async function GET() {
     console.log(`🔍 SIMPLE FILE INVESTIGATION: Checking specific listing...`)
     const { data: listing, error: listingError } = await supabase.from("listings").select("*").limit(1).single()
 
-    let listingResult = { found: false }
+    let listingResult: any = { found: false }
     const fileColumns = []
     const jsonFileColumns = []
 
