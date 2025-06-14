@@ -40,13 +40,10 @@ export async function GET() {
   try {
     console.log("[SERVER] 🔍 DEBUG IMPORTS: Testing AI SDK imports...")
     const aiModule = await import("ai")
-    const deepinfraModule = await // import("@ai-sdk/deepinfra")
     results.imports.aiSdk = {
       success: true,
       generateText: typeof aiModule.generateText,
-      deepinfra: typeof deepinfraModule.deepinfra,
       aiModuleKeys: Object.keys(aiModule),
-      deepinfraModuleKeys: Object.keys(deepinfraModule),
     }
   } catch (error) {
     console.error("[SERVER] ❌ DEBUG IMPORTS: AI SDK import error:", error)

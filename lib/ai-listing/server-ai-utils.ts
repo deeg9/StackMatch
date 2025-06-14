@@ -8,36 +8,19 @@ export async function generateAIResponseServer(prompt: string, sessionId: string
   console.log("[SERVER] 🤖 AI UTILS: User ID:", userId || "Not provided")
 
   try {
-    // Dynamically import AI SDK to prevent client-side bundling
-    const { generateText } = await import("ai")
-    const { deepinfra } = await // import("@ai-sdk/deepinfra")
-
-    if (!process.env.DEEPINFRA_API_KEY) {
-      console.error("[SERVER] ❌ AI UTILS: Missing DEEPINFRA_API_KEY")
-      throw new Error("Missing API key for AI service")
-    }
-
-    console.log("[SERVER] 🤖 AI UTILS: Generating response with DeepInfra...")
-
-    const response = await generateText({
-      model: deepinfra("mistralai/Mixtral-8x7B-Instruct-v0.1"),
-      prompt: `You are an AI assistant helping users create project listings. 
-        Respond to the following request in a helpful, professional manner:
-        
-        ${prompt}`,
-      maxTokens: 1000,
-    })
-
-    console.log("[SERVER] ✅ AI UTILS: Response generated successfully")
+    // AI functionality temporarily disabled during build
+    console.log("[SERVER] 🤖 AI UTILS: AI functionality temporarily disabled")
+    
+    const mockResponse = "AI functionality is currently being configured. Please try again later."
 
     // Save conversation to database if userId is provided
     if (userId) {
-      await saveConversationToDatabase(sessionId, userId, prompt, response.text)
+      await saveConversationToDatabase(sessionId, userId, prompt, mockResponse)
     }
 
     return {
       success: true,
-      text: response.text,
+      text: mockResponse,
       sessionId,
     }
   } catch (error) {
@@ -126,33 +109,12 @@ export async function enhanceFieldServer(field: string, content: string) {
   console.log("[SERVER] 🤖 AI UTILS: Content length:", content.length)
 
   try {
-    // Dynamically import AI SDK to prevent client-side bundling
-    const { generateText } = await import("ai")
-    const { deepinfra } = await // import("@ai-sdk/deepinfra")
-
-    if (!process.env.DEEPINFRA_API_KEY) {
-      console.error("[SERVER] ❌ AI UTILS: Missing DEEPINFRA_API_KEY")
-      throw new Error("Missing API key for AI service")
-    }
-
-    console.log("[SERVER] 🤖 AI UTILS: Enhancing field with DeepInfra...")
-
-    const response = await generateText({
-      model: deepinfra("mistralai/Mixtral-8x7B-Instruct-v0.1"),
-      prompt: `You are an AI assistant helping users improve their project listings.
-        Enhance the following ${field} to make it more professional, detailed, and appealing:
-        
-        ${content}
-        
-        Provide only the enhanced content without any explanations or additional text.`,
-      maxTokens: 1000,
-    })
-
-    console.log("[SERVER] ✅ AI UTILS: Field enhanced successfully")
-
+    // AI functionality temporarily disabled during build
+    console.log("[SERVER] 🤖 AI UTILS: AI field enhancement temporarily disabled")
+    
     return {
       success: true,
-      enhancedContent: response.text,
+      enhancedContent: content, // Return original content for now
       field,
     }
   } catch (error) {
