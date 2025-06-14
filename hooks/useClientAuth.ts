@@ -11,7 +11,6 @@ export function useClientAuth() {
 
   useEffect(() => {
     const getUser = async () => {
-      console.log("useClientAuth: Fetching user session...")
       try {
         const {
           data: { session },
@@ -22,7 +21,6 @@ export function useClientAuth() {
           console.error("Auth session error:", error)
           setUser(null)
         } else {
-          console.log("Session data:", session ? "Session exists" : "No session")
           setUser(session?.user ?? null)
         }
       } catch (error) {
@@ -35,23 +33,19 @@ export function useClientAuth() {
 
     getUser()
 
-    console.log("useClientAuth: Setting up auth state change listener")
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Auth state changed:", event)
       setUser(session?.user ?? null)
       setLoading(false)
     })
 
     return () => {
-      console.log("useClientAuth: Cleaning up auth state change listener")
       subscription.unsubscribe()
     }
   }, [supabase.auth])
 
   const signIn = async (email: string, password: string) => {
-    console.log("useClientAuth: Attempting sign in...")
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -59,11 +53,9 @@ export function useClientAuth() {
       })
 
       if (error) {
-        console.error("Sign in error:", error)
         throw error
       }
 
-      console.log("Sign in successful")
       return data
     } catch (error) {
       console.error("Sign in error:", error)
@@ -72,14 +64,11 @@ export function useClientAuth() {
   }
 
   const signOut = async () => {
-    console.log("useClientAuth: Attempting sign out...")
     try {
       const { error } = await supabase.auth.signOut()
       if (error) {
-        console.error("Sign out error:", error)
         throw error
       }
-      console.log("Sign out successful")
     } catch (error) {
       console.error("Sign out error:", error)
       throw error

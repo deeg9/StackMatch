@@ -1,163 +1,127 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import type React from "react"
+import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { SearchIcon, CheckIcon } from "lucide-react"
+import { Check } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-export interface Category {
+interface Category {
   id: string
   name: string
   description: string
-  icon?: string
-  subcategories?: Category[]
+  icon: React.ReactNode
+  subcategories?: string[]
+  popular?: boolean
 }
 
 interface CategorySelectionGridProps {
   categories: Category[]
   selectedCategoryId: string | null
-  onCategorySelect: (categoryId: string) => void
-  onNext: () => void
-  onBack: () => void
+  onSelectCategory: (categoryId: string) => void
+  layout?: "grid" | "list"
+  size?: "sm" | "md" | "lg"
 }
 
 export function CategorySelectionGrid({
   categories,
   selectedCategoryId,
-  onCategorySelect,
-  onNext,
-  onBack,
+  onSelectCategory,
+  layout = "grid",
+  size = "md",
 }: CategorySelectionGridProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filteredCategories, setFilteredCategories] = useState<Category[]>(categories)
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([])
-  const [activeCategory, setActiveCategory] = useState<Category | null>(null)
-
-  // Filter categories based on search term
-  useEffect(() => {
-    if (!searchTerm.trim()) {
-      setFilteredCategories(categories)
-      return
+  // Get size-specific classes
+  const getSizeClasses = () => {
+    switch (size) {
+      case "sm":
+        return {
+          card: "p-3",
+          icon: "h-6 w-6 mb-2",
+          title: "text-sm font-medium",
+          description: "text-xs",
+          badge: "text-xs px-1.5 py-0.5",
+        }
+      case "lg":
+        return {
+          card: "p-6",
+          icon: "h-12 w-12 mb-4",
+          title: "text-lg font-semibold",
+          description: "text-sm",
+          badge: "text-sm px-2.5 py-1",
+        }
+      default: // md
+        return {
+          card: "p-4",
+          icon: "h-8 w-8 mb-3",
+          title: "text-base font-medium",
+          description: "text-xs",
+          badge: "text-xs px-2 py-0.5",
+        }
     }
-
-    const lowerSearchTerm = searchTerm.toLowerCase()
-    const filtered = categories.filter(
-      (category) =>
-        category.name.toLowerCase().includes(lowerSearchTerm) ||
-        category.description.toLowerCase().includes(lowerSearchTerm) ||
-        (category.subcategories &&
-          category.subcategories.some(
-            (sub) =>
-              sub.name.toLowerCase().includes(lowerSearchTerm) ||
-              sub.description.toLowerCase().includes(lowerSearchTerm),
-          )),
-    )
-    setFilteredCategories(filtered)
-  }, [searchTerm, categories])
-
-  // Set active category when selected category changes
-  useEffect(() => {
-    if (selectedCategoryId) {
-      const selected = categories.find((cat) => cat.id === selectedCategoryId) || null
-      setActiveCategory(selected)
-      setSelectedSubcategories([])
-    } else {
-      setActiveCategory(null)
-      setSelectedSubcategories([])
-    }
-  }, [selectedCategoryId, categories])
-
-  const handleCategorySelect = (categoryId: string) => {
-    onCategorySelect(categoryId)
   }
 
-  const toggleSubcategory = (subcategoryId: string) => {
-    setSelectedSubcategories((prev) => {
-      if (prev.includes(subcategoryId)) {
-        return prev.filter((id) => id !== subcategoryId)
-      } else {
-        return [...prev, subcategoryId]
-      }
-    })
-  }
+  const sizeClasses = getSizeClasses()
 
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Select Project Category</CardTitle>
-          <CardDescription>Choose the category that best describes your project</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="relative">
-            <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search categories..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
+    <div
+      className={cn(
+        "grid gap-4",
+        layout === "grid" ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : "grid-cols-1",
+      )}
+    >
+      {categories.map((category) => {
+        const isSelected = category.id === selectedCategoryId
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-            {filteredCategories.map((category) => (
-              <div
-                key={category.id}
-                className={`border rounded-lg p-4 cursor-pointer transition-colors ${
-                  selectedCategoryId === category.id ? "border-primary bg-primary/5" : "hover:border-primary/50"
-                }`}
-                onClick={() => handleCategorySelect(category.id)}
+        return (
+          <Card
+            key={category.id}
+            className={cn(
+              sizeClasses.card,
+              "relative cursor-pointer transition-all",
+              isSelected
+                ? "border-primary ring-2 ring-primary/20 bg-primary/5"
+                : "hover:border-primary/50 hover:bg-gray-50",
+            )}
+            onClick={() => onSelectCategory(category.id)}
+          >
+            {isSelected && (
+              <div className="absolute top-2 right-2 bg-primary text-white rounded-full p-0.5">
+                <Check className="h-3 w-3" />
+              </div>
+            )}
+
+            {category.popular && (
+              <Badge
+                variant="secondary"
+                className={cn("absolute top-2 right-2", sizeClasses.badge, isSelected && "right-8")}
               >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-medium">{category.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{category.description}</p>
-                  </div>
-                  {selectedCategoryId === category.id && <CheckIcon className="h-5 w-5 text-primary" />}
-                </div>
-              </div>
-            ))}
-          </div>
+                Popular
+              </Badge>
+            )}
 
-          {activeCategory && activeCategory.subcategories && activeCategory.subcategories.length > 0 && (
-            <div className="mt-6 border-t pt-4">
-              <h3 className="font-medium mb-3">Select Relevant Subcategories (Optional)</h3>
-              <div className="flex flex-wrap gap-2">
-                {activeCategory.subcategories.map((subcategory) => {
-                  const isSelected = selectedSubcategories.includes(subcategory.id)
-                  return (
-                    <Badge
-                      key={subcategory.id}
-                      variant={isSelected ? "default" : "outline"}
-                      className={`cursor-pointer ${isSelected ? "" : "hover:border-primary/50"}`}
-                      onClick={() => toggleSubcategory(subcategory.id)}
-                    >
-                      {subcategory.name}
-                      {isSelected && <CheckIcon className="ml-1 h-3 w-3" />}
-                    </Badge>
-                  )
-                })}
-              </div>
-            </div>
-          )}
+            <div className={cn("text-primary", sizeClasses.icon)}>{category.icon}</div>
 
-          {filteredCategories.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
-              No categories found matching "{searchTerm}". Try a different search term.
-            </div>
-          )}
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline" onClick={onBack}>
-            Back
-          </Button>
-          <Button onClick={onNext} disabled={!selectedCategoryId}>
-            Continue
-          </Button>
-        </CardFooter>
-      </Card>
+            <h3 className={sizeClasses.title}>{category.name}</h3>
+
+            <p className={cn("text-gray-500 mt-1", sizeClasses.description)}>{category.description}</p>
+
+            {category.subcategories && category.subcategories.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-3">
+                {category.subcategories.slice(0, 3).map((subcategory) => (
+                  <Badge key={subcategory} variant="outline" className={sizeClasses.badge}>
+                    {subcategory}
+                  </Badge>
+                ))}
+                {category.subcategories.length > 3 && (
+                  <Badge variant="outline" className={sizeClasses.badge}>
+                    +{category.subcategories.length - 3} more
+                  </Badge>
+                )}
+              </div>
+            )}
+          </Card>
+        )
+      })}
     </div>
   )
 }

@@ -1,16 +1,16 @@
-"\"use client"
+import { createBrowserClient } from "@supabase/ssr"
 
-import { createClient as createSupabaseClient } from "@supabase/supabase-js"
+let supabaseClient: ReturnType<typeof createBrowserClient> | null = null
 
-export const createClient = () => {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.error("Missing Supabase environment variables")
-    throw new Error("Missing Supabase environment variables")
+export function createClient() {
+  if (!supabaseClient) {
+    console.log("🔍 SUPABASE CLIENT: Creating new browser client")
+    supabaseClient = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    )
+  } else {
+    console.log("🔍 SUPABASE CLIENT: Reusing existing browser client")
   }
-
-  console.log("Creating Supabase client with URL:", supabaseUrl)
-  return createSupabaseClient(supabaseUrl, supabaseAnonKey)
+  return supabaseClient
 }

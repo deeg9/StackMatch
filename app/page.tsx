@@ -9,21 +9,14 @@ import { ArrowRight, Users, Zap, Shield } from "lucide-react"
 import { useClientAuth } from "@/hooks/useClientAuth"
 
 export default function HomePage() {
-  console.log("HomePage: Component rendering")
   const { user, loading } = useClientAuth()
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    console.log("HomePage: Client-side effect running")
     setIsClient(true)
   }, [])
 
-  useEffect(() => {
-    console.log("HomePage: Auth state updated", { loading, user: user ? "User exists" : "No user" })
-  }, [loading, user])
-
   if (!isClient) {
-    console.log("HomePage: Waiting for client-side hydration")
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -32,7 +25,6 @@ export default function HomePage() {
   }
 
   if (loading) {
-    console.log("HomePage: Loading auth state")
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -40,54 +32,8 @@ export default function HomePage() {
     )
   }
 
-  console.log("HomePage: Rendering main content", { isAuthenticated: !!user })
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      {/* Navigation Header */}
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">SM</span>
-              </div>
-              <span className="font-bold text-xl">StackMatch</span>
-            </div>
-            <div className="flex items-center gap-4">
-              {user ? (
-                <>
-                  <span className="text-sm text-slate-600 dark:text-slate-300">
-                    Welcome back!
-                  </span>
-                  <Link href="/dashboard">
-                    <Button variant="ghost" size="sm">
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <Button variant="outline" size="sm" onClick={() => window.location.href = '/login'}>
-                    Sign Out
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login">
-                    <Button variant="ghost" size="sm">
-                      Sign In
-                    </Button>
-                  </Link>
-                  <Link href="/signup">
-                    <Button size="sm">
-                      Sign Up
-                    </Button>
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="container mx-auto px-4 py-20 lg:py-32">

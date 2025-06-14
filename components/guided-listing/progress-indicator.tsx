@@ -1,99 +1,155 @@
 "use client"
 
+import React from "react"
+import { CheckCircle2, Circle } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { CheckIcon } from "lucide-react"
-import { useEffect, useState } from "react"
 
-export interface Step {
+interface Step {
   id: string
-  name: string
+  label: string
   description?: string
-  status: "complete" | "current" | "upcoming"
 }
 
 interface ProgressIndicatorProps {
   steps: Step[]
   currentStepId: string
-  className?: string
+  completedStepIds: string[]
   onStepClick?: (stepId: string) => void
+  orientation?: "horizontal" | "vertical"
+  size?: "sm" | "md" | "lg"
+  showLabels?: boolean
   allowNavigation?: boolean
 }
 
 export function ProgressIndicator({
   steps,
   currentStepId,
-  className,
+  completedStepIds,
   onStepClick,
+  orientation = "horizontal",
+  size = "md",
+  showLabels = true,
   allowNavigation = true,
 }: ProgressIndicatorProps) {
-  const [mounted, setMounted] = useState(false)
+  // Determine if a step is completed
+  const isStepCompleted = (stepId: string) => completedStepIds.includes(stepId)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  // Determine if a step is the current step
+  const isCurrentStep = (stepId: string) => stepId === currentStepId
 
-  if (!mounted) {
-    return null
+  // Determine if a step is clickable
+  const isStepClickable = (stepId: string, index: number) => {
+    if (!allowNavigation) return false
+
+    // Can always click completed steps
+    if (isStepCompleted(stepId)) return true
+
+    // Can click the current step
+    if (isCurrentStep(stepId)) return true
+
+    // Can click the next step if the current step is completed
+    const currentStepIndex = steps.findIndex((step) => step.id === currentStepId)
+    if (index === currentStepIndex + 1 && isStepCompleted(currentStepId)) return true
+
+    return false
   }
 
+  // Handle step click
+  const handleStepClick = (stepId: string, index: number) => {
+    if (onStepClick && isStepClickable(stepId, index)) {
+      onStepClick(stepId)
+    }
+  }
+
+  // Get size-specific classes
+  const getSizeClasses = () => {
+    switch (size) {
+      case "sm":
+        return {
+          container: "gap-2",
+          step: "w-6 h-6",
+          icon: "h-4 w-4",
+          line: "h-0.5",
+          text: "text-xs",
+        }
+      case "lg":
+        return {
+          container: "gap-4",
+          step: "w-10 h-10",
+          icon: "h-6 w-6",
+          line: "h-1",
+          text: "text-base",
+        }
+      default: // md
+        return {
+          container: "gap-3",
+          step: "w-8 h-8",
+          icon: "h-5 w-5",
+          line: "h-0.5",
+          text: "text-sm",
+        }
+    }
+  }
+
+  const sizeClasses = getSizeClasses()
+
   return (
-    <nav aria-label="Progress" className={cn("w-full", className)}>
-      <ol role="list" className="space-y-3 md:flex md:space-x-4 md:space-y-0">
-        {steps.map((step, stepIdx) => (
-          <li key={step.id} className="md:flex-1">
-            <button
-              onClick={() => allowNavigation && onStepClick?.(step.id)}
-              disabled={!allowNavigation || step.status === "upcoming"}
-              className={cn(
-                "group flex w-full flex-col border-l-4 py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4",
-                step.status === "complete" ? "border-emerald-600" : "",
-                step.status === "current" ? "border-primary" : "",
-                step.status === "upcoming" ? "border-gray-200 dark:border-gray-700" : "",
-                allowNavigation && step.status !== "upcoming" ? "cursor-pointer" : "cursor-default",
+    <div
+      className={cn("flex", orientation === "vertical" ? "flex-col" : "flex-row items-center", sizeClasses.container)}
+    >
+      {steps.map((step, index) => {
+        const isCompleted = isStepCompleted(step.id)
+        const isCurrent = isCurrentStep(step.id)
+        const isClickable = isStepClickable(step.id, index)
+
+        return (
+          <React.Fragment key={step.id}>
+            {/* Step indicator */}
+            <div className="flex flex-col items-center">
+              <div
+                className={cn(
+                  "rounded-full flex items-center justify-center transition-colors",
+                  sizeClasses.step,
+                  isCompleted
+                    ? "bg-green-100 text-green-600"
+                    : isCurrent
+                      ? "bg-blue-100 text-blue-600 ring-2 ring-blue-200"
+                      : "bg-gray-100 text-gray-400",
+                  isClickable && !isCurrent && "cursor-pointer hover:bg-gray-200",
+                )}
+                onClick={() => handleStepClick(step.id, index)}
+                role={isClickable ? "button" : undefined}
+                tabIndex={isClickable ? 0 : undefined}
+              >
+                {isCompleted ? <CheckCircle2 className={sizeClasses.icon} /> : <Circle className={sizeClasses.icon} />}
+              </div>
+
+              {/* Step label */}
+              {showLabels && (
+                <div
+                  className={cn(
+                    "mt-1 text-center",
+                    sizeClasses.text,
+                    isCurrent ? "font-medium text-gray-900" : "text-gray-500",
+                  )}
+                >
+                  {step.label}
+                </div>
               )}
-            >
-              <span className="flex items-center text-sm font-medium">
-                <span
-                  className={cn(
-                    "flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full",
-                    step.status === "complete" ? "bg-emerald-600 group-hover:bg-emerald-700" : "",
-                    step.status === "current" ? "border-2 border-primary text-primary" : "",
-                    step.status === "upcoming" ? "border-2 border-gray-300 dark:border-gray-600" : "",
-                  )}
-                >
-                  {step.status === "complete" ? (
-                    <CheckIcon className="h-5 w-5 text-white" aria-hidden="true" />
-                  ) : (
-                    <span>{stepIdx + 1}</span>
-                  )}
-                </span>
-                <span
-                  className={cn(
-                    "ml-3 text-sm font-medium",
-                    step.status === "complete" ? "text-emerald-600" : "",
-                    step.status === "current" ? "text-primary" : "",
-                    step.status === "upcoming" ? "text-gray-500 dark:text-gray-400" : "",
-                  )}
-                >
-                  {step.name}
-                </span>
-              </span>
-              {step.description && (
-                <span
-                  className={cn(
-                    "ml-11 text-xs",
-                    step.status === "upcoming"
-                      ? "text-gray-500 dark:text-gray-400"
-                      : "text-gray-700 dark:text-gray-300",
-                  )}
-                >
-                  {step.description}
-                </span>
-              )}
-            </button>
-          </li>
-        ))}
-      </ol>
-    </nav>
+            </div>
+
+            {/* Connector line */}
+            {index < steps.length - 1 && (
+              <div
+                className={cn(
+                  "bg-gray-200",
+                  orientation === "vertical" ? "w-0.5 h-4 mx-auto" : `flex-1 ${sizeClasses.line}`,
+                )}
+              />
+            )}
+          </React.Fragment>
+        )
+      })}
+    </div>
   )
 }
