@@ -66,9 +66,9 @@ export default function AIDeploymentPage() {
 
   const getStatusColor = () => {
     if (completionPercentage < 50) return "destructive"
-    if (completionPercentage < 80) return "warning"
+    if (completionPercentage < 80) return "secondary"
     if (completionPercentage < 100) return "default"
-    return "success"
+    return "outline"
   }
 
   const getStatusIcon = () => {
