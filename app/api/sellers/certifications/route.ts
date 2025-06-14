@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase"
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Provider ID is required" }, { status: 400 })
     }
 
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const { data, error } = await supabase
       .from("provider_certifications")
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     // Check for auto-verification based on credential ID patterns
     const isAutoVerifiable = await checkAutoVerification(body.credential_id, body.issuing_organization)
@@ -63,7 +63,7 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
     const { id, ...updates } = body
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const { data, error } = await supabase
       .from("provider_certifications")
@@ -93,7 +93,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "Certification ID is required" }, { status: 400 })
     }
 
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const { error } = await supabase.from("provider_certifications").delete().eq("id", id)
 

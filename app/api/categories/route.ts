@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET() {
   try {
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const { data: categories, error } = await supabase.from("project_categories").select("*").order("name")
 

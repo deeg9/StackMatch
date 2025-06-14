@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
   try {
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
       limit,
     })
 
-    const supabase = createServerClient()
+    const supabase = createClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()
@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
 
   try {
     console.log("🔍 API DEBUG: About to create Supabase client")
-    const supabase = createServerClient()
+    const supabase = createClient()
     console.log("🔍 API DEBUG: Supabase client created successfully")
 
     console.log("🔍 API DEBUG: Getting user authentication")

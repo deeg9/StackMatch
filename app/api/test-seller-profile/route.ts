@@ -1,11 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
   console.log("🔍 TEST SELLER PROFILE: GET /api/test-seller-profile called")
 
   try {
-    const supabase = createServerClient()
+    const supabase = createClient()
     console.log("🔍 TEST SELLER PROFILE: Supabase client created")
 
     const {

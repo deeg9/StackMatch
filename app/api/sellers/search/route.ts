@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase"
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get("sortBy") || "rating"
     const sortOrder = searchParams.get("sortOrder") || "desc"
 
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     // Start building the query - only select from provider_profiles for now
     let dbQuery = supabase.from("provider_profiles").select("*")

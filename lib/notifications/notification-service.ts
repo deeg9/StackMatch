@@ -1,4 +1,4 @@
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 
 export type NotificationType =
   | "deal_room_message"
@@ -24,7 +24,7 @@ export interface CreateNotificationParams {
 }
 
 export class NotificationService {
-  private supabase = createServerClient()
+  private supabase = createClient()
 
   async createNotification(params: CreateNotificationParams) {
     try {

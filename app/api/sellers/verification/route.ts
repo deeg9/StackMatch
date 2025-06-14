@@ -1,11 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase"
+import { createClient } from "@/lib/supabase/server"
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { providerId, verificationType, documents, businessInfo } = body
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     // Create verification request
     const verificationRequest = {
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Provider ID is required" }, { status: 400 })
     }
 
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const { data, error } = await supabase
       .from("verification_requests")

@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase"
+import { createClient } from "@/lib/supabase/server"
 import { getCurrentUser, logUserActivity } from "@/lib/auth"
 
 export async function POST(request: Request) {
   try {
-    const supabase = createServerClient()
+    const supabase = createClient()
     const currentUser = await getCurrentUser()
 
     if (!currentUser) {

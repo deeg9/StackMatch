@@ -1,10 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 import { getCurrentUser } from "@/lib/auth"
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createServerClient()
+    const supabase = createClient()
     const currentUser = await getCurrentUser()
 
     if (!currentUser) {
@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const supabase = createServerClient()
+    const supabase = createClient()
     const currentUser = await getCurrentUser()
 
     if (!currentUser) {

@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 import { getCurrentUser } from "@/lib/auth"
 
 export async function GET() {
   try {
     console.log("🔍 DEBUG STRUCTURE: Starting...")
 
-    const supabase = createServerClient()
+    const supabase = createClient()
     const currentUser = await getCurrentUser()
 
     if (!currentUser) {

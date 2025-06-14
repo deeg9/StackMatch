@@ -1,4 +1,4 @@
-import { createServerClient } from "@/lib/supabase"
+import { createClient } from "@/lib/supabase/server"
 
 export interface UserProfile {
   id: string
@@ -77,7 +77,7 @@ export interface SellerProfile {
 
 export async function getCurrentUser(): Promise<UserProfile | null> {
   try {
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const {
       data: { user },
@@ -123,7 +123,7 @@ export async function logUserActivity(
   request?: Request,
 ) {
   try {
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const ipAddress = request?.headers.get("x-forwarded-for") || request?.headers.get("x-real-ip") || "unknown"
     const userAgent = request?.headers.get("user-agent") || "unknown"

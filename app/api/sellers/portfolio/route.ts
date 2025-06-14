@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase"
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Provider ID is required" }, { status: 400 })
     }
 
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const { data, error } = await supabase
       .from("provider_portfolio")
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { images, ...portfolioData } = body
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     // Insert portfolio item
     const { data: portfolio, error: portfolioError } = await supabase
@@ -81,7 +81,7 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
     const { id, images, ...updates } = body
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const { data, error } = await supabase.from("provider_portfolio").update(updates).eq("id", id).select().single()
 
@@ -125,7 +125,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "Portfolio ID is required" }, { status: 400 })
     }
 
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const { error } = await supabase.from("provider_portfolio").delete().eq("id", id)
 

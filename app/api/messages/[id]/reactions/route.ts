@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase"
+import { createClient } from "@/lib/supabase/server"
 import type { Reaction as ReactionType } from "@/types"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -8,7 +8,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     if (!messageId) {
       return NextResponse.json({ error: "Message ID is required" }, { status: 400 })
     }
-    const supabase = createServerClient()
+    const supabase = createClient()
 
     const { data: reactionsData, error } = await supabase
       .from("message_reactions")
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     const messageId = params.id
     const { emoji } = (await request.json()) as { emoji: string }
 
-    const supabase = createServerClient()
+    const supabase = createClient()
     const {
       data: { user: currentUser },
     } = await supabase.auth.getUser()
