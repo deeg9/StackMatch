@@ -10,6 +10,7 @@ export type {
   MilestoneStatus,
   DealRoomFile,
   FileType,
+  ContractFileVersion,
   // Add Approval if/when you define it
 } from "./deal-room-types"
 
