@@ -15,6 +15,16 @@ export type {
   // Add Approval if/when you define it
 } from "./deal-room-types"
 
+// Conversation and messaging types
+export type {
+  Conversation,
+  ConversationType,
+  Participant,
+  MessageSummary,
+  ConversationParticipant,
+  Message,
+} from "./conversation-types"
+
 // Add other exports from this file if necessary
 // ...
 
