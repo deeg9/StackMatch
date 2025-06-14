@@ -88,7 +88,6 @@ async function saveConversationToDatabase(sessionId: string, userId: string, use
         session_id: sessionId,
         user_id: userId,
         conversation_data: [newMessage, newResponse],
-        form_state: {},
       })
 
       if (insertError) {

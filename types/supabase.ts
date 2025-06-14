@@ -9,195 +9,288 @@ export type Database = {
       profiles: {
         Row: {
           id: string
-          user_id: string
           email: string
-          user_type: "buyer" | "seller"
-          full_name: string | null
-          avatar_url: string | null
           company_name: string | null
+          full_name: string | null
           phone: string | null
+          avatar_url: string | null
           is_verified: boolean | null
-          onboarding_completed: boolean | null
           email_verified: boolean | null
-          created_at: string
-          updated_at: string
+          onboarding_completed: boolean | null
+          created_at: string | null
+          updated_at: string | null
+          user_type: string | null
         }
         Insert: {
-          id?: string
-          user_id: string
+          id: string
           email: string
-          user_type: "buyer" | "seller"
-          full_name?: string | null
-          avatar_url?: string | null
           company_name?: string | null
+          full_name?: string | null
           phone?: string | null
+          avatar_url?: string | null
           is_verified?: boolean | null
-          onboarding_completed?: boolean | null
           email_verified?: boolean | null
-          created_at?: string
-          updated_at?: string
+          onboarding_completed?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+          user_type?: string | null
         }
         Update: {
           id?: string
-          user_id?: string
           email?: string
-          user_type?: "buyer" | "seller"
-          full_name?: string | null
-          avatar_url?: string | null
           company_name?: string | null
+          full_name?: string | null
           phone?: string | null
+          avatar_url?: string | null
           is_verified?: boolean | null
-          onboarding_completed?: boolean | null
           email_verified?: boolean | null
-          created_at?: string
-          updated_at?: string
+          onboarding_completed?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+          user_type?: string | null
         }
         Relationships: []
       }
       buyer_profiles: {
         Row: {
           id: string
-          user_id: string
+          user_id: string | null
           industry: string | null
           company_size: string | null
           annual_software_budget: number | null
           preferred_project_size: string | null
-          created_at: string
-          updated_at: string
+          created_at: string | null
+          company_logo_url: string | null
+          detailed_company_description: string | null
+          primary_contact_name: string | null
+          primary_contact_title: string | null
+          primary_contact_email: string | null
+          primary_contact_phone: string | null
+          annual_project_budget: string | null
+          average_project_duration: string | null
+          preferred_pm_methodology: string | null
+          typical_team_size: number | null
+          business_objectives: Json | null
+          social_media_profiles: Json | null
+          verification_documents_url: string | null
+          preferred_meeting_times: Json | null
+          language_preferences: Json | null
+          timezone: string | null
+          business_challenges: string | null
+          success_metrics: Json | null
+          previous_experience: string | null
+          preferred_provider_characteristics: Json | null
+          partnership_goals: string | null
+          updated_at: string | null
+          company_description: string | null
+          website_url: string | null
+          founded_year: number | null
+          headquarters_location: string | null
+          annual_revenue_range: string | null
+          company_name: string | null
         }
         Insert: {
           id?: string
-          user_id: string
+          user_id?: string | null
           industry?: string | null
           company_size?: string | null
           annual_software_budget?: number | null
           preferred_project_size?: string | null
-          created_at?: string
-          updated_at?: string
+          created_at?: string | null
+          company_logo_url?: string | null
+          detailed_company_description?: string | null
+          primary_contact_name?: string | null
+          primary_contact_title?: string | null
+          primary_contact_email?: string | null
+          primary_contact_phone?: string | null
+          annual_project_budget?: string | null
+          average_project_duration?: string | null
+          preferred_pm_methodology?: string | null
+          typical_team_size?: number | null
+          business_objectives?: Json | null
+          social_media_profiles?: Json | null
+          verification_documents_url?: string | null
+          preferred_meeting_times?: Json | null
+          language_preferences?: Json | null
+          timezone?: string | null
+          business_challenges?: string | null
+          success_metrics?: Json | null
+          previous_experience?: string | null
+          preferred_provider_characteristics?: Json | null
+          partnership_goals?: string | null
+          updated_at?: string | null
+          company_description?: string | null
+          website_url?: string | null
+          founded_year?: number | null
+          headquarters_location?: string | null
+          annual_revenue_range?: string | null
+          company_name?: string | null
         }
         Update: {
           id?: string
-          user_id?: string
+          user_id?: string | null
           industry?: string | null
           company_size?: string | null
           annual_software_budget?: number | null
           preferred_project_size?: string | null
-          created_at?: string
-          updated_at?: string
+          created_at?: string | null
+          company_logo_url?: string | null
+          detailed_company_description?: string | null
+          primary_contact_name?: string | null
+          primary_contact_title?: string | null
+          primary_contact_email?: string | null
+          primary_contact_phone?: string | null
+          annual_project_budget?: string | null
+          average_project_duration?: string | null
+          preferred_pm_methodology?: string | null
+          typical_team_size?: number | null
+          business_objectives?: Json | null
+          social_media_profiles?: Json | null
+          verification_documents_url?: string | null
+          preferred_meeting_times?: Json | null
+          language_preferences?: Json | null
+          timezone?: string | null
+          business_challenges?: string | null
+          success_metrics?: Json | null
+          previous_experience?: string | null
+          preferred_provider_characteristics?: Json | null
+          partnership_goals?: string | null
+          updated_at?: string | null
+          company_description?: string | null
+          website_url?: string | null
+          founded_year?: number | null
+          headquarters_location?: string | null
+          annual_revenue_range?: string | null
+          company_name?: string | null
         }
         Relationships: []
       }
       seller_profiles: {
         Row: {
           id: string
-          user_id: string
-          company_name: string | null
-          business_description: string | null
-          website_url: string | null
-          portfolio_url: string | null
+          user_id: string | null
+          business_type: string | null
           years_in_business: number | null
-          company_size: string | null
+          team_size: number | null
           hourly_rate_min: number | null
           hourly_rate_max: number | null
-          project_rate_min: number | null
-          project_rate_max: number | null
-          availability: string | null
-          next_available_date: string | null
-          time_zone: string | null
-          is_accepting_projects: boolean | null
-          health_score: number | null
-          created_at: string
-          updated_at: string
+          expertise_areas: string[] | null
+          certifications: Json | null
+          portfolio_url: string | null
+          created_at: string | null
         }
         Insert: {
           id?: string
-          user_id: string
-          company_name?: string | null
-          business_description?: string | null
-          website_url?: string | null
-          portfolio_url?: string | null
+          user_id?: string | null
+          business_type?: string | null
           years_in_business?: number | null
-          company_size?: string | null
+          team_size?: number | null
           hourly_rate_min?: number | null
           hourly_rate_max?: number | null
-          project_rate_min?: number | null
-          project_rate_max?: number | null
-          availability?: string | null
-          next_available_date?: string | null
-          time_zone?: string | null
-          is_accepting_projects?: boolean | null
-          health_score?: number | null
-          created_at?: string
-          updated_at?: string
+          expertise_areas?: string[] | null
+          certifications?: Json | null
+          portfolio_url?: string | null
+          created_at?: string | null
         }
         Update: {
           id?: string
-          user_id?: string
-          company_name?: string | null
-          business_description?: string | null
-          website_url?: string | null
-          portfolio_url?: string | null
+          user_id?: string | null
+          business_type?: string | null
           years_in_business?: number | null
-          company_size?: string | null
+          team_size?: number | null
           hourly_rate_min?: number | null
           hourly_rate_max?: number | null
-          project_rate_min?: number | null
-          project_rate_max?: number | null
-          availability?: string | null
-          next_available_date?: string | null
-          time_zone?: string | null
-          is_accepting_projects?: boolean | null
-          health_score?: number | null
-          created_at?: string
-          updated_at?: string
+          expertise_areas?: string[] | null
+          certifications?: Json | null
+          portfolio_url?: string | null
+          created_at?: string | null
         }
         Relationships: []
       }
       listings: {
         Row: {
           id: string
-          buyer_profile_id: string
+          buyer_id: string
           title: string
-          description: string | null
+          description: string
           category_id: string | null
+          status: string | null
           budget_min: number | null
           budget_max: number | null
-          timeline: string | null
-          status: "OPEN" | "CLOSED" | "AWARDED" | "COMPLETED"
-          is_featured: boolean | null
-          created_at: string
-          updated_at: string
-          expires_at: string | null
+          project_duration: string | null
+          required_skills: string[] | null
+          location_preference: string | null
+          remote_preference: string | null
+          bid_deadline: string | null
+          project_start_date: string | null
+          attachments: Json | null
+          view_count: number | null
+          created_at: string | null
+          updated_at: string | null
+          published_at: string | null
+          about_business: string | null
+          about_company: string | null
+          success_metrics: Json | null
+          current_challenges: Json | null
+          timeline_phases: Json | null
+          tags: string[] | null
+          timeline: Json | null
         }
         Insert: {
           id?: string
-          buyer_profile_id: string
+          buyer_id: string
           title: string
-          description?: string | null
+          description: string
           category_id?: string | null
+          status?: string | null
           budget_min?: number | null
           budget_max?: number | null
-          timeline?: string | null
-          status?: "OPEN" | "CLOSED" | "AWARDED" | "COMPLETED"
-          is_featured?: boolean | null
-          created_at?: string
-          updated_at?: string
-          expires_at?: string | null
+          project_duration?: string | null
+          required_skills?: string[] | null
+          location_preference?: string | null
+          remote_preference?: string | null
+          bid_deadline?: string | null
+          project_start_date?: string | null
+          attachments?: Json | null
+          view_count?: number | null
+          created_at?: string | null
+          updated_at?: string | null
+          published_at?: string | null
+          about_business?: string | null
+          about_company?: string | null
+          success_metrics?: Json | null
+          current_challenges?: Json | null
+          timeline_phases?: Json | null
+          tags?: string[] | null
+          timeline?: Json | null
         }
         Update: {
           id?: string
-          buyer_profile_id?: string
+          buyer_id?: string
           title?: string
-          description?: string | null
+          description?: string
           category_id?: string | null
+          status?: string | null
           budget_min?: number | null
           budget_max?: number | null
-          timeline?: string | null
-          status?: "OPEN" | "CLOSED" | "AWARDED" | "COMPLETED"
-          is_featured?: boolean | null
-          created_at?: string
-          updated_at?: string
-          expires_at?: string | null
+          project_duration?: string | null
+          required_skills?: string[] | null
+          location_preference?: string | null
+          remote_preference?: string | null
+          bid_deadline?: string | null
+          project_start_date?: string | null
+          attachments?: Json | null
+          view_count?: number | null
+          created_at?: string | null
+          updated_at?: string | null
+          published_at?: string | null
+          about_business?: string | null
+          about_company?: string | null
+          success_metrics?: Json | null
+          current_challenges?: Json | null
+          timeline_phases?: Json | null
+          tags?: string[] | null
+          timeline?: Json | null
         }
         Relationships: []
       }
@@ -235,44 +328,59 @@ export type Database = {
         Row: {
           id: string
           listing_id: string
-          seller_profile_id: string
-          title: string
-          description: string | null
-          amount: number | null
-          timeline: string | null
-          status: "DRAFT" | "SUBMITTED" | "ACCEPTED" | "REJECTED" | "WITHDRAWN"
+          seller_id: string
+          status: string | null
+          cover_letter: string
+          proposed_budget: number
+          proposed_timeline: string | null
+          technical_approach: string | null
+          relevant_experience: string | null
+          attachments: Json | null
+          is_sealed: boolean | null
           submitted_at: string | null
-          response_due_date: string | null
-          created_at: string
-          updated_at: string
+          reviewed_at: string | null
+          created_at: string | null
+          updated_at: string | null
+          withdrawn_at: string | null
+          withdrawal_reason: string | null
         }
         Insert: {
           id?: string
           listing_id: string
-          seller_profile_id: string
-          title: string
-          description?: string | null
-          amount?: number | null
-          timeline?: string | null
-          status?: "DRAFT" | "SUBMITTED" | "ACCEPTED" | "REJECTED" | "WITHDRAWN"
+          seller_id: string
+          status?: string | null
+          cover_letter: string
+          proposed_budget: number
+          proposed_timeline?: string | null
+          technical_approach?: string | null
+          relevant_experience?: string | null
+          attachments?: Json | null
+          is_sealed?: boolean | null
           submitted_at?: string | null
-          response_due_date?: string | null
-          created_at?: string
-          updated_at?: string
+          reviewed_at?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+          withdrawn_at?: string | null
+          withdrawal_reason?: string | null
         }
         Update: {
           id?: string
           listing_id?: string
-          seller_profile_id?: string
-          title?: string
-          description?: string | null
-          amount?: number | null
-          timeline?: string | null
-          status?: "DRAFT" | "SUBMITTED" | "ACCEPTED" | "REJECTED" | "WITHDRAWN"
+          seller_id?: string
+          status?: string | null
+          cover_letter?: string
+          proposed_budget?: number
+          proposed_timeline?: string | null
+          technical_approach?: string | null
+          relevant_experience?: string | null
+          attachments?: Json | null
+          is_sealed?: boolean | null
           submitted_at?: string | null
-          response_due_date?: string | null
-          created_at?: string
-          updated_at?: string
+          reviewed_at?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+          withdrawn_at?: string | null
+          withdrawal_reason?: string | null
         }
         Relationships: []
       }
@@ -339,39 +447,36 @@ export type Database = {
       messages: {
         Row: {
           id: string
-          conversation_id: string
-          sender_id: string
+          conversation_id: string | null
+          sender_id: string | null
           content: string
+          attachments: Json | null
           is_encrypted: boolean | null
-          message_type: "TEXT" | "FILE" | "SYSTEM"
-          file_url: string | null
-          file_name: string | null
-          created_at: string
-          updated_at: string
+          is_edited: boolean | null
+          edited_at: string | null
+          created_at: string | null
         }
         Insert: {
           id?: string
-          conversation_id: string
-          sender_id: string
+          conversation_id?: string | null
+          sender_id?: string | null
           content: string
+          attachments?: Json | null
           is_encrypted?: boolean | null
-          message_type?: "TEXT" | "FILE" | "SYSTEM"
-          file_url?: string | null
-          file_name?: string | null
-          created_at?: string
-          updated_at?: string
+          is_edited?: boolean | null
+          edited_at?: string | null
+          created_at?: string | null
         }
         Update: {
           id?: string
-          conversation_id?: string
-          sender_id?: string
+          conversation_id?: string | null
+          sender_id?: string | null
           content?: string
+          attachments?: Json | null
           is_encrypted?: boolean | null
-          message_type?: "TEXT" | "FILE" | "SYSTEM"
-          file_url?: string | null
-          file_name?: string | null
-          created_at?: string
-          updated_at?: string
+          is_edited?: boolean | null
+          edited_at?: string | null
+          created_at?: string | null
         }
         Relationships: []
       }
@@ -666,21 +771,762 @@ export type Database = {
       saved_listings: {
         Row: {
           id: string
-          buyer_profile_id: string
+          seller_id: string
           listing_id: string
-          created_at: string
+          saved_at: string
         }
         Insert: {
           id?: string
-          buyer_profile_id: string
+          seller_id: string
           listing_id: string
-          created_at?: string
+          saved_at?: string
         }
         Update: {
           id?: string
-          buyer_profile_id?: string
+          seller_id?: string
           listing_id?: string
+          saved_at?: string
+        }
+        Relationships: []
+      }
+      listing_conversations: {
+        Row: {
+          id: string
+          session_id: string
+          user_id: string
+          conversation_data: Json
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          session_id: string
+          user_id: string
+          conversation_data?: Json
           created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          session_id?: string
+          user_id?: string
+          conversation_data?: Json
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          id: string
+          email: string
+          email_confirmed_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          email: string
+          email_confirmed_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          email_confirmed_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      deal_room_participants: {
+        Row: {
+          id: string
+          deal_room_id: string
+          user_id: string
+          role: "BUYER" | "SELLER"
+          joined_at: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          deal_room_id: string
+          user_id: string
+          role: "BUYER" | "SELLER"
+          joined_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          deal_room_id?: string
+          user_id?: string
+          role?: "BUYER" | "SELLER"
+          joined_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      deal_room_files: {
+        Row: {
+          id: string
+          deal_room_id: string
+          uploader_id: string | null
+          contract_id: string | null
+          milestone_id: string | null
+          file_name: string
+          file_path: string
+          file_size_bytes: number
+          mime_type: string
+          type: string | null
+          description: string | null
+          version: number | null
+          parent_file_id: string | null
+          is_latest: boolean | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          deal_room_id: string
+          uploader_id?: string | null
+          contract_id?: string | null
+          milestone_id?: string | null
+          file_name: string
+          file_path: string
+          file_size_bytes: number
+          mime_type: string
+          type?: string | null
+          description?: string | null
+          version?: number | null
+          parent_file_id?: string | null
+          is_latest?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          deal_room_id?: string
+          uploader_id?: string | null
+          contract_id?: string | null
+          milestone_id?: string | null
+          file_name?: string
+          file_path?: string
+          file_size_bytes?: number
+          mime_type?: string
+          type?: string | null
+          description?: string | null
+          version?: number | null
+          parent_file_id?: string | null
+          is_latest?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      deal_room_messages: {
+        Row: {
+          id: string
+          deal_room_id: string
+          sender_id: string
+          sender_type: string
+          content: string
+          created_at: string
+          updated_at: string | null
+          is_read: boolean | null
+        }
+        Insert: {
+          id?: string
+          deal_room_id: string
+          sender_id: string
+          sender_type: string
+          content: string
+          created_at?: string
+          updated_at?: string | null
+          is_read?: boolean | null
+        }
+        Update: {
+          id?: string
+          deal_room_id?: string
+          sender_id?: string
+          sender_type?: string
+          content?: string
+          created_at?: string
+          updated_at?: string | null
+          is_read?: boolean | null
+        }
+        Relationships: []
+      }
+      milestones: {
+        Row: {
+          id: string
+          contract_id: string
+          title: string
+          description: string | null
+          due_date: string | null
+          status: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "OVERDUE" | "CANCELLED"
+          amount: number | null
+          is_payment_milestone: boolean
+          submitted_at: string | null
+          approved_at: string | null
+          rejected_at: string | null
+          paid_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          contract_id: string
+          title: string
+          description?: string | null
+          due_date?: string | null
+          status?: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "OVERDUE" | "CANCELLED"
+          amount?: number | null
+          is_payment_milestone?: boolean
+          submitted_at?: string | null
+          approved_at?: string | null
+          rejected_at?: string | null
+          paid_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          contract_id?: string
+          title?: string
+          description?: string | null
+          due_date?: string | null
+          status?: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "OVERDUE" | "CANCELLED"
+          amount?: number | null
+          is_payment_milestone?: boolean
+          submitted_at?: string | null
+          approved_at?: string | null
+          rejected_at?: string | null
+          paid_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      ai_enhancements: {
+        Row: {
+          id: string
+          conversation_id: string | null
+          field_name: string
+          original_value: string | null
+          enhanced_value: string
+          enhancement_type: string
+          user_feedback: number | null
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          conversation_id?: string | null
+          field_name: string
+          original_value?: string | null
+          enhanced_value: string
+          enhancement_type: string
+          user_feedback?: number | null
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          conversation_id?: string | null
+          field_name?: string
+          original_value?: string | null
+          enhanced_value?: string
+          enhancement_type?: string
+          user_feedback?: number | null
+          created_at?: string | null
+        }
+        Relationships: []
+      }
+      buyer_budgets: {
+        Row: {
+          id: string
+          buyer_profile_id: string | null
+          project_name: string
+          allocated_budget: number
+          spent_amount: number | null
+          remaining_budget: number | null
+          budget_period: string | null
+          status: string | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          buyer_profile_id?: string | null
+          project_name: string
+          allocated_budget: number
+          spent_amount?: number | null
+          remaining_budget?: number | null
+          budget_period?: string | null
+          status?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          buyer_profile_id?: string | null
+          project_name?: string
+          allocated_budget?: number
+          spent_amount?: number | null
+          remaining_budget?: number | null
+          budget_period?: string | null
+          status?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      buyer_expenses: {
+        Row: {
+          id: string
+          buyer_profile_id: string | null
+          budget_id: string | null
+          expense_name: string
+          amount: number
+          category: string
+          expense_date: string
+          description: string | null
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          buyer_profile_id?: string | null
+          budget_id?: string | null
+          expense_name: string
+          amount: number
+          category: string
+          expense_date: string
+          description?: string | null
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          buyer_profile_id?: string | null
+          budget_id?: string | null
+          expense_name?: string
+          amount?: number
+          category?: string
+          expense_date?: string
+          description?: string | null
+          created_at?: string | null
+        }
+        Relationships: []
+      }
+      deal_room_activities: {
+        Row: {
+          id: string
+          deal_room_id: string
+          user_id: string | null
+          activity_type: string
+          content: Json | null
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          deal_room_id: string
+          user_id?: string | null
+          activity_type: string
+          content?: Json | null
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          deal_room_id?: string
+          user_id?: string | null
+          activity_type?: string
+          content?: Json | null
+          created_at?: string | null
+        }
+        Relationships: []
+      }
+      deal_room_closures: {
+        Row: {
+          id: string
+          deal_room_id: string
+          initiator_id: string
+          initiator_type: string
+          reason_category: string
+          reason_description: string | null
+          outcome_type: string
+          requested_at: string
+          finalized_at: string | null
+          cooling_period_ends_at: string | null
+          feedback_buyer_rating: number | null
+          feedback_buyer_comment: string | null
+          feedback_seller_rating: number | null
+          feedback_seller_comment: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          deal_room_id: string
+          initiator_id: string
+          initiator_type: string
+          reason_category: string
+          reason_description?: string | null
+          outcome_type: string
+          requested_at?: string
+          finalized_at?: string | null
+          cooling_period_ends_at?: string | null
+          feedback_buyer_rating?: number | null
+          feedback_buyer_comment?: string | null
+          feedback_seller_rating?: number | null
+          feedback_seller_comment?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          deal_room_id?: string
+          initiator_id?: string
+          initiator_type?: string
+          reason_category?: string
+          reason_description?: string | null
+          outcome_type?: string
+          requested_at?: string
+          finalized_at?: string | null
+          cooling_period_ends_at?: string | null
+          feedback_buyer_rating?: number | null
+          feedback_buyer_comment?: string | null
+          feedback_seller_rating?: number | null
+          feedback_seller_comment?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      deal_room_documents: {
+        Row: {
+          id: string
+          deal_room_id: string
+          title: string
+          content: string | null
+          document_type: string
+          created_at: string
+          updated_at: string | null
+          created_by_id: string | null
+        }
+        Insert: {
+          id?: string
+          deal_room_id: string
+          title: string
+          content?: string | null
+          document_type: string
+          created_at: string
+          updated_at?: string | null
+          created_by_id?: string | null
+        }
+        Update: {
+          id?: string
+          deal_room_id?: string
+          title?: string
+          content?: string | null
+          document_type?: string
+          created_at?: string
+          updated_at?: string | null
+          created_by_id?: string | null
+        }
+        Relationships: []
+      }
+      listing_drafts: {
+        Row: {
+          id: string
+          user_id: string
+          category: string
+          form_data: Json
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          category: string
+          form_data: Json
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          category?: string
+          form_data?: Json
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      listing_requirements: {
+        Row: {
+          id: string
+          listing_id: string | null
+          requirement: string
+          priority: string | null
+          order_index: number | null
+        }
+        Insert: {
+          id?: string
+          listing_id?: string | null
+          requirement: string
+          priority?: string | null
+          order_index?: number | null
+        }
+        Update: {
+          id?: string
+          listing_id?: string | null
+          requirement?: string
+          priority?: string | null
+          order_index?: number | null
+        }
+        Relationships: []
+      }
+      message_reactions: {
+        Row: {
+          id: string
+          message_id: string | null
+          user_id: string | null
+          emoji: string
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          message_id?: string | null
+          user_id?: string | null
+          emoji: string
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          message_id?: string | null
+          user_id?: string | null
+          emoji?: string
+          created_at?: string | null
+        }
+        Relationships: []
+      }
+      proposal_milestones: {
+        Row: {
+          id: string
+          proposal_id: string | null
+          title: string
+          description: string | null
+          deliverables: string[] | null
+          amount: number
+          duration_days: number | null
+          order_index: number | null
+        }
+        Insert: {
+          id?: string
+          proposal_id?: string | null
+          title: string
+          description?: string | null
+          deliverables?: string[] | null
+          amount: number
+          duration_days?: number | null
+          order_index?: number | null
+        }
+        Update: {
+          id?: string
+          proposal_id?: string | null
+          title?: string
+          description?: string | null
+          deliverables?: string[] | null
+          amount?: number
+          duration_days?: number | null
+          order_index?: number | null
+        }
+        Relationships: []
+      }
+      user_reputation: {
+        Row: {
+          id: string
+          user_id: string
+          points: number | null
+          threads_created: number | null
+          comments_created: number | null
+          upvotes_received: number | null
+          downvotes_received: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          points?: number | null
+          threads_created?: number | null
+          comments_created?: number | null
+          upvotes_received?: number | null
+          downvotes_received?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          points?: number | null
+          threads_created?: number | null
+          comments_created?: number | null
+          upvotes_received?: number | null
+          downvotes_received?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      forum_categories: {
+        Row: {
+          id: string
+          name: string
+          slug: string
+          description: string | null
+          icon: string | null
+          color: string | null
+          order_index: number | null
+          parent_id: string | null
+          is_active: boolean | null
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          slug: string
+          description?: string | null
+          icon?: string | null
+          color?: string | null
+          order_index?: number | null
+          parent_id?: string | null
+          is_active?: boolean | null
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          slug?: string
+          description?: string | null
+          icon?: string | null
+          color?: string | null
+          order_index?: number | null
+          parent_id?: string | null
+          is_active?: boolean | null
+          created_at?: string | null
+        }
+        Relationships: []
+      }
+      forum_comments: {
+        Row: {
+          id: string
+          thread_id: string
+          author_id: string | null
+          parent_comment_id: string | null
+          content: string
+          is_edited: boolean | null
+          is_deleted: boolean | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          thread_id: string
+          author_id?: string | null
+          parent_comment_id?: string | null
+          content: string
+          is_edited?: boolean | null
+          is_deleted?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          thread_id?: string
+          author_id?: string | null
+          parent_comment_id?: string | null
+          content?: string
+          is_edited?: boolean | null
+          is_deleted?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      forum_threads: {
+        Row: {
+          id: string
+          author_id: string
+          category_id: string | null
+          title: string
+          content: string
+          type: string | null
+          status: string | null
+          view_count: number | null
+          is_featured: boolean | null
+          tags: string[] | null
+          created_at: string | null
+          updated_at: string | null
+          last_activity_at: string | null
+          is_anonymous: boolean | null
+        }
+        Insert: {
+          id?: string
+          author_id: string
+          category_id?: string | null
+          title: string
+          content: string
+          type?: string | null
+          status?: string | null
+          view_count?: number | null
+          is_featured?: boolean | null
+          tags?: string[] | null
+          created_at?: string | null
+          updated_at?: string | null
+          last_activity_at?: string | null
+          is_anonymous?: boolean | null
+        }
+        Update: {
+          id?: string
+          author_id?: string
+          category_id?: string | null
+          title?: string
+          content?: string
+          type?: string | null
+          status?: string | null
+          view_count?: number | null
+          is_featured?: boolean | null
+          tags?: string[] | null
+          created_at?: string | null
+          updated_at?: string | null
+          last_activity_at?: string | null
+          is_anonymous?: boolean | null
+        }
+        Relationships: []
+      }
+      forum_votes: {
+        Row: {
+          id: string
+          user_id: string | null
+          thread_id: string | null
+          comment_id: string | null
+          vote_type: string
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          thread_id?: string | null
+          comment_id?: string | null
+          vote_type: string
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          thread_id?: string | null
+          comment_id?: string | null
+          vote_type?: string
+          created_at?: string | null
         }
         Relationships: []
       }
