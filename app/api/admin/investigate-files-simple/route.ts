@@ -39,8 +39,8 @@ export async function GET() {
     const { data: listing, error: listingError } = await supabase.from("listings").select("*").limit(1).single()
 
     let listingResult: any = { found: false }
-    const fileColumns = []
-    const jsonFileColumns = []
+    const fileColumns: string[] = []
+    const jsonFileColumns: string[] = []
 
     if (listing && !listingError) {
       listingResult = {
@@ -96,8 +96,8 @@ export async function GET() {
     console.log(`🔍 SIMPLE FILE INVESTIGATION: Checking specific proposal...`)
     const { data: proposal, error: proposalError } = await supabase.from("proposals").select("*").limit(1).single()
 
-    let proposalResult = { found: false }
-    let proposalFileColumns = []
+    let proposalResult: any = { found: false }
+    let proposalFileColumns: string[] = []
 
     if (proposal && !proposalError) {
       proposalResult = {
