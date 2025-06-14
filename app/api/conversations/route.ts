@@ -71,17 +71,20 @@ export async function GET(request: NextRequest) {
         }
 
         const participants: Participant[] =
-          participantsData?.map((p) => ({
-            id: p.profiles.id, // user_id from profiles
-            user_id: p.user_id, // from conversation_participants
-            profile: p.profiles as UserProfile,
-            name: p.profiles.full_name || "Unknown User",
-            avatar: p.profiles.avatar_url || "/placeholder.svg?height=40&width=40",
-            last_read_at: p.last_read_at,
-            is_archived: p.is_archived,
-            joined_at: p.joined_at,
-            isCurrentUser: p.user_id === currentUserId,
-          })) || []
+          participantsData?.map((p) => {
+            const profile = Array.isArray(p.profiles) ? p.profiles[0] : p.profiles;
+            return {
+              id: profile?.id || p.user_id,
+              user_id: p.user_id,
+              profile: profile as UserProfile,
+              name: profile?.full_name || "Unknown User",
+              avatar: profile?.avatar_url || "/placeholder.svg?height=40&width=40",
+              last_read_at: p.last_read_at,
+              is_archived: p.is_archived,
+              joined_at: p.joined_at,
+              isCurrentUser: p.user_id === currentUserId,
+            };
+          }) || []
 
         // Get latest message
         const { data: latestMessageData, error: lmError } = await supabase
