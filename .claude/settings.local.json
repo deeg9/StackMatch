@@ -13,7 +13,9 @@
       "Bash(python3:*)",
       "Bash(cp:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(rg:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
