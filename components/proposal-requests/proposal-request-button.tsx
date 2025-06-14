@@ -32,3 +32,4 @@ const ProposalRequestButton: React.FC<ProposalRequestButtonProps> = ({ onClick, 
 }
 
 export default ProposalRequestButton
+export { ProposalRequestButton }

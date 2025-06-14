@@ -14,7 +14,7 @@ interface ProposalFormProps {
   onCancel?: () => void
 }
 
-export function ProposalForm({ listingId, onSubmit, onCancel }: ProposalFormProps) {
+function ProposalForm({ listingId, onSubmit, onCancel }: ProposalFormProps) {
   const [formData, setFormData] = useState({
     proposal_text: "",
     technical_approach: "",
@@ -142,3 +142,6 @@ export function ProposalForm({ listingId, onSubmit, onCancel }: ProposalFormProp
     </Card>
   )
 }
+
+export { ProposalForm }
+export default ProposalForm

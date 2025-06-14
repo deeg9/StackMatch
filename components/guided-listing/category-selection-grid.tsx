@@ -23,7 +23,7 @@ interface CategorySelectionGridProps {
   size?: "sm" | "md" | "lg"
 }
 
-export function CategorySelectionGrid({
+function CategorySelectionGrid({
   categories,
   selectedCategoryId,
   onSelectCategory,
@@ -125,3 +125,5 @@ export function CategorySelectionGrid({
     </div>
   )
 }
+
+export default CategorySelectionGrid

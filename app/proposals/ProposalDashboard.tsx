@@ -28,7 +28,7 @@ interface ProposalDashboardProps {
   userId?: string
 }
 
-export function ProposalDashboard({ userId }: ProposalDashboardProps) {
+function ProposalDashboard({ userId }: ProposalDashboardProps) {
   const [proposals, setProposals] = useState<Proposal[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState("all")
@@ -268,3 +268,6 @@ export function ProposalDashboard({ userId }: ProposalDashboardProps) {
     </div>
   )
 }
+
+export { ProposalDashboard }
+export default ProposalDashboard

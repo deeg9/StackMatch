@@ -99,7 +99,7 @@ export default function AIDeploymentPage() {
                 </div>
                 {checklistItems.map((item) => (
                   <div key={item.id} className="flex items-center space-x-4">
-                    <Checkbox id={item.id} checked={checklist[item.id]} onCheckedChange={() => toggleItem(item.id)} />
+                    <Checkbox id={item.id} checked={checklist[item.id as keyof typeof checklist]} onCheckedChange={() => toggleItem(item.id as keyof typeof checklist)} />
                     <div className="space-y-1">
                       <label htmlFor={item.id} className="text-sm font-medium">
                         {item.label}

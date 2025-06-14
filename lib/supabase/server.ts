@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr"
+import { createClient as createSupabaseClient } from "@supabase/supabase-js"
 import { cookies } from "next/headers"
 
 export function createClient() {
@@ -43,4 +44,25 @@ export function createClient() {
     console.error("🔍 SUPABASE SERVER: Error creating client:", error)
     throw error
   }
+}
+
+// Export createServerClient for compatibility with existing imports
+export { createServerClient } from "@supabase/ssr"
+
+// Create service role client for admin operations
+export function createServiceRoleClient() {
+  const supabaseUrl = process.env.SUPABASE_URL
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!supabaseUrl || !supabaseServiceRoleKey) {
+    console.error("🔍 SUPABASE SERVER: Missing service role environment variables")
+    throw new Error("Missing Supabase service role environment variables")
+  }
+
+  return createSupabaseClient(supabaseUrl, supabaseServiceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  })
 }

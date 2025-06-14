@@ -43,3 +43,6 @@ export function createRouteHandlerClient({ cookies: cookieStore }: { cookies: ()
     return createClient(supabaseUrl || fallbackUrl, supabaseAnonKey || fallbackKey)
   }
 }
+
+// Export createServerClient for compatibility with existing imports
+export { createServerClient } from "@supabase/ssr"

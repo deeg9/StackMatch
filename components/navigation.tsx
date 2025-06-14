@@ -14,7 +14,7 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { useClientAuth } from "@/hooks/useClientAuth"
 import { Home, MessageSquare, Bell, LogOut, Settings, User } from "lucide-react"
 
-export default function Navigation() {
+function Navigation() {
   const pathname = usePathname()
   const router = useRouter()
   const { user, loading, signOut } = useClientAuth()
@@ -139,3 +139,6 @@ export default function Navigation() {
     </nav>
   )
 }
+
+export { Navigation }
+export default Navigation

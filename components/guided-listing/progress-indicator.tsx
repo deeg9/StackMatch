@@ -21,7 +21,7 @@ interface ProgressIndicatorProps {
   allowNavigation?: boolean
 }
 
-export function ProgressIndicator({
+function ProgressIndicator({
   steps,
   currentStepId,
   completedStepIds,
@@ -153,3 +153,5 @@ export function ProgressIndicator({
     </div>
   )
 }
+
+export default ProgressIndicator

@@ -96,6 +96,84 @@ const SidebarGroupLabel = React.forwardRef<
 ))
 SidebarGroupLabel.displayName = "SidebarGroupLabel"
 
+const SidebarGroupContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("space-y-1", className)}
+    {...props}
+  />
+))
+SidebarGroupContent.displayName = "SidebarGroupContent"
+
+const SidebarProvider = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex", className)}
+    {...props}
+  />
+))
+SidebarProvider.displayName = "SidebarProvider"
+
+const SidebarMenu = React.forwardRef<
+  HTMLUListElement,
+  React.HTMLAttributes<HTMLUListElement>
+>(({ className, ...props }, ref) => (
+  <ul
+    ref={ref}
+    className={cn("space-y-1", className)}
+    {...props}
+  />
+))
+SidebarMenu.displayName = "SidebarMenu"
+
+const SidebarMenuItem = React.forwardRef<
+  HTMLLIElement,
+  React.HTMLAttributes<HTMLLIElement>
+>(({ className, ...props }, ref) => (
+  <li
+    ref={ref}
+    className={cn("", className)}
+    {...props}
+  />
+))
+SidebarMenuItem.displayName = "SidebarMenuItem"
+
+const SidebarMenuButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    active?: boolean
+  }
+>(({ className, active, ...props }, ref) => (
+  <button
+    ref={ref}
+    className={cn(
+      "flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+      active && "bg-accent text-accent-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+SidebarMenuButton.displayName = "SidebarMenuButton"
+
+const SidebarTrigger = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, ...props }, ref) => (
+  <button
+    ref={ref}
+    className={cn("flex items-center justify-center p-2 hover:bg-accent rounded", className)}
+    {...props}
+  />
+))
+SidebarTrigger.displayName = "SidebarTrigger"
+
 export {
   Sidebar,
   SidebarContent,
@@ -104,4 +182,10 @@ export {
   SidebarItem,
   SidebarGroup,
   SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarProvider,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarTrigger,
 }

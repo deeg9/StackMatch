@@ -59,3 +59,4 @@ const ProposalPackageTab: React.FC<ProposalPackageTabProps> = () => {
 }
 
 export default ProposalPackageTab
+export { ProposalPackageTab as QuotePackageTab }

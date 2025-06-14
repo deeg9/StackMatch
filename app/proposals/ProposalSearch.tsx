@@ -31,7 +31,7 @@ interface ProposalSearchProps {
   onSelectListing?: (listing: Listing) => void
 }
 
-export function ProposalSearch({ onSelectListing }: ProposalSearchProps) {
+function ProposalSearch({ onSelectListing }: ProposalSearchProps) {
   const [listings, setListings] = useState<Listing[]>([])
   const [filteredListings, setFilteredListings] = useState<Listing[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -317,3 +317,6 @@ export function ProposalSearch({ onSelectListing }: ProposalSearchProps) {
     </div>
   )
 }
+
+export { ProposalSearch }
+export default ProposalSearch
