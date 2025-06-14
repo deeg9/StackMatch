@@ -142,21 +142,21 @@ export interface DealRoomDocument {
 // New interface for deal room closures
 export interface DealRoomClosure {
   id: string
-  dealRoomId: string
-  initiatorId: string
-  initiatorType: "BUYER" | "SELLER"
-  reasonCategory: ClosureReasonCategory
-  reasonDescription?: string
-  outcomeType: ClosureOutcomeType
-  requestedAt: string
-  finalizedAt?: string
-  coolingPeriodEndsAt: string
-  feedbackBuyerRating?: number
-  feedbackBuyerComment?: string
-  feedbackSellerRating?: number
-  feedbackSellerComment?: string
-  createdAt: string
-  updatedAt: string
+  deal_room_id: string
+  initiator_id: string
+  initiator_type: "BUYER" | "SELLER"
+  reason_category: ClosureReasonCategory
+  reason_description?: string
+  outcome_type: ClosureOutcomeType
+  requested_at: string
+  finalized_at?: string
+  cooling_period_ends_at: string
+  feedback_buyer_rating?: number
+  feedback_buyer_comment?: string
+  feedback_seller_rating?: number
+  feedback_seller_comment?: string
+  created_at: string
+  updated_at: string
 }
 
 export interface ContractFile {

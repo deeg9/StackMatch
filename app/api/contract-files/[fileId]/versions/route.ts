@@ -3,6 +3,7 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { put } from "@vercel/blob"
 import type { ContractFileVersion } from "@/types"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 
 export async function POST(request: Request, { params }: { params: { fileId: string } }) {
   const supabase = createRouteHandlerClient({ cookies })
@@ -74,7 +75,7 @@ export async function POST(request: Request, { params }: { params: { fileId: str
     if (insertError) {
       console.error("Error inserting file version:", insertError)
       // Potentially delete blob if DB insert fails
-      return NextResponse.json({ error: insertError.message }, { status: 500 })
+      return NextResponse.json({ error: getErrorMessage(insertError) }, { status: 500 })
     }
 
     // 4. Update contract_files.current_version_id
@@ -92,6 +93,6 @@ export async function POST(request: Request, { params }: { params: { fileId: str
     return NextResponse.json(newVersion as ContractFileVersion, { status: 201 })
   } catch (e: any) {
     console.error("Unexpected error uploading file version:", e)
-    return NextResponse.json({ error: e.message || "An unexpected error occurred" }, { status: 500 })
+    return NextResponse.json({ error: getErrorMessage(e) || "An unexpected error occurred" }, { status: 500 })
   }
 }

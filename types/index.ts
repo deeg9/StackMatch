@@ -25,6 +25,34 @@ export type {
   Message,
 } from "./conversation-types"
 
+// Additional missing types
+export interface AuthUser {
+  id: string
+  email: string
+  full_name: string | null
+  avatar_url: string | null
+  user_type: string | null
+}
+
+export interface TypingUser {
+  userId: string
+  conversationId: string
+  isTyping: boolean
+  timestamp: string
+}
+
+export interface Reaction {
+  id: string
+  message_id: string
+  user_id: string
+  emoji: string
+  created_at: string
+  user?: {
+    id: string
+    full_name: string
+  }
+}
+
 // Add other exports from this file if necessary
 // ...
 
@@ -42,6 +70,13 @@ export interface SellerProfile {
   company_name?: string | null
   contact_name?: string | null // Or use UserProfile.full_name
   // ... other seller-specific business details
+  
+  // Extended properties to match usage patterns
+  portfolio: PortfolioItem[]
+  team: TeamMember[]
+  certifications: Certification[]
+  reviews: Review[]
+  rating: number
 }
 
 export interface BuyerProfile {
@@ -99,4 +134,202 @@ export interface Review {
   rating: number // e.g., 1-5
   comment?: string | null
   created_at: string
+}
+
+// User type
+export interface User {
+  id: string
+  email: string
+  name: string
+  userType: "BUSINESS" | "PROVIDER" | "ADMIN"
+  createdAt: string
+  updatedAt: string
+}
+
+// Project type  
+export interface Project {
+  id: string
+  title: string
+  description: string
+  businessId: string
+  status: "DRAFT" | "OPEN" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED"
+  createdAt: string
+  updatedAt: string
+}
+
+// Bid type
+export interface Bid {
+  id: string
+  listingId: string
+  providerId: string
+  title: string
+  status: "DRAFT" | "SUBMITTED" | "UNDER_REVIEW" | "SHORTLISTED" | "ACCEPTED" | "REJECTED" | "WITHDRAWN"
+  createdAt: string
+  updatedAt: string
+}
+
+// Business Profile type
+export interface BusinessProfile {
+  id: string
+  userId: string
+  companyName: string
+  createdAt: string
+  updatedAt: string
+}
+
+// Message type (for type checker compatibility)
+export interface Message {
+  id: string
+  conversationId: string
+  senderId: string
+  content: string
+  type: "TEXT" | "IMAGE" | "FILE" | "SYSTEM"
+  createdAt: string
+  updatedAt: string
+}
+
+// Portfolio Item type
+export interface PortfolioItem {
+  id: string
+  sellerId: string
+  title: string
+  description: string
+  projectType?: string
+  clientIndustry?: string
+  technologiesUsed: string[]
+  projectUrl?: string
+  completionDate?: string
+  isPublic: boolean
+  isFeatured?: boolean
+  createdAt: string
+  updatedAt: string
+  portfolio_images?: PortfolioImage[]
+}
+
+export interface PortfolioImage {
+  id: string
+  portfolioItemId: string
+  imageUrl: string
+  caption?: string
+  sortOrder: number
+  createdAt: string
+}
+
+// Team Member type
+export interface TeamMember {
+  id: string
+  sellerId: string
+  name: string
+  role: string
+  bio?: string
+  avatarUrl?: string
+  yearsExperience?: number
+  specializations?: string[]
+  email?: string
+  isPublic: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+// Certification type
+export interface Certification {
+  id: string
+  sellerId: string
+  certificationName: string
+  issuingOrganization: string
+  issueDate: string
+  expiryDate?: string
+  credentialId?: string
+  verificationUrl?: string
+  isVerified: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+// Provider Profile type (comprehensive seller profile)
+export interface ProviderProfile {
+  id: string
+  userId: string
+  businessName: string // Used by type checker
+  companyName?: string // Alternative property name
+  description: string
+  industry: string
+  companySize: string
+  foundingYear?: number
+  location: string
+  logoUrl?: string
+  bannerImageUrl?: string
+  websiteUrl?: string
+  isVerified: boolean
+  isAcceptingProjects: boolean
+  nextAvailableDate?: string
+  healthScore: number
+  createdAt: string
+  updatedAt: string
+  
+  // Related data - used by type checker
+  services?: SellerService[] // Used by type checker
+  seller_metrics?: SellerMetrics
+  seller_services?: SellerService[]
+  seller_technologies?: SellerTechnology[]
+  seller_portfolio?: PortfolioItem[]
+  seller_team_members?: TeamMember[]
+  seller_certifications?: Certification[]
+  seller_badges?: SellerBadge[]
+  portfolio?: PortfolioItem[]
+  team?: TeamMember[]
+  certifications?: Certification[]
+  reviews?: Review[]
+  rating?: number
+}
+
+// Supporting types for ProviderProfile
+export interface SellerMetrics {
+  id: string
+  sellerId: string
+  totalProjects: number
+  completedProjects: number
+  averageRating: number
+  totalReviews: number
+  responseTimeHours: number
+  completionRate: number
+  onTimeDeliveryRate: number
+  repeatClientRate: number
+  winRate: number
+  totalEarnings: number
+  averageProjectValue: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface SellerService {
+  id: string
+  sellerId: string
+  serviceName: string
+  description: string
+  category: string
+  startingPrice: number
+  deliveryTimeWeeks: number
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface SellerTechnology {
+  id: string
+  sellerId: string
+  technologyName: string
+  experienceYears: number
+  proficiencyLevel: "BEGINNER" | "INTERMEDIATE" | "ADVANCED" | "EXPERT"
+  createdAt: string
+}
+
+export interface SellerBadge {
+  id: string
+  sellerId: string
+  badgeName: string
+  description: string
+  iconUrl?: string
+  earnedAt: string
+  createdAt: string
 }

@@ -17,7 +17,8 @@
       "Bash(true)",
       "Bash(git config:*)",
       "Bash(npm search:*)",
-      "Bash(npm view:*)"
+      "Bash(npm view:*)",
+      "Bash(timeout 30 npm run lint:*)"
     ],
     "deny": []
   }

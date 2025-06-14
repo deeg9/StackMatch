@@ -134,7 +134,8 @@ export async function GET(request: NextRequest) {
           unreadCount = count || 0
         }
 
-        const projectTitle = conv.listings?.title || (conv.proposal_id ? `Proposal Discussion` : "Direct Message")
+        const listing = Array.isArray(conv.listings) ? conv.listings[0] : conv.listings
+        const projectTitle = listing?.title || (conv.proposal_id ? `Proposal Discussion` : "Direct Message")
 
         return {
           id: conv.id,

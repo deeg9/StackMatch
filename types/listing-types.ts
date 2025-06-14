@@ -94,9 +94,31 @@ export interface ApiListingData {
   remote_preference?: string
   about_company?: string
   about_business?: string
-  attachments?: any[]
-  success_metrics?: any[]
-  current_challenges?: any[]
-  timeline_phases?: any[]
+  attachments?: {
+    id: string
+    file_name: string
+    file_url: string
+    file_type?: string
+    file_size?: number
+  }[]
+  success_metrics?: {
+    id: string
+    description: string
+    target_value?: string
+    measurement_method?: string
+  }[]
+  current_challenges?: {
+    id: string
+    description: string
+    priority?: "low" | "medium" | "high"
+    impact?: string
+  }[]
+  timeline_phases?: {
+    id: string
+    phase_name: string
+    description?: string
+    estimated_duration?: string
+    dependencies?: string[]
+  }[]
   detailedNeeds?: Array<{ title: string; description: string; priority?: string }>
 }

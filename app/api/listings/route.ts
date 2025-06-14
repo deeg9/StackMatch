@@ -150,45 +150,51 @@ export async function GET(request: NextRequest) {
 
     // Transform the data to match frontend expectations
     const transformedListings =
-      listings?.map((listing) => ({
-        id: listing.id,
-        title: listing.title,
-        description: listing.description,
-        status: listing.status,
-        budget:
-          listing.budget_min && listing.budget_max
-            ? `$${(listing.budget_min / 1000).toFixed(0)}k - $${(listing.budget_max / 1000).toFixed(0)}k`
-            : listing.budget_min
-              ? `$${(listing.budget_min / 1000).toFixed(0)}k+`
-              : "Budget TBD",
-        budget_min: listing.budget_min,
-        budget_max: listing.budget_max,
-        deadline: listing.bid_deadline,
-        location: listing.location_preference || "Remote",
-        tags: listing.required_skills || [],
-        companyName: listing.profiles?.company_name || listing.profiles?.full_name || "Anonymous",
-        companyLogo: listing.profiles?.avatar_url,
-        category: listing.project_categories?.name || "Uncategorized",
-        categorySlug: listing.project_categories?.slug,
-        views: listing.view_count || 0,
-        growth: "N/A", // This would need to be calculated based on view trends
-        isNew: new Date(listing.created_at).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000, // New if created within 7 days
-        isActive: listing.status === "ACTIVE",
-        created_at: listing.created_at,
-        updated_at: listing.updated_at,
-        published_at: listing.published_at,
-        buyer_id: listing.buyer_id,
-        category_id: listing.category_id,
-        project_start_date: listing.project_start_date,
-        project_duration: listing.project_duration,
-        required_skills: listing.required_skills,
-        location_preference: listing.location_preference,
-        remote_preference: listing.remote_preference,
-        requirements: listing.listing_requirements || [],
-        // Additional fields for compatibility
-        project_categories: listing.project_categories,
-        listing_requirements: listing.listing_requirements,
-      })) || []
+      listings?.map((listing) => {
+        // Handle case where profiles or project_categories might be arrays
+        const profile = listing.profiles ? (Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles) : null;
+        const category = listing.project_categories ? (Array.isArray(listing.project_categories) ? listing.project_categories[0] : listing.project_categories) : null;
+        
+        return {
+          id: listing.id,
+          title: listing.title,
+          description: listing.description,
+          status: listing.status,
+          budget:
+            listing.budget_min && listing.budget_max
+              ? `$${(listing.budget_min / 1000).toFixed(0)}k - $${(listing.budget_max / 1000).toFixed(0)}k`
+              : listing.budget_min
+                ? `$${(listing.budget_min / 1000).toFixed(0)}k+`
+                : "Budget TBD",
+          budget_min: listing.budget_min,
+          budget_max: listing.budget_max,
+          deadline: listing.bid_deadline,
+          location: listing.location_preference || "Remote",
+          tags: listing.required_skills || [],
+          companyName: profile?.company_name || profile?.full_name || "Anonymous",
+          companyLogo: profile?.avatar_url,
+          category: category?.name || "Uncategorized",
+          categorySlug: category?.slug,
+          views: listing.view_count || 0,
+          growth: "N/A", // This would need to be calculated based on view trends
+          isNew: new Date(listing.created_at).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000, // New if created within 7 days
+          isActive: listing.status === "ACTIVE",
+          created_at: listing.created_at,
+          updated_at: listing.updated_at,
+          published_at: listing.published_at,
+          buyer_id: listing.buyer_id,
+          category_id: listing.category_id,
+          project_start_date: listing.project_start_date,
+          project_duration: listing.project_duration,
+          required_skills: listing.required_skills,
+          location_preference: listing.location_preference,
+          remote_preference: listing.remote_preference,
+          requirements: listing.listing_requirements || [],
+          // Additional fields for compatibility
+          project_categories: listing.project_categories,
+          listing_requirements: listing.listing_requirements,
+        };
+      }) || []
 
     // Format the response
     return NextResponse.json({
@@ -346,7 +352,7 @@ export async function POST(request: NextRequest) {
 
     if (insertError) {
       console.error("[SERVER] Listings API (POST): Error creating listing:", insertError)
-      return NextResponse.json({ error: "Failed to create listing: " + insertError.message }, { status: 500 })
+      return NextResponse.json({ error: "Failed to create listing: " + getErrorMessage(insertError) }, { status: 500 })
     }
 
     console.log("[SERVER] Listings API (POST): Listing created successfully:", listing.id)

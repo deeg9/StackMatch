@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { cookies } from "next/headers"
 // Import both client creation functions
-import { createClient as createUserContextClient } from "@/utils/supabase/server" // For user context operations
+import { createClient as createUserContextClient } from "@/lib/supabase/server" // For user context operations
 import { createServiceRoleClient } from "@/lib/supabase/server" // For service role operations
 
 // Helper function for a short delay
@@ -46,8 +46,8 @@ export async function POST(request: NextRequest) {
     })
 
     if (authError) {
-      console.error("SIGNUP_API: Supabase auth.signUp error:", authError.message, "Status:", authError.status)
-      return NextResponse.json({ error: authError.message }, { status: authError.status || 400 })
+      console.error("SIGNUP_API: Supabase auth.signUp error:", getErrorMessage(authError), "Status:", authError.status)
+      return NextResponse.json({ error: getErrorMessage(authError) }, { status: authError.status || 400 })
     }
 
     if (!authData.user) {
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
 
     if (profileError) {
       console.error("SIGNUP_API: Profile creation error (serviceRoleClient):", JSON.stringify(profileError))
-      return NextResponse.json({ error: `Failed to create user profile: ${profileError.message}` }, { status: 500 })
+      return NextResponse.json({ error: `Failed to create user profile: ${getErrorMessage(profileError)}` }, { status: 500 })
     }
     console.log(`SIGNUP_API: Successfully inserted into 'profiles' table with serviceRoleClient`)
 
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
       // await serviceRoleClient.from('profiles').delete().eq('id', authData.user.id);
       // await serviceRoleClient.auth.admin.deleteUser(authData.user.id); // Be careful with this
       return NextResponse.json(
-        { error: `Failed to create ${specificProfileType} profile: ${specificProfileError.message}` },
+        { error: `Failed to create ${specificProfileType} profile: ${getErrorMessage(specificProfileError)}` },
         { status: 500 },
       )
     }

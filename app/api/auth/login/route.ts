@@ -36,9 +36,9 @@ export async function POST(request: NextRequest) {
     console.log("🔍 LOGIN DEBUG: signInWithPassword completed")
 
     if (authError) {
-      console.error("🔍 LOGIN DEBUG: Authentication error:", authError.message)
+      console.error("🔍 LOGIN DEBUG: Authentication error:", getErrorMessage(authError))
       return NextResponse.json(
-        { success: false, message: "Invalid credentials", error: authError.message },
+        { success: false, message: "Invalid credentials", error: getErrorMessage(authError) },
         { status: 401 },
       )
     }
@@ -66,9 +66,9 @@ export async function POST(request: NextRequest) {
     console.log("🔍 LOGIN DEBUG: Profile query completed")
 
     if (profileError) {
-      console.error("🔍 LOGIN DEBUG: Profile fetch error:", profileError.message)
+      console.error("🔍 LOGIN DEBUG: Profile fetch error:", getErrorMessage(profileError))
       return NextResponse.json(
-        { success: false, message: "Error fetching user profile", error: profileError.message },
+        { success: false, message: "Error fetching user profile", error: getErrorMessage(profileError) },
         { status: 500 },
       )
     }
@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
         .single()
 
       if (sellerProfileError) {
-        console.error("🔍 LOGIN DEBUG: Seller profile check failed:", sellerProfileError.message)
+        console.error("🔍 LOGIN DEBUG: Seller profile check failed:", getErrorMessage(sellerProfileError))
         if (sellerProfileError.code !== "PGRST116") {
           console.error("🔍 LOGIN DEBUG: Serious seller profile error:", sellerProfileError)
         }

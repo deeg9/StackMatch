@@ -135,8 +135,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         return NextResponse.json(
           {
             error: "Failed to withdraw proposal",
-            details: updateError.message,
-            simpleError: simpleError.message,
+            details: getErrorMessage(updateError),
+            simpleError: getErrorMessage(simpleError),
           },
           { status: 500 },
         )

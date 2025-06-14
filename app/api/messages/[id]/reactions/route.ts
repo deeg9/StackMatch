@@ -28,14 +28,19 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: "Failed to fetch reactions" }, { status: 500 })
     }
 
-    const formattedReactions: ReactionType[] = reactionsData.map((r) => ({
-      id: r.id,
-      message_id: r.message_id,
-      user_id: r.user_id,
-      emoji: r.emoji,
-      created_at: r.created_at,
-      user: r.profiles ? { id: r.profiles.id, full_name: r.profiles.full_name || "Unknown User" } : undefined,
-    }))
+    const formattedReactions: ReactionType[] = reactionsData.map((r) => {
+      // Handle case where profiles might be an array
+      const profile = r.profiles ? (Array.isArray(r.profiles) ? r.profiles[0] : r.profiles) : null;
+      
+      return {
+        id: r.id,
+        message_id: r.message_id,
+        user_id: r.user_id,
+        emoji: r.emoji,
+        created_at: r.created_at,
+        user: profile ? { id: profile.id, full_name: profile.full_name || "Unknown User" } : undefined,
+      };
+    })
 
     // To match your previous structure of grouped reactions:
     const groupedReactions = formattedReactions.reduce(
@@ -131,14 +136,17 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         console.error("Reaction creation error:", insertError)
         return NextResponse.json({ error: "Failed to add reaction" }, { status: 500 })
       }
+      // Handle case where profiles might be an array
+      const reactionProfile = newReaction.profiles ? (Array.isArray(newReaction.profiles) ? newReaction.profiles[0] : newReaction.profiles) : null;
+      
       const formattedNewReaction: ReactionType = {
         id: newReaction.id,
         message_id: messageId,
         user_id: newReaction.user_id,
         emoji: newReaction.emoji,
         created_at: newReaction.created_at,
-        user: newReaction.profiles
-          ? { id: newReaction.profiles.id, full_name: newReaction.profiles.full_name || "Unknown User" }
+        user: reactionProfile
+          ? { id: reactionProfile.id, full_name: reactionProfile.full_name || "Unknown User" }
           : undefined,
       }
       return NextResponse.json({ success: true, action: "added", reaction: formattedNewReaction })

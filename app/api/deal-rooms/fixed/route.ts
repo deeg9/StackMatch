@@ -48,7 +48,7 @@ export async function GET(request: Request) {
     } = await supabase.auth.getUser()
 
     if (authError || !user) {
-      console.log("🔍 DEAL ROOMS FIXED API: No authenticated user:", authError?.message)
+      console.log("🔍 DEAL ROOMS FIXED API: No authenticated user:", authError ? getErrorMessage(authError) : "No user")
       return NextResponse.json(
         {
           error: "Authentication required",
@@ -69,7 +69,7 @@ export async function GET(request: Request) {
       .single()
 
     if (profileError) {
-      console.error("🔍 DEAL ROOMS FIXED API: Error fetching profile:", profileError.message)
+      console.error("🔍 DEAL ROOMS FIXED API: Error fetching profile:", getErrorMessage(profileError))
       return NextResponse.json(
         {
           error: "Profile not found",
@@ -88,7 +88,7 @@ export async function GET(request: Request) {
     })
 
     if (columnsError) {
-      console.error("🔍 DEAL ROOMS FIXED API: Error fetching columns:", columnsError.message)
+      console.error("🔍 DEAL ROOMS FIXED API: Error fetching columns:", getErrorMessage(columnsError))
       // If the function doesn't exist, just continue with basic columns
     } else {
       console.log("🔍 DEAL ROOMS FIXED API: Table columns:", columns)
@@ -102,13 +102,13 @@ export async function GET(request: Request) {
       .order("created_at", { ascending: false })
 
     if (dealRoomsError) {
-      console.error("🔍 DEAL ROOMS FIXED API: Error fetching deal rooms:", dealRoomsError.message)
+      console.error("🔍 DEAL ROOMS FIXED API: Error fetching deal rooms:", getErrorMessage(dealRoomsError))
       return NextResponse.json({
         dealRooms: [],
         userType: profile.user_type,
         userId: user.id,
         message: "Error fetching deal rooms",
-        error: dealRoomsError.message,
+        error: getErrorMessage(dealRoomsError),
       })
     }
 

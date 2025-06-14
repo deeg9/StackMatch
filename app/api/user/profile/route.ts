@@ -165,7 +165,7 @@ export async function GET() {
       ])) as any
 
       if (profileError) {
-        console.log(`🔍 [${requestId}] USER PROFILE API: Profile fetch failed:`, profileError.message)
+        console.log(`🔍 [${requestId}] USER PROFILE API: Profile fetch failed:`, getErrorMessage(profileError))
         return NextResponse.json({ error: "Profile not found" }, { status: 404 })
       }
 

@@ -52,32 +52,36 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: "Failed to fetch messages" }, { status: 500 })
     }
 
-    const formattedMessages: MessageType[] = messagesData.map((msg) => ({
-      id: msg.id,
-      conversation_id: msg.conversation_id,
-      conversationId: msg.conversation_id, // alias
-      sender_id: msg.sender_id,
-      content: msg.content,
-      attachments: msg.attachments,
-      is_encrypted: msg.is_encrypted,
-      encrypted: msg.is_encrypted, // alias
-      is_edited: msg.is_edited,
-      edited_at: msg.edited_at,
-      created_at: msg.created_at,
-      timestamp: msg.created_at, // alias
-      sender: msg.profiles
-        ? {
-            // profiles can be null if sender_id is null or profile deleted
-            id: msg.profiles.id,
-            full_name: msg.profiles.full_name || "Unknown User",
-            avatar_url: msg.profiles.avatar_url || "/placeholder.svg?height=32&width=32",
-          }
-        : {
-            id: msg.sender_id || "unknown",
-            full_name: "Unknown User",
-            avatar_url: "/placeholder.svg?height=32&width=32",
-          },
-    }))
+    const formattedMessages: MessageType[] = messagesData.map((msg) => {
+      // Handle case where profiles might be an array
+      const profile = msg.profiles ? (Array.isArray(msg.profiles) ? msg.profiles[0] : msg.profiles) : null;
+      
+      return {
+        id: msg.id,
+        conversation_id: msg.conversation_id,
+        conversationId: msg.conversation_id, // alias
+        sender_id: msg.sender_id,
+        content: msg.content,
+        attachments: msg.attachments,
+        is_encrypted: msg.is_encrypted,
+        encrypted: msg.is_encrypted, // alias
+        is_edited: msg.is_edited,
+        edited_at: msg.edited_at,
+        created_at: msg.created_at,
+        timestamp: msg.created_at, // alias
+        sender: profile
+          ? {
+              id: profile.id,
+              full_name: profile.full_name || "Unknown User",
+              avatar_url: profile.avatar_url || "/placeholder.svg?height=32&width=32",
+            }
+          : {
+              id: msg.sender_id || "unknown",
+              full_name: "Unknown User",
+              avatar_url: "/placeholder.svg?height=32&width=32",
+            },
+      };
+    })
 
     // Update last_read_at for the current user in this conversation
     await supabase
@@ -154,6 +158,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     // Update conversation's updated_at timestamp
     await supabase.from("conversations").update({ updated_at: new Date().toISOString() }).eq("id", conversationId)
 
+    // Handle case where profiles might be an array
+    const messageProfile = messageData.profiles ? (Array.isArray(messageData.profiles) ? messageData.profiles[0] : messageData.profiles) : null;
+    
     const formattedMessage: MessageType = {
       id: messageData.id,
       conversation_id: messageData.conversation_id,
@@ -167,11 +174,11 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       edited_at: messageData.edited_at,
       created_at: messageData.created_at,
       timestamp: messageData.created_at, // alias
-      sender: messageData.profiles
+      sender: messageProfile
         ? {
-            id: messageData.profiles.id,
-            full_name: messageData.profiles.full_name || "Unknown User",
-            avatar_url: messageData.profiles.avatar_url || "/placeholder.svg?height=32&width=32",
+            id: messageProfile.id,
+            full_name: messageProfile.full_name || "Unknown User",
+            avatar_url: messageProfile.avatar_url || "/placeholder.svg?height=32&width=32",
           }
         : {
             id: senderId,

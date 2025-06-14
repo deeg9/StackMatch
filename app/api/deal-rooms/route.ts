@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js"
 import { NextResponse } from "next/server"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 
 export const dynamic = "force-dynamic"
 
@@ -48,8 +49,8 @@ export async function GET(request: Request) {
     } = await supabase.auth.getUser(token)
 
     if (userError) {
-      console.log("🔍 DEAL ROOMS API: Error getting user from token:", userError.message)
-      return NextResponse.json({ error: "Invalid token", details: userError.message }, { status: 401 })
+      console.log("🔍 DEAL ROOMS API: Error getting user from token:", getErrorMessage(userError))
+      return NextResponse.json({ error: "Invalid token", details: getErrorMessage(userError) }, { status: 401 })
     }
 
     if (!user) {
@@ -82,8 +83,8 @@ export async function GET(request: Request) {
     const { data: tableInfo, error: tableError } = await supabase.from("deal_rooms").select("id").limit(1)
 
     if (tableError) {
-      console.error("🔍 DEAL ROOMS API: Error checking deal_rooms table:", tableError.message)
-      return NextResponse.json({ error: "Database error", details: tableError.message }, { status: 500 })
+      console.error("🔍 DEAL ROOMS API: Error checking deal_rooms table:", getErrorMessage(tableError))
+      return NextResponse.json({ error: "Database error", details: getErrorMessage(tableError) }, { status: 500 })
     }
 
     console.log("🔍 DEAL ROOMS API: Deal rooms table exists and is accessible")
@@ -104,9 +105,9 @@ export async function GET(request: Request) {
     const { data: dealRooms, error: dealRoomsError } = await query
 
     if (dealRoomsError) {
-      console.error("🔍 DEAL ROOMS API: Error fetching deal rooms:", dealRoomsError.message)
+      console.error("🔍 DEAL ROOMS API: Error fetching deal rooms:", getErrorMessage(dealRoomsError))
       return NextResponse.json(
-        { error: "Failed to fetch deal rooms", details: dealRoomsError.message },
+        { error: "Failed to fetch deal rooms", details: getErrorMessage(dealRoomsError) },
         { status: 500 },
       )
     }
@@ -131,7 +132,7 @@ export async function GET(request: Request) {
         .limit(5)
 
       if (allError) {
-        console.log("🔍 DEAL ROOMS API: Error checking all deal rooms:", allError.message)
+        console.log("🔍 DEAL ROOMS API: Error checking all deal rooms:", getErrorMessage(allError))
       } else {
         console.log(`🔍 DEAL ROOMS API: Found ${allDealRooms?.length || 0} total deal rooms in system`)
         if (allDealRooms && allDealRooms.length > 0) {

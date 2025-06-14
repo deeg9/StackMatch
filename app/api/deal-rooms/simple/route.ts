@@ -53,11 +53,11 @@ export async function GET() {
       const { error: tableCheckError } = await supabase.from("deal_rooms").select("id").limit(1)
 
       if (tableCheckError) {
-        console.error("🔍 SIMPLE DEAL ROOMS API: deal_rooms table error:", tableCheckError.message)
+        console.error("🔍 SIMPLE DEAL ROOMS API: deal_rooms table error:", getErrorMessage(tableCheckError))
         return NextResponse.json(
           {
             error: "Database structure issue",
-            details: tableCheckError.message,
+            details: getErrorMessage(tableCheckError),
             dealRooms: [],
             userType: currentUser.user_type,
           },

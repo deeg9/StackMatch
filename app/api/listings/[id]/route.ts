@@ -200,7 +200,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     if (updateError) {
       console.error("Error updating listing:", updateError)
-      return NextResponse.json({ error: "Failed to update listing", details: updateError.message }, { status: 500 })
+      return NextResponse.json({ error: "Failed to update listing", details: getErrorMessage(updateError) }, { status: 500 })
     }
 
     // Handle detailedNeeds (listing_requirements)
@@ -271,7 +271,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
     if (deleteError) {
       console.error("Error deleting listing:", deleteError)
-      return NextResponse.json({ error: "Failed to delete listing", details: deleteError.message }, { status: 500 })
+      return NextResponse.json({ error: "Failed to delete listing", details: getErrorMessage(deleteError) }, { status: 500 })
     }
 
     return NextResponse.json({ message: "Listing deleted successfully" })

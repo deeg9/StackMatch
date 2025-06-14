@@ -41,20 +41,25 @@ export function SellersGrid() {
         if (error) throw error
 
         // Transform data to match Seller type
-        const transformedSellers: Seller[] = data.map((seller) => ({
-          id: seller.id,
-          user_id: seller.user_id,
-          company_name: seller.profiles?.company_name || "Company Name",
-          description: `${seller.business_type || "Technology"} provider with ${seller.years_in_business || 0}+ years of experience`,
-          location: "United States",
-          rating: 4.5 + Math.random() * 0.5,
-          projects_count: Math.floor(Math.random() * 50) + 10,
-          expertise: seller.expertise_areas || ["Web Development", "Mobile Apps", "Cloud Services"],
-          response_time: "< 24 hours",
-          experience: `${seller.years_in_business || 0}+ years`,
-          hourly_rate: `$${seller.hourly_rate_min || 50}-${seller.hourly_rate_max || 150}/hr`,
-          is_top_rated: Math.random() > 0.7,
-        }))
+        const transformedSellers: Seller[] = data.map((seller) => {
+          // Handle case where profiles might be an array
+          const profile = seller.profiles ? (Array.isArray(seller.profiles) ? seller.profiles[0] : seller.profiles) : null;
+          
+          return {
+            id: seller.id,
+            user_id: seller.user_id,
+            company_name: profile?.company_name || "Company Name",
+            description: `${seller.business_type || "Technology"} provider with ${seller.years_in_business || 0}+ years of experience`,
+            location: "United States",
+            rating: 4.5 + Math.random() * 0.5,
+            projects_count: Math.floor(Math.random() * 50) + 10,
+            expertise: seller.expertise_areas || ["Web Development", "Mobile Apps", "Cloud Services"],
+            response_time: "< 24 hours",
+            experience: `${seller.years_in_business || 0}+ years`,
+            hourly_rate: `$${seller.hourly_rate_min || 50}-${seller.hourly_rate_max || 150}/hr`,
+            is_top_rated: Math.random() > 0.7,
+          };
+        })
 
         setSellers(transformedSellers)
       } catch (err: any) {

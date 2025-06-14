@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getAuthenticatedClient } from "@/lib/auth/api-utils"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const timestamp = new Date().toISOString()
@@ -156,11 +157,11 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       console.error(`🔍 [${timestamp}] MESSAGES API POST: Error creating message:`, insertError)
       console.error(`🔍 [${timestamp}] MESSAGES API POST: Error details:`, {
         code: insertError.code,
-        message: insertError.message,
+        message: getErrorMessage(insertError),
         details: insertError.details,
         hint: insertError.hint,
       })
-      return NextResponse.json({ error: "Failed to send message: " + insertError.message }, { status: 500 })
+      return NextResponse.json({ error: "Failed to send message: " + getErrorMessage(insertError) }, { status: 500 })
     }
 
     console.log(`🔍 [${timestamp}] MESSAGES API POST: Message created successfully:`, newMessage.id)

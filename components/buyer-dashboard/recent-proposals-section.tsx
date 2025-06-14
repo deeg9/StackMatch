@@ -160,10 +160,15 @@ export function RecentProposalsSection() {
 
       <div className="space-y-4">
         {proposals.map((proposal) => {
+          // Handle case where seller_profiles, profiles, or listings might be arrays
+          const sellerProfile = proposal.seller_profiles ? (Array.isArray(proposal.seller_profiles) ? proposal.seller_profiles[0] : proposal.seller_profiles) : null;
+          const profile = sellerProfile?.profiles ? (Array.isArray(sellerProfile.profiles) ? sellerProfile.profiles[0] : sellerProfile.profiles) : null;
+          const listing = proposal.listings ? (Array.isArray(proposal.listings) ? proposal.listings[0] : proposal.listings) : null;
+          
           const sellerName =
-            proposal.seller_profiles?.profiles?.company_name ||
-            proposal.seller_profiles?.profiles?.full_name ||
-            `${proposal.seller_profiles?.business_type || "Unknown"} Provider`
+            profile?.company_name ||
+            profile?.full_name ||
+            `${sellerProfile?.business_type || "Unknown"} Provider`
 
           return (
             <div
@@ -173,7 +178,7 @@ export function RecentProposalsSection() {
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-10 w-10">
-                    <AvatarImage src={proposal.seller_profiles?.profiles?.avatar_url || undefined} />
+                    <AvatarImage src={profile?.avatar_url || undefined} />
                     <AvatarFallback className="bg-slate-700 text-white">
                       {sellerName.charAt(0).toUpperCase()}
                     </AvatarFallback>
@@ -182,9 +187,9 @@ export function RecentProposalsSection() {
                     <h3 className="text-white font-medium text-sm sm:text-base">{sellerName}</h3>
                     <p
                       className="text-slate-400 text-xs sm:text-sm truncate max-w-[150px] sm:max-w-xs"
-                      title={`For listing: ${proposal.listings?.title || "N/A"}`}
+                      title={`For listing: ${listing?.title || "N/A"}`}
                     >
-                      For: {proposal.listings?.title || "N/A"}
+                      For: {listing?.title || "N/A"}
                     </p>
                     <div className="flex items-center gap-1 mt-1">
                       <span className="text-base font-semibold text-white">

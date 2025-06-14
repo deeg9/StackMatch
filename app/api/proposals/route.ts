@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
       hasUser: !!user,
       userId: user?.id,
       userEmail: user?.email,
-      authError: authError?.message,
+      authError: authError ? getErrorMessage(authError) : null,
     })
 
     if (authError || !user) {
@@ -187,7 +187,7 @@ export async function POST(request: NextRequest) {
     console.log("🔍 API DEBUG: Seller profile result:", {
       sellerProfile,
       errorCode: sellerProfileError?.code,
-      errorMessage: sellerProfileError?.message,
+      errorMessage: sellerProfileError ? getErrorMessage(sellerProfileError) : null,
     })
 
     if (sellerProfileError || !sellerProfile) {
@@ -195,7 +195,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: "Seller profile not found. Please complete your seller profile first.",
-          details: sellerProfileError?.message,
+          details: sellerProfileError ? getErrorMessage(sellerProfileError) : null,
         },
         { status: 400 },
       )
@@ -225,7 +225,7 @@ export async function POST(request: NextRequest) {
         console.log("🔍 API DEBUG: Existing proposal check result:", {
           existingProposal,
           errorCode: existingProposalError?.code,
-          errorMessage: existingProposalError?.message,
+          errorMessage: existingProposalError ? getErrorMessage(existingProposalError) : null,
         })
 
         if (existingProposalError && existingProposalError.code !== "PGRST116") {
@@ -282,7 +282,7 @@ export async function POST(request: NextRequest) {
       success: !!newProposal && !proposalError,
       proposalId: newProposal?.id,
       errorCode: proposalError?.code,
-      errorMessage: proposalError?.message,
+      errorMessage: proposalError ? getErrorMessage(proposalError) : null,
       errorDetails: proposalError?.details,
       errorHint: proposalError?.hint,
     })
@@ -292,7 +292,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: "Failed to create proposal",
-          details: proposalError.message,
+          details: getErrorMessage(proposalError),
           code: proposalError.code,
           hint: proposalError.hint,
         },
@@ -320,7 +320,7 @@ export async function POST(request: NextRequest) {
 
       console.log("🔍 API DEBUG: Milestones insert result:", {
         success: !milestonesError,
-        errorMessage: milestonesError?.message,
+        errorMessage: milestonesError ? getErrorMessage(milestonesError) : null,
       })
 
       if (milestonesError) {

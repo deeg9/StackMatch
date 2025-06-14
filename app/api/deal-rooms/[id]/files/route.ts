@@ -25,7 +25,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       .single()
 
     if (dealRoomError) {
-      console.error("🔧 FILES API: Deal room query error:", dealRoomError.message)
+      console.error("🔧 FILES API: Deal room query error:", getErrorMessage(dealRoomError))
     } else {
       console.log("🔧 FILES API: Deal room found:", dealRoom)
     }
@@ -40,7 +40,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     console.log("🔧 FILES API: Native files query completed, count:", files?.length || 0)
 
     if (filesError) {
-      console.error("🔧 FILES API: Files query error:", filesError.message)
+      console.error("🔧 FILES API: Files query error:", getErrorMessage(filesError))
     }
 
     // Format native files
@@ -76,7 +76,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
           .single()
 
         if (listingError) {
-          console.log("🔧 FILES API: Listing query error:", listingError.message)
+          console.log("🔧 FILES API: Listing query error:", getErrorMessage(listingError))
         } else if (listing) {
           console.log("🔧 FILES API: Processing listing attachments...")
           listingFiles = processListingAttachments(listing)
@@ -99,7 +99,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
           .single()
 
         if (proposalError) {
-          console.log("🔧 FILES API: Proposal query error:", proposalError.message)
+          console.log("🔧 FILES API: Proposal query error:", getErrorMessage(proposalError))
         } else if (proposal) {
           console.log("🔧 FILES API: Processing proposal attachments...")
           proposalFiles = processProposalAttachments(proposal)
@@ -262,7 +262,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
       .single()
 
     if (insertError) {
-      console.error("📤 FILES API: Database insert failed:", insertError.message)
+      console.error("📤 FILES API: Database insert failed:", getErrorMessage(insertError))
 
       // Try to clean up uploaded file
       try {
@@ -277,7 +277,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
         JSON.stringify({
           success: false,
           error: "Failed to save file record",
-          details: insertError.message,
+          details: getErrorMessage(insertError),
         }),
         { status: 500, headers: { "Content-Type": "application/json" } },
       )
@@ -365,12 +365,12 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     const { error: deleteError } = await supabase.from("deal_room_files").delete().eq("id", fileId)
 
     if (deleteError) {
-      console.error("🗑️ FILES API: Database deletion failed:", deleteError.message)
+      console.error("🗑️ FILES API: Database deletion failed:", getErrorMessage(deleteError))
       return new Response(
         JSON.stringify({
           success: false,
           error: "Failed to delete file record",
-          details: deleteError.message,
+          details: getErrorMessage(deleteError),
         }),
         { status: 500, headers: { "Content-Type": "application/json" } },
       )
