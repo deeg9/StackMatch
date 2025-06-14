@@ -159,6 +159,19 @@ export interface DealRoomClosure {
   updatedAt: string
 }
 
+export interface ContractFile {
+  id: string
+  contract_id: string
+  title: string
+  description: string | null
+  file_type: string | null
+  is_active: boolean
+  current_version_id: string | null
+  uploaded_by: string
+  created_at: string
+  updated_at: string
+}
+
 export interface ContractFileVersion {
   id: string
   contract_file_id: string
