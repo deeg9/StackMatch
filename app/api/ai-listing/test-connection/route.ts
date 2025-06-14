@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server"
 
+interface TestResults {
+  success: boolean
+  tests: Record<string, any>
+  timestamp: string
+}
+
 export async function GET() {
   console.log("[SERVER] 🔍 AI TEST CONNECTION: Starting test...")
 
   try {
-    const results = {
+    const results: TestResults = {
       success: true,
       tests: {},
       timestamp: new Date().toISOString(),

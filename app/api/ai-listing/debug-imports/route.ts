@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server"
 
+interface DebugResults {
+  imports: Record<string, any>
+  errors: Record<string, any>
+  timestamp: string
+}
+
 export async function GET() {
   console.log("[SERVER] 🔍 DEBUG IMPORTS: Starting import debugging...")
 
-  const results = {
+  const results: DebugResults = {
     imports: {},
     errors: {},
     timestamp: new Date().toISOString(),
