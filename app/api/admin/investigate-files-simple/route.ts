@@ -38,7 +38,7 @@ export async function GET() {
     console.log(`🔍 SIMPLE FILE INVESTIGATION: Checking specific listing...`)
     const { data: listing, error: listingError } = await supabase.from("listings").select("*").limit(1).single()
 
-    let listingResult: any = { found: false }
+    let listingResult: { found: boolean; listingId?: string; title?: string } = { found: false }
     const fileColumns: string[] = []
     const jsonFileColumns: any[] = []
 
@@ -50,7 +50,8 @@ export async function GET() {
       }
 
       // Look for file-related columns
-      const fileRelatedColumns = Object.keys(listing).filter(
+      const listingRecord = listing as { [key: string]: any }
+      const fileRelatedColumns = Object.keys(listingRecord).filter(
         (key) =>
           key.includes("file") || key.includes("attachment") || key.includes("document") || key.includes("upload"),
       )
@@ -58,8 +59,8 @@ export async function GET() {
       console.log(`🔍 SIMPLE FILE INVESTIGATION: File-related columns found:`, fileRelatedColumns)
 
       // Check if any columns contain JSON file data
-      for (const column of Object.keys(listing)) {
-        const value = listing[column]
+      for (const column of Object.keys(listingRecord)) {
+        const value = listingRecord[column]
         if (value && typeof value === "object") {
           try {
             // Check if it's an array of file objects
@@ -96,7 +97,7 @@ export async function GET() {
     console.log(`🔍 SIMPLE FILE INVESTIGATION: Checking specific proposal...`)
     const { data: proposal, error: proposalError } = await supabase.from("proposals").select("*").limit(1).single()
 
-    let proposalResult: any = { found: false }
+    let proposalResult: { found: boolean; proposalId?: string } = { found: false }
     let proposalFileColumns: string[] = []
 
     if (proposal && !proposalError) {
@@ -106,7 +107,8 @@ export async function GET() {
       }
 
       // Look for file-related columns
-      proposalFileColumns = Object.keys(proposal).filter(
+      const proposalRecord = proposal as { [key: string]: any }
+      proposalFileColumns = Object.keys(proposalRecord).filter(
         (key) =>
           key.includes("file") || key.includes("attachment") || key.includes("document") || key.includes("upload"),
       )
@@ -129,7 +131,7 @@ export async function GET() {
       "media_files",
     ]
 
-    const tableResults = {}
+    const tableResults: { [key: string]: { exists: boolean; count?: number; error?: string } } = {}
 
     for (const tableName of alternativeTables) {
       console.log(`🔍 SIMPLE FILE INVESTIGATION: Checking table: ${tableName}`)
@@ -154,7 +156,7 @@ export async function GET() {
     console.log(`🔍 SIMPLE FILE INVESTIGATION: Checking current deal room...`)
     const { data: dealRoom, error: dealRoomError } = await supabase.from("deal_rooms").select("*").limit(1).single()
 
-    let dealRoomResult = { found: false }
+    let dealRoomResult: { found: boolean; dealRoomId?: string; data?: any } = { found: false }
 
     if (dealRoom && !dealRoomError) {
       dealRoomResult = {
@@ -191,59 +193,59 @@ export async function GET() {
       targetListing: listingResult.found
         ? {
             found: true,
-            id: listing.id,
-            title: listing.title,
-            createdAt: listing.created_at,
-            buyerId: listing.buyer_id,
-            allColumns: Object.keys(listing),
-            fileColumns: Object.keys(listing)
+            id: listingRecord.id,
+            title: listingRecord.title,
+            createdAt: listingRecord.created_at,
+            buyerId: listingRecord.buyer_id,
+            allColumns: Object.keys(listingRecord),
+            fileColumns: Object.keys(listingRecord)
               .filter((key) => key.includes("file") || key.includes("attachment") || key.includes("document"))
               .map((column) => ({
                 column,
-                value: listing[column],
-                hasData: !!listing[column],
-                type: typeof listing[column],
+                value: listingRecord[column],
+                hasData: !!listingRecord[column],
+                type: typeof listingRecord[column],
               })),
             jsonFileColumns,
-            potentialFileData: Object.keys(listing)
-              .filter((key) => listing[key] && typeof listing[key] === "object")
+            potentialFileData: Object.keys(listingRecord)
+              .filter((key) => listingRecord[key] && typeof listingRecord[key] === "object")
               .map((column) => ({
                 column,
-                value: listing[column],
-                type: typeof listing[column],
-                length: JSON.stringify(listing[column]).length,
+                value: listingRecord[column],
+                type: typeof listingRecord[column],
+                length: JSON.stringify(listingRecord[column]).length,
               })),
           }
         : { found: false },
       targetProposal: proposalResult.found
         ? {
             found: true,
-            id: proposal.id,
-            listingId: proposal.listing_id,
-            sellerId: proposal.seller_id,
-            createdAt: proposal.created_at,
-            allColumns: Object.keys(proposal),
+            id: proposalRecord.id,
+            listingId: proposalRecord.listing_id,
+            sellerId: proposalRecord.seller_id,
+            createdAt: proposalRecord.created_at,
+            allColumns: Object.keys(proposalRecord),
             fileColumns: proposalFileColumns.map((column) => ({
               column,
-              value: proposal[column],
-              hasData: !!proposal[column],
-              type: typeof proposal[column],
+              value: proposalRecord[column],
+              hasData: !!proposalRecord[column],
+              type: typeof proposalRecord[column],
             })),
-            potentialFileData: Object.keys(proposal)
+            potentialFileData: Object.keys(proposalRecord)
               .filter(
                 (key) =>
-                  proposal[key] &&
-                  (typeof proposal[key] === "object" ||
-                    (typeof proposal[key] === "string" && proposal[key].length > 5)),
+                  proposalRecord[key] &&
+                  (typeof proposalRecord[key] === "object" ||
+                    (typeof proposalRecord[key] === "string" && proposalRecord[key].length > 5)),
               )
               .map((column) => ({
                 column,
-                value: proposal[column],
-                type: typeof proposal[column],
+                value: proposalRecord[column],
+                type: typeof proposalRecord[column],
                 length:
-                  typeof proposal[column] === "string"
-                    ? proposal[column].length
-                    : JSON.stringify(proposal[column]).length,
+                  typeof proposalRecord[column] === "string"
+                    ? proposalRecord[column].length
+                    : JSON.stringify(proposalRecord[column]).length,
               })),
           }
         : { found: false },
