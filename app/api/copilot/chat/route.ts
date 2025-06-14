@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { generateText } from "ai"
-// import { deepinfra } from "@ai-sdk/deepinfra"
+import { deepinfra } from "@ai-sdk/deepinfra"
 
 // IMPORTANT: Set the DEEPINFRA_API_KEY environment variable
 

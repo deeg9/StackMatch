@@ -1,6 +1,6 @@
-// import { deepinfra } from "@ai-sdk/deepinfra"
-import { streamText, type CoreMessage } from "
-import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"ai"
+import { deepinfra } from "@ai-sdk/deepinfra"
+import { streamText, type CoreMessage } from "ai"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30
