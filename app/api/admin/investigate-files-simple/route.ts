@@ -41,6 +41,7 @@ export async function GET() {
     let listingResult: { found: boolean; listingId?: string; title?: string } = { found: false }
     const fileColumns: string[] = []
     const jsonFileColumns: any[] = []
+    let listingRecord: { [key: string]: any } | null = null
 
     if (listing && !listingError) {
       listingResult = {
@@ -50,7 +51,7 @@ export async function GET() {
       }
 
       // Look for file-related columns
-      const listingRecord = listing as { [key: string]: any }
+      listingRecord = listing as { [key: string]: any }
       const fileRelatedColumns = Object.keys(listingRecord).filter(
         (key) =>
           key.includes("file") || key.includes("attachment") || key.includes("document") || key.includes("upload"),
@@ -99,6 +100,7 @@ export async function GET() {
 
     let proposalResult: { found: boolean; proposalId?: string } = { found: false }
     let proposalFileColumns: string[] = []
+    let proposalRecord: { [key: string]: any } | null = null
 
     if (proposal && !proposalError) {
       proposalResult = {
@@ -107,7 +109,7 @@ export async function GET() {
       }
 
       // Look for file-related columns
-      const proposalRecord = proposal as { [key: string]: any }
+      proposalRecord = proposal as { [key: string]: any }
       proposalFileColumns = Object.keys(proposalRecord).filter(
         (key) =>
           key.includes("file") || key.includes("attachment") || key.includes("document") || key.includes("upload"),
@@ -190,7 +192,7 @@ export async function GET() {
         count: dealRoomFilesCount || 0,
         sample: sampleFiles,
       },
-      targetListing: listingResult.found
+      targetListing: listingResult.found && listingRecord
         ? {
             found: true,
             id: listingRecord.id,
@@ -217,7 +219,7 @@ export async function GET() {
               })),
           }
         : { found: false },
-      targetProposal: proposalResult.found
+      targetProposal: proposalResult.found && proposalRecord
         ? {
             found: true,
             id: proposalRecord.id,
