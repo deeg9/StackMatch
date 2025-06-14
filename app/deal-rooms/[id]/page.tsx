@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useParams } from "
-import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"next/navigation"
+import { useParams } from "next/navigation"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { useAppDispatch, useAppSelector } from "@/hooks/useAppDispatch"
 import { DealRoomDetails } from "@/components/deal-rooms/deal-room-details"
 import { Skeleton } from "@/components/ui/skeleton"

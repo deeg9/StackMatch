@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useCallback, useEffect } from "react"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 // Global request cache to deduplicate across components
 const globalRequestCache = new Map<string, Promise<any>>()
@@ -31,8 +32,7 @@ export function useSafeRequest() {
   const safeFetch = useCallback(
     async (url: string, options?: RequestInit, timeoutMs = 10000, deduplicate = true): Promise<any> => {
       const requestId = ++globalRequestCount
-      const cacheKey = `${url}-${JSON.stringify(options?.body || {})}-${options?.method || "
-import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"GET"}`
+      const cacheKey = `${url}-${JSON.stringify(options?.body || {})}-${options?.method || "GET"}`
 
       console.log(`🔍 SAFE REQUEST [${instanceId.current}] #${requestId}: Starting request to ${url}`)
 

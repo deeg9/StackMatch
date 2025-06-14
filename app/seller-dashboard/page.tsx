@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
-import { cookies } from "
-import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"next/headers"
+import { cookies } from "next/headers"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import SellerDashboardClientPage from "./client-page"
 import type { UserProfile, SellerProfile, Proposal, Listing } from "@/types"

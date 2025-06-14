@@ -13,7 +13,9 @@
       "Bash(./node_modules/.bin/tsc:*)",
       "Bash(npx --yes typescript@latest tsc --noEmit --project . 2 >& 1)",
       "Bash(npm run type-check:*)",
-      "Bash(npx typescript:*)"
+      "Bash(npx typescript:*)",
+      "Bash(true)",
+      "Bash(git config:*)"
     ],
     "deny": []
   }

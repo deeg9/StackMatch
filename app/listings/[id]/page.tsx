@@ -1,8 +1,8 @@
 "use client"
 
 import { useParams, useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect } from "
-import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"react"
+import { useState, useEffect } from "react"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"

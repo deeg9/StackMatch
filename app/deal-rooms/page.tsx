@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSelector } from "
-import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"react-redux"
+import { useSelector } from "react-redux"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import type { RootState } from "@/store"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"

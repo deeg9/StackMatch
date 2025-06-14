@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -19,8 +20,7 @@ export interface UploadResult {
 export function generateUniqueFileName(originalName: string, dealRoomId: string): string {
   const timestamp = Date.now()
   const randomString = Math.random().toString(36).substring(2, 15)
-  const extension = originalName.split("
-import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler".").pop() || "bin"
+  const extension = originalName.split(".").pop() || "bin"
   const sanitizedName = originalName.replace(/[^a-zA-Z0-9.-]/g, "_")
 
   return `deal-rooms/${dealRoomId}/${timestamp}_${randomString}_${sanitizedName}`

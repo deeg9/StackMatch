@@ -1,8 +1,8 @@
 "use client" // This page will fetch data client-side
 
 import { useEffect, useState } from "react"
-import { useParams } from "
-import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"next/navigation"
+import { useParams } from "next/navigation"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import type { Contract } from "@/types"
 import { ContractDetailsView } from "@/components/deal-rooms/contract-details-view"
 import { useToast } from "@/hooks/use-toast"

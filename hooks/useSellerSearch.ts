@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { useDispatch, useSelector } from "
-import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import type { RootState } from "@/store"
 import { setLoading, setError, setSearchResults } from "@/store/slices/sellerProfilesSlice"
 import { useDebounce } from "./use-debounce"
