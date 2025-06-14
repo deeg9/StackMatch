@@ -12,7 +12,8 @@
       "Bash(/tmp/find_conflicts.sh:*)",
       "Bash(python3:*)",
       "Bash(cp:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }
