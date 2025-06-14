@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 
 export async function POST(request: Request) {
   console.log("[SERVER] 🔍 AI SAVE DRAFT: Starting save draft handler...")

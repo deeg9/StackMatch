@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { getAuthUser } from "@/lib/auth/api-utils"
 import type { ConversationSession } from "@/types/ai-listing-types"
 
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest, { params }: { params: { sessionI
     const { data: conversation, error } = await supabase
       .from("listing_conversations")
       .select("*")
-      .eq("session_id", sessionId as string)
+      .eq("session_id", sessionId)
       .eq("user_id", user.id)
       .single()
 
@@ -54,7 +54,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { sessi
     const { error } = await supabase
       .from("listing_conversations")
       .delete()
-      .eq("session_id", sessionId as string)
+      .eq("session_id", sessionId)
       .eq("user_id", user.id)
 
     if (error) {

@@ -1,6 +1,6 @@
 "use server"
 
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function generateAIResponseServer(prompt: string, sessionId: string, userId?: string) {

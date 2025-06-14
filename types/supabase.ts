@@ -3,6 +3,24 @@
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
+// Database Enums
+export type DatabaseEnums = {
+  user_type: 'buyer' | 'seller'
+  listing_status: 'DRAFT' | 'ACTIVE' | 'CLOSED' | 'AWARDED' | 'CANCELLED'
+  proposal_status: 'DRAFT' | 'SUBMITTED' | 'UNDER_REVIEW' | 'ACCEPTED' | 'REJECTED' | 'WITHDRAWN'
+  contract_status: 'DRAFT' | 'PENDING_SIGNATURES' | 'ACTIVE' | 'COMPLETED' | 'TERMINATED'
+  deal_room_status: 'ACTIVE' | 'COMPLETED' | 'CLOSED' | 'CANCELLED' | 'PENDING_CLOSURE' | 'CLOSED_SUCCESSFULLY' | 'CLOSED_UNSUCCESSFULLY'
+  milestone_status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'OVERDUE' | 'CANCELLED'
+  conversation_type: 'DIRECT' | 'LISTING_INQUIRY' | 'PROPOSAL_DISCUSSION'
+  message_type: 'TEXT' | 'FILE' | 'SYSTEM'
+  file_type: 'CONTRACT' | 'SCOPE_DOCUMENT' | 'INVOICE' | 'DELIVERABLE' | 'OTHER'
+  thread_type: 'DISCUSSION' | 'QUESTION' | 'ANNOUNCEMENT' | 'POLL'
+  thread_status: 'OPEN' | 'CLOSED' | 'PINNED' | 'ARCHIVED'
+  vote_type: 'UPVOTE' | 'DOWNVOTE'
+  verification_status: 'PENDING' | 'VERIFIED' | 'REJECTED'
+  requirement_priority: 'HIGH' | 'MEDIUM' | 'LOW'
+}
+
 export type Database = {
   public: {
     Tables: {
@@ -19,7 +37,7 @@ export type Database = {
           onboarding_completed: boolean | null
           created_at: string | null
           updated_at: string | null
-          user_type: string | null
+          user_type: DatabaseEnums['user_type'] | null
         }
         Insert: {
           id: string
@@ -33,7 +51,7 @@ export type Database = {
           onboarding_completed?: boolean | null
           created_at?: string | null
           updated_at?: string | null
-          user_type?: string | null
+          user_type?: DatabaseEnums['user_type'] | null
         }
         Update: {
           id?: string
@@ -47,7 +65,7 @@ export type Database = {
           onboarding_completed?: boolean | null
           created_at?: string | null
           updated_at?: string | null
-          user_type?: string | null
+          user_type?: DatabaseEnums['user_type'] | null
         }
         Relationships: []
       }
@@ -214,7 +232,7 @@ export type Database = {
           title: string
           description: string
           category_id: string | null
-          status: string | null
+          status: DatabaseEnums['listing_status'] | null
           budget_min: number | null
           budget_max: number | null
           project_duration: string | null
@@ -242,7 +260,7 @@ export type Database = {
           title: string
           description: string
           category_id?: string | null
-          status?: string | null
+          status?: DatabaseEnums['listing_status'] | null
           budget_min?: number | null
           budget_max?: number | null
           project_duration?: string | null
@@ -270,7 +288,7 @@ export type Database = {
           title?: string
           description?: string
           category_id?: string | null
-          status?: string | null
+          status?: DatabaseEnums['listing_status'] | null
           budget_min?: number | null
           budget_max?: number | null
           project_duration?: string | null
@@ -329,7 +347,7 @@ export type Database = {
           id: string
           listing_id: string
           seller_id: string
-          status: string | null
+          status: DatabaseEnums['proposal_status'] | null
           cover_letter: string
           proposed_budget: number
           proposed_timeline: string | null
@@ -348,7 +366,7 @@ export type Database = {
           id?: string
           listing_id: string
           seller_id: string
-          status?: string | null
+          status?: DatabaseEnums['proposal_status'] | null
           cover_letter: string
           proposed_budget: number
           proposed_timeline?: string | null
@@ -367,7 +385,7 @@ export type Database = {
           id?: string
           listing_id?: string
           seller_id?: string
-          status?: string | null
+          status?: DatabaseEnums['proposal_status'] | null
           cover_letter?: string
           proposed_budget?: number
           proposed_timeline?: string | null
@@ -387,7 +405,7 @@ export type Database = {
       conversations: {
         Row: {
           id: string
-          type: "PROPOSAL_DISCUSSION" | "DEAL_ROOM" | "GENERAL" | "SUPPORT"
+          type: DatabaseEnums['conversation_type']
           listing_id: string | null
           proposal_id: string | null
           created_at: string
@@ -395,7 +413,7 @@ export type Database = {
         }
         Insert: {
           id?: string
-          type: "PROPOSAL_DISCUSSION" | "DEAL_ROOM" | "GENERAL" | "SUPPORT"
+          type: DatabaseEnums['conversation_type']
           listing_id?: string | null
           proposal_id?: string | null
           created_at?: string
@@ -403,7 +421,7 @@ export type Database = {
         }
         Update: {
           id?: string
-          type?: "PROPOSAL_DISCUSSION" | "DEAL_ROOM" | "GENERAL" | "SUPPORT"
+          type?: DatabaseEnums['conversation_type']
           listing_id?: string | null
           proposal_id?: string | null
           created_at?: string
@@ -487,7 +505,7 @@ export type Database = {
           proposal_id: string | null
           buyer_id: string
           seller_id: string
-          status: "ACTIVE" | "COMPLETED" | "TERMINATED" | "ON_HOLD" | "PENDING_CLOSURE" | "CLOSED_SUCCESSFULLY" | "CLOSED_UNSUCCESSFULLY"
+          status: DatabaseEnums['deal_room_status']
           room_name: string | null
           created_at: string
           completed_at: string | null
@@ -499,7 +517,7 @@ export type Database = {
           proposal_id?: string | null
           buyer_id: string
           seller_id: string
-          status?: "ACTIVE" | "COMPLETED" | "TERMINATED" | "ON_HOLD" | "PENDING_CLOSURE" | "CLOSED_SUCCESSFULLY" | "CLOSED_UNSUCCESSFULLY"
+          status?: DatabaseEnums['deal_room_status']
           room_name?: string | null
           created_at?: string
           completed_at?: string | null
@@ -511,7 +529,7 @@ export type Database = {
           proposal_id?: string | null
           buyer_id?: string
           seller_id?: string
-          status?: "ACTIVE" | "COMPLETED" | "TERMINATED" | "ON_HOLD" | "PENDING_CLOSURE" | "CLOSED_SUCCESSFULLY" | "CLOSED_UNSUCCESSFULLY"
+          status?: DatabaseEnums['deal_room_status']
           room_name?: string | null
           created_at?: string
           completed_at?: string | null
@@ -526,7 +544,7 @@ export type Database = {
           title: string
           description: string | null
           value: number | null
-          status: "DRAFT" | "PENDING_SIGNATURES" | "ACTIVE" | "COMPLETED" | "TERMINATED"
+          status: DatabaseEnums['contract_status']
           start_date: string | null
           end_date: string | null
           signed_at: string | null
@@ -539,7 +557,7 @@ export type Database = {
           title: string
           description?: string | null
           value?: number | null
-          status?: "DRAFT" | "PENDING_SIGNATURES" | "ACTIVE" | "COMPLETED" | "TERMINATED"
+          status?: DatabaseEnums['contract_status']
           start_date?: string | null
           end_date?: string | null
           signed_at?: string | null
@@ -552,7 +570,7 @@ export type Database = {
           title?: string
           description?: string | null
           value?: number | null
-          status?: "DRAFT" | "PENDING_SIGNATURES" | "ACTIVE" | "COMPLETED" | "TERMINATED"
+          status?: DatabaseEnums['contract_status']
           start_date?: string | null
           end_date?: string | null
           signed_at?: string | null
@@ -884,7 +902,7 @@ export type Database = {
           file_path: string
           file_size_bytes: number
           mime_type: string
-          type: string | null
+          type: DatabaseEnums['file_type'] | null
           description: string | null
           version: number | null
           parent_file_id: string | null
@@ -902,7 +920,7 @@ export type Database = {
           file_path: string
           file_size_bytes: number
           mime_type: string
-          type?: string | null
+          type?: DatabaseEnums['file_type'] | null
           description?: string | null
           version?: number | null
           parent_file_id?: string | null
@@ -920,7 +938,7 @@ export type Database = {
           file_path?: string
           file_size_bytes?: number
           mime_type?: string
-          type?: string | null
+          type?: DatabaseEnums['file_type'] | null
           description?: string | null
           version?: number | null
           parent_file_id?: string | null
@@ -970,7 +988,7 @@ export type Database = {
           title: string
           description: string | null
           due_date: string | null
-          status: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "OVERDUE" | "CANCELLED"
+          status: DatabaseEnums['milestone_status']
           amount: number | null
           is_payment_milestone: boolean
           submitted_at: string | null
@@ -986,7 +1004,7 @@ export type Database = {
           title: string
           description?: string | null
           due_date?: string | null
-          status?: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "OVERDUE" | "CANCELLED"
+          status?: DatabaseEnums['milestone_status']
           amount?: number | null
           is_payment_milestone?: boolean
           submitted_at?: string | null
@@ -1002,7 +1020,7 @@ export type Database = {
           title?: string
           description?: string | null
           due_date?: string | null
-          status?: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "OVERDUE" | "CANCELLED"
+          status?: DatabaseEnums['milestone_status']
           amount?: number | null
           is_payment_milestone?: boolean
           submitted_at?: string | null
@@ -1068,7 +1086,7 @@ export type Database = {
           spent_amount?: number | null
           remaining_budget?: number | null
           budget_period?: string | null
-          status?: string | null
+          status?: DatabaseEnums['listing_status'] | null
           created_at?: string | null
           updated_at?: string | null
         }
@@ -1080,7 +1098,7 @@ export type Database = {
           spent_amount?: number | null
           remaining_budget?: number | null
           budget_period?: string | null
-          status?: string | null
+          status?: DatabaseEnums['listing_status'] | null
           created_at?: string | null
           updated_at?: string | null
         }
@@ -1462,8 +1480,8 @@ export type Database = {
           category_id: string | null
           title: string
           content: string
-          type: string | null
-          status: string | null
+          type: DatabaseEnums['thread_type'] | null
+          status: DatabaseEnums['thread_status'] | null
           view_count: number | null
           is_featured: boolean | null
           tags: string[] | null
@@ -1478,8 +1496,8 @@ export type Database = {
           category_id?: string | null
           title: string
           content: string
-          type?: string | null
-          status?: string | null
+          type?: DatabaseEnums['thread_type'] | null
+          status?: DatabaseEnums['thread_status'] | null
           view_count?: number | null
           is_featured?: boolean | null
           tags?: string[] | null
@@ -1494,8 +1512,8 @@ export type Database = {
           category_id?: string | null
           title?: string
           content?: string
-          type?: string | null
-          status?: string | null
+          type?: DatabaseEnums['thread_type'] | null
+          status?: DatabaseEnums['thread_status'] | null
           view_count?: number | null
           is_featured?: boolean | null
           tags?: string[] | null
@@ -1512,7 +1530,7 @@ export type Database = {
           user_id: string | null
           thread_id: string | null
           comment_id: string | null
-          vote_type: string
+          vote_type: DatabaseEnums['vote_type']
           created_at: string | null
         }
         Insert: {
@@ -1520,7 +1538,7 @@ export type Database = {
           user_id?: string | null
           thread_id?: string | null
           comment_id?: string | null
-          vote_type: string
+          vote_type: DatabaseEnums['vote_type']
           created_at?: string | null
         }
         Update: {
@@ -1528,7 +1546,7 @@ export type Database = {
           user_id?: string | null
           thread_id?: string | null
           comment_id?: string | null
-          vote_type?: string
+          vote_type?: DatabaseEnums['vote_type']
           created_at?: string | null
         }
         Relationships: []
@@ -1562,3 +1580,19 @@ export type Database = {
 export type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row']
 export type Insertable<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Insert']
 export type Updatable<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Update']
+
+// Export individual enum types for easy access
+export type UserType = DatabaseEnums['user_type']
+export type ListingStatus = DatabaseEnums['listing_status']
+export type ProposalStatus = DatabaseEnums['proposal_status']
+export type ContractStatus = DatabaseEnums['contract_status']
+export type DealRoomStatus = DatabaseEnums['deal_room_status']
+export type MilestoneStatus = DatabaseEnums['milestone_status']
+export type ConversationType = DatabaseEnums['conversation_type']
+export type MessageType = DatabaseEnums['message_type']
+export type FileType = DatabaseEnums['file_type']
+export type ThreadType = DatabaseEnums['thread_type']
+export type ThreadStatus = DatabaseEnums['thread_status']
+export type VoteType = DatabaseEnums['vote_type']
+export type VerificationStatus = DatabaseEnums['verification_status']
+export type RequirementPriority = DatabaseEnums['requirement_priority']
