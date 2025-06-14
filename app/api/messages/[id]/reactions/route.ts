@@ -2,9 +2,9 @@ import { type NextRequest, NextResponse } from "next/server"
 import { createServerClient } from "@/lib/supabase"
 import type { Reaction as ReactionType } from "@/types"
 
-export async function GET(request: NextRequest, { params }: { params: { messageId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const messageId = params.messageId
+    const messageId = params.id
     if (!messageId) {
       return NextResponse.json({ error: "Message ID is required" }, { status: 400 })
     }
@@ -69,9 +69,9 @@ export async function GET(request: NextRequest, { params }: { params: { messageI
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { messageId: string } }) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const messageId = params.messageId
+    const messageId = params.id
     const { emoji } = (await request.json()) as { emoji: string }
 
     const supabase = createServerClient()

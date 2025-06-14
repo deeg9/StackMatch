@@ -2,9 +2,9 @@ import { type NextRequest, NextResponse } from "next/server"
 import { createServerClient } from "@/lib/supabase"
 import type { Message as MessageType } from "@/types" // Use our MessageType
 
-export async function GET(request: NextRequest, { params }: { params: { conversationId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const conversationId = params.conversationId
+    const conversationId = params.id
     if (!conversationId) {
       return NextResponse.json({ error: "Conversation ID is required" }, { status: 400 })
     }
@@ -92,9 +92,9 @@ export async function GET(request: NextRequest, { params }: { params: { conversa
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { conversationId: string } }) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const conversationId = params.conversationId
+    const conversationId = params.id
     // Ensure senderId comes from authenticated user, not request body for security
     const supabase = createServerClient()
     const {
