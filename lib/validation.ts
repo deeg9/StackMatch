@@ -83,6 +83,17 @@ export const profileUpdateSchema = z.object({
   timezone: z.string().optional(),
 })
 
+// Proposal request validation schemas
+export const ProposalRequestSchema = z.object({
+  seller_id: z.string().uuid("Invalid seller ID"),
+  listing_id: z.string().uuid("Invalid listing ID").optional(),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+  budget_min: z.number().min(0, "Minimum budget must be 0 or greater").optional(),
+  budget_max: z.number().min(0, "Maximum budget must be 0 or greater").optional(),
+  timeline: z.string().optional(),
+  requirements: z.string().optional(),
+})
+
 // Export types
 export type UserRegistrationData = z.infer<typeof userRegistrationSchema>
 export type UserLoginData = z.infer<typeof userLoginSchema>
@@ -92,3 +103,4 @@ export type DealRoomData = z.infer<typeof dealRoomSchema>
 export type MessageData = z.infer<typeof messageSchema>
 export type FileUploadData = z.infer<typeof fileUploadSchema>
 export type ProfileUpdateData = z.infer<typeof profileUpdateSchema>
+export type ProposalRequestData = z.infer<typeof ProposalRequestSchema>
