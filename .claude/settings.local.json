@@ -16,7 +16,8 @@
       "Bash(npx typescript:*)",
       "Bash(true)",
       "Bash(git config:*)",
-      "Bash(npm search:*)"
+      "Bash(npm search:*)",
+      "Bash(npm view:*)"
     ],
     "deny": []
   }
