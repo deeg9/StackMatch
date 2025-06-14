@@ -32,6 +32,7 @@ export interface UserProfile {
   id: string // Corresponds to auth.users.id
   full_name?: string | null
   avatar_url?: string | null
+  user_type?: string | null
   // other user-specific details not related to buyer/seller role
 }
 
