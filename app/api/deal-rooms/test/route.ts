@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
@@ -88,8 +89,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       {
         error: "Unexpected error in test",
-        details: error.message,
-        stack: error.stack,
+        details: getErrorMessage(error),
+        stack: getErrorStack(error),
       },
       { status: 500 },
     )

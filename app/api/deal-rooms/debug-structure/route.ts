@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 import { getCurrentUser } from "@/lib/auth"
 
@@ -93,7 +94,7 @@ export async function GET() {
     return NextResponse.json(
       {
         error: "Debug failed",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       },
       { status: 500 },
     )

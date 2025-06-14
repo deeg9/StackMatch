@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 
@@ -159,6 +160,6 @@ export async function POST(request: Request) {
     })
   } catch (error: any) {
     console.error("Error creating sample data:", error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: getErrorMessage(error) }, { status: 500 })
   }
 }

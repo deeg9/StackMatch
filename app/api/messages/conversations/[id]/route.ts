@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 import type { Message as MessageType } from "@/types" // Use our MessageType
 
@@ -147,7 +148,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     if (error) {
       console.error("Message creation error:", error)
       // RLS might prevent insertion if user is not a participant
-      return NextResponse.json({ error: `Failed to send message: ${error.message}` }, { status: 500 })
+      return NextResponse.json({ error: `Failed to send message: ${getErrorMessage(error)}` }, { status: 500 })
     }
 
     // Update conversation's updated_at timestamp

@@ -1,3 +1,4 @@
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 export async function GET() {
   console.log("🔍 SCHEMA VALIDATION: Starting schema validation")
 
@@ -41,8 +42,8 @@ export async function GET() {
         console.log("🔍 SCHEMA VALIDATION: Listings table OK")
       }
     } catch (error: any) {
-      results.listings.error = error.message
-      console.log("🔍 SCHEMA VALIDATION: Listings exception:", error.message)
+      results.listings.error = getErrorMessage(error)
+      console.log("🔍 SCHEMA VALIDATION: Listings exception:", getErrorMessage(error))
     }
 
     // Test proposals table
@@ -65,8 +66,8 @@ export async function GET() {
         console.log("🔍 SCHEMA VALIDATION: Proposals table OK")
       }
     } catch (error: any) {
-      results.proposals.error = error.message
-      console.log("🔍 SCHEMA VALIDATION: Proposals exception:", error.message)
+      results.proposals.error = getErrorMessage(error)
+      console.log("🔍 SCHEMA VALIDATION: Proposals exception:", getErrorMessage(error))
     }
 
     // Test deal_room_files table
@@ -89,8 +90,8 @@ export async function GET() {
         console.log("🔍 SCHEMA VALIDATION: deal_room_files table OK")
       }
     } catch (error: any) {
-      results.deal_room_files.error = error.message
-      console.log("🔍 SCHEMA VALIDATION: Files exception:", error.message)
+      results.deal_room_files.error = getErrorMessage(error)
+      console.log("🔍 SCHEMA VALIDATION: Files exception:", getErrorMessage(error))
     }
 
     // Calculate summary
@@ -117,13 +118,13 @@ export async function GET() {
       },
     )
   } catch (error: any) {
-    console.error("🔍 SCHEMA VALIDATION: Unexpected error:", error.message)
+    console.error("🔍 SCHEMA VALIDATION: Unexpected error:", getErrorMessage(error))
 
     return new Response(
       JSON.stringify({
         success: false,
         error: "Schema validation failed",
-        details: error.message,
+        details: getErrorMessage(error),
       }),
       {
         status: 500,

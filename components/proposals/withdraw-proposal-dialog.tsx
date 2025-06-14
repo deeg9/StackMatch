@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -97,7 +98,7 @@ export function WithdrawProposalDialog({
       console.error("🔍 CLIENT DEBUG: Error withdrawing proposal:", error)
       toast({
         title: "Error",
-        description: error.message || "Failed to withdraw proposal. Please try again.",
+        description: getErrorMessage(error) || "Failed to withdraw proposal. Please try again.",
         variant: "destructive",
       })
     } finally {

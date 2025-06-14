@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 
@@ -38,8 +39,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         message: `Found ${files.length} files`,
       }
     } catch (error: any) {
-      results.errors.get = error.message
-      results.operations.get = { success: false, message: error.message }
+      results.errors.get = getErrorMessage(error)
+      results.operations.get = { success: false, message: getErrorMessage(error) }
     }
 
     // Test 2: POST (file upload)
@@ -74,8 +75,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       // Store for later tests
       results.testFileId = uploadedFile.id
     } catch (error: any) {
-      results.errors.post = error.message
-      results.operations.post = { success: false, message: error.message }
+      results.errors.post = getErrorMessage(error)
+      results.operations.post = { success: false, message: getErrorMessage(error) }
     }
 
     // Test 3: GET (with files)
@@ -92,8 +93,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
           message: `Found ${files.length} files after upload`,
         }
       } catch (error: any) {
-        results.errors.getAfterUpload = error.message
-        results.operations.getAfterUpload = { success: false, message: error.message }
+        results.errors.getAfterUpload = getErrorMessage(error)
+        results.operations.getAfterUpload = { success: false, message: getErrorMessage(error) }
       }
     }
 
@@ -137,8 +138,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         // Store for later cleanup
         results.versionFileId = versionedFile.id
       } catch (error: any) {
-        results.errors.version = error.message
-        results.operations.version = { success: false, message: error.message }
+        results.errors.version = getErrorMessage(error)
+        results.operations.version = { success: false, message: getErrorMessage(error) }
       }
     }
 
@@ -159,8 +160,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
           message: `File and versions deleted successfully`,
         }
       } catch (error: any) {
-        results.errors.delete = error.message
-        results.operations.delete = { success: false, message: error.message }
+        results.errors.delete = getErrorMessage(error)
+        results.operations.delete = { success: false, message: getErrorMessage(error) }
       }
     }
 
@@ -177,8 +178,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         message: `Found ${files.length} files after all operations`,
       }
     } catch (error: any) {
-      results.errors.finalCheck = error.message
-      results.operations.finalCheck = { success: false, message: error.message }
+      results.errors.finalCheck = getErrorMessage(error)
+      results.operations.finalCheck = { success: false, message: getErrorMessage(error) }
     }
 
     // All tests completed
@@ -188,7 +189,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     return NextResponse.json(results)
   } catch (error: any) {
     console.error(`🔍 FILES TEST API: Unhandled error:`, error)
-    results.errors.unhandled = error.message
+    results.errors.unhandled = getErrorMessage(error)
     return NextResponse.json(results, { status: 500 })
   }
 }

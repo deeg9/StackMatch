@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 
@@ -45,12 +46,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     if (error) {
       console.error("Error fetching activities:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.json({ error: getErrorMessage(error) }, { status: 500 })
     }
 
     return NextResponse.json({ activities })
   } catch (error: any) {
     console.error("Activities endpoint error:", error)
-    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 })
+    return NextResponse.json({ error: getErrorMessage(error) || "Internal server error" }, { status: 500 })
   }
 }

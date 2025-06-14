@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useParams } from "next/navigation"
+import { useParams } from "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"next/navigation"
 import { useAppDispatch, useAppSelector } from "@/hooks/useAppDispatch"
 import { DealRoomDetails } from "@/components/deal-rooms/deal-room-details"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -239,7 +240,7 @@ export default function DealRoomPage() {
       setError(String(error))
       setDebugInfo({
         fetchError: String(error),
-        errorStack: error instanceof Error ? error.stack : "No stack trace",
+        errorStack: error instanceof Error ? getErrorStack(error) : "No stack trace",
       })
     } finally {
       setLoading(false)

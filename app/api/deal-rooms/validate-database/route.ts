@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
@@ -158,7 +159,7 @@ export async function GET(request: NextRequest) {
       {
         success: false,
         error: "Database validation failed",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       },
       { status: 500 },
     )

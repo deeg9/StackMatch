@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET(request: NextRequest) {
   console.log("🔍 SERVER UTILS TEST: Starting server utilities test")
@@ -28,7 +29,7 @@ export async function GET(request: NextRequest) {
         step: 1,
         name: "Cookies Import",
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
       })
       throw error
     }
@@ -57,11 +58,11 @@ export async function GET(request: NextRequest) {
           step: 3,
           name: "Database Query with Server Client",
           success: false,
-          error: error.message,
+          error: getErrorMessage(error),
           errorCode: error.code,
           errorDetails: error.details,
         })
-        results.errors.push(`Database error: ${error.message}`)
+        results.errors.push(`Database error: ${getErrorMessage(error)}`)
       } else {
         results.steps.push({
           step: 3,
@@ -76,10 +77,10 @@ export async function GET(request: NextRequest) {
         step: 2,
         name: "Server Supabase Client",
         success: false,
-        error: error.message,
-        stack: error.stack,
+        error: getErrorMessage(error),
+        stack: getErrorStack(error),
       })
-      results.errors.push(`Server client error: ${error.message}`)
+      results.errors.push(`Server client error: ${getErrorMessage(error)}`)
     }
 
     // Overall success
@@ -90,14 +91,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(results)
   } catch (error: any) {
     console.error("🔍 SERVER UTILS TEST: Unhandled error:", error)
-    results.errors.push(`Unhandled error: ${error.message}`)
+    results.errors.push(`Unhandled error: ${getErrorMessage(error)}`)
 
     return NextResponse.json(
       {
         ...results,
         unhandledError: {
-          message: error.message,
-          stack: error.stack,
+          message: getErrorMessage(error),
+          stack: getErrorStack(error),
           name: error.name,
         },
       },

@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useSelector } from "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"react-redux"
 import type { RootState } from "@/store"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
@@ -56,7 +57,7 @@ export function useDealRooms(options: UseDealRoomsOptions = {}) {
       setDealRooms(data.dealRooms)
     } catch (error) {
       console.error("Error fetching deal rooms:", error)
-      setError(error instanceof Error ? error.message : "Failed to load deal rooms")
+      setError(error instanceof Error ? getErrorMessage(error) : "Failed to load deal rooms")
     } finally {
       setLoading(false)
     }

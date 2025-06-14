@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
-import { cookies } from "next/headers"
+import { cookies } from "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"next/headers"
 import { createClient } from "@/utils/supabase/server"
 import SellerDashboardClientPage from "./client-page"
 import type { UserProfile, SellerProfile, Proposal, Listing } from "@/types"
@@ -222,7 +223,7 @@ export default async function SellerDashboardPage() {
           }
         } catch (error) {
           console.error("🔍 DASHBOARD DEBUG: Error fetching active proposals:", error)
-          console.error("🔍 DASHBOARD DEBUG: Error details:", error instanceof Error ? error.message : "Unknown error")
+          console.error("🔍 DASHBOARD DEBUG: Error details:", error instanceof Error ? getErrorMessage(error) : "Unknown error")
         }
       } else {
         console.log("🔍 DASHBOARD DEBUG: No valid seller profile ID, skipping stats queries...")
@@ -268,7 +269,7 @@ export default async function SellerDashboardPage() {
     return <SellerDashboardClientPage dashboardData={dashboardData} />
   } catch (error) {
     console.error("🔍 DASHBOARD DEBUG: Uncaught error in seller dashboard:", error)
-    console.error("🔍 DASHBOARD DEBUG: Error stack:", error instanceof Error ? error.stack : "No stack trace")
+    console.error("🔍 DASHBOARD DEBUG: Error stack:", error instanceof Error ? getErrorStack(error) : "No stack trace")
     return redirect("/login")
   }
 }

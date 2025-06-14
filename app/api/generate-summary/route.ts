@@ -1,5 +1,6 @@
 // import { deepinfra } from "@ai-sdk/deepinfra"
-import { streamText, type CoreMessage } from "ai"
+import { streamText, type CoreMessage } from "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"ai"
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30
@@ -77,7 +78,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("[GENERATE_SUMMARY_ERROR]", error)
     if (error instanceof Error) {
-      return new Response(JSON.stringify({ error: error.message }), {
+      return new Response(JSON.stringify({ error: getErrorMessage(error) }), {
         status: 500,
         headers: { "Content-Type": "application/json" },
       })

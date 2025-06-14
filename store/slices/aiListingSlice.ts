@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import type {
   ConversationMessage,
   AIListingSession,
@@ -71,8 +72,8 @@ export const sendMessage = createAsyncThunk<SendMessageResponse, SendMessageRequ
       }
     } catch (error) {
       console.error("❌ REDUX: sendMessage error:", error)
-      console.error("❌ REDUX: Error details:", error instanceof Error ? error.message : "Unknown error")
-      return rejectWithValue(error instanceof Error ? error.message : "Network error occurred")
+      console.error("❌ REDUX: Error details:", error instanceof Error ? getErrorMessage(error) : "Unknown error")
+      return rejectWithValue(error instanceof Error ? getErrorMessage(error) : "Network error occurred")
     }
   },
 )
@@ -120,8 +121,8 @@ export const saveDraft = createAsyncThunk<SaveDraftResponse, SaveDraftRequest>(
       }
     } catch (error) {
       console.error("❌ REDUX: saveDraft error:", error)
-      console.error("❌ REDUX: saveDraft error details:", error instanceof Error ? error.message : "Unknown error")
-      return rejectWithValue(error instanceof Error ? error.message : "Network error occurred")
+      console.error("❌ REDUX: saveDraft error details:", error instanceof Error ? getErrorMessage(error) : "Unknown error")
+      return rejectWithValue(error instanceof Error ? getErrorMessage(error) : "Network error occurred")
     }
   },
 )
@@ -171,8 +172,8 @@ export const enhanceField = createAsyncThunk<EnhanceFieldResponse, EnhanceFieldR
       }
     } catch (error) {
       console.error("❌ REDUX: enhanceField error:", error)
-      console.error("❌ REDUX: enhanceField error details:", error instanceof Error ? error.message : "Unknown error")
-      return rejectWithValue(error instanceof Error ? error.message : "Network error occurred")
+      console.error("❌ REDUX: enhanceField error details:", error instanceof Error ? getErrorMessage(error) : "Unknown error")
+      return rejectWithValue(error instanceof Error ? getErrorMessage(error) : "Network error occurred")
     }
   },
 )

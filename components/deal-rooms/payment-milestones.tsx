@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -64,7 +65,7 @@ export function PaymentMilestones({ contractId, dealRoomId, currentUserId }: Pay
       const data = await response.json()
       setMilestones(data)
     } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" })
+      toast({ title: "Error", description: getErrorMessage(error), variant: "destructive" })
     } finally {
       setIsLoading(false)
     }
@@ -101,7 +102,7 @@ export function PaymentMilestones({ contractId, dealRoomId, currentUserId }: Pay
       })
       toast({ title: "Success", description: "Payment milestone created successfully." })
     } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" })
+      toast({ title: "Error", description: getErrorMessage(error), variant: "destructive" })
     } finally {
       setIsSubmitting(false)
     }
@@ -120,7 +121,7 @@ export function PaymentMilestones({ contractId, dealRoomId, currentUserId }: Pay
       await fetchMilestones()
       toast({ title: "Success", description: "Milestone status updated." })
     } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" })
+      toast({ title: "Error", description: getErrorMessage(error), variant: "destructive" })
     }
   }
 

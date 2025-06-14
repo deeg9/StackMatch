@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { useState, useEffect, useRef } from "react"
 import { useAppDispatch } from "@/hooks/useAppDispatch"
 import { useAppSelector } from "@/hooks/useAppSelector"
@@ -154,7 +155,7 @@ export function AIConversationPanel({ formState = {}, onFormStateUpdate, classNa
       console.error("❌ UI: Failed to send message:", error)
       toast({
         title: "Failed to send message",
-        description: error instanceof Error ? error.message : "Unknown error occurred",
+        description: error instanceof Error ? getErrorMessage(error) : "Unknown error occurred",
         variant: "destructive",
       })
     }
@@ -177,7 +178,7 @@ export function AIConversationPanel({ formState = {}, onFormStateUpdate, classNa
       console.error("❌ Save draft failed:", error)
       toast({
         title: "Save draft failed",
-        description: error instanceof Error ? error.message : "Unknown error occurred",
+        description: error instanceof Error ? getErrorMessage(error) : "Unknown error occurred",
         variant: "destructive",
       })
     }

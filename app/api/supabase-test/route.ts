@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function POST(request: NextRequest) {
   console.log("🔍 SUPABASE TEST: Starting Supabase test endpoint")
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           {
             error: "Auth error",
-            details: error.message,
+            details: getErrorMessage(error),
             step: "authentication",
           },
           { status: 401 },
@@ -85,7 +86,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           {
             error: "Database query failed",
-            details: error.message,
+            details: getErrorMessage(error),
             step: "database_query",
           },
           { status: 500 },
@@ -114,13 +115,13 @@ export async function POST(request: NextRequest) {
     })
   } catch (error: any) {
     console.error("🔍 SUPABASE TEST: Unexpected error:", error)
-    console.error("🔍 SUPABASE TEST: Error stack:", error.stack)
+    console.error("🔍 SUPABASE TEST: Error stack:", getErrorStack(error))
 
     return NextResponse.json(
       {
         error: "Supabase test failed",
-        details: error.message,
-        stack: error.stack,
+        details: getErrorMessage(error),
+        stack: getErrorStack(error),
         step: "unexpected_error",
       },
       { status: 500 },

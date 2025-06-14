@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import type { Proposal, ProposalMilestone } from "@/types/proposal-types"
 
 interface ProposalState {
@@ -47,7 +48,7 @@ export const fetchProposals = createAsyncThunk(
       const data = await response.json()
       return data.proposals as Proposal[]
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -69,7 +70,7 @@ export const fetchDashboardProposals = createAsyncThunk(
       const data = await response.json()
       return data.proposals as Proposal[]
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -86,7 +87,7 @@ export const fetchProposal = createAsyncThunk(
       const data = await response.json()
       return data.proposal as Proposal
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -143,7 +144,7 @@ export const submitProposal = createAsyncThunk(
       return responseData.proposal as Proposal
     } catch (error: any) {
       console.error("🔍 REDUX DEBUG: Exception in submitProposal:", error)
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -177,7 +178,7 @@ export const updateProposal = createAsyncThunk(
       const data = await response.json()
       return data.proposal as Proposal
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -197,7 +198,7 @@ export const deleteProposal = createAsyncThunk(
 
       return proposalId // Return the ID of the deleted proposal
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )

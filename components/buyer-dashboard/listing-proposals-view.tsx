@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -57,9 +58,9 @@ const ListingProposalsView: React.FC<ListingProposalsViewProps> = ({ listingId }
         throw new Error(data.error || data.details || "Failed to create deal room")
       }
     } catch (error: any) {
-      console.error("🔍 CLIENT DEBUG: Error creating deal room:", error.message)
-      setError(error.message)
-      alert(`Error creating deal room: ${error.message}`)
+      console.error("🔍 CLIENT DEBUG: Error creating deal room:", getErrorMessage(error))
+      setError(getErrorMessage(error))
+      alert(`Error creating deal room: ${getErrorMessage(error)}`)
     } finally {
       setIsLoading(false)
     }
@@ -104,8 +105,8 @@ const ListingProposalsView: React.FC<ListingProposalsViewProps> = ({ listingId }
       }
     } catch (error: any) {
       console.error("🔍 CLIENT DEBUG: Test creation error:", error)
-      setError(error.message)
-      alert(`Test Creation Error: ${error.message}`)
+      setError(getErrorMessage(error))
+      alert(`Test Creation Error: ${getErrorMessage(error)}`)
     } finally {
       setIsLoading(false)
     }

@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { getAuthenticatedClient } from "@/lib/auth/api-utils"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -230,7 +231,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     return NextResponse.json({ listing: updatedListingData, message: "Listing updated successfully" })
   } catch (error: any) {
     console.error("Error updating listing:", error)
-    return NextResponse.json({ error: "Failed to update listing", details: error.message }, { status: 500 })
+    return NextResponse.json({ error: "Failed to update listing", details: getErrorMessage(error) }, { status: 500 })
   }
 }
 
@@ -276,6 +277,6 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     return NextResponse.json({ message: "Listing deleted successfully" })
   } catch (error: any) {
     console.error("Error deleting listing:", error)
-    return NextResponse.json({ error: "Failed to delete listing", details: error.message }, { status: 500 })
+    return NextResponse.json({ error: "Failed to delete listing", details: getErrorMessage(error) }, { status: 500 })
   }
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET() {
   try {
@@ -29,9 +30,9 @@ export async function GET() {
     console.error("🔍 NEXTJS COOKIES TEST: Error:", error)
     return NextResponse.json(
       {
-        error: error.message || "Unknown error",
+        error: getErrorMessage(error) || "Unknown error",
         errorType: error.constructor.name,
-        errorStack: error.stack,
+        errorStack: getErrorStack(error),
         success: false,
         timestamp: new Date().toISOString(),
       },

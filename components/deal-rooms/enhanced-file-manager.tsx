@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 import { useState, useEffect, useRef } from "react"
 import { useSelector } from "react-redux"
@@ -192,11 +193,11 @@ export function EnhancedFileManager({ dealRoomId }: EnhancedFileManagerProps) {
       setRetryCount(0)
     } catch (error) {
       console.error("Error fetching files:", error)
-      setError(error instanceof Error ? error.message : "Failed to load files")
+      setError(error instanceof Error ? getErrorMessage(error) : "Failed to load files")
 
       toast({
         title: "Failed to load files",
-        description: error instanceof Error ? error.message : "Please try again later",
+        description: error instanceof Error ? getErrorMessage(error) : "Please try again later",
         variant: "destructive",
         action:
           retryCount < 3 ? (
@@ -343,14 +344,14 @@ export function EnhancedFileManager({ dealRoomId }: EnhancedFileManagerProps) {
       setUploadFiles((prev) =>
         prev.map((f) =>
           f.id === uploadFile.id
-            ? { ...f, status: "error", error: error instanceof Error ? error.message : "Upload failed" }
+            ? { ...f, status: "error", error: error instanceof Error ? getErrorMessage(error) : "Upload failed" }
             : f,
         ),
       )
 
       toast({
         title: "Upload failed",
-        description: error instanceof Error ? error.message : "Failed to upload file",
+        description: error instanceof Error ? getErrorMessage(error) : "Failed to upload file",
         variant: "destructive",
       })
     }
@@ -436,7 +437,7 @@ export function EnhancedFileManager({ dealRoomId }: EnhancedFileManagerProps) {
 
       toast({
         title: "Upload failed",
-        description: error instanceof Error ? error.message : "Failed to upload new version",
+        description: error instanceof Error ? getErrorMessage(error) : "Failed to upload new version",
         variant: "destructive",
       })
     } finally {
@@ -487,7 +488,7 @@ export function EnhancedFileManager({ dealRoomId }: EnhancedFileManagerProps) {
 
       toast({
         title: "Delete failed",
-        description: error instanceof Error ? error.message : "Failed to delete the file",
+        description: error instanceof Error ? getErrorMessage(error) : "Failed to delete the file",
         variant: "destructive",
       })
     } finally {
@@ -515,7 +516,7 @@ export function EnhancedFileManager({ dealRoomId }: EnhancedFileManagerProps) {
 
       toast({
         title: "Download failed",
-        description: error instanceof Error ? error.message : "Failed to download file",
+        description: error instanceof Error ? getErrorMessage(error) : "Failed to download file",
         variant: "destructive",
       })
     }

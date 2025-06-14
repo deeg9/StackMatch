@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET() {
   console.log("[SERVER] 🔍 SIMPLE TEST: Starting basic test...")
@@ -30,7 +31,7 @@ export async function GET() {
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : "Simple test failed",
+        error: error instanceof Error ? getErrorMessage(error) : "Simple test failed",
         timestamp: new Date().toISOString(),
       },
       { status: 500 },

@@ -53,14 +53,14 @@ export async function GET() {
       },
     )
   } catch (error: any) {
-    console.error("🔵 SUPABASE TEST: Caught error:", error.message)
-    console.error("🔵 SUPABASE TEST: Error stack:", error.stack)
+    console.error("🔵 SUPABASE TEST: Caught error:", getErrorMessage(error))
+    console.error("🔵 SUPABASE TEST: Error stack:", getErrorStack(error))
 
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message,
-        stack: error.stack,
+        error: getErrorMessage(error),
+        stack: getErrorStack(error),
         timestamp: new Date().toISOString(),
       }),
       {

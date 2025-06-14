@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 import { authenticateUser } from "@/lib/auth/api-utils"
@@ -123,7 +124,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   } catch (error) {
     console.error("🔍 NATIVE FILES: Error:", error)
     return NextResponse.json(
-      { error: "Internal server error", details: error instanceof Error ? error.message : "Unknown error" },
+      { error: "Internal server error", details: error instanceof Error ? getErrorMessage(error) : "Unknown error" },
       { status: 500 },
     )
   }

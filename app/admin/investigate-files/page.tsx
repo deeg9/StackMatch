@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { Button } from "@/components/ui/button"
 import { Loader2, Search, Database, FileText, AlertCircle, CheckCircle, XCircle } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
@@ -66,7 +67,7 @@ export default function AdminFileInvestigationPage() {
 
       toast({
         title: "Investigation Failed",
-        description: error instanceof Error ? error.message : "Unknown error",
+        description: error instanceof Error ? getErrorMessage(error) : "Unknown error",
         variant: "destructive",
       })
     } finally {

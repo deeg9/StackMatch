@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET() {
   try {
@@ -39,7 +40,7 @@ export async function GET() {
         </head>
         <body>
           <h1>Error</h1>
-          <p>${error.message || "Unknown error"}</p>
+          <p>${getErrorMessage(error) || "Unknown error"}</p>
         </body>
       </html>
     `,

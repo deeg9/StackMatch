@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -108,7 +109,7 @@ export function AITestingDashboard() {
       setTestResults((prev) => ({
         ...prev,
         [testCase.id]: {
-          error: error instanceof Error ? error.message : "Unknown error",
+          error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
           analysis: { passed: false, issues: ["API call failed"] },
           timestamp: new Date().toISOString(),
         },
@@ -149,7 +150,7 @@ export function AITestingDashboard() {
       setTestResults((prev) => ({
         ...prev,
         custom: {
-          error: error instanceof Error ? error.message : "Unknown error",
+          error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
           userInput: customInput,
           timestamp: new Date().toISOString(),
         },

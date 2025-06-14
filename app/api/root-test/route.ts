@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET() {
   console.log("🌟 ROOT TEST: Starting root level API test")
@@ -16,6 +17,6 @@ export async function GET() {
     return NextResponse.json(result)
   } catch (error: any) {
     console.error("🌟 ROOT TEST: Error:", error)
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 })
+    return NextResponse.json({ success: false, error: getErrorMessage(error) }, { status: 500 })
   }
 }

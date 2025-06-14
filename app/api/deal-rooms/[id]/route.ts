@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { getAuthenticatedClient } from "@/lib/auth/api-utils"
 
 // Helper function to create standardized error responses
@@ -28,7 +29,7 @@ async function fetchDealRoom(supabase: any, id: string) {
     .single()
 
   if (error) {
-    console.error("🔍 DEAL ROOM [ID] API: Error fetching deal room:", error.message)
+    console.error("🔍 DEAL ROOM [ID] API: Error fetching deal room:", getErrorMessage(error))
     return { data: null, error }
   }
 
@@ -82,7 +83,7 @@ async function fetchListing(supabase: any, listingId: string | null) {
     .single()
 
   if (error) {
-    console.warn("🔍 DEAL ROOM [ID] API: Error fetching listing:", error.message)
+    console.warn("🔍 DEAL ROOM [ID] API: Error fetching listing:", getErrorMessage(error))
     return null
   }
 
@@ -112,7 +113,7 @@ async function fetchProposal(supabase: any, proposalId: string | null) {
     .single()
 
   if (error) {
-    console.warn("🔍 DEAL ROOM [ID] API: Error fetching proposal:", error.message)
+    console.warn("🔍 DEAL ROOM [ID] API: Error fetching proposal:", getErrorMessage(error))
     return null
   }
 
@@ -141,7 +142,7 @@ async function fetchProfile(supabase: any, userId: string | null) {
     .single()
 
   if (error) {
-    console.warn("🔍 DEAL ROOM [ID] API: Error fetching profile:", error.message)
+    console.warn("🔍 DEAL ROOM [ID] API: Error fetching profile:", getErrorMessage(error))
     return {
       id: userId,
       full_name: "Unknown User",
@@ -169,7 +170,7 @@ async function fetchParticipants(supabase: any, dealRoomId: string) {
     .eq("deal_room_id", dealRoomId)
 
   if (error) {
-    console.warn("🔍 DEAL ROOM [ID] API: Error fetching participants:", error.message)
+    console.warn("🔍 DEAL ROOM [ID] API: Error fetching participants:", getErrorMessage(error))
     return []
   }
 
@@ -232,7 +233,7 @@ async function fetchMessages(supabase: any, dealRoomId: string) {
     .order("created_at", { ascending: true })
 
   if (error) {
-    console.warn("🔍 DEAL ROOM [ID] API: Error fetching messages:", error.message)
+    console.warn("🔍 DEAL ROOM [ID] API: Error fetching messages:", getErrorMessage(error))
     return []
   }
 
@@ -301,7 +302,7 @@ async function fetchFiles(supabase: any, dealRoomId: string) {
     .order("created_at", { ascending: false })
 
   if (error) {
-    console.warn("🔍 DEAL ROOM [ID] API: Error fetching files:", error.message)
+    console.warn("🔍 DEAL ROOM [ID] API: Error fetching files:", getErrorMessage(error))
     return []
   }
 
@@ -348,7 +349,7 @@ async function fetchMilestones(supabase: any, dealRoomId: string) {
     .order("created_at", { ascending: true })
 
   if (error) {
-    console.warn("🔍 DEAL ROOM [ID] API: Error fetching milestones:", error.message)
+    console.warn("🔍 DEAL ROOM [ID] API: Error fetching milestones:", getErrorMessage(error))
     return []
   }
 

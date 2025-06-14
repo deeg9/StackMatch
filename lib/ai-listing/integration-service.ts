@@ -1,5 +1,6 @@
 import type { ListingFormData } from "@/types/listing-types"
 import type { ConversationSession } from "@/types/ai-listing-types"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 import { sanitizeFieldValue, validateFieldValue } from "./response-parser"
 
@@ -132,7 +133,7 @@ export class ListingIntegrationService {
 
       if (error) {
         console.error("Error saving listing:", error)
-        return { success: false, error: error.message }
+        return { success: false, error: getErrorMessage(error) }
       }
 
       return { success: true, listingId: data.id }
@@ -140,7 +141,7 @@ export class ListingIntegrationService {
       console.error("Exception saving listing:", error)
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error saving listing",
+        error: error instanceof Error ? getErrorMessage(error) : "Unknown error saving listing",
       }
     }
   }
@@ -191,7 +192,7 @@ export class ListingIntegrationService {
       console.error("Exception loading listing:", error)
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error loading listing",
+        error: error instanceof Error ? getErrorMessage(error) : "Unknown error loading listing",
       }
     }
   }

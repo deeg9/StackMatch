@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction, createAsyncThunk } from "@reduxjs/toolkit"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import {
   DealRoomStatus,
   type ClosureReasonCategory,
@@ -137,7 +138,7 @@ export const requestDealRoomClosure = createAsyncThunk(
       const data = await response.json()
       return data
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -173,7 +174,7 @@ export const confirmDealRoomClosure = createAsyncThunk(
       const data = await response.json()
       return data
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -201,7 +202,7 @@ export const cancelDealRoomClosure = createAsyncThunk(
       const data = await response.json()
       return data
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -235,7 +236,7 @@ export const submitDealRoomFeedback = createAsyncThunk(
       const data = await response.json()
       return data
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )

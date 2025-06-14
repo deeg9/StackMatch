@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useCallback } from "react"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import type { Contract, ContractFile, ContractFileVersion, ContractFileCategory } from "@/types"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -56,7 +57,7 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
       const data = await response.json()
       setFiles(data as ContractFile[])
     } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" })
+      toast({ title: "Error", description: getErrorMessage(error), variant: "destructive" })
       setFiles([])
     } finally {
       setIsLoadingFiles(false)
@@ -116,7 +117,7 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
       setNewFileDescription("")
       setNewFileCategory("AGREEMENT")
     } catch (error: any) {
-      toast({ title: "Error Creating File", description: error.message, variant: "destructive" })
+      toast({ title: "Error Creating File", description: getErrorMessage(error), variant: "destructive" })
     } finally {
       setIsCreatingFile(false)
     }

@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/client"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function getCurrentToken(): Promise<{ token: string | null; success: boolean }> {
   try {
@@ -13,7 +14,7 @@ export async function getCurrentToken(): Promise<{ token: string | null; success
     } = await supabase.auth.getSession()
 
     if (error) {
-      console.error("🔑 TOKEN UTILS: Error getting session:", error.message)
+      console.error("🔑 TOKEN UTILS: Error getting session:", getErrorMessage(error))
       return { token: null, success: false }
     }
 
@@ -45,7 +46,7 @@ export async function refreshToken(): Promise<string | null> {
     } = await supabase.auth.refreshSession()
 
     if (error) {
-      console.error("🔑 TOKEN UTILS: Error refreshing session:", error.message)
+      console.error("🔑 TOKEN UTILS: Error refreshing session:", getErrorMessage(error))
       return null
     }
 

@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@supabase/supabase-js"
 
 export async function GET(request: NextRequest) {
@@ -51,9 +52,9 @@ export async function GET(request: NextRequest) {
       results.tests.databaseConnection = {
         success: false,
         message: "Database connection failed",
-        error: error.message,
+        error: getErrorMessage(error),
       }
-      results.errors.push(`Database error: ${error.message}`)
+      results.errors.push(`Database error: ${getErrorMessage(error)}`)
     }
 
     // Overall success
@@ -63,14 +64,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(results)
   } catch (error: any) {
     console.error("🔍 BASIC TEST: Unhandled error:", error)
-    results.errors.push(`Unhandled error: ${error.message}`)
+    results.errors.push(`Unhandled error: ${getErrorMessage(error)}`)
 
     return NextResponse.json(
       {
         ...results,
         error: {
-          message: error.message,
-          stack: error.stack,
+          message: getErrorMessage(error),
+          stack: getErrorStack(error),
           name: error.name,
         },
       },

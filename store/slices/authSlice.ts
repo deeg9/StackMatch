@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import type { User } from "@/types" // Import the extended User type
 
 interface AuthState {
@@ -95,7 +96,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false
-        state.error = action.error.message || "Login failed"
+        state.error = action.payload as string || "Login failed"
       })
 
       // Signup
@@ -110,7 +111,7 @@ const authSlice = createSlice({
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.isLoading = false
-        state.error = action.error.message || "Signup failed"
+        state.error = action.payload as string || "Signup failed"
       })
 
       // Fetch current user

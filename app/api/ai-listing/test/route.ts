@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET(request: NextRequest) {
   console.log("[SERVER] 🔍 AI LISTING TEST: Simple test endpoint called")
@@ -35,7 +36,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       },
       { status: 500 },
     )

@@ -1,3 +1,4 @@
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 export async function GET(request: Request) {
   console.log("🔍 AUTH SIMPLE: Starting...")
 
@@ -51,7 +52,7 @@ export async function GET(request: Request) {
     })
   } catch (error: any) {
     console.error("🔍 AUTH SIMPLE: Error:", error)
-    return new Response(`Error: ${error.message}`, {
+    return new Response(`Error: ${getErrorMessage(error)}`, {
       status: 500,
       headers: { "Content-Type": "text/plain" },
     })

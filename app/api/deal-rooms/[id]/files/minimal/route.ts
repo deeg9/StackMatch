@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@supabase/supabase-js"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -89,8 +90,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       {
         success: false,
         error: {
-          message: error.message,
-          stack: error.stack,
+          message: getErrorMessage(error),
+          stack: getErrorStack(error),
           name: error.name,
         },
       },

@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js"
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 // Create a direct Supabase client for testing
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string
@@ -56,7 +57,7 @@ export async function GET() {
     return NextResponse.json(
       {
         error: "Test failed",
-        details: error.message,
+        details: getErrorMessage(error),
       },
       { status: 500 },
     )

@@ -1,5 +1,6 @@
 // import { deepinfra } from "@ai-sdk/deepinfra"
-import { streamText, type CoreMessage } from "ai"
+import { streamText, type CoreMessage } from "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"ai"
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30
@@ -75,7 +76,7 @@ export async function POST(req: Request) {
     return result.toDataStreamResponse()
   } catch (error: any) {
     console.error("Error generating proposal:", error)
-    return new Response(`Error generating proposal: ${error.message || "Unknown error"}`, {
+    return new Response(`Error generating proposal: ${getErrorMessage(error) || "Unknown error"}`, {
       status: 500,
     })
   }

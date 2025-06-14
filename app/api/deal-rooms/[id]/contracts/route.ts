@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import type { Contract } from "@/types"
@@ -23,7 +24,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     if (error) {
       console.error("Error fetching contracts:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.json({ error: getErrorMessage(error) }, { status: 500 })
     }
 
     return NextResponse.json(contracts as Contract[])

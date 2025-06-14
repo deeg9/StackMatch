@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { getAuthenticatedClient } from "@/lib/auth/api-utils"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -298,7 +299,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     return NextResponse.json({ success: true, proposal: transformedProposal })
   } catch (error: any) {
     console.error("🔍 API DEBUG: Unexpected error in PUT /api/proposals/:id:", error)
-    return NextResponse.json({ error: "An unexpected error occurred", details: error.message }, { status: 500 })
+    return NextResponse.json({ error: "An unexpected error occurred", details: getErrorMessage(error) }, { status: 500 })
   }
 }
 

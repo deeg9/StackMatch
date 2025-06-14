@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useSelector } from "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"react-redux"
 import type { RootState } from "@/store"
 import { BuyerDashboardHeader } from "@/components/buyer-dashboard/buyer-dashboard-header"
 import { Card, CardContent } from "@/components/ui/card"
@@ -54,7 +55,7 @@ export default function SimpleDealRoomsPage() {
         }
       } catch (error) {
         console.error("🔍 SIMPLE PAGE: Error:", error)
-        setError(error instanceof Error ? error.message : "Failed to load deal rooms")
+        setError(error instanceof Error ? getErrorMessage(error) : "Failed to load deal rooms")
         toast({
           title: "Error",
           description: "Failed to load deal rooms. Check console for details.",

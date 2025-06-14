@@ -78,7 +78,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
           }))
           console.log("🟢 WORKING TEST: Processed listing files:", listingFiles.length)
         } catch (error: any) {
-          console.log("🟢 WORKING TEST: Error processing listing attachments:", error.message)
+          console.log("🟢 WORKING TEST: Error processing listing attachments:", getErrorMessage(error))
         }
       }
     }
@@ -119,14 +119,14 @@ export async function GET(request: Request, { params }: { params: { id: string }
       },
     )
   } catch (error: any) {
-    console.error("🟢 WORKING TEST: Unexpected error:", error.message)
-    console.error("🟢 WORKING TEST: Error stack:", error.stack)
+    console.error("🟢 WORKING TEST: Unexpected error:", getErrorMessage(error))
+    console.error("🟢 WORKING TEST: Error stack:", getErrorStack(error))
 
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message,
-        stack: error.stack,
+        error: getErrorMessage(error),
+        stack: getErrorStack(error),
         dealRoomId: params.id,
         timestamp: new Date().toISOString(),
       }),

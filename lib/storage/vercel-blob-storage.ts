@@ -13,7 +13,8 @@ export interface UploadResult {
 export function generateUniqueFileName(originalName: string, dealRoomId: string): string {
   const timestamp = Date.now()
   const randomString = Math.random().toString(36).substring(2, 15)
-  const extension = originalName.split(".").pop() || "bin"
+  const extension = originalName.split("
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler".").pop() || "bin"
   const sanitizedName = originalName.replace(/[^a-zA-Z0-9.-]/g, "_")
 
   return `deal-rooms/${dealRoomId}/${timestamp}_${randomString}_${sanitizedName}`
@@ -50,10 +51,10 @@ export async function uploadFile(file: File, dealRoomId: string, category: strin
       publicUrl: blob.url,
     }
   } catch (error: any) {
-    console.error("📁 VERCEL BLOB: Upload error:", error.message)
+    console.error("📁 VERCEL BLOB: Upload error:", getErrorMessage(error))
     return {
       success: false,
-      error: error.message,
+      error: getErrorMessage(error),
     }
   }
 }
@@ -70,10 +71,10 @@ export async function deleteFile(fileUrl: string): Promise<{ success: boolean; e
     console.log("📁 VERCEL BLOB: File deleted successfully")
     return { success: true }
   } catch (error: any) {
-    console.error("📁 VERCEL BLOB: Delete error:", error.message)
+    console.error("📁 VERCEL BLOB: Delete error:", getErrorMessage(error))
     return {
       success: false,
-      error: error.message,
+      error: getErrorMessage(error),
     }
   }
 }
@@ -93,10 +94,10 @@ export async function getFileMetadata(fileUrl: string): Promise<{ success: boole
       metadata,
     }
   } catch (error: any) {
-    console.error("📁 VERCEL BLOB: Metadata error:", error.message)
+    console.error("📁 VERCEL BLOB: Metadata error:", getErrorMessage(error))
     return {
       success: false,
-      error: error.message,
+      error: getErrorMessage(error),
     }
   }
 }

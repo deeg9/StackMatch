@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 
@@ -192,7 +193,7 @@ export async function GET() {
     return NextResponse.json(
       {
         error: "Investigation failed",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       },
       { status: 500 },
     )

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 
 export interface BuyerProfile {
   id: string
@@ -74,7 +75,7 @@ export const fetchBuyerProfile = createAsyncThunk("buyerProfile/fetch", async (_
     return data.profile
   } catch (error) {
     console.error("🔍 REDUX: Fetch error:", error)
-    return rejectWithValue(error.message)
+    return rejectWithValue(getErrorMessage(error))
   }
 })
 
@@ -104,7 +105,7 @@ export const updateBuyerProfile = createAsyncThunk(
       return data.profile
     } catch (error) {
       console.error("🔍 REDUX: Update error:", error)
-      return rejectWithValue(error.message)
+      return rejectWithValue(getErrorMessage(error))
     }
   },
 )
@@ -135,7 +136,7 @@ export const createBuyerProfile = createAsyncThunk(
       return data.profile
     } catch (error) {
       console.error("🔍 REDUX: Create error:", error)
-      return rejectWithValue(error.message)
+      return rejectWithValue(getErrorMessage(error))
     }
   },
 )

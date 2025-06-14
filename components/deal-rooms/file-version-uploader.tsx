@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type FormEvent } from "react"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -52,7 +53,7 @@ export function FileVersionUploader({ contractFile, onUploadSuccess }: FileVersi
       const fileInput = event.currentTarget.querySelector('input[type="file"]') as HTMLInputElement
       if (fileInput) fileInput.value = ""
     } catch (error: any) {
-      toast({ title: "Upload Failed", description: error.message, variant: "destructive" })
+      toast({ title: "Upload Failed", description: getErrorMessage(error), variant: "destructive" })
     } finally {
       setIsUploading(false)
     }

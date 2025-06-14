@@ -1,3 +1,4 @@
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 export interface VerificationResult {
   isValid: boolean
   status: "verified" | "expired" | "revoked" | "not_found" | "error"
@@ -89,7 +90,7 @@ export class VerificationService {
         isValid: false,
         status: "error",
         lastVerified: new Date().toISOString(),
-        errorMessage: error instanceof Error ? error.message : "Unknown verification error",
+        errorMessage: error instanceof Error ? getErrorMessage(error) : "Unknown verification error",
       }
     }
   }

@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@supabase/supabase-js"
 
 export async function POST(request: NextRequest) {
@@ -143,7 +144,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(responseData)
   } catch (error) {
     console.error("🔍 LOGIN DEBUG: Unexpected error:", error)
-    console.error("🔍 LOGIN DEBUG: Error stack:", error instanceof Error ? error.stack : "No stack trace")
+    console.error("🔍 LOGIN DEBUG: Error stack:", error instanceof Error ? getErrorStack(error) : "No stack trace")
     return NextResponse.json(
       { success: false, message: "An unexpected error occurred", error: String(error) },
       { status: 500 },

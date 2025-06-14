@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -60,7 +61,7 @@ export function ApprovalWorkflow({ contractId, dealRoomId, currentUserId }: Appr
       const data = await response.json()
       setApprovals(data)
     } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" })
+      toast({ title: "Error", description: getErrorMessage(error), variant: "destructive" })
     } finally {
       setIsLoading(false)
     }
@@ -87,7 +88,7 @@ export function ApprovalWorkflow({ contractId, dealRoomId, currentUserId }: Appr
         description: `Successfully ${action.toLowerCase()} the request.`,
       })
     } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" })
+      toast({ title: "Error", description: getErrorMessage(error), variant: "destructive" })
     } finally {
       setIsSubmitting(null)
     }

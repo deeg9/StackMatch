@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 
 export async function POST(request: Request) {
@@ -84,7 +85,7 @@ export async function POST(request: Request) {
     console.error("[SERVER] ❌ AI SAVE DRAFT: Unexpected error:", error)
     return NextResponse.json(
       {
-        error: error instanceof Error ? error.message : "An unexpected error occurred",
+        error: error instanceof Error ? getErrorMessage(error) : "An unexpected error occurred",
       },
       { status: 500 },
     )

@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useSelector } from "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"react-redux"
 import type { RootState } from "@/store"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -137,7 +138,7 @@ export default function DealRoomsPage() {
         setDealRooms([])
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to load deal rooms"
+      const errorMessage = error instanceof Error ? getErrorMessage(error) : "Failed to load deal rooms"
       setError(errorMessage)
       toast({
         title: "Error",

@@ -75,15 +75,15 @@ export async function GET(request: Request, { params }: { params: { id: string }
       },
     )
   } catch (error: any) {
-    console.error("🟡 CAREFUL TEST: Unexpected error:", error.message)
-    console.error("🟡 CAREFUL TEST: Error stack:", error.stack)
+    console.error("🟡 CAREFUL TEST: Unexpected error:", getErrorMessage(error))
+    console.error("🟡 CAREFUL TEST: Error stack:", getErrorStack(error))
 
     return new Response(
       JSON.stringify({
         success: false,
         step: "unexpected_error",
-        error: error.message,
-        stack: error.stack,
+        error: getErrorMessage(error),
+        stack: getErrorStack(error),
         timestamp: new Date().toISOString(),
       }),
       {

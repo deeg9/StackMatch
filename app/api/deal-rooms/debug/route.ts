@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 
 export async function POST(request: NextRequest) {
@@ -94,13 +95,13 @@ export async function POST(request: NextRequest) {
     })
   } catch (error: any) {
     console.error("🔍 DEBUG API: Unexpected error:", error)
-    console.error("🔍 DEBUG API: Error stack:", error.stack)
+    console.error("🔍 DEBUG API: Error stack:", getErrorStack(error))
 
     return NextResponse.json(
       {
         error: "Debug test failed",
-        details: error.message,
-        stack: error.stack,
+        details: getErrorMessage(error),
+        stack: getErrorStack(error),
         step: "unexpected_error",
       },
       { status: 500 },

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 
 export type ListingStatus = "DRAFT" | "ACTIVE" | "CLOSED" | "AWARDED" | "CANCELLED"
 
@@ -126,7 +127,7 @@ export const fetchListings = createAsyncThunk("listings/fetchListings", async (_
     const data = await response.json()
     return data
   } catch (error: any) {
-    return rejectWithValue(error.message || "Failed to fetch listings")
+    return rejectWithValue(getErrorMessage(error) || "Failed to fetch listings")
   }
 })
 
@@ -145,7 +146,7 @@ export const fetchListingById = createAsyncThunk(
       const data = await response.json()
       return data.listing
     } catch (error: any) {
-      return rejectWithValue(error.message || "Failed to fetch listing")
+      return rejectWithValue(getErrorMessage(error) || "Failed to fetch listing")
     }
   },
 )
@@ -189,7 +190,7 @@ export const createListing = createAsyncThunk(
       }
     } catch (error: any) {
       // Network errors or other issues
-      return rejectWithValue(error.message || "Failed to create listing due to a network or unexpected error")
+      return rejectWithValue(getErrorMessage(error) || "Failed to create listing due to a network or unexpected error")
     }
   },
 )
@@ -215,7 +216,7 @@ export const updateListing = createAsyncThunk(
       const responseData = await response.json()
       return responseData.listing
     } catch (error: any) {
-      return rejectWithValue(error.message || "Failed to update listing")
+      return rejectWithValue(getErrorMessage(error) || "Failed to update listing")
     }
   },
 )
@@ -234,7 +235,7 @@ export const deleteListing = createAsyncThunk("listings/deleteListing", async (i
 
     return id
   } catch (error: any) {
-    return rejectWithValue(error.message || "Failed to delete listing")
+    return rejectWithValue(getErrorMessage(error) || "Failed to delete listing")
   }
 })
 
@@ -251,7 +252,7 @@ export const fetchCategories = createAsyncThunk("listings/fetchCategories", asyn
     const data = await response.json()
     return data.categories
   } catch (error: any) {
-    return rejectWithValue(error.message || "Failed to fetch categories")
+    return rejectWithValue(getErrorMessage(error) || "Failed to fetch categories")
   }
 })
 

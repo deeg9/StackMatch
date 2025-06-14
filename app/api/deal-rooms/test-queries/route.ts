@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
@@ -46,7 +47,7 @@ export async function GET(request: NextRequest) {
     } catch (error) {
       testResults.tests.basicQuery = {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       }
     }
 
@@ -101,7 +102,7 @@ export async function GET(request: NextRequest) {
     } catch (error) {
       testResults.tests.complexQuery = {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       }
     }
 
@@ -122,7 +123,7 @@ export async function GET(request: NextRequest) {
     } catch (error) {
       testResults.tests.notificationQuery = {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       }
     }
 
@@ -150,7 +151,7 @@ export async function GET(request: NextRequest) {
     } catch (error) {
       testResults.tests.activityQuery = {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       }
     }
 
@@ -185,7 +186,7 @@ export async function GET(request: NextRequest) {
     } catch (error) {
       testResults.tests.groupingQuery = {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       }
     }
 
@@ -208,7 +209,7 @@ export async function GET(request: NextRequest) {
       {
         success: false,
         error: "Query testing failed",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       },
       { status: 500 },
     )

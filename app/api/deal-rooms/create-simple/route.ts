@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 
 export async function POST(request: NextRequest) {
@@ -189,13 +190,13 @@ export async function POST(request: NextRequest) {
     })
   } catch (error: any) {
     console.error("🔍 CREATE SIMPLE: Unexpected error:", error)
-    console.error("🔍 CREATE SIMPLE: Error stack:", error.stack)
+    console.error("🔍 CREATE SIMPLE: Error stack:", getErrorStack(error))
 
     return NextResponse.json(
       {
         error: "Deal room creation failed",
-        details: error.message,
-        stack: error.stack,
+        details: getErrorMessage(error),
+        stack: getErrorStack(error),
       },
       { status: 500 },
     )

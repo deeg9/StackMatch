@@ -1,7 +1,8 @@
 "use client" // This page will fetch data client-side
 
 import { useEffect, useState } from "react"
-import { useParams } from "next/navigation"
+import { useParams } from "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"next/navigation"
 import type { Contract } from "@/types"
 import { ContractDetailsView } from "@/components/deal-rooms/contract-details-view"
 import { useToast } from "@/hooks/use-toast"
@@ -35,7 +36,7 @@ export default function ContractManagementPage() {
         const data = await response.json()
         setContracts(data as Contract[])
       } catch (error: any) {
-        toast({ title: "Error fetching contracts", description: error.message, variant: "destructive" })
+        toast({ title: "Error fetching contracts", description: getErrorMessage(error), variant: "destructive" })
         setContracts([])
       } finally {
         setIsLoading(false)

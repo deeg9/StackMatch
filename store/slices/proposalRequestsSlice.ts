@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import type {
   ProposalRequest,
   ProposalResponse,
@@ -49,7 +50,7 @@ export const fetchBuyerProposalRequests = createAsyncThunk(
       const data = await response.json()
       return data.requests as ProposalRequest[]
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -71,7 +72,7 @@ export const fetchSellerProposalRequests = createAsyncThunk(
       const data = await response.json()
       return data.requests as ProposalRequest[]
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -93,7 +94,7 @@ export const fetchDashboardProposalRequests = createAsyncThunk(
       const data = await response.json()
       return data.requests as ProposalRequest[]
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -116,7 +117,7 @@ export const createProposalRequest = createAsyncThunk(
       const data = await response.json()
       return data.request as ProposalRequest
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -133,7 +134,7 @@ export const fetchProposalRequest = createAsyncThunk(
       const data = await response.json()
       return data.request as ProposalRequest
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -156,7 +157,7 @@ export const createProposalResponse = createAsyncThunk(
       const data = await response.json()
       return { requestId: responseData.request_id, response: data.response as ProposalResponse }
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -179,7 +180,7 @@ export const acceptProposalResponse = createAsyncThunk(
       const data = await response.json()
       return data.response as ProposalResponse
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -202,7 +203,7 @@ export const createDealRoomFromProposal = createAsyncThunk(
       const data = await response.json()
       return data.dealRoom
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { getAuthenticatedClient } from "@/lib/auth/api-utils"
 import type { NextRequest } from "next/server"
 
@@ -154,7 +155,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     if (error) {
       console.error("Error fetching participants:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.json({ error: getErrorMessage(error) }, { status: 500 })
     }
 
     return NextResponse.json({ participants })

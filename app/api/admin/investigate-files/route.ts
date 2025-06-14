@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 
@@ -80,7 +81,7 @@ export async function GET() {
       console.log("🔍 ADMIN FILE INVESTIGATION: deal_room_files error:", error)
       investigation.findings.dealRoomFiles = {
         exists: false,
-        error: error instanceof Error ? error.message : "Table not accessible",
+        error: error instanceof Error ? getErrorMessage(error) : "Table not accessible",
       }
     }
 
@@ -186,7 +187,7 @@ export async function GET() {
       console.log("🔍 ADMIN FILE INVESTIGATION: Listing query error:", error)
       investigation.findings.targetListing = {
         found: false,
-        error: error instanceof Error ? error.message : "Query failed",
+        error: error instanceof Error ? getErrorMessage(error) : "Query failed",
       }
     }
 
@@ -270,7 +271,7 @@ export async function GET() {
       console.log("🔍 ADMIN FILE INVESTIGATION: Proposal query error:", error)
       investigation.findings.targetProposal = {
         found: false,
-        error: error instanceof Error ? error.message : "Query failed",
+        error: error instanceof Error ? getErrorMessage(error) : "Query failed",
       }
     }
 
@@ -325,7 +326,7 @@ export async function GET() {
         console.log(`🔍 ADMIN FILE INVESTIGATION: Table ${tableName} error:`, error)
         investigation.findings.alternativeTables[tableName] = {
           exists: false,
-          error: error instanceof Error ? error.message : "Table not accessible",
+          error: error instanceof Error ? getErrorMessage(error) : "Table not accessible",
         }
       }
     }
@@ -355,7 +356,7 @@ export async function GET() {
       console.log("🔍 ADMIN FILE INVESTIGATION: Deal room query error:", error)
       investigation.findings.currentDealRoom = {
         found: false,
-        error: error instanceof Error ? error.message : "Query failed",
+        error: error instanceof Error ? getErrorMessage(error) : "Query failed",
       }
     }
 
@@ -378,7 +379,7 @@ export async function GET() {
     return NextResponse.json(
       {
         error: "Investigation failed",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
         timestamp: new Date().toISOString(),
       },
       { status: 500 },

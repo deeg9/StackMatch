@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
@@ -101,7 +102,7 @@ export async function GET(request: NextRequest) {
     })
   } catch (error: any) {
     console.error("🔍 API DEBUG: Unexpected error in GET /api/proposals:", error)
-    return NextResponse.json({ error: "An unexpected error occurred", details: error.message }, { status: 500 })
+    return NextResponse.json({ error: "An unexpected error occurred", details: getErrorMessage(error) }, { status: 500 })
   }
 }
 
@@ -351,12 +352,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ proposal: transformedProposal }, { status: 201 })
   } catch (error: any) {
     console.error("🔍 API DEBUG: Top-level exception in proposals POST:", error)
-    console.error("🔍 API DEBUG: Error stack:", error.stack)
+    console.error("🔍 API DEBUG: Error stack:", getErrorStack(error))
     return NextResponse.json(
       {
         error: "Internal server error",
-        details: error.message,
-        stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+        details: getErrorMessage(error),
+        stack: process.env.NODE_ENV === "development" ? getErrorStack(error) : undefined,
       },
       { status: 500 },
     )

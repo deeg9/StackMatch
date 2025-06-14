@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 
 export async function GET() {
   try {
@@ -34,7 +35,7 @@ export async function GET() {
     return NextResponse.json(
       {
         error: "Debug update failed",
-        details: error.message,
+        details: getErrorMessage(error),
       },
       { status: 500 },
     )

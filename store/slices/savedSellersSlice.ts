@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 
 interface SavedSeller {
   id: string
@@ -93,7 +94,7 @@ const savedSellersSlice = createSlice({
       })
       .addCase(saveSeller.rejected, (state, action) => {
         state.isLoading = false
-        state.error = action.error.message || "Failed to save seller"
+        state.error = action.payload as string || "Failed to save seller"
       })
       // Remove saved seller
       .addCase(removeSavedSeller.pending, (state) => {
@@ -107,7 +108,7 @@ const savedSellersSlice = createSlice({
       })
       .addCase(removeSavedSeller.rejected, (state, action) => {
         state.isLoading = false
-        state.error = action.error.message || "Failed to remove saved seller"
+        state.error = action.payload as string || "Failed to remove saved seller"
       })
       // Load saved sellers
       .addCase(loadSavedSellers.pending, (state) => {
@@ -121,7 +122,7 @@ const savedSellersSlice = createSlice({
       })
       .addCase(loadSavedSellers.rejected, (state, action) => {
         state.isLoading = false
-        state.error = action.error.message || "Failed to load saved sellers"
+        state.error = action.payload as string || "Failed to load saved sellers"
       })
   },
 })

@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { getAuthenticatedSupabaseClient } from "@/lib/auth/api-utils"
 
 export async function GET(request: NextRequest) {
@@ -153,7 +154,7 @@ export async function GET(request: NextRequest) {
       {
         error: "Investigation failed",
         details: String(error),
-        stack: error instanceof Error ? error.stack : undefined,
+        stack: error instanceof Error ? getErrorStack(error) : undefined,
       },
       { status: 500 },
     )

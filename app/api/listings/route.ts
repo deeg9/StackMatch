@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@supabase/supabase-js"
 import type { Database } from "@/types/supabase" // Ensure you have this type
 
@@ -379,6 +380,6 @@ export async function POST(request: NextRequest) {
     )
   } catch (error: any) {
     console.error("[SERVER] Listings API (POST): Unexpected error:", error)
-    return NextResponse.json({ error: "Failed to create listing: " + error.message }, { status: 500 })
+    return NextResponse.json({ error: "Failed to create listing: " + getErrorMessage(error) }, { status: 500 })
   }
 }

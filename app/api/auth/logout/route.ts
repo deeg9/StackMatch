@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 import { logUserActivity } from "@/lib/auth"
 
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
 
       if (error) {
         console.error("Logout error:", error)
-        return NextResponse.json({ error: error.message }, { status: 400 })
+        return NextResponse.json({ error: getErrorMessage(error) }, { status: 400 })
       }
     }
 

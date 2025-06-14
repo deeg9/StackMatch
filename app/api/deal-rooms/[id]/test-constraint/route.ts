@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { getAuthenticatedClient } from "@/lib/auth/api-utils"
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
           results.push({
             value: testValue,
             success: false,
-            error: error.message,
+            error: getErrorMessage(error),
             errorCode: error.code,
           })
         } else {

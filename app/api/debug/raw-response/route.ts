@@ -1,3 +1,4 @@
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 export async function GET(request: Request) {
   console.log("🔍 RAW RESPONSE: Starting...")
 
@@ -16,6 +17,6 @@ export async function GET(request: Request) {
     return response
   } catch (error: any) {
     console.error("🔍 RAW RESPONSE: Error:", error)
-    return new Response(`Error: ${error.message}`, { status: 500 })
+    return new Response(`Error: ${getErrorMessage(error)}`, { status: 500 })
   }
 }

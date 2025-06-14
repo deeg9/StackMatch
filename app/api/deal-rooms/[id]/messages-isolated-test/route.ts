@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   const timestamp = new Date().toISOString()
@@ -42,7 +43,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         return NextResponse.json({
           success: true,
           step: "auth_error",
-          error: authResult.error.message,
+          error: authResult.getErrorMessage(error),
           details: "Authentication failed but function completed",
         })
       }
@@ -108,15 +109,15 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     console.error(`🔍 [${timestamp}] ISOLATED TEST: Error name:`, error instanceof Error ? error.name : "Unknown")
     console.error(
       `🔍 [${timestamp}] ISOLATED TEST: Error message:`,
-      error instanceof Error ? error.message : String(error),
+      error instanceof Error ? getErrorMessage(error) : String(error),
     )
-    console.error(`🔍 [${timestamp}] ISOLATED TEST: Error stack:`, error instanceof Error ? error.stack : "No stack")
+    console.error(`🔍 [${timestamp}] ISOLATED TEST: Error stack:`, error instanceof Error ? getErrorStack(error) : "No stack")
 
     return NextResponse.json(
       {
         success: false,
         error: "Unhandled error in isolated test",
-        details: error instanceof Error ? error.message : String(error),
+        details: error instanceof Error ? getErrorMessage(error) : String(error),
         errorType: typeof error,
         errorName: error instanceof Error ? error.name : "Unknown",
       },

@@ -1,6 +1,7 @@
 "use client"
 
 import { io, type Socket } from "socket.io-client"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 class WebSocketManager {
   private socket: Socket | null = null
@@ -44,7 +45,7 @@ class WebSocketManager {
       })
 
       this.socket.on("connect_error", (error) => {
-        console.warn("WebSocket connection failed - continuing without real-time features:", error.message)
+        console.warn("WebSocket connection failed - continuing without real-time features:", getErrorMessage(error))
         // Don't attempt reconnection for initial connection failures
         if (this.reconnectAttempts === 0) {
           this.socket?.disconnect()

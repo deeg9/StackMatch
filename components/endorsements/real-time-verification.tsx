@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { useDispatch } from "react-redux"
 import { updateEndorsement } from "@/store/slices/endorsementsSlice"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -147,7 +148,7 @@ export function RealTimeVerification({ endorsements, platforms, onVerificationCo
               endorsementId: endorsement.id,
               status: "failed",
               progress: 0,
-              error: error instanceof Error ? error.message : "Unknown error",
+              error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
             }),
           ),
       )

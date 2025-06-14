@@ -1,3 +1,4 @@
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   console.log("🔧 FILES API: Starting files endpoint for deal room:", params.id)
 
@@ -82,7 +83,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
           console.log("🔧 FILES API: Processed", listingFiles.length, "listing files")
         }
       } catch (error: any) {
-        console.error("🔧 FILES API: Error processing listing files:", error.message)
+        console.error("🔧 FILES API: Error processing listing files:", getErrorMessage(error))
       }
     }
 
@@ -105,7 +106,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
           console.log("🔧 FILES API: Processed", proposalFiles.length, "proposal files")
         }
       } catch (error: any) {
-        console.error("🔧 FILES API: Error processing proposal files:", error.message)
+        console.error("🔧 FILES API: Error processing proposal files:", getErrorMessage(error))
       }
     }
 
@@ -148,12 +149,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
       },
     )
   } catch (error: any) {
-    console.error("🔧 FILES API: Error:", error.message)
+    console.error("🔧 FILES API: Error:", getErrorMessage(error))
 
     return new Response(
       JSON.stringify({
         error: "Internal server error",
-        details: error.message,
+        details: getErrorMessage(error),
       }),
       {
         status: 500,
@@ -303,12 +304,12 @@ export async function POST(request: Request, { params }: { params: { id: string 
       { status: 200, headers: { "Content-Type": "application/json" } },
     )
   } catch (error: any) {
-    console.error("📤 FILES API: Unexpected error:", error.message)
+    console.error("📤 FILES API: Unexpected error:", getErrorMessage(error))
     return new Response(
       JSON.stringify({
         success: false,
         error: "File upload failed",
-        details: error.message,
+        details: getErrorMessage(error),
       }),
       { status: 500, headers: { "Content-Type": "application/json" } },
     )
@@ -385,12 +386,12 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
       { status: 200, headers: { "Content-Type": "application/json" } },
     )
   } catch (error: any) {
-    console.error("🗑️ FILES API: Unexpected error:", error.message)
+    console.error("🗑️ FILES API: Unexpected error:", getErrorMessage(error))
     return new Response(
       JSON.stringify({
         success: false,
         error: "File deletion failed",
-        details: error.message,
+        details: getErrorMessage(error),
       }),
       { status: 500, headers: { "Content-Type": "application/json" } },
     )

@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
@@ -47,6 +48,6 @@ export async function GET(request: NextRequest) {
     })
   } catch (error: any) {
     console.error("🔍 TEST SELLER PROFILE: Exception:", error)
-    return NextResponse.json({ error: "Internal server error", details: error.message }, { status: 500 })
+    return NextResponse.json({ error: "Internal server error", details: getErrorMessage(error) }, { status: 500 })
   }
 }

@@ -1,5 +1,6 @@
 import type { AIResponse, FieldMapping } from "@/types/ai-listing-types"
 import type { ListingFormData } from "@/types/listing-types"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export interface ParsedAIResponse {
   success: boolean
@@ -66,7 +67,7 @@ export function parseAIResponse(rawResponse: string): ParsedAIResponse {
     console.error("Failed to parse AI response:", error)
     return {
       success: false,
-      error: `Failed to parse AI response: ${error instanceof Error ? error.message : "Unknown error"}`,
+      error: `Failed to parse AI response: ${error instanceof Error ? getErrorMessage(error) : "Unknown error"}`,
     }
   }
 }

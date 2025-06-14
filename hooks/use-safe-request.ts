@@ -31,7 +31,8 @@ export function useSafeRequest() {
   const safeFetch = useCallback(
     async (url: string, options?: RequestInit, timeoutMs = 10000, deduplicate = true): Promise<any> => {
       const requestId = ++globalRequestCount
-      const cacheKey = `${url}-${JSON.stringify(options?.body || {})}-${options?.method || "GET"}`
+      const cacheKey = `${url}-${JSON.stringify(options?.body || {})}-${options?.method || "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"GET"}`
 
       console.log(`🔍 SAFE REQUEST [${instanceId.current}] #${requestId}: Starting request to ${url}`)
 
@@ -77,7 +78,7 @@ export function useSafeRequest() {
           return data
         })
         .catch((error) => {
-          console.error(`🔍 SAFE REQUEST [${instanceId.current}] #${requestId}: Request failed:`, error.message)
+          console.error(`🔍 SAFE REQUEST [${instanceId.current}] #${requestId}: Request failed:`, getErrorMessage(error))
           throw error
         })
         .finally(() => {

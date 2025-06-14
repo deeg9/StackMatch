@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET() {
   try {
@@ -11,7 +12,7 @@ export async function GET() {
     console.error("Simple test error:", error)
     return NextResponse.json(
       {
-        error: error.message || "Unknown error",
+        error: getErrorMessage(error) || "Unknown error",
         success: false,
       },
       { status: 500 },

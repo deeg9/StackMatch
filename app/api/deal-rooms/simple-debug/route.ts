@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,14 +25,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(response)
   } catch (error: any) {
     console.error("🔍 SIMPLE DEBUG: Error:", error)
-    console.error("🔍 SIMPLE DEBUG: Error stack:", error.stack)
+    console.error("🔍 SIMPLE DEBUG: Error stack:", getErrorStack(error))
 
     return NextResponse.json(
       {
         success: false,
         error: "Simple debug test failed",
-        details: error.message,
-        stack: error.stack,
+        details: getErrorMessage(error),
+        stack: getErrorStack(error),
       },
       { status: 500 },
     )

@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 // Simple cache for profile data
 const profileCache = new Map<string, { data: any; timestamp: number }>()
@@ -105,7 +106,7 @@ export async function GET() {
       ])) as any
 
       if (error) {
-        console.log(`🔍 [${requestId}] USER PROFILE API: supabase.auth.getUser() failed:`, error.message)
+        console.log(`🔍 [${requestId}] USER PROFILE API: supabase.auth.getUser() failed:`, getErrorMessage(error))
         authError = error
       } else if (data?.user) {
         user = data.user
@@ -225,7 +226,7 @@ export async function GET() {
     } catch (error) {
       console.log(`🔍 [${requestId}] USER PROFILE API: Error fetching profile:`, error)
 
-      if (error instanceof Error && error.message.includes("timed out")) {
+      if (error instanceof Error && getErrorMessage(error).includes("timed out")) {
         return NextResponse.json({ error: "Database request timed out" }, { status: 408 })
       }
 
@@ -235,7 +236,7 @@ export async function GET() {
     console.log(`🔍 [${requestId}] USER PROFILE API: Unexpected error:`, error)
 
     // Special handling for timeout errors
-    if (error instanceof Error && error.message.includes("timed out")) {
+    if (error instanceof Error && getErrorMessage(error).includes("timed out")) {
       return NextResponse.json({ error: "Request timed out" }, { status: 408 })
     }
 

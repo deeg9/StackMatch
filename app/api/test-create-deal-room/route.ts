@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET() {
   console.log("🔍 TEST API: GET request received")
@@ -63,7 +64,7 @@ export async function POST(request: Request) {
       {
         success: false,
         error: "Failed to process request",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       },
       { status: 500 },
     )

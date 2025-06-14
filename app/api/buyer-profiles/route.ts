@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js"
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 // Create a direct Supabase client for debugging
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string
@@ -40,7 +41,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(
         {
           error: "Failed to create Supabase client",
-          details: clientError.message,
+          details: getErrorMessage(clientError),
         },
         { status: 500 },
       )
@@ -132,12 +133,12 @@ export async function GET(request: NextRequest) {
     })
   } catch (error) {
     console.error("🔍 BUYER PROFILE API: Unexpected error:", error)
-    console.error("🔍 BUYER PROFILE API: Error stack:", error.stack)
+    console.error("🔍 BUYER PROFILE API: Error stack:", getErrorStack(error))
     return NextResponse.json(
       {
         error: "Internal server error",
-        details: error.message,
-        stack: error.stack,
+        details: getErrorMessage(error),
+        stack: getErrorStack(error),
       },
       { status: 500 },
     )
@@ -180,8 +181,8 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json(
         {
           error: "Failed to update buyer profile",
-          details: error.message,
-          code: error.code,
+          details: getErrorMessage(error),
+          code: (error as any)?.code,
         },
         { status: 500 },
       )
@@ -198,8 +199,8 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json(
       {
         error: "Internal server error",
-        details: error.message,
-        stack: error.stack,
+        details: getErrorMessage(error),
+        stack: getErrorStack(error),
       },
       { status: 500 },
     )
@@ -239,8 +240,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: "Failed to create buyer profile",
-          details: error.message,
-          code: error.code,
+          details: getErrorMessage(error),
+          code: (error as any)?.code,
         },
         { status: 500 },
       )
@@ -260,8 +261,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error: "Internal server error",
-        details: error.message,
-        stack: error.stack,
+        details: getErrorMessage(error),
+        stack: getErrorStack(error),
       },
       { status: 500 },
     )

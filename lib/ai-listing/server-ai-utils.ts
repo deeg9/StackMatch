@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function generateAIResponseServer(prompt: string, sessionId: string, userId?: string) {
   console.log("[SERVER] 🤖 AI UTILS: Starting AI response generation...")
@@ -27,7 +28,7 @@ export async function generateAIResponseServer(prompt: string, sessionId: string
     console.error("[SERVER] ❌ AI UTILS: Error generating response:", error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Failed to generate AI response",
+      error: error instanceof Error ? getErrorMessage(error) : "Failed to generate AI response",
       sessionId,
     }
   }
@@ -121,7 +122,7 @@ export async function enhanceFieldServer(field: string, content: string) {
     console.error("[SERVER] ❌ AI UTILS: Error enhancing field:", error)
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Failed to enhance field",
+      error: error instanceof Error ? getErrorMessage(error) : "Failed to enhance field",
       field,
     }
   }

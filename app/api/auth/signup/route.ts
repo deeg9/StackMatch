@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { cookies } from "next/headers"
 // Import both client creation functions
 import { createClient as createUserContextClient } from "@/utils/supabase/server" // For user context operations
@@ -117,14 +118,14 @@ export async function POST(request: NextRequest) {
     })
   } catch (error: any) {
     console.error("SIGNUP_API: === UNHANDLED ERROR ===")
-    console.error("SIGNUP_API: Error message:", error.message)
-    console.error("SIGNUP_API: Error stack:", error.stack)
+    console.error("SIGNUP_API: Error message:", getErrorMessage(error))
+    console.error("SIGNUP_API: Error stack:", getErrorStack(error))
     console.error("SIGNUP_API: Full error object:", JSON.stringify(error, null, 2))
 
     return NextResponse.json(
       {
         error: "An unexpected internal server error occurred.",
-        details: error.message,
+        details: getErrorMessage(error),
       },
       { status: 500 },
     )

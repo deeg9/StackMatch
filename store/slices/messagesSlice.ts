@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction, createAsyncThunk } from "@reduxjs/toolkit"
+import { getErrorMessage } from "@/lib/utils/error-handler"
 import type { Conversation, Message, TypingUser } from "@/types" // Ensure AuthUser is correctly typed
 
 interface MessagesState {
@@ -38,7 +39,7 @@ export const fetchConversations = createAsyncThunk(
       const data = await response.json()
       return data.conversations as Conversation[]
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -56,7 +57,7 @@ export const fetchMessages = createAsyncThunk(
       const data = await response.json()
       return { conversationId, messages: data.messages as Message[] }
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )
@@ -85,7 +86,7 @@ export const sendMessage = createAsyncThunk(
       const data = await response.json()
       return data.message as Message // API should return the created message
     } catch (error: any) {
-      return rejectWithValue(error.message || "Network error")
+      return rejectWithValue(getErrorMessage(error) || "Network error")
     }
   },
 )

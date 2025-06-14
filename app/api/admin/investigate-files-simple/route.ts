@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@supabase/supabase-js"
 
 export async function GET() {
@@ -268,7 +269,7 @@ export async function GET() {
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
         timestamp: new Date().toISOString(),
       },
       { status: 500 },

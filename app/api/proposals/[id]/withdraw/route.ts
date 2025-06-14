@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 
@@ -174,13 +175,13 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     })
   } catch (error: any) {
     console.error("🔍 WITHDRAW API: Unexpected error:", error)
-    console.error("🔍 WITHDRAW API: Error stack:", error.stack)
+    console.error("🔍 WITHDRAW API: Error stack:", getErrorStack(error))
 
     return NextResponse.json(
       {
         error: "Internal server error",
-        details: error.message,
-        stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+        details: getErrorMessage(error),
+        stack: process.env.NODE_ENV === "development" ? getErrorStack(error) : undefined,
       },
       { status: 500 },
     )

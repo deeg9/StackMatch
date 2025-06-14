@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@supabase/supabase-js"
 
 export async function GET(request: NextRequest) {
@@ -41,9 +42,9 @@ export async function GET(request: NextRequest) {
     } catch (error: any) {
       results.tables.listings = {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
       }
-      results.errors.push(`Listings table error: ${error.message}`)
+      results.errors.push(`Listings table error: ${getErrorMessage(error)}`)
     }
 
     // Check deal_rooms table structure
@@ -65,9 +66,9 @@ export async function GET(request: NextRequest) {
     } catch (error: any) {
       results.tables.deal_rooms = {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
       }
-      results.errors.push(`Deal rooms table error: ${error.message}`)
+      results.errors.push(`Deal rooms table error: ${getErrorMessage(error)}`)
     }
 
     // Check deal_room_files table structure
@@ -89,9 +90,9 @@ export async function GET(request: NextRequest) {
     } catch (error: any) {
       results.tables.deal_room_files = {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
       }
-      results.errors.push(`Deal room files table error: ${error.message}`)
+      results.errors.push(`Deal room files table error: ${getErrorMessage(error)}`)
     }
 
     // Check proposals table structure
@@ -114,9 +115,9 @@ export async function GET(request: NextRequest) {
     } catch (error: any) {
       results.tables.proposals = {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
       }
-      results.errors.push(`Proposals table error: ${error.message}`)
+      results.errors.push(`Proposals table error: ${getErrorMessage(error)}`)
     }
 
     // Overall success
@@ -126,14 +127,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(results)
   } catch (error: any) {
     console.error("🔍 SCHEMA CHECK: Unhandled error:", error)
-    results.errors.push(`Unhandled error: ${error.message}`)
+    results.errors.push(`Unhandled error: ${getErrorMessage(error)}`)
 
     return NextResponse.json(
       {
         ...results,
         error: {
-          message: error.message,
-          stack: error.stack,
+          message: getErrorMessage(error),
+          stack: getErrorStack(error),
           name: error.name,
         },
       },

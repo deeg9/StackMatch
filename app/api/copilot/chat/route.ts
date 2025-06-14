@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { generateText } from "ai"
 // import { deepinfra } from "@ai-sdk/deepinfra"
 
@@ -43,7 +44,7 @@ export async function POST(req: Request) {
     console.error("Error in /api/copilot/chat:", error)
     let errorMessage = "Failed to process your request."
     if (error instanceof Error) {
-      errorMessage = error.message
+      errorMessage = getErrorMessage(error)
     }
     return NextResponse.json({ error: errorMessage }, { status: 500 })
   }

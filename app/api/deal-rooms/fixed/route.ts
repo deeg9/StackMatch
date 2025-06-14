@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { cookies } from "next/headers"
 import { createServerClient } from "@supabase/ssr"
 
@@ -173,7 +174,7 @@ export async function GET(request: Request) {
     return NextResponse.json(
       {
         error: "Internal server error",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
         dealRooms: [],
       },
       { status: 500 },

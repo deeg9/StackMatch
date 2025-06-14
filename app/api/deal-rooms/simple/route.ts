@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { cookies } from "next/headers"
 import { createServerClient } from "@supabase/ssr"
 import { getSimpleCurrentUser } from "@/lib/auth-simple"
@@ -70,7 +71,7 @@ export async function GET() {
       return NextResponse.json(
         {
           error: "Error checking database structure",
-          details: error instanceof Error ? error.message : "Unknown error",
+          details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
           dealRooms: [],
           userType: currentUser.user_type,
         },
@@ -91,7 +92,7 @@ export async function GET() {
     return NextResponse.json(
       {
         error: "Internal server error",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
         dealRooms: [],
         userType: "UNKNOWN",
       },

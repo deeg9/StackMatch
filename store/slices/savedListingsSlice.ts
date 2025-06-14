@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit'
+import { getErrorMessage } from "@/lib/utils/error-handler"
 
 interface SavedListing {
   id: string
@@ -36,7 +37,7 @@ export const loadSavedListings = createAsyncThunk(
       const data = await response.json()
       return data.savedListings
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Network error')
+      return rejectWithValue(getErrorMessage(error) || 'Network error')
     }
   }
 )
@@ -58,7 +59,7 @@ export const saveListing = createAsyncThunk(
       
       return { ...listing, savedAt: new Date().toISOString() }
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Network error')
+      return rejectWithValue(getErrorMessage(error) || 'Network error')
     }
   }
 )
@@ -78,7 +79,7 @@ export const removeSavedListing = createAsyncThunk(
       
       return listingId
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Network error')
+      return rejectWithValue(getErrorMessage(error) || 'Network error')
     }
   }
 )

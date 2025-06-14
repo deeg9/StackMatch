@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET() {
   // Multiple console log attempts
@@ -27,14 +28,14 @@ export async function GET() {
     return NextResponse.json(response)
   } catch (error: any) {
     console.error("🚨 DEBUG TEST: Caught error:", error)
-    console.error("🚨 DEBUG TEST: Error message:", error.message)
-    console.error("🚨 DEBUG TEST: Error stack:", error.stack)
+    console.error("🚨 DEBUG TEST: Error message:", getErrorMessage(error))
+    console.error("🚨 DEBUG TEST: Error stack:", getErrorStack(error))
 
     return NextResponse.json(
       {
         success: false,
-        error: error.message,
-        stack: error.stack,
+        error: getErrorMessage(error),
+        stack: getErrorStack(error),
         timestamp: new Date().toISOString(),
       },
       { status: 500 },

@@ -19,7 +19,8 @@ export interface UploadResult {
 export function generateUniqueFileName(originalName: string, dealRoomId: string): string {
   const timestamp = Date.now()
   const randomString = Math.random().toString(36).substring(2, 15)
-  const extension = originalName.split(".").pop() || "bin"
+  const extension = originalName.split("
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler".").pop() || "bin"
   const sanitizedName = originalName.replace(/[^a-zA-Z0-9.-]/g, "_")
 
   return `deal-rooms/${dealRoomId}/${timestamp}_${randomString}_${sanitizedName}`
@@ -54,10 +55,10 @@ export async function uploadFile(file: File, dealRoomId: string, category: strin
     })
 
     if (error) {
-      console.error("📁 STORAGE: Upload error:", error.message)
+      console.error("📁 STORAGE: Upload error:", getErrorMessage(error))
       return {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
       }
     }
 
@@ -74,10 +75,10 @@ export async function uploadFile(file: File, dealRoomId: string, category: strin
       publicUrl: urlData.publicUrl,
     }
   } catch (error: any) {
-    console.error("📁 STORAGE: Unexpected error:", error.message)
+    console.error("📁 STORAGE: Unexpected error:", getErrorMessage(error))
     return {
       success: false,
-      error: error.message,
+      error: getErrorMessage(error),
     }
   }
 }
@@ -92,20 +93,20 @@ export async function deleteFile(filePath: string): Promise<{ success: boolean; 
     const { error } = await supabaseAdmin.storage.from("deal-room-files").remove([filePath])
 
     if (error) {
-      console.error("📁 STORAGE: Delete error:", error.message)
+      console.error("📁 STORAGE: Delete error:", getErrorMessage(error))
       return {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
       }
     }
 
     console.log("📁 STORAGE: File deleted successfully")
     return { success: true }
   } catch (error: any) {
-    console.error("📁 STORAGE: Delete exception:", error.message)
+    console.error("📁 STORAGE: Delete exception:", getErrorMessage(error))
     return {
       success: false,
-      error: error.message,
+      error: getErrorMessage(error),
     }
   }
 }

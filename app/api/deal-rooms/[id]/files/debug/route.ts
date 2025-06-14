@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 import { authenticateUser } from "@/lib/auth/api-utils"
@@ -74,10 +75,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     } catch (error: any) {
       debugResults.steps.dealRoomVerification = {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
         timestamp: new Date().toISOString(),
       }
-      debugResults.errors.push(`Deal room verification error: ${error.message}`)
+      debugResults.errors.push(`Deal room verification error: ${getErrorMessage(error)}`)
       return NextResponse.json(debugResults, { status: 500 })
     }
 
@@ -109,10 +110,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     } catch (error: any) {
       debugResults.steps.participantVerification = {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
         timestamp: new Date().toISOString(),
       }
-      debugResults.errors.push(`Participant verification error: ${error.message}`)
+      debugResults.errors.push(`Participant verification error: ${getErrorMessage(error)}`)
       return NextResponse.json(debugResults, { status: 500 })
     }
 
@@ -140,10 +141,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     } catch (error: any) {
       debugResults.steps.nativeFiles = {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
         timestamp: new Date().toISOString(),
       }
-      debugResults.errors.push(`Native files query error: ${error.message}`)
+      debugResults.errors.push(`Native files query error: ${getErrorMessage(error)}`)
     }
 
     // Step 5: Query listing files (if listing_id exists)
@@ -194,19 +195,19 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
           } catch (error: any) {
             debugResults.steps.listingAttachments = {
               success: false,
-              error: error.message,
+              error: getErrorMessage(error),
               timestamp: new Date().toISOString(),
             }
-            debugResults.errors.push(`Listing attachments query error: ${error.message}`)
+            debugResults.errors.push(`Listing attachments query error: ${getErrorMessage(error)}`)
           }
         }
       } catch (error: any) {
         debugResults.steps.listingBasic = {
           success: false,
-          error: error.message,
+          error: getErrorMessage(error),
           timestamp: new Date().toISOString(),
         }
-        debugResults.errors.push(`Listing basic query error: ${error.message}`)
+        debugResults.errors.push(`Listing basic query error: ${getErrorMessage(error)}`)
       }
     } else {
       debugResults.steps.listingFiles = {
@@ -242,10 +243,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       } catch (error: any) {
         debugResults.steps.proposalFiles = {
           success: false,
-          error: error.message,
+          error: getErrorMessage(error),
           timestamp: new Date().toISOString(),
         }
-        debugResults.errors.push(`Proposal files query error: ${error.message}`)
+        debugResults.errors.push(`Proposal files query error: ${getErrorMessage(error)}`)
       }
     } else {
       debugResults.steps.proposalFiles = {
@@ -263,11 +264,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     return NextResponse.json(debugResults)
   } catch (error: any) {
     console.error(`🔍 FILES DEBUG: Unhandled error:`, error)
-    debugResults.errors.push(`Unhandled error: ${error.message}`)
+    debugResults.errors.push(`Unhandled error: ${getErrorMessage(error)}`)
     debugResults.steps.unhandledError = {
       success: false,
-      error: error.message,
-      stack: error.stack,
+      error: getErrorMessage(error),
+      stack: getErrorStack(error),
       timestamp: new Date().toISOString(),
     }
 

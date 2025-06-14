@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import type { ContractFile } from "@/types"
@@ -32,7 +33,7 @@ export async function GET(request: Request, { params }: { params: { contractId: 
 
     if (error) {
       console.error("Error fetching contract files:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.json({ error: getErrorMessage(error) }, { status: 500 })
     }
 
     // Ensure versions is always an array
@@ -90,7 +91,7 @@ export async function POST(request: Request, { params }: { params: { contractId:
 
     if (error) {
       console.error("Error creating contract file record:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.json({ error: getErrorMessage(error) }, { status: 500 })
     }
 
     // Ensure versions is always an array

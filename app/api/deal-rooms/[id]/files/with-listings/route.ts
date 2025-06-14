@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 import { authenticateUser } from "@/lib/auth/api-utils"
@@ -169,7 +170,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         allFiles = [...allFiles, ...formattedNativeFiles]
       }
     } catch (error: any) {
-      console.log(`🔍 WITH LISTINGS: Native files exception: ${error.message}`)
+      console.log(`🔍 WITH LISTINGS: Native files exception: ${getErrorMessage(error)}`)
     }
 
     // Step 2: Get listing files (if listing_id exists)
@@ -261,15 +262,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                 console.log(`🔍 WITH LISTINGS: Successfully processed ${jsonFiles.length} listing attachments`)
                 allFiles = [...allFiles, ...jsonFiles]
               } catch (error: any) {
-                console.log(`🔍 WITH LISTINGS: Error processing listing attachments: ${error.message}`)
+                console.log(`🔍 WITH LISTINGS: Error processing listing attachments: ${getErrorMessage(error)}`)
               }
             }
           } catch (error: any) {
-            console.log(`🔍 WITH LISTINGS: Attachments query exception: ${error.message}`)
+            console.log(`🔍 WITH LISTINGS: Attachments query exception: ${getErrorMessage(error)}`)
           }
         }
       } catch (error: any) {
-        console.log(`🔍 WITH LISTINGS: Listing query exception: ${error.message}`)
+        console.log(`🔍 WITH LISTINGS: Listing query exception: ${getErrorMessage(error)}`)
       }
     }
 
@@ -287,7 +288,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   } catch (error) {
     console.error("🔍 WITH LISTINGS: Error:", error)
     return NextResponse.json(
-      { error: "Internal server error", details: error instanceof Error ? error.message : "Unknown error" },
+      { error: "Internal server error", details: error instanceof Error ? getErrorMessage(error) : "Unknown error" },
       { status: 500 },
     )
   }

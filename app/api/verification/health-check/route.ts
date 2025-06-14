@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 interface PlatformTestResult {
   platform: string
@@ -101,7 +102,7 @@ async function testPlatformHealth(platform: string): Promise<PlatformTestResult>
       platform,
       status: "failed",
       responseTime: Date.now() - startTime,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       timestamp: new Date().toISOString(),
     }
   }

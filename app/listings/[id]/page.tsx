@@ -1,7 +1,8 @@
 "use client"
 
 import { useParams, useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -255,7 +256,7 @@ export default function ListingDetailPage() {
       }
     } catch (error: any) {
       console.error("🔍 CLIENT DEBUG: Error fetching seller proposals:", error)
-      setProposalError(error.message)
+      setProposalError(getErrorMessage(error))
       setSubmittedProposal(null)
       setWithdrawnProposal(null)
       setWithdrawnCount(0)

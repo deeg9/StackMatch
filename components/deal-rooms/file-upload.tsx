@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 import { useState, useRef } from "react"
 import { useDispatch } from "react-redux"
@@ -117,14 +118,14 @@ export function FileUpload({ dealRoomId, userId, userName, onUploadComplete }: F
       setUploadFiles((prev) =>
         prev.map((f) =>
           f.id === uploadFile.id
-            ? { ...f, status: "error", error: error instanceof Error ? error.message : "Upload failed" }
+            ? { ...f, status: "error", error: error instanceof Error ? getErrorMessage(error) : "Upload failed" }
             : f,
         ),
       )
 
       toast({
         title: "Upload failed",
-        description: error instanceof Error ? error.message : "Failed to upload file",
+        description: error instanceof Error ? getErrorMessage(error) : "Failed to upload file",
         variant: "destructive",
       })
     }

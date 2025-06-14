@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 interface TestResults {
   success: boolean
@@ -36,7 +37,7 @@ export async function GET() {
       console.error("[SERVER] ❌ AI TEST CONNECTION: Environment test error:", error)
       results.tests.environment = {
         success: false,
-        error: error instanceof Error ? error.message : "Environment test failed",
+        error: error instanceof Error ? getErrorMessage(error) : "Environment test failed",
       }
     }
 
@@ -59,7 +60,7 @@ export async function GET() {
       console.error("[SERVER] ❌ AI TEST CONNECTION: Database test error:", error)
       results.tests.database = {
         success: false,
-        error: error instanceof Error ? error.message : "Database connection failed",
+        error: error instanceof Error ? getErrorMessage(error) : "Database connection failed",
       }
     }
 
@@ -84,7 +85,7 @@ export async function GET() {
       console.error("[SERVER] ❌ AI TEST CONNECTION: Auth test error:", error)
       results.tests.authentication = {
         success: false,
-        error: error instanceof Error ? error.message : "Authentication test failed",
+        error: error instanceof Error ? getErrorMessage(error) : "Authentication test failed",
       }
     }
 
@@ -104,7 +105,7 @@ export async function GET() {
       console.error("[SERVER] ❌ AI TEST CONNECTION: AI SDK import error:", error)
       results.tests.aiSdk = {
         success: false,
-        error: error instanceof Error ? error.message : "AI SDK import failed",
+        error: error instanceof Error ? getErrorMessage(error) : "AI SDK import failed",
       }
     }
 
@@ -124,7 +125,7 @@ export async function GET() {
       console.error("[SERVER] ❌ AI TEST CONNECTION: Server AI utils error:", error)
       results.tests.serverUtils = {
         success: false,
-        error: error instanceof Error ? error.message : "Server AI utils import failed",
+        error: error instanceof Error ? getErrorMessage(error) : "Server AI utils import failed",
       }
     }
 
@@ -139,14 +140,14 @@ export async function GET() {
     })
   } catch (error) {
     console.error("[SERVER] ❌ AI TEST CONNECTION: Unexpected error:", error)
-    console.error("[SERVER] ❌ AI TEST CONNECTION: Error stack:", error instanceof Error ? error.stack : "No stack")
+    console.error("[SERVER] ❌ AI TEST CONNECTION: Error stack:", error instanceof Error ? getErrorStack(error) : "No stack")
 
     const errorResponse = {
       success: false,
       error: {
-        message: error instanceof Error ? error.message : "Unknown error occurred",
+        message: error instanceof Error ? getErrorMessage(error) : "Unknown error occurred",
         type: error instanceof Error ? error.constructor.name : "UnknownError",
-        stack: error instanceof Error ? error.stack : undefined,
+        stack: error instanceof Error ? getErrorStack(error) : undefined,
       },
       timestamp: new Date().toISOString(),
     }

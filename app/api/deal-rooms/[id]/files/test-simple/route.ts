@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 import { authenticateUser } from "@/lib/auth/api-utils"
@@ -26,8 +27,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       const cookieStore = cookies()
       testResults.tests.cookieStore = { success: true, message: "Cookie store accessible" }
     } catch (error: any) {
-      testResults.tests.cookieStore = { success: false, error: error.message }
-      testResults.errors.push(`Cookie store error: ${error.message}`)
+      testResults.tests.cookieStore = { success: false, error: getErrorMessage(error) }
+      testResults.errors.push(`Cookie store error: ${getErrorMessage(error)}`)
     }
 
     // Test 3: Supabase client creation
@@ -65,10 +66,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             if (error) {
               testResults.tests.databaseConnectivity = {
                 success: false,
-                error: error.message,
+                error: getErrorMessage(error),
                 message: "Database query failed",
               }
-              testResults.errors.push(`Database error: ${error.message}`)
+              testResults.errors.push(`Database error: ${getErrorMessage(error)}`)
             } else {
               testResults.tests.databaseConnectivity = {
                 success: true,
@@ -128,45 +129,45 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                   } catch (error: any) {
                     testResults.tests.userParticipation = {
                       success: false,
-                      error: error.message,
+                      error: getErrorMessage(error),
                       message: "Participation check failed",
                     }
-                    testResults.errors.push(`Participation check error: ${error.message}`)
+                    testResults.errors.push(`Participation check error: ${getErrorMessage(error)}`)
                   }
                 }
               } catch (error: any) {
                 testResults.tests.dealRoomExistence = {
                   success: false,
-                  error: error.message,
+                  error: getErrorMessage(error),
                   message: "Deal room query failed",
                 }
-                testResults.errors.push(`Deal room query error: ${error.message}`)
+                testResults.errors.push(`Deal room query error: ${getErrorMessage(error)}`)
               }
             }
           } catch (error: any) {
             testResults.tests.databaseConnectivity = {
               success: false,
-              error: error.message,
+              error: getErrorMessage(error),
               message: "Database connection failed",
             }
-            testResults.errors.push(`Database connection error: ${error.message}`)
+            testResults.errors.push(`Database connection error: ${getErrorMessage(error)}`)
           }
         }
       } catch (error: any) {
         testResults.tests.authentication = {
           success: false,
-          error: error.message,
+          error: getErrorMessage(error),
           message: "Authentication process failed",
         }
-        testResults.errors.push(`Authentication process error: ${error.message}`)
+        testResults.errors.push(`Authentication process error: ${getErrorMessage(error)}`)
       }
     } catch (error: any) {
       testResults.tests.supabaseClient = {
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
         message: "Supabase client creation failed",
       }
-      testResults.errors.push(`Supabase client error: ${error.message}`)
+      testResults.errors.push(`Supabase client error: ${getErrorMessage(error)}`)
     }
 
     // Determine overall success
@@ -178,11 +179,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     return NextResponse.json(testResults)
   } catch (error: any) {
     console.error(`🔍 SIMPLE TEST: Unhandled error:`, error)
-    testResults.errors.push(`Unhandled error: ${error.message}`)
+    testResults.errors.push(`Unhandled error: ${getErrorMessage(error)}`)
     testResults.tests.unhandledError = {
       success: false,
-      error: error.message,
-      stack: error.stack,
+      error: getErrorMessage(error),
+      stack: getErrorStack(error),
     }
 
     return NextResponse.json(testResults, { status: 500 })

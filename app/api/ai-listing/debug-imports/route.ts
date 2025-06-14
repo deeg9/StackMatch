@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 interface DebugResults {
   imports: Record<string, any>
@@ -25,7 +26,7 @@ export async function GET() {
     }
   } catch (error) {
     console.error("[SERVER] ❌ DEBUG IMPORTS: Next.js import error:", error)
-    results.errors.nextjs = error instanceof Error ? error.message : "Next.js import failed"
+    results.errors.nextjs = error instanceof Error ? getErrorMessage(error) : "Next.js import failed"
   }
 
   // Test 2: Supabase imports
@@ -39,7 +40,7 @@ export async function GET() {
     }
   } catch (error) {
     console.error("[SERVER] ❌ DEBUG IMPORTS: Supabase import error:", error)
-    results.errors.supabase = error instanceof Error ? error.message : "Supabase import failed"
+    results.errors.supabase = error instanceof Error ? getErrorMessage(error) : "Supabase import failed"
   }
 
   // Test 3: AI SDK imports
@@ -53,7 +54,7 @@ export async function GET() {
     }
   } catch (error) {
     console.error("[SERVER] ❌ DEBUG IMPORTS: AI SDK import error:", error)
-    results.errors.aiSdk = error instanceof Error ? error.message : "AI SDK import failed"
+    results.errors.aiSdk = error instanceof Error ? getErrorMessage(error) : "AI SDK import failed"
   }
 
   // Test 4: Server AI utils imports
@@ -67,7 +68,7 @@ export async function GET() {
     }
   } catch (error) {
     console.error("[SERVER] ❌ DEBUG IMPORTS: Server AI utils import error:", error)
-    results.errors.serverUtils = error instanceof Error ? error.message : "Server AI utils import failed"
+    results.errors.serverUtils = error instanceof Error ? getErrorMessage(error) : "Server AI utils import failed"
   }
 
   console.log("[SERVER] ✅ DEBUG IMPORTS: All import tests completed")

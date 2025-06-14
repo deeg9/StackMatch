@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { cookies } from "next/headers"
 
 export async function GET() {
@@ -139,8 +140,8 @@ export async function GET() {
     return NextResponse.json(
       {
         ...debugInfo,
-        error: error.message || "Unknown error",
-        errorStack: error.stack,
+        error: getErrorMessage(error) || "Unknown error",
+        errorStack: getErrorStack(error),
         success: false,
       },
       { status: 500 },

@@ -1,3 +1,4 @@
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 export async function GET() {
   console.log("🟢 SAFE TEST: Starting safe test")
 
@@ -27,7 +28,7 @@ export async function GET() {
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message,
+        error: getErrorMessage(error),
         timestamp: new Date().toISOString(),
       }),
       {

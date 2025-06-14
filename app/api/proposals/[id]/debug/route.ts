@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 
@@ -82,8 +83,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     return NextResponse.json(
       {
         debug: "Error in debug endpoint",
-        error: error.message,
-        stack: error.stack,
+        error: getErrorMessage(error),
+        stack: getErrorStack(error),
       },
       { status: 500 },
     )

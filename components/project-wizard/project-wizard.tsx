@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/utils/error-handler"
 "use client"
 
 import { useSelector, useDispatch } from "react-redux"
@@ -75,7 +76,7 @@ export function ProjectWizard() {
       router.push("/buyer-dashboard")
     } catch (error: any) {
       // unwrap() throws the error payload if the thunk is rejected
-      dispatch(setError(typeof error === "string" ? error : error.message || "Failed to create project listing"))
+      dispatch(setError(typeof error === "string" ? error : getErrorMessage(error) || "Failed to create project listing"))
     } finally {
       dispatch(setSubmitting(false))
     }

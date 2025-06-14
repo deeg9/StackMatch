@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
@@ -164,7 +165,7 @@ export function AIListingWizard({ onSubmit, onCancel, existingListingId }: AILis
       }
     } catch (error) {
       console.error("Failed to submit listing:", error)
-      setIntegrationError(error instanceof Error ? error.message : "Failed to create listing")
+      setIntegrationError(error instanceof Error ? getErrorMessage(error) : "Failed to create listing")
 
       toast({
         title: "Error",

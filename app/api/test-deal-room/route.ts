@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 
 export async function GET() {
   console.log("🔍 TEST: GET endpoint reached")
@@ -25,7 +26,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error: "Failed to parse request",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? getErrorMessage(error) : "Unknown error",
       },
       { status: 400 },
     )
