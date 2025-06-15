@@ -206,7 +206,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
               try {
                 // Handle different possible formats of attachments
-                let attachments = []
+                let attachments: any[] = []
 
                 if (Array.isArray(listingAttachments.attachments)) {
                   attachments = listingAttachments.attachments

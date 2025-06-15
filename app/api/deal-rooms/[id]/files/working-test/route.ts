@@ -53,7 +53,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     console.log("🟢 WORKING TEST: Files count:", files?.length || 0)
 
     // Step 5: Try to get listing if it exists
-    let listingFiles = []
+    let listingFiles: Array<{ id: string; name: string; source: string; inherited: boolean }> = []
     if (dealRoom.listing_id) {
       console.log("🟢 WORKING TEST: Querying listing for attachments")
       const { data: listing, error: listingError } = await supabase

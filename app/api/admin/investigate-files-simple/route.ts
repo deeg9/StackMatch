@@ -26,7 +26,7 @@ export async function GET() {
     console.log(`🔍 SIMPLE FILE INVESTIGATION: deal_room_files result:`, { count: dealRoomFilesCount })
 
     // Get a sample of files if they exist
-    let sampleFiles = []
+    let sampleFiles: any[] = []
     if (dealRoomFilesCount && dealRoomFilesCount > 0) {
       const { data: files } = await supabase.from("deal_room_files").select("*").limit(5)
 
