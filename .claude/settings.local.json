@@ -26,7 +26,9 @@
       "Bash(echo \"$file\")",
       "Bash(fi)",
       "Bash(done)",
-      "Bash(echo \"Updating $file\")"
+      "Bash(echo \"Updating $file\")",
+      "Bash(timeout 60 npm run build)",
+      "Bash(timeout 60 npx next build)"
     ],
     "deny": []
   }

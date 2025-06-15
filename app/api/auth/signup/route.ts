@@ -12,9 +12,8 @@ export async function POST(request: NextRequest) {
   console.log("SIGNUP_API: === ROUTE ENTRY ===")
   console.log("SIGNUP_API: Timestamp:", new Date().toISOString())
 
-  const cookieStore = cookies()
   // Client for user authentication (uses anon key initially, then user session)
-  const userAuthClient = createUserContextClient(cookieStore)
+  const userAuthClient = createUserContextClient()
   // Client for administrative database operations (uses service_role key)
   const serviceRoleClient = createServiceRoleClient()
 
