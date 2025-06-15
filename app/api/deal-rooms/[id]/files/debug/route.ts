@@ -27,7 +27,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    const { user, error: authError } = await authenticateUser(supabase)
+    const { user, error: authError } = await authenticateUser(request)
 
     if (authError || !user) {
       debugResults.steps.authentication = {

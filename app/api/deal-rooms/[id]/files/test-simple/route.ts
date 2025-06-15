@@ -41,7 +41,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       // Test 4: Authentication
       console.log(`🔍 SIMPLE TEST: Test 4 - Authentication`)
       try {
-        const { user, error: authError } = await authenticateUser(supabase)
+        const { user, error: authError } = await authenticateUser(request)
 
         if (authError || !user) {
           testResults.tests.authentication = {

@@ -34,7 +34,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     const supabase = createClient(cookieStore)
 
     // Authenticate user
-    const { user, error: authError } = await authenticateUser(supabase)
+    const { user, error: authError } = await authenticateUser(request)
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
