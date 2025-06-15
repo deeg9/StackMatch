@@ -1,3 +1,5 @@
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   console.log("🟡 CAREFUL TEST: Starting careful files test")
   console.log("🟡 CAREFUL TEST: Deal room ID:", params.id)
