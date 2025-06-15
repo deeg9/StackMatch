@@ -1,7 +1,7 @@
 import type { ListingFormData } from "@/types/listing-types"
 import type { ConversationSession } from "@/types/ai-listing-types"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { sanitizeFieldValue, validateFieldValue } from "./response-parser"
 
 /**

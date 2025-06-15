@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { getCurrentUser, logUserActivity } from "@/lib/auth"
 
 export async function POST(request: Request) {

@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import type { Message as MessageType } from "@/types" // Use our MessageType
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {

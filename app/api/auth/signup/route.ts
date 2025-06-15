@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { cookies } from "next/headers"
 // Import both client creation functions
-import { createClient as createUserContextClient } from "@/lib/supabase/server" // For user context operations
+import { createClient as createUserContextClient } from "@/lib/supabase/client-wrapper" // For user context operations
 import { createServiceRoleClient } from "@/lib/supabase/server" // For service role operations
 
 // Helper function for a short delay

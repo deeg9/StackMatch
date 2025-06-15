@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { getAuthUser } from "@/lib/auth/api-utils"
 import { ListingIntegrationService } from "@/lib/ai-listing/integration-service"
 

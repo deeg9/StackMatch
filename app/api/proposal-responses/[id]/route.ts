@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { getCurrentUser } from "@/lib/auth/api-utils"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {

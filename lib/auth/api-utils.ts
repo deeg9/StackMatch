@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server"
 import { createClient } from "@supabase/supabase-js"
-import { createClient as createServerClient } from "@/lib/supabase/server"
+import { createClient as createServerClient } from "@/lib/supabase/client-wrapper"
 import { cookies } from "next/headers"
 
 export interface AuthResult {

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { enhanceFieldServer } from "@/lib/ai-listing/server-ai-utils"
 
 export async function POST(request: Request) {
