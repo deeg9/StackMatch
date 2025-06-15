@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
           lastSeen: p.users.last_active,
         }))
 
-      const lastMessage = lastMessages?.find((m) => m.conversation_id === conv.conversations.id)
+      const lastMessage = lastMessages?.find((m: any) => m.conversation_id === conv.conversations.id)
       const lastMessageFormatted = lastMessage
         ? {
             id: lastMessage.id,

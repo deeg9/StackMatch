@@ -36,8 +36,8 @@ export async function GET(request: NextRequest) {
       results.tables.listings = {
         success: true,
         columns: listingsColumns,
-        hasTimelineColumn: listingsColumns.some((col) => col.column_name === "timeline"),
-        hasAttachmentsColumn: listingsColumns.some((col) => col.column_name === "attachments"),
+        hasTimelineColumn: listingsColumns.some((col: any) => col.column_name === "timeline"),
+        hasAttachmentsColumn: listingsColumns.some((col: any) => col.column_name === "attachments"),
       }
     } catch (error: any) {
       results.tables.listings = {
@@ -110,7 +110,7 @@ export async function GET(request: NextRequest) {
       results.tables.proposals = {
         success: true,
         columns: proposalsColumns,
-        hasAttachmentsColumn: proposalsColumns.some((col) => col.column_name === "attachments"),
+        hasAttachmentsColumn: proposalsColumns.some((col: any) => col.column_name === "attachments"),
       }
     } catch (error: any) {
       results.tables.proposals = {

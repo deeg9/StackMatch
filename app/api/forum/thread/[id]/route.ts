@@ -154,7 +154,7 @@ const mockComments: ForumComment[] = [
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const threadId = params.id
-    const thread = mockThreads.find((t) => t.id === threadId)
+    const thread = mockThreads.find((t: any) => t.id === threadId)
 
     if (!thread) {
       return NextResponse.json({ error: "Thread not found" }, { status: 404 })

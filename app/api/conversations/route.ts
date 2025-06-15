@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
         // or comparing message created_at with participant's last_read_at.
         let unreadCount = 0
         if (lastMessage && lastMessage.senderId !== currentUserId) {
-          const participantSelf = participantsData?.find((p) => p.user_id === currentUserId)
+          const participantSelf = participantsData?.find((p: any) => p.user_id === currentUserId)
           if (
             participantSelf?.last_read_at &&
             new Date(lastMessage.timestamp) > new Date(participantSelf.last_read_at)

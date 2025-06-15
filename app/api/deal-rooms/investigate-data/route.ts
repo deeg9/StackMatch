@@ -126,7 +126,7 @@ export async function GET(request: NextRequest) {
             id: dealRoomId,
             room: specificDealRoom,
             participants: specificParticipants,
-            userHasAccess: specificParticipants?.some((p) => p.user_id === user.id) || false,
+            userHasAccess: specificParticipants?.some((p: any) => p.user_id === user.id) || false,
           }
         : null,
       orphanedRooms: {
