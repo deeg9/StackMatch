@@ -91,7 +91,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     const participantIds = [dealRoom.buyer_id, dealRoom.seller_id, ...(participants?.map((p: any) => p.user_id) || [])]
 
     // Remove duplicates
-    const uniqueParticipantIds = [...new Set(participantIds)]
+    const uniqueParticipantIds = Array.from(new Set(participantIds))
 
     await notifyClosureConfirmed(
       params.id,

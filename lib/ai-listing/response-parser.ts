@@ -257,7 +257,7 @@ export function extractKeywords(text: string): string[] {
     "am",
   ])
 
-  return [...new Set(words.filter((word) => !stopWords.has(word)))].slice(0, 10)
+  return Array.from(new Set(words.filter((word) => !stopWords.has(word)))).slice(0, 10)
 }
 
 export function generateFormSummary(formData: Partial<ListingFormData>): string {

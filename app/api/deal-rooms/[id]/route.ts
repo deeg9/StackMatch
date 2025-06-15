@@ -239,7 +239,7 @@ async function fetchMessages(supabase: any, dealRoomId: string) {
 
   // Fetch sender data for messages
   if (data && data.length > 0) {
-    const senderIds = [...new Set(data.map((m: any) => m.sender_id))]
+    const senderIds = Array.from(new Set(data.map((m: any) => m.sender_id)))
     const { data: senders, error: sendersError } = await supabase
       .from("profiles")
       .select(`
