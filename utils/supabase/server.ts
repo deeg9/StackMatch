@@ -23,7 +23,7 @@ export function createClient(cookieStore?: ReturnType<typeof cookies>) {
   let allCookies: string[] = []
   try {
     // This might throw in some contexts
-    allCookies = store.getAll().map((c) => c.name)
+    allCookies = store.getAll().map((c: any) => c.name)
   } catch (e) {
     console.log(`🔍 SUPABASE SERVER [${requestId}]: Could not get all cookies`)
   }

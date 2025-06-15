@@ -238,7 +238,7 @@ export default async function SellerDashboardPage() {
 
     const successRate = 0 // Simplified for debugging
     const averageRating = "N/A"
-    const recentProposals = recentProposalsData.map((p) => ({
+    const recentProposals = recentProposalsData.map((p: any) => ({
       ...p,
       client_company_name: "Unknown Client", // We'll fetch this later when needed
     })) as DashboardProposal[]

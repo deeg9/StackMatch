@@ -55,10 +55,10 @@ export default function EditListingPage() {
           tags: rawData.required_skills,
           aboutBusiness: rawData.about_business,
           aboutCompany: rawData.about_company,
-          attachments: rawData.attachments?.map((a) => ({ id: a.id, name: a.name, size: a.size })) as AttachmentFile[],
+          attachments: rawData.attachments?.map((a: any) => ({ id: a.id, name: a.name, size: a.size })) as AttachmentFile[],
           successMetrics: rawData.success_metrics as SuccessMetric[],
           currentChallenges: rawData.current_challenges as Challenge[],
-          timelinePhases: rawData.timeline_phases?.map((p) => ({
+          timelinePhases: rawData.timeline_phases?.map((p: any) => ({
             id: p.id,
             title: p.title,
             startDate: p.startDate ? p.startDate.split("T")[0] : "",

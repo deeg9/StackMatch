@@ -121,7 +121,7 @@ export function validateFieldValue(fieldName: string, value: any): { isValid: bo
       if (!Array.isArray(value)) {
         return { isValid: false, error: "Must be an array" }
       }
-      if (value.some((item) => typeof item !== "string" || !item.trim())) {
+      if (value.some((item: any) => typeof item !== "string" || !item.trim())) {
         return { isValid: false, error: "All items must be non-empty strings" }
       }
       break
@@ -159,8 +159,8 @@ export function sanitizeFieldValue(fieldName: string, value: any): any {
     case "timelinePhases":
       if (Array.isArray(value)) {
         return value
-          .filter((item) => typeof item === "string" && item.trim())
-          .map((item) => item.trim())
+          .filter((item: any) => typeof item === "string" && item.trim())
+          .map((item: any) => item.trim())
           .slice(0, 20) // Limit array size
       }
       return []

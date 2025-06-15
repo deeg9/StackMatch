@@ -57,7 +57,7 @@ export function RealTimeVerification({ endorsements, platforms, onVerificationCo
   }, [autoVerifyEnabled])
 
   const handleVerifyEndorsement = async (endorsement: Endorsement) => {
-    const platform = platforms.find((p) => p.id === endorsement.platformId)
+    const platform = platforms.find((p: any) => p.id === endorsement.platformId)
     if (!platform) return
 
     setVerificationStatuses(
@@ -334,7 +334,7 @@ export function RealTimeVerification({ endorsements, platforms, onVerificationCo
           <div className="space-y-3">
             {endorsements.map((endorsement) => {
               const status = verificationStatuses.get(endorsement.id)
-              const platform = platforms.find((p) => p.id === endorsement.platformId)
+              const platform = platforms.find((p: any) => p.id === endorsement.platformId)
 
               return (
                 <Card key={endorsement.id}>

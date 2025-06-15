@@ -72,7 +72,7 @@ export function VerificationSystemTest() {
       // Set a failed state
       setHealthCheck({
         overall: "critical",
-        platforms: platforms.map((p) => ({
+        platforms: platforms.map((p: any) => ({
           platform: p.id,
           status: "failed",
           responseTime: 0,
@@ -107,7 +107,7 @@ export function VerificationSystemTest() {
 
       // Update the health check with the new result
       if (healthCheck) {
-        const updatedPlatforms = healthCheck.platforms.map((p) => (p.platform === platformId ? result : p))
+        const updatedPlatforms = healthCheck.platforms.map((p: any) => (p.platform === platformId ? result : p))
         setHealthCheck({
           ...healthCheck,
           platforms: updatedPlatforms,

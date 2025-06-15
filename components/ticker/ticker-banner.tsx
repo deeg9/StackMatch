@@ -72,7 +72,7 @@ export function TickerBanner({ items }: TickerBannerProps = {}) {
     >
       <div className="ticker-container overflow-hidden whitespace-nowrap relative">
         <div className={`ticker-content ${isPaused ? "paused" : ""}`}>
-          {tickerItems.map((item) => (
+          {tickerItems.map((item: any) => (
             <span key={item.id} className="inline-block mx-8 text-sm font-medium">
               {getIcon(item.type || "new")}
               {item.message || item.text}

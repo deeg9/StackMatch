@@ -201,7 +201,7 @@ export function ChatInterface({ isOpen, onClose, initialConversationId, currentU
   const activeConversationData = conversations.find((c) => c.id === activeConversationId)
   const activeMessages = activeConversationId ? messages[activeConversationId] || [] : []
 
-  const otherParticipant = activeConversationData?.participants.find((p) => p.user_id !== currentUserProfile?.id)
+  const otherParticipant = activeConversationData?.participants.find((p: any) => p.user_id !== currentUserProfile?.id)
 
   const conversationTypingUsers = typingUsers.filter(
     (tu) => tu.conversationId === activeConversationId && tu.userId !== currentUserProfile?.id,
@@ -243,7 +243,7 @@ export function ChatInterface({ isOpen, onClose, initialConversationId, currentU
                 <div className="p-2">
                   {filteredConversations.map((conversation) => {
                     const otherUserDisplay =
-                      conversation.participants.find((p) => p.user_id !== currentUserProfile?.id) ||
+                      conversation.participants.find((p: any) => p.user_id !== currentUserProfile?.id) ||
                       conversation.participants[0]
                     const isActive = conversation.id === activeConversationId
 

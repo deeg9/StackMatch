@@ -113,7 +113,7 @@ const messagesSlice = createSlice({
         state.messages[conversationId] = []
       }
       // Avoid duplicates if message already added via optimistic update or REST
-      if (!state.messages[conversationId].find((m) => m.id === message.id)) {
+      if (!state.messages[conversationId].find((m: any) => m.id === message.id)) {
         state.messages[conversationId].push(message)
       }
 
@@ -156,7 +156,7 @@ const messagesSlice = createSlice({
       const conversationMessages = state.messages[conversation_id]
 
       if (conversationMessages) {
-        const messageIndex = conversationMessages.findIndex((m) => m.id === id)
+        const messageIndex = conversationMessages.findIndex((m: any) => m.id === id)
         if (messageIndex !== -1) {
           conversationMessages[messageIndex] = {
             ...conversationMessages[messageIndex],
@@ -181,10 +181,10 @@ const messagesSlice = createSlice({
       const conversationMessages = state.messages[conversationId]
 
       if (conversationMessages) {
-        state.messages[conversationId] = conversationMessages.filter((m) => m.id !== messageId)
+        state.messages[conversationId] = conversationMessages.filter((m: any) => m.id !== messageId)
 
         // Update last message in conversation if this was the last message
-        const conversation = state.conversations.find((c) => c.id === conversationId)
+        const conversation = state.conversations.find((c: any) => c.id === conversationId)
         if (conversation && conversation.lastMessage?.id === messageId) {
           const remainingMessages = state.messages[conversationId]
           if (remainingMessages.length > 0) {
@@ -203,9 +203,9 @@ const messagesSlice = createSlice({
       }
     },
     updateConversationLastRead: (state, action: PayloadAction<{ conversationId: string; lastReadAt: string }>) => {
-      const conv = state.conversations.find((c) => c.id === action.payload.conversationId)
+      const conv = state.conversations.find((c: any) => c.id === action.payload.conversationId)
       if (conv) {
-        const participant = conv.participants.find((p) => p.user_id === state.currentUserId)
+        const participant = conv.participants.find((p: any) => p.user_id === state.currentUserId)
         if (participant) {
           participant.last_read_at = action.payload.lastReadAt
         }
@@ -215,7 +215,7 @@ const messagesSlice = createSlice({
     // Update conversation metadata
     updateConversation: (state, action: PayloadAction<Partial<Conversation> & { id: string }>) => {
       const { id, ...updates } = action.payload
-      const conversationIndex = state.conversations.findIndex((c) => c.id === id)
+      const conversationIndex = state.conversations.findIndex((c: any) => c.id === id)
       if (conversationIndex !== -1) {
         state.conversations[conversationIndex] = {
           ...state.conversations[conversationIndex],
@@ -227,14 +227,14 @@ const messagesSlice = createSlice({
     addConversation: (state, action: PayloadAction<Conversation>) => {
       const newConversation = action.payload
       // Check if conversation already exists
-      if (!state.conversations.find((c) => c.id === newConversation.id)) {
+      if (!state.conversations.find((c: any) => c.id === newConversation.id)) {
         state.conversations.unshift(newConversation) // Add to beginning
       }
     },
     // Remove a conversation
     removeConversation: (state, action: PayloadAction<string>) => {
       const conversationId = action.payload
-      state.conversations = state.conversations.filter((c) => c.id !== conversationId)
+      state.conversations = state.conversations.filter((c: any) => c.id !== conversationId)
       // Also remove messages for this conversation
       delete state.messages[conversationId]
       // Clear active conversation if it was the removed one
@@ -260,8 +260,8 @@ const messagesSlice = createSlice({
     // Online status - bulk update
     setOnlineUsers: (state, action: PayloadAction<string[]>) => {
       state.onlineUsers = action.payload
-      state.conversations.forEach((c) => {
-        c.participants.forEach((p) => {
+      state.conversations.forEach((c: any) => {
+        c.participants.forEach((p: any) => {
           p.isOnline = action.payload.includes(p.user_id)
         })
       })
@@ -273,8 +273,8 @@ const messagesSlice = createSlice({
         state.onlineUsers.push(userId)
       }
       // Update participant status in conversations
-      state.conversations.forEach((c) => {
-        c.participants.forEach((p) => {
+      state.conversations.forEach((c: any) => {
+        c.participants.forEach((p: any) => {
           if (p.user_id === userId) {
             p.isOnline = true
           }
@@ -285,8 +285,8 @@ const messagesSlice = createSlice({
       const userId = action.payload
       state.onlineUsers = state.onlineUsers.filter((id) => id !== userId)
       // Update participant status in conversations
-      state.conversations.forEach((c) => {
-        c.participants.forEach((p) => {
+      state.conversations.forEach((c: any) => {
+        c.participants.forEach((p: any) => {
           if (p.user_id === userId) {
             p.isOnline = false
           }
@@ -295,21 +295,21 @@ const messagesSlice = createSlice({
     },
     // Local encryption state (if needed, or handle per conversation)
     toggleConversationEncryption: (state, action: PayloadAction<string>) => {
-      const conv = state.conversations.find((c) => c.id === action.payload)
+      const conv = state.conversations.find((c: any) => c.id === action.payload)
       if (conv) {
         conv.encryptionEnabled = !conv.encryptionEnabled
       }
     },
     // Mark conversation as read
     markConversationAsRead: (state, action: PayloadAction<string>) => {
-      const conversation = state.conversations.find((c) => c.id === action.payload)
+      const conversation = state.conversations.find((c: any) => c.id === action.payload)
       if (conversation) {
         conversation.unreadCount = 0
       }
     },
     // Update unread count
     updateUnreadCount: (state, action: PayloadAction<{ conversationId: string; count: number }>) => {
-      const conversation = state.conversations.find((c) => c.id === action.payload.conversationId)
+      const conversation = state.conversations.find((c: any) => c.id === action.payload.conversationId)
       if (conversation) {
         conversation.unreadCount = action.payload.count
       }
@@ -323,13 +323,13 @@ const messagesSlice = createSlice({
       const conversationMessages = state.messages[conversationId]
 
       if (conversationMessages) {
-        const message = conversationMessages.find((m) => m.id === messageId)
+        const message = conversationMessages.find((m: any) => m.id === messageId)
         if (message) {
           if (!message.reactions) {
             message.reactions = []
           }
           // Remove existing reaction from this user for this emoji
-          message.reactions = message.reactions.filter((r) => !(r.emoji === reaction && r.user_id === userId))
+          message.reactions = message.reactions.filter((r: any) => !(r.emoji === reaction && r.user_id === userId))
           // Add new reaction
           message.reactions.push({
             emoji: reaction,
@@ -347,9 +347,9 @@ const messagesSlice = createSlice({
       const conversationMessages = state.messages[conversationId]
 
       if (conversationMessages) {
-        const message = conversationMessages.find((m) => m.id === messageId)
+        const message = conversationMessages.find((m: any) => m.id === messageId)
         if (message && message.reactions) {
-          message.reactions = message.reactions.filter((r) => !(r.emoji === reaction && r.user_id === userId))
+          message.reactions = message.reactions.filter((r: any) => !(r.emoji === reaction && r.user_id === userId))
         }
       }
     },
@@ -375,9 +375,9 @@ const messagesSlice = createSlice({
       })
       .addCase(fetchConversations.fulfilled, (state, action: PayloadAction<Conversation[]>) => {
         state.isLoadingConversations = false
-        state.conversations = action.payload.map((conv) => ({
+        state.conversations = action.payload.map((conv: any) => ({
           ...conv,
-          participants: conv.participants.map((p) => ({ ...p, isOnline: state.onlineUsers.includes(p.user_id) })),
+          participants: conv.participants.map((p: any) => ({ ...p, isOnline: state.onlineUsers.includes(p.user_id) })),
         }))
       })
       .addCase(fetchConversations.rejected, (state, action) => {
@@ -396,7 +396,7 @@ const messagesSlice = createSlice({
           state.messages[action.payload.conversationId] = action.payload.messages
           // Mark conversation as read when messages are fetched for the active one
           if (state.activeConversationId === action.payload.conversationId) {
-            const conversation = state.conversations.find((c) => c.id === action.payload.conversationId)
+            const conversation = state.conversations.find((c: any) => c.id === action.payload.conversationId)
             if (conversation) conversation.unreadCount = 0
           }
         },
@@ -413,11 +413,11 @@ const messagesSlice = createSlice({
         const message = action.payload
         const conversationId = message.conversation_id
         if (!state.messages[conversationId]) state.messages[conversationId] = []
-        if (!state.messages[conversationId].find((m) => m.id === message.id)) {
+        if (!state.messages[conversationId].find((m: any) => m.id === message.id)) {
           // Avoid duplicate if already added optimistically
           state.messages[conversationId].push(message)
         }
-        const conversation = state.conversations.find((c) => c.id === conversationId)
+        const conversation = state.conversations.find((c: any) => c.id === conversationId)
         if (conversation) {
           conversation.lastMessage = {
             id: message.id,
