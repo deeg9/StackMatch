@@ -43,7 +43,7 @@ export async function GET() {
       console.log(`🔍 [${requestId}] USER PROFILE API: Total cookies found: ${allCookies.length}`)
 
       // Filter for Supabase-related cookies
-      const supabaseCookies = allCookies.filter((c) => c.name.includes("supabase") || c.name.includes("sb-"))
+      const supabaseCookies = allCookies.filter((c: any) => c.name.includes("supabase") || c.name.includes("sb-"))
       console.log(`🔍 [${requestId}] USER PROFILE API: Supabase-related cookies:`, supabaseCookies)
     } catch (e) {
       console.log(`🔍 [${requestId}] USER PROFILE API: Could not get all cookies:`, e)

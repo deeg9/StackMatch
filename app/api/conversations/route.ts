@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
     }
 
     const enrichedConversations = await Promise.all(
-      conversationsData.map(async (conv) => {
+      conversationsData.map(async (conv: any) => {
         // Get participants for this conversation
         const { data: participantsData, error: pError } = await supabase
           .from("conversation_participants")

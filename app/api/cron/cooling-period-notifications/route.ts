@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get deal room details for notifications
-    const dealRoomIds = closures.map((c) => c.deal_room_id)
+    const dealRoomIds = closures.map((c: any) => c.deal_room_id)
     const { data: dealRooms, error: dealRoomsError } = await supabase
       .from("deal_rooms")
       .select("id, room_name")
@@ -60,8 +60,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Send notifications
-    const notificationPromises = closures.map((closure) => {
-      const dealRoom = dealRooms?.find((dr) => dr.id === closure.deal_room_id)
+    const notificationPromises = closures.map((closure: any) => {
+      const dealRoom = dealRooms?.find((dr: any) => dr.id === closure.deal_room_id)
       if (!dealRoom) return Promise.resolve()
 
       return notifyCoolingPeriodEnding(
