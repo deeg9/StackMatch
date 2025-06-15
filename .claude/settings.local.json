@@ -29,7 +29,8 @@
       "Bash(echo \"Updating $file\")",
       "Bash(timeout 60 npm run build)",
       "Bash(timeout 60 npx next build)",
-      "Bash(timeout 30 npx next build)"
+      "Bash(timeout 30 npx next build)",
+      "Bash(npm uninstall:*)"
     ],
     "deny": []
   }

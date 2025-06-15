@@ -1,6 +1,6 @@
 // Conversation and messaging related types
 
-export type ConversationType = "PROPOSAL_DISCUSSION" | "DEAL_ROOM" | "GENERAL" | "SUPPORT"
+export type ConversationType = "PROPOSAL_DISCUSSION" | "DEAL_ROOM" | "GENERAL" | "SUPPORT" | "LISTING_INQUIRY"
 
 export interface Conversation {
   id: string
