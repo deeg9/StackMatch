@@ -1,10 +1,10 @@
 "use client"
 
-import { TickerBanner } from "@/components/ticker/ticker-banner"
-import { BrowseHeader } from "@/components/browse-listings/browse-header"
-import { FiltersSection } from "@/components/browse-listings/filters-section"
-import { ListingsGrid } from "@/components/browse-listings/listings-grid"
-import { AuthGuard } from "@/components/auth/auth-guard"
+// import { TickerBanner } from "@/components/ticker/ticker-banner"
+// import { BrowseHeader } from "@/components/browse-listings/browse-header"
+// import { FiltersSection } from "@/components/browse-listings/filters-section"
+// import { ListingsGrid } from "@/components/browse-listings/listings-grid"
+// import { AuthGuard } from "@/components/auth/auth-guard"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "@/hooks/useAppDispatch"
 import { fetchListings, updateFilters } from "@/store/slices/listingsSlice"
@@ -71,19 +71,20 @@ export default function BrowseListingsPage() {
   }
 
   return (
-    <AuthGuard requiredUserType="seller" redirectTo="/login">
+    <div>
+      {/* <AuthGuard requiredUserType="seller" redirectTo="/login"> */}
       <div className="min-h-screen bg-background">
-        <TickerBanner
+        {/* <TickerBanner
           items={[
             { id: "1", text: "Enterprise AWS migration project awarded to CloudExperts" },
             { id: "2", text: `${listings.length} active projects available for proposals` },
             { id: "3", text: "TechSolutions just won a $50K CRM project with GlobalCorp" },
             { id: "4", text: "New AI/ML project posted - $75K budget" },
           ]}
-        />
+        /> */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <BrowseHeader />
-          <FiltersSection onFilterChange={handleFilterChange} />
+          {/* <BrowseHeader />
+          <FiltersSection onFilterChange={handleFilterChange} /> */}
 
           {error && (
             <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6">
@@ -134,7 +135,8 @@ export default function BrowseListingsPage() {
               </div>
             </div>
           ) : (
-            <ListingsGrid listings={listings} />
+            <div>Listings would go here</div>
+            /* <ListingsGrid listings={listings} /> */
           )}
 
           {/* Pagination */}
@@ -161,6 +163,7 @@ export default function BrowseListingsPage() {
           )}
         </div>
       </div>
-    </AuthGuard>
+    </div>
+    /* </AuthGuard> */
   )
 }

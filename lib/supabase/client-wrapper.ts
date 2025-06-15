@@ -61,7 +61,9 @@ export function createClient(cookieStore?: ReadonlyRequestCookies) {
         limit: (count: number) => tableBuilder.limit(count),
         order: (column: string, options?: any) => tableBuilder.order(column, options),
       }
-    }
+    },
+    // Add RPC method for database functions
+    rpc: (functionName: string, params?: any) => (supabase as any).rpc(functionName, params)
   }
 }
 

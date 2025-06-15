@@ -7,18 +7,23 @@ import { Button } from "@/components/ui/button"
 // Define ticker item type
 interface TickerItem {
   id: string
-  message: string
-  type: "deadline" | "new" | "award" | "milestone" | "trending"
+  message?: string
+  text?: string
+  type?: "deadline" | "new" | "award" | "milestone" | "trending"
 }
 
-export function TickerBanner() {
+interface TickerBannerProps {
+  items?: TickerItem[]
+}
+
+export function TickerBanner({ items }: TickerBannerProps = {}) {
   const [dismissed, setDismissed] = useState(false)
   const [tickerItems, setTickerItems] = useState<TickerItem[]>([])
   const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
-    // Initial ticker items - duplicated to ensure continuous flow
-    const initialItems: TickerItem[] = [
+    // Use passed items or fall back to default items
+    const defaultItems: TickerItem[] = [
       { id: "1", message: "ERP Implementation for Manufacturing due in 24 hours", type: "deadline" },
       { id: "2", message: "47 new projects submitted in the last hour", type: "new" },
       { id: "3", message: "TechSolutions just won a $50K CRM project with GlobalCorp", type: "award" },
@@ -31,26 +36,13 @@ export function TickerBanner() {
       { id: "6", message: "High-priority cybersecurity project bids close in 6 hours", type: "deadline" },
       { id: "7", message: "New blockchain integration project posted by FinTech startup", type: "new" },
       { id: "8", message: "Enterprise AWS migration project awarded to CloudExperts", type: "award" },
-      // Duplicate items to ensure continuous flow
-      { id: "9", message: "ERP Implementation for Manufacturing due in 24 hours", type: "deadline" },
-      { id: "10", message: "47 new projects submitted in the last hour", type: "new" },
-      { id: "11", message: "TechSolutions just won a $50K CRM project with GlobalCorp", type: "award" },
-      { id: "12", message: "StackMatch just reached 1,000 successful matches worth $2.5M", type: "milestone" },
-      {
-        id: "13",
-        message: "AI and Machine Learning projects are trending this week with 40% increase",
-        type: "trending",
-      },
-      { id: "14", message: "High-priority cybersecurity project bids close in 6 hours", type: "deadline" },
-      { id: "15", message: "New blockchain integration project posted by FinTech startup", type: "new" },
-      { id: "16", message: "Enterprise AWS migration project awarded to CloudExperts", type: "award" },
     ]
 
-    setTickerItems(initialItems)
-
-    // In a real app, you would fetch ticker items from an API
-    // and potentially set up WebSocket for real-time updates
-  }, [])
+    const finalItems = items && items.length > 0 ? items : defaultItems
+    // Duplicate items to ensure continuous flow
+    const duplicatedItems = [...finalItems, ...finalItems]
+    setTickerItems(duplicatedItems)
+  }, [items])
 
   // Function to get the appropriate icon based on item type
   const getIcon = (type: string) => {
@@ -82,8 +74,8 @@ export function TickerBanner() {
         <div className={`ticker-content ${isPaused ? "paused" : ""}`}>
           {tickerItems.map((item) => (
             <span key={item.id} className="inline-block mx-8 text-sm font-medium">
-              {getIcon(item.type)}
-              {item.message}
+              {getIcon(item.type || "new")}
+              {item.message || item.text}
             </span>
           ))}
         </div>
