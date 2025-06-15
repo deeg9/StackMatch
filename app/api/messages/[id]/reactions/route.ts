@@ -28,7 +28,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: "Failed to fetch reactions" }, { status: 500 })
     }
 
-    const formattedReactions: ReactionType[] = reactionsData.map((r) => {
+    const formattedReactions: ReactionType[] = reactionsData.map((r: any) => {
       // Handle case where profiles might be an array
       const profile = r.profiles ? (Array.isArray(r.profiles) ? r.profiles[0] : r.profiles) : null;
       

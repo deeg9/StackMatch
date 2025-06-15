@@ -305,7 +305,7 @@ export async function POST(request: NextRequest) {
     let parsedBudgetMax = budgetMax
 
     if (typeof budgetMin === "string" && budgetMin.includes("-")) {
-      const [min, max] = budgetMin.split("-").map((b) => {
+      const [min, max] = budgetMin.split("-").map((b: string) => {
         const num = b.replace(/[$k,]/g, "")
         return Number.parseFloat(num) * (b.includes("k") ? 1000 : 1)
       })

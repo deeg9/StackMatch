@@ -35,7 +35,7 @@ export async function GET() {
     // Debug cookies
     let allCookies: Array<{ name: string; hasValue: boolean; valueLength: number }> = []
     try {
-      allCookies = cookieStore.getAll().map((c) => ({
+      allCookies = cookieStore.getAll().map((c: any) => ({
         name: c.name,
         hasValue: !!c.value,
         valueLength: c.value?.length || 0,

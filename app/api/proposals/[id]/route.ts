@@ -196,8 +196,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         .select("id")
         .eq("proposal_id", proposalId)
 
-      const existingMilestoneIds = existingMilestones?.map((m) => m.id) || []
-      const updatedMilestoneIds = updateData.milestones.filter((m) => m.id).map((m) => m.id)
+      const existingMilestoneIds = existingMilestones?.map((m: any) => m.id) || []
+      const updatedMilestoneIds = updateData.milestones.filter((m: any) => m.id).map((m: any) => m.id)
 
       // Find milestones to delete (exist in DB but not in update)
       const milestonesToDelete = existingMilestoneIds.filter((id) => !updatedMilestoneIds.includes(id))

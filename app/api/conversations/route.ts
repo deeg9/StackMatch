@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ conversations: [] })
     }
 
-    const conversationIds = participations.map((p) => p.conversation_id)
+    const conversationIds = participations.map((p: any) => p.conversation_id)
 
     // Get conversation details
     const { data: conversationsData, error: convError } = await supabase
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
         }
 
         const participants: Participant[] =
-          participantsData?.map((p) => {
+          participantsData?.map((p: any) => {
             const profile = Array.isArray(p.profiles) ? p.profiles[0] : p.profiles;
             return {
               id: profile?.id || p.user_id,
