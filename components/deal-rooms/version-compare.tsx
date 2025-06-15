@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux"
 import type { RootState } from "../../store"
 import { uploadNewVersion, setAsCurrentVersion, rollbackVersion } from "../../store/dealRoomsSlice"
 import type { FileVersion } from "../../types"
-import "./version-compare.css"
 
 const VersionCompare: React.FC = () => {
   const dispatch = useDispatch()
