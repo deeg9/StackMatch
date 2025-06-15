@@ -135,7 +135,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     const { data: existingListing, error: fetchError } = await supabase
       .from("listings")
-      .select("buyer_id")
+      .select("buyer_id, published_at")
       .eq("id", listingId)
       .single()
 

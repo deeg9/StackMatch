@@ -41,16 +41,16 @@ export async function GET(request: NextRequest) {
 
     // Transform the data to match the expected format
     const transformedListings = savedListings.map((saved) => ({
-      id: saved.listing.id,
-      companyName: saved.listing.buyer?.company_name || saved.listing.buyer?.full_name || "Unknown Company",
-      title: saved.listing.title,
+      id: saved.listing?.id,
+      companyName: saved.listing?.buyer?.company_name || saved.listing?.buyer?.full_name || "Unknown Company",
+      title: saved.listing?.title,
       budget:
-        saved.listing.budget_min && saved.listing.budget_max
+        saved.listing?.budget_min && saved.listing?.budget_max
           ? `$${saved.listing.budget_min.toLocaleString()} - $${saved.listing.budget_max.toLocaleString()}`
           : "Budget not specified",
-      deadline: saved.listing.bid_deadline ? new Date(saved.listing.bid_deadline).toLocaleDateString() : "No deadline",
-      location: saved.listing.location_preference || "Remote",
-      tags: saved.listing.tags || [],
+      deadline: saved.listing?.bid_deadline ? new Date(saved.listing.bid_deadline).toLocaleDateString() : "No deadline",
+      location: saved.listing?.location_preference || "Remote",
+      tags: saved.listing?.tags || [],
       savedAt: saved.saved_at,
     }))
 
@@ -124,19 +124,19 @@ export async function POST(request: NextRequest) {
 
     // Transform the data
     const transformedListing = {
-      id: savedListing.listing.id,
+      id: savedListing.listing?.id,
       companyName:
-        savedListing.listing.buyer?.company_name || savedListing.listing.buyer?.full_name || "Unknown Company",
-      title: savedListing.listing.title,
+        savedListing.listing?.buyer?.company_name || savedListing.listing?.buyer?.full_name || "Unknown Company",
+      title: savedListing.listing?.title,
       budget:
-        savedListing.listing.budget_min && savedListing.listing.budget_max
+        savedListing.listing?.budget_min && savedListing.listing?.budget_max
           ? `$${savedListing.listing.budget_min.toLocaleString()} - $${savedListing.listing.budget_max.toLocaleString()}`
           : "Budget not specified",
-      deadline: savedListing.listing.bid_deadline
+      deadline: savedListing.listing?.bid_deadline
         ? new Date(savedListing.listing.bid_deadline).toLocaleDateString()
         : "No deadline",
-      location: savedListing.listing.location_preference || "Remote",
-      tags: savedListing.listing.tags || [],
+      location: savedListing.listing?.location_preference || "Remote",
+      tags: savedListing.listing?.tags || [],
       savedAt: savedListing.saved_at,
     }
 

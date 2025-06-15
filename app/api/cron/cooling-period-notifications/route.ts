@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { notifyCoolingPeriodEnding } from "@/lib/notifications/deal-room-closure-notifications"
 
 // This endpoint should be called by a cron job once a day

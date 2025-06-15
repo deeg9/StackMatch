@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { ClosureReasonCategory, type ClosureOutcomeType } from "@/types/deal-room-types"
 
 // Types for notification templates

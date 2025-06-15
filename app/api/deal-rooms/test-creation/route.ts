@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 
 export async function POST(request: NextRequest) {
   console.log("🔍 TEST CREATION: Starting step-by-step test")

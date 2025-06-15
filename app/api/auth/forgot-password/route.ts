@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-wrapper"
 import { logUserActivity } from "@/lib/auth"
 
 export async function POST(request: NextRequest) {
@@ -13,9 +13,9 @@ export async function POST(request: NextRequest) {
     const supabase = createClient()
 
     // Check if user exists
-    const { data: user } = await supabase.from("users").select("id").eq("email", email).single()
+    const { data: user, error: userError } = await supabase.from("users").select("id").eq("email", email).single()
 
-    if (!user) {
+    if (userError || !user) {
       // Don't reveal if email exists or not for security
       return NextResponse.json({
         success: true,

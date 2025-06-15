@@ -18,7 +18,15 @@
       "Bash(git config:*)",
       "Bash(npm search:*)",
       "Bash(npm view:*)",
-      "Bash(timeout 30 npm run lint:*)"
+      "Bash(timeout 30 npm run lint:*)",
+      "Bash(for:*)",
+      "Bash(do)",
+      "Bash(if ! grep -q \"client-wrapper\" \"$file\")",
+      "Bash(then)",
+      "Bash(echo \"$file\")",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(echo \"Updating $file\")"
     ],
     "deny": []
   }
