@@ -1,3 +1,5 @@
+import { getErrorMessage } from "@/lib/utils/error-handler"
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   console.log("🟢 WORKING TEST: Starting working files test")
   console.log("🟢 WORKING TEST: Deal room ID:", params.id)
