@@ -1,5 +1,4 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
+import { createClientWithCookies } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
 import { ProposalRequestSchema } from "@/lib/validation"
 import { ProposalNotificationService } from "@/lib/notifications/proposal-notification-service"
@@ -7,7 +6,7 @@ import { ProposalNotificationService } from "@/lib/notifications/proposal-notifi
 export const dynamic = "force-dynamic"
 
 export async function POST(request: Request) {
-  const supabase = createRouteHandlerClient({ cookies })
+  const supabase = await createClientWithCookies()
 
   try {
     const {

@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
+import { createClientWithCookies } from "@/lib/supabase/server"
 
 export async function PATCH(request: Request, { params }: { params: { approvalId: string } }) {
-  const supabase = createRouteHandlerClient({ cookies })
+  const supabase = await createClientWithCookies()
   const { approvalId } = params
 
   const {

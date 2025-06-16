@@ -3,19 +3,23 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js"
 import { cookies } from "next/headers"
 import type { Database } from "@/types/supabase"
 
-export async function createClient() {
+export function createClient() {
+  // Return a client that doesn't use cookies for contexts where cookies aren't available
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    throw new Error("Missing required Supabase environment variables")
+  }
+
+  // For non-auth operations, we can use the basic client
+  return createSupabaseClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
+}
+
+export async function createClientWithCookies() {
   const cookieStore = await cookies()
 
-  // Log the environment variables (without revealing secrets)
-  console.log(
-    "🔍 SUPABASE SERVER: Creating client with URL:",
-    process.env.NEXT_PUBLIC_SUPABASE_URL ? "URL defined" : "URL missing",
-    "and ANON KEY:",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "KEY defined" : "KEY missing",
-  )
-
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.error("🔍 SUPABASE SERVER: Missing required environment variables!")
     throw new Error("Missing required Supabase environment variables")
   }
 

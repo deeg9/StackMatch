@@ -1,9 +1,8 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { NextResponse } from "next/server"
-import { cookies } from "next/headers"
 import { z } from "zod"
 import { proposalResponseSchema } from "@/lib/validations/proposal-response"
 import { ProposalNotificationService } from "@/lib/notifications/proposal-notification-service"
+import { createClientWithCookies } from "@/lib/supabase/server"
 
 const proposalResponseCreateSchema = proposalResponseSchema
 
@@ -16,7 +15,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   try {
     const body = await req.json()
     const { requestId, response } = bodySchema.parse(body)
-    const supabase = createRouteHandlerClient({ cookies: await cookies() })
+    const supabase = await createClientWithCookies()
 
     const {
       data: { user },

@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
+import { createClientWithCookies } from "@/lib/supabase/server"
 import type { Contract } from "@/types"
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const supabase = createRouteHandlerClient({ cookies })
+  const supabase = await createClientWithCookies()
   const dealRoomId = params.id
 
   if (!dealRoomId) {

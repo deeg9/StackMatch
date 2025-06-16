@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server"
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
 import { put } from "@vercel/blob"
 import type { ContractFileVersion } from "@/types"
 import { getErrorMessage } from "@/lib/utils/error-handler"
+import { createClientWithCookies } from "@/lib/supabase/server"
 
 export async function POST(request: Request, { params }: { params: { fileId: string } }) {
-  const supabase = createRouteHandlerClient({ cookies })
+  const supabase = await createClientWithCookies()
   const { fileId: contract_file_id } = params
 
   const {
