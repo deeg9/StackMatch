@@ -5,12 +5,7 @@ import { z } from "zod"
 import { proposalResponseSchema } from "@/lib/validations/proposal-response"
 import { ProposalNotificationService } from "@/lib/notifications/proposal-notification-service"
 
-const proposalResponseCreateSchema = proposalResponseSchema.omit({
-  id: true,
-  created_at: true,
-  request_id: true,
-  seller_id: true,
-})
+const proposalResponseCreateSchema = proposalResponseSchema
 
 const bodySchema = z.object({
   requestId: z.string(),
