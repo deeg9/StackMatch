@@ -28,7 +28,7 @@ export async function GET() {
       return NextResponse.json({
         success: false,
         error: "Client creation failed",
-        details: clientError.message,
+        details: getErrorMessage(clientError),
         envTest,
       })
     }
@@ -62,7 +62,7 @@ export async function GET() {
     } catch (authException: unknown) {
       authTest = {
         error: "Auth call failed",
-        details: authException.message,
+        details: getErrorMessage(authException),
       }
       console.error("🔍 SUPABASE TEST: Auth exception:", authException)
     }
@@ -82,7 +82,7 @@ export async function GET() {
     } catch (dbException: unknown) {
       dbTest = {
         error: "Database query failed",
-        details: dbException.message,
+        details: getErrorMessage(dbException),
       }
       console.error("🔍 SUPABASE TEST: Database exception:", dbException)
     }
@@ -105,7 +105,7 @@ export async function GET() {
     } catch (bpException: unknown) {
       buyerProfileTest = {
         error: "Buyer profiles query failed",
-        details: bpException.message,
+        details: getErrorMessage(bpException),
       }
       console.error("🔍 SUPABASE TEST: Buyer profiles exception:", bpException)
     }
@@ -130,7 +130,7 @@ export async function GET() {
     } catch (cException: unknown) {
       christopherTest = {
         error: "Christopher query failed",
-        details: cException.message,
+        details: getErrorMessage(cException),
       }
       console.error("🔍 SUPABASE TEST: Christopher exception:", cException)
     }
