@@ -63,7 +63,7 @@ export function processListingAttachments(listing: any): InheritedFile[] {
   }
 
   const inheritedFiles = attachmentArray
-    .map((attachment, index) => {
+    .map((attachment, index: any) => {
       try {
         return formatInheritedFile(attachment, "listing", listing, index)
       } catch (error) {

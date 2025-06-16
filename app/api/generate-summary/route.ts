@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     }
     if (uploadedFiles && uploadedFiles.length > 0) {
       prompt += `\n\nUploaded Document Contents:\n`
-      uploadedFiles.forEach((fileContent, index) => {
+      uploadedFiles.forEach((fileContent, index: any) => {
         prompt += `--- Document ${index + 1} ---\n${fileContent}\n--- End Document ${index + 1} ---\n\n`
       })
     }

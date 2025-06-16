@@ -52,10 +52,10 @@ export async function GET(request: NextRequest) {
 
     // Transform the data
     const transformedThreads =
-      threads?.map((thread) => {
+      threads?.map((thread: any) => {
         // Calculate vote count
-        const upvotes = thread.forum_votes?.filter((vote: any) => vote.vote_type === "UP").length || 0
-        const downvotes = thread.forum_votes?.filter((vote: any) => vote.vote_type === "DOWN").length || 0
+        const upvotes = thread.forum_votes?.filter((vote: any: any) => vote.vote_type === "UP").length || 0
+        const downvotes = thread.forum_votes?.filter((vote: any: any) => vote.vote_type === "DOWN").length || 0
         const voteScore = upvotes - downvotes
 
         return {

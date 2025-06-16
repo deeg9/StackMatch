@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
 
     // Apply verified filter if the field exists
     if (verified === "true") {
-      filteredData = filteredData.filter((provider) => provider.verified === true || provider.is_verified === true)
+      filteredData = filteredData.filter((provider: any) => provider.verified === true || provider.is_verified === true)
     }
 
     // Apply services filter (mock data for now)

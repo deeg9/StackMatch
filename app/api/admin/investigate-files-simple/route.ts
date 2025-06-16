@@ -181,7 +181,7 @@ export async function GET() {
       dealRoomFilesCount: dealRoomFilesCount || 0,
       targetListingFound: listingResult.found,
       targetProposalFound: proposalResult.found,
-      alternativeTablesFound: Object.keys(tableResults).filter((t) => tableResults[t].exists).length,
+      alternativeTablesFound: Object.keys(tableResults).filter((t: any) => tableResults[t].exists).length,
     }
 
     console.log(`🔍 SIMPLE FILE INVESTIGATION: Summary:`, summary)
@@ -202,8 +202,8 @@ export async function GET() {
             buyerId: listingRecord.buyer_id,
             allColumns: Object.keys(listingRecord),
             fileColumns: Object.keys(listingRecord)
-              .filter((key) => key.includes("file") || key.includes("attachment") || key.includes("document"))
-              .map((column) => ({
+              .filter((key: any) => key.includes("file") || key.includes("attachment") || key.includes("document"))
+              .map((column: any) => ({
                 column,
                 value: listingRecord[column],
                 hasData: !!listingRecord[column],
@@ -211,8 +211,8 @@ export async function GET() {
               })),
             jsonFileColumns,
             potentialFileData: Object.keys(listingRecord)
-              .filter((key) => listingRecord[key] && typeof listingRecord[key] === "object")
-              .map((column) => ({
+              .filter((key: any) => listingRecord[key] && typeof listingRecord[key] === "object")
+              .map((column: any) => ({
                 column,
                 value: listingRecord[column],
                 type: typeof listingRecord[column],
@@ -228,7 +228,7 @@ export async function GET() {
             sellerId: proposalRecord.seller_id,
             createdAt: proposalRecord.created_at,
             allColumns: Object.keys(proposalRecord),
-            fileColumns: proposalFileColumns.map((column) => ({
+            fileColumns: proposalFileColumns.map((column: any) => ({
               column,
               value: proposalRecord[column],
               hasData: !!proposalRecord[column],
@@ -236,12 +236,12 @@ export async function GET() {
             })),
             potentialFileData: Object.keys(proposalRecord)
               .filter(
-                (key) =>
+                (key: any) =>
                   proposalRecord[key] &&
                   (typeof proposalRecord[key] === "object" ||
                     (typeof proposalRecord[key] === "string" && proposalRecord[key].length > 5)),
               )
-              .map((column) => ({
+              .map((column: any) => ({
                 column,
                 value: proposalRecord[column],
                 type: typeof proposalRecord[column],

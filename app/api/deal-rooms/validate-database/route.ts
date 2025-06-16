@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     const requiredTables = ["profiles", "listings", "proposals", "deal_rooms"]
     const existingTables = tables?.map((t: any) => t.table_name) || []
-    const missingTables = requiredTables.filter((table: any) => !existingTables.includes(table))
+    const missingTables = requiredTables.filter((table: any: any) => !existingTables.includes(table))
 
     if (missingTables.length > 0) {
       return NextResponse.json(

@@ -60,7 +60,7 @@ export function useNotifications() {
 
       if (response.ok) {
         setNotifications((prev) =>
-          prev.map((notif) => (notificationIds.includes(notif.id) ? { ...notif, is_read: true } : notif)),
+          prev.map((notif: any) => (notificationIds.includes(notif.id) ? { ...notif, is_read: true } : notif)),
         )
         setUnreadCount((prev) => Math.max(0, prev - notificationIds.length))
       }
@@ -78,7 +78,7 @@ export function useNotifications() {
       })
 
       if (response.ok) {
-        setNotifications((prev) => prev.map((notif) => ({ ...notif, is_read: true })))
+        setNotifications((prev) => prev.map((notif: any) => ({ ...notif, is_read: true })))
         setUnreadCount(0)
       }
     } catch (error) {

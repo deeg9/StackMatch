@@ -26,7 +26,7 @@ export function createClient(cookieStore?: ReadonlyRequestCookies) {
           },
           setAll(cookiesToSet) {
             try {
-              cookiesToSet.forEach(({ name, value, options }) => {
+              cookiesToSet.forEach(({ name, value, options }: any) => {
                 // For ReadonlyRequestCookies, we can't set cookies directly
                 // This is expected behavior in some server contexts
               })

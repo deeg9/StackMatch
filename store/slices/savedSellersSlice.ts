@@ -53,7 +53,7 @@ export const removeSavedSeller = createAsyncThunk("savedSellers/removeSavedSelle
   try {
     // Remove from localStorage
     const existingSaved = JSON.parse(localStorage.getItem("savedSellers") || "[]")
-    const updatedSaved = existingSaved.filter((seller: SavedSeller) => seller.id !== sellerId)
+    const updatedSaved = existingSaved.filter((seller: SavedSeller: any) => seller.id !== sellerId)
     localStorage.setItem("savedSellers", JSON.stringify(updatedSaved))
 
     return sellerId
@@ -102,7 +102,7 @@ const savedSellersSlice = createSlice({
         state.error = null
       })
       .addCase(removeSavedSeller.fulfilled, (state, action) => {
-        state.savedSellers = state.savedSellers.filter((seller) => seller.id !== action.payload)
+        state.savedSellers = state.savedSellers.filter((seller: any) => seller.id !== action.payload)
         state.isLoading = false
         state.error = null
       })

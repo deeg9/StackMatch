@@ -27,8 +27,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Determine overall health
-    const successCount = results.filter((r) => r.status === "success").length
-    const failedCount = results.filter((r) => r.status === "failed").length
+    const successCount = results.filter((r: any) => r.status === "success").length
+    const failedCount = results.filter((r: any) => r.status === "failed").length
 
     let overall: "healthy" | "degraded" | "critical"
     if (failedCount === 0) {

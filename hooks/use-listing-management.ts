@@ -37,7 +37,7 @@ export function useListingManagement(listingId?: string) {
         current_challenges: formData.currentChallenges || [],
         timeline_phases: formData.timelinePhases || [],
         detailedNeeds:
-          formData.detailedNeeds?.map((need) => ({
+          formData.detailedNeeds?.map((need: any) => ({
             title: need.title,
             description: need.description,
             priority: "medium", // Default priority

@@ -207,12 +207,12 @@ function getMockThreads(category?: string | null, tag?: string | null, sort?: st
   // Filter by category if provided
   let filteredThreads = allThreads
   if (category) {
-    filteredThreads = filteredThreads.filter((thread) => thread.category === category)
+    filteredThreads = filteredThreads.filter((thread: any) => thread.category === category)
   }
 
   // Filter by tag if provided
   if (tag) {
-    filteredThreads = filteredThreads.filter((thread) => thread.tags.includes(tag))
+    filteredThreads = filteredThreads.filter((thread: any) => thread.tags.includes(tag))
   }
 
   // Sort threads

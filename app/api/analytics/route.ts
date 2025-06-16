@@ -65,17 +65,17 @@ export async function GET(request: NextRequest) {
 
     // Calculate percentages for referral sources and pages
     const totalViews = mockAnalytics.metrics.totalViews
-    mockAnalytics.metrics.topReferralSources.forEach((source) => {
+    mockAnalytics.metrics.topReferralSources.forEach((source: any) => {
       source.percentage = Math.round((source.count / totalViews) * 100 * 100) / 100
     })
 
-    const totalPageViews = mockAnalytics.metrics.topPages.reduce((sum, page) => sum + page.views, 0)
-    mockAnalytics.metrics.topPages.forEach((page) => {
+    const totalPageViews = mockAnalytics.metrics.topPages.reduce((sum: any, page: any) => sum + page.views, 0)
+    mockAnalytics.metrics.topPages.forEach((page: any) => {
       page.percentage = Math.round((page.views / totalPageViews) * 100 * 100) / 100
     })
 
-    const totalDeviceViews = mockAnalytics.metrics.deviceBreakdown.reduce((sum, device) => sum + device.count, 0)
-    mockAnalytics.metrics.deviceBreakdown.forEach((device) => {
+    const totalDeviceViews = mockAnalytics.metrics.deviceBreakdown.reduce((sum: any, device: any) => sum + device.count, 0)
+    mockAnalytics.metrics.deviceBreakdown.forEach((device: any) => {
       device.percentage = Math.round((device.count / totalDeviceViews) * 100 * 100) / 100
     })
 

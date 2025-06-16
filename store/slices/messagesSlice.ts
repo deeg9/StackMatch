@@ -117,7 +117,7 @@ const messagesSlice = createSlice({
         state.messages[conversationId].push(message)
       }
 
-      const conversation = state.conversations.find((c) => c.id === conversationId)
+      const conversation = state.conversations.find((c: any) => c.id === conversationId)
       if (conversation) {
         conversation.lastMessage = {
           id: message.id,
@@ -138,7 +138,7 @@ const messagesSlice = createSlice({
       const conversationId = message.conversation_id
       if (!state.messages[conversationId]) state.messages[conversationId] = []
       state.messages[conversationId].push(message)
-      const conversation = state.conversations.find((c) => c.id === conversationId)
+      const conversation = state.conversations.find((c: any) => c.id === conversationId)
       if (conversation) {
         conversation.lastMessage = {
           id: message.id,
@@ -164,7 +164,7 @@ const messagesSlice = createSlice({
           }
 
           // Update last message in conversation if this was the last message
-          const conversation = state.conversations.find((c) => c.id === conversation_id)
+          const conversation = state.conversations.find((c: any) => c.id === conversation_id)
           if (conversation && conversation.lastMessage?.id === id) {
             conversation.lastMessage = {
               ...conversation.lastMessage,
@@ -181,7 +181,7 @@ const messagesSlice = createSlice({
       const conversationMessages = state.messages[conversationId]
 
       if (conversationMessages) {
-        state.messages[conversationId] = conversationMessages.filter((m: any) => m.id !== messageId)
+        state.messages[conversationId] = conversationMessages.filter((m: any: any) => m.id !== messageId)
 
         // Update last message in conversation if this was the last message
         const conversation = state.conversations.find((c: any) => c.id === conversationId)
@@ -234,7 +234,7 @@ const messagesSlice = createSlice({
     // Remove a conversation
     removeConversation: (state, action: PayloadAction<string>) => {
       const conversationId = action.payload
-      state.conversations = state.conversations.filter((c: any) => c.id !== conversationId)
+      state.conversations = state.conversations.filter((c: any: any) => c.id !== conversationId)
       // Also remove messages for this conversation
       delete state.messages[conversationId]
       // Clear active conversation if it was the removed one
@@ -283,7 +283,7 @@ const messagesSlice = createSlice({
     },
     setUserOffline: (state, action: PayloadAction<string>) => {
       const userId = action.payload
-      state.onlineUsers = state.onlineUsers.filter((id) => id !== userId)
+      state.onlineUsers = state.onlineUsers.filter((id: any) => id !== userId)
       // Update participant status in conversations
       state.conversations.forEach((c: any) => {
         c.participants.forEach((p: any) => {
@@ -329,7 +329,7 @@ const messagesSlice = createSlice({
             message.reactions = []
           }
           // Remove existing reaction from this user for this emoji
-          message.reactions = message.reactions.filter((r: any) => !(r.emoji === reaction && r.user_id === userId))
+          message.reactions = message.reactions.filter((r: any: any) => !(r.emoji === reaction && r.user_id === userId))
           // Add new reaction
           message.reactions.push({
             emoji: reaction,
@@ -349,7 +349,7 @@ const messagesSlice = createSlice({
       if (conversationMessages) {
         const message = conversationMessages.find((m: any) => m.id === messageId)
         if (message && message.reactions) {
-          message.reactions = message.reactions.filter((r: any) => !(r.emoji === reaction && r.user_id === userId))
+          message.reactions = message.reactions.filter((r: any: any) => !(r.emoji === reaction && r.user_id === userId))
         }
       }
     },

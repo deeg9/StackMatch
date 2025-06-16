@@ -36,7 +36,7 @@ export function parseAIResponse(rawResponse: string): ParsedAIResponse {
     // Build field mappings from fieldUpdates
     const fieldMappings: FieldMapping[] = []
     if (parsed.fieldUpdates && typeof parsed.fieldUpdates === "object") {
-      Object.entries(parsed.fieldUpdates).forEach(([fieldName, value]) => {
+      Object.entries(parsed.fieldUpdates).forEach(([fieldName, value]: any) => {
         if (isValidFormField(fieldName) && value !== null && value !== undefined) {
           fieldMappings.push({
             fieldName: fieldName as keyof ListingFormData,
@@ -159,7 +159,7 @@ export function sanitizeFieldValue(fieldName: string, value: any): any {
     case "timelinePhases":
       if (Array.isArray(value)) {
         return value
-          .filter((item: any) => typeof item === "string" && item.trim())
+          .filter((item: any: any) => typeof item === "string" && item.trim())
           .map((item: any) => item.trim())
           .slice(0, 20) // Limit array size
       }
@@ -205,7 +205,7 @@ export function extractKeywords(text: string): string[] {
     .toLowerCase()
     .replace(/[^\w\s]/g, " ")
     .split(/\s+/)
-    .filter((word: any) => word.length > 3)
+    .filter((word: any: any) => word.length > 3)
 
   // Remove common stop words
   const stopWords = new Set([
@@ -257,7 +257,7 @@ export function extractKeywords(text: string): string[] {
     "am",
   ])
 
-  return Array.from(new Set(words.filter((word: any) => !stopWords.has(word)))).slice(0, 10)
+  return Array.from(new Set(words.filter((word: any: any) => !stopWords.has(word)))).slice(0, 10)
 }
 
 export function generateFormSummary(formData: Partial<ListingFormData>): string {

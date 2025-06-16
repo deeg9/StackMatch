@@ -46,7 +46,7 @@ export function processProposalAttachments(proposal: any): InheritedFile[] {
   }
 
   const inheritedFiles = attachmentArray
-    .map((attachment, index) => {
+    .map((attachment, index: any) => {
       try {
         return formatProposalInheritedFile(attachment, proposal, index)
       } catch (error) {

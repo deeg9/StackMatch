@@ -20,13 +20,13 @@ export function useForumWebSocket(threadId?: string, tags?: string[]) {
 
     // Subscribe to tags if provided
     if (tags && tags.length > 0) {
-      tags.forEach((tag) => wsManager.subscribeToTag(tag))
+      tags.forEach((tag: any) => wsManager.subscribeToTag(tag))
     }
 
     // Set up event listeners
     wsManager.onNewThread((thread) => {
       // Only notify if thread matches subscribed tags
-      if (tags && tags.some((tag) => thread.tags.includes(tag))) {
+      if (tags && tags.some((tag: any) => thread.tags.includes(tag))) {
         dispatch(
           addForumNotification({
             id: `notification-${Date.now()}`,
@@ -87,7 +87,7 @@ export function useForumWebSocket(threadId?: string, tags?: string[]) {
       }
 
       if (tags && tags.length > 0) {
-        tags.forEach((tag) => wsManager.unsubscribeFromTag(tag))
+        tags.forEach((tag: any) => wsManager.unsubscribeFromTag(tag))
       }
 
       wsManager.off("new_thread")

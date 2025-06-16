@@ -598,7 +598,7 @@ export function getNextStage(currentStage: ConversationStage, formData: any): Co
   const flow = CONVERSATION_FLOWS[currentStage]
 
   // Check if current stage requirements are met
-  const hasRequiredFields = flow.requiredFields.every((field) => {
+  const hasRequiredFields = flow.requiredFields.every((field: any) => {
     const value = formData[field]
     return value && (Array.isArray(value) ? value.length > 0 : true)
   })
@@ -612,7 +612,7 @@ export function getNextStage(currentStage: ConversationStage, formData: any): Co
 
   for (const nextStage of nextStages) {
     const nextFlow = CONVERSATION_FLOWS[nextStage]
-    const hasNextRequiredFields = nextFlow.requiredFields.every((field) => {
+    const hasNextRequiredFields = nextFlow.requiredFields.every((field: any) => {
       const value = formData[field]
       return value && (Array.isArray(value) ? value.length > 0 : true)
     })
@@ -637,7 +637,7 @@ export function validateStageCompletion(
   const flow = CONVERSATION_FLOWS[stage]
   const missingFields: string[] = []
 
-  flow.requiredFields.forEach((field) => {
+  flow.requiredFields.forEach((field: any) => {
     const value = formData[field]
     if (!value || (Array.isArray(value) && value.length === 0)) {
       missingFields.push(field)

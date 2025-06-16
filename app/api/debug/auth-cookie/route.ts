@@ -18,7 +18,7 @@ export async function GET() {
 
     if (!authTokenCookie?.value) {
       debugInfo.step = "no_auth_cookie"
-      debugInfo.allCookies = Array.from(cookieStore.getAll()).map((c) => ({
+      debugInfo.allCookies = Array.from(cookieStore.getAll()).map((c: any) => ({
         name: c.name,
         hasValue: !!c.value,
         valueLength: c.value?.length || 0,
@@ -95,7 +95,7 @@ export async function GET() {
             const jsonPayload = decodeURIComponent(
               atob(base64)
                 .split("")
-                .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+                .map((c: any) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
                 .join(""),
             )
 

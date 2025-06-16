@@ -323,7 +323,7 @@ const proposalRequestsSlice = createSlice({
         const response = action.payload
 
         // Update in buyer requests
-        const buyerRequest = state.buyerRequests.find((req) => req.responses?.some((r) => r.id === response.id))
+        const buyerRequest = state.buyerRequests.find((req: any) => req.responses?.some((r: any) => r.id === response.id))
         if (buyerRequest) {
           const responseIndex = buyerRequest.responses!.findIndex((r) => r.id === response.id)
           if (responseIndex !== -1) {

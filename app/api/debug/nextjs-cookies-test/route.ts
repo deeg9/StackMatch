@@ -23,7 +23,7 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       totalCookies: allCookies.length,
-      cookieNames: allCookies.map((c) => c.name),
+      cookieNames: allCookies.map((c: any) => c.name),
       timestamp: new Date().toISOString(),
     })
   } catch (error: any) {

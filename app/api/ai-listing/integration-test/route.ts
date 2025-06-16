@@ -100,13 +100,13 @@ export async function POST(request: NextRequest) {
 // Helper functions
 function estimateTokensUsed(messages: any[]): number {
   // Rough estimate: 1 token ≈ 4 characters
-  return messages.reduce((total, msg) => {
+  return messages.reduce((total: any, msg: any) => {
     return total + (msg.content?.length || 0) / 4
   }, 0)
 }
 
 function countPopulatedFields(formState: any): number {
-  return Object.values(formState || {}).filter((value) => {
+  return Object.values(formState || {}).filter((value: any) => {
     if (Array.isArray(value)) return value.length > 0
     return value !== null && value !== undefined && value !== ""
   }).length

@@ -112,7 +112,7 @@ const projectWizardSlice = createSlice({
       }
     },
     removeRequirement: (state, action: PayloadAction<string>) => {
-      state.data.requirements = state.data.requirements.filter((req) => req.id !== action.payload)
+      state.data.requirements = state.data.requirements.filter((req: any) => req.id !== action.payload)
     },
 
     // Technology actions
@@ -122,7 +122,7 @@ const projectWizardSlice = createSlice({
       }
     },
     removeTechnology: (state, action: PayloadAction<string>) => {
-      state.data.preferredTechnologies = state.data.preferredTechnologies.filter((tech) => tech !== action.payload)
+      state.data.preferredTechnologies = state.data.preferredTechnologies.filter((tech: any) => tech !== action.payload)
     },
 
     // Skill actions
@@ -132,7 +132,7 @@ const projectWizardSlice = createSlice({
       }
     },
     removeSkill: (state, action: PayloadAction<string>) => {
-      state.data.skills = state.data.skills.filter((skill) => skill !== action.payload)
+      state.data.skills = state.data.skills.filter((skill: any) => skill !== action.payload)
     },
 
     // Attachment actions
@@ -140,7 +140,7 @@ const projectWizardSlice = createSlice({
       state.data.attachments.push(action.payload)
     },
     removeAttachment: (state, action: PayloadAction<string>) => {
-      state.data.attachments = state.data.attachments.filter((attachment) => attachment !== action.payload)
+      state.data.attachments = state.data.attachments.filter((attachment: any) => attachment !== action.payload)
     },
 
     setSubmitting: (state, action: PayloadAction<boolean>) => {

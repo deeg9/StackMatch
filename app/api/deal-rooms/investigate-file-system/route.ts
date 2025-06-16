@@ -144,14 +144,14 @@ export async function GET() {
 
       if (!listingAllError && listingWithAllColumns) {
         const fileRelatedColumns = Object.keys(listingWithAllColumns).filter(
-          (key) =>
+          (key: any) =>
             key.toLowerCase().includes("file") ||
             key.toLowerCase().includes("attachment") ||
             key.toLowerCase().includes("document"),
         )
 
         investigation.findings.listingFileColumns = fileRelatedColumns
-        investigation.findings.listingFileData = fileRelatedColumns.reduce((acc, col) => {
+        investigation.findings.listingFileData = fileRelatedColumns.reduce((acc: any, col: any) => {
           acc[col] = listingWithAllColumns[col]
           return acc
         }, {} as any)
@@ -167,7 +167,7 @@ export async function GET() {
 
       if (!error && listingFull) {
         // Look for JSON columns that might contain file data
-        const jsonColumns = Object.entries(listingFull).filter(([key, value]) => {
+        const jsonColumns = Object.entries(listingFull).filter(([key, value]: any) => {
           if (typeof value === "object" && value !== null) {
             const jsonStr = JSON.stringify(value).toLowerCase()
             return jsonStr.includes("file") || jsonStr.includes("upload") || jsonStr.includes("attachment")

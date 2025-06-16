@@ -67,7 +67,7 @@ const sellerProfilesSlice = createSlice({
     },
     addPortfolioItem: (state, action: PayloadAction<{ profileId: string; item: PortfolioItem }>) => {
       const { profileId, item } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
         profile.portfolio.push(item)
       }
@@ -77,15 +77,15 @@ const sellerProfilesSlice = createSlice({
     },
     updatePortfolioItem: (state, action: PayloadAction<{ profileId: string; item: PortfolioItem }>) => {
       const { profileId, item } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
-        const index = profile.portfolio.findIndex((p) => p.id === item.id)
+        const index = profile.portfolio.findIndex((p: any) => p.id === item.id)
         if (index !== -1) {
           profile.portfolio[index] = item
         }
       }
       if (state.currentProfile?.id === profileId) {
-        const index = state.currentProfile.portfolio.findIndex((p) => p.id === item.id)
+        const index = state.currentProfile.portfolio.findIndex((p: any) => p.id === item.id)
         if (index !== -1) {
           state.currentProfile.portfolio[index] = item
         }
@@ -93,17 +93,17 @@ const sellerProfilesSlice = createSlice({
     },
     removePortfolioItem: (state, action: PayloadAction<{ profileId: string; itemId: string }>) => {
       const { profileId, itemId } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
-        profile.portfolio = profile.portfolio.filter((item) => item.id !== itemId)
+        profile.portfolio = profile.portfolio.filter((item: any) => item.id !== itemId)
       }
       if (state.currentProfile?.id === profileId) {
-        state.currentProfile.portfolio = state.currentProfile.portfolio.filter((item) => item.id !== itemId)
+        state.currentProfile.portfolio = state.currentProfile.portfolio.filter((item: any) => item.id !== itemId)
       }
     },
     addTeamMember: (state, action: PayloadAction<{ profileId: string; member: TeamMember }>) => {
       const { profileId, member } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
         profile.team.push(member)
       }
@@ -113,15 +113,15 @@ const sellerProfilesSlice = createSlice({
     },
     updateTeamMember: (state, action: PayloadAction<{ profileId: string; member: TeamMember }>) => {
       const { profileId, member } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
-        const index = profile.team.findIndex((m) => m.id === member.id)
+        const index = profile.team.findIndex((m: any) => m.id === member.id)
         if (index !== -1) {
           profile.team[index] = member
         }
       }
       if (state.currentProfile?.id === profileId) {
-        const index = state.currentProfile.team.findIndex((m) => m.id === member.id)
+        const index = state.currentProfile.team.findIndex((m: any) => m.id === member.id)
         if (index !== -1) {
           state.currentProfile.team[index] = member
         }
@@ -129,17 +129,17 @@ const sellerProfilesSlice = createSlice({
     },
     removeTeamMember: (state, action: PayloadAction<{ profileId: string; memberId: string }>) => {
       const { profileId, memberId } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
-        profile.team = profile.team.filter((member) => member.id !== memberId)
+        profile.team = profile.team.filter((member: any) => member.id !== memberId)
       }
       if (state.currentProfile?.id === profileId) {
-        state.currentProfile.team = state.currentProfile.team.filter((member) => member.id !== memberId)
+        state.currentProfile.team = state.currentProfile.team.filter((member: any) => member.id !== memberId)
       }
     },
     addCertification: (state, action: PayloadAction<{ profileId: string; certification: Certification }>) => {
       const { profileId, certification } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
         profile.certifications.push(certification)
       }
@@ -149,15 +149,15 @@ const sellerProfilesSlice = createSlice({
     },
     updateCertification: (state, action: PayloadAction<{ profileId: string; certification: Certification }>) => {
       const { profileId, certification } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
-        const index = profile.certifications.findIndex((c) => c.id === certification.id)
+        const index = profile.certifications.findIndex((c: any) => c.id === certification.id)
         if (index !== -1) {
           profile.certifications[index] = certification
         }
       }
       if (state.currentProfile?.id === profileId) {
-        const index = state.currentProfile.certifications.findIndex((c) => c.id === certification.id)
+        const index = state.currentProfile.certifications.findIndex((c: any) => c.id === certification.id)
         if (index !== -1) {
           state.currentProfile.certifications[index] = certification
         }
@@ -165,28 +165,28 @@ const sellerProfilesSlice = createSlice({
     },
     removeCertification: (state, action: PayloadAction<{ profileId: string; certificationId: string }>) => {
       const { profileId, certificationId } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
-        profile.certifications = profile.certifications.filter((cert) => cert.id !== certificationId)
+        profile.certifications = profile.certifications.filter((cert: any) => cert.id !== certificationId)
       }
       if (state.currentProfile?.id === profileId) {
         state.currentProfile.certifications = state.currentProfile.certifications.filter(
-          (cert) => cert.id !== certificationId,
+          (cert: any) => cert.id !== certificationId,
         )
       }
     },
     addReview: (state, action: PayloadAction<{ profileId: string; review: Review }>) => {
       const { profileId, review } = action.payload
-      const profile = state.profiles.find((p) => p.id === profileId)
+      const profile = state.profiles.find((p: any) => p.id === profileId)
       if (profile) {
         profile.reviews.push(review)
         // Recalculate average rating
-        const totalRating = profile.reviews.reduce((sum, r) => sum + r.rating, 0)
+        const totalRating = profile.reviews.reduce((sum: any, r: any) => sum + r.rating, 0)
         profile.rating = totalRating / profile.reviews.length
       }
       if (state.currentProfile?.id === profileId) {
         state.currentProfile.reviews.push(review)
-        const totalRating = state.currentProfile.reviews.reduce((sum, r) => sum + r.rating, 0)
+        const totalRating = state.currentProfile.reviews.reduce((sum: any, r: any) => sum + r.rating, 0)
         state.currentProfile.rating = totalRating / state.currentProfile.reviews.length
       }
     },

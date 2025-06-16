@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
 
     // Transform data to match frontend expectations
     const transformedBudgets =
-      budgets?.map((budget) => ({
+      budgets?.map((budget: any) => ({
         id: budget.id,
         name: budget.project_name,
         amount: budget.allocated_budget,

@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Transform the data to match the expected format
-    const transformedListings = savedListings.map((saved) => ({
+    const transformedListings = savedListings.map((saved: any) => ({
       id: saved.listing?.id,
       companyName: saved.listing?.buyer?.company_name || saved.listing?.buyer?.full_name || "Unknown Company",
       title: saved.listing?.title,

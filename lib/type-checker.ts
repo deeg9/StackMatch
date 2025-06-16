@@ -106,7 +106,7 @@ export const validateArrayResponse = <T>(
     throw new Error(`${errorMessage}: Expected array`)
   }
   
-  return data.map((item, index) => {
+  return data.map((item, index: any) => {
     if (!validator(item)) {
       throw new Error(`${errorMessage}: Invalid item at index ${index}`)
     }

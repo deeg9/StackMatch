@@ -127,7 +127,7 @@ const verificationSlice = createSlice({
       }
     },
     removeCertification: (state, action: PayloadAction<string>) => {
-      state.certifications = state.certifications.filter((cert) => cert.id !== action.payload)
+      state.certifications = state.certifications.filter((cert: any) => cert.id !== action.payload)
     },
     setDocuments: (state, action: PayloadAction<VerificationDocument[]>) => {
       state.documents = action.payload
@@ -142,7 +142,7 @@ const verificationSlice = createSlice({
       }
     },
     removeDocument: (state, action: PayloadAction<string>) => {
-      state.documents = state.documents.filter((doc) => doc.id !== action.payload)
+      state.documents = state.documents.filter((doc: any) => doc.id !== action.payload)
     },
     setUploadProgress: (state, action: PayloadAction<{ fileId: string; progress: number }>) => {
       state.uploadProgress[action.payload.fileId] = action.payload.progress

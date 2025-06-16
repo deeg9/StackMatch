@@ -173,16 +173,16 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       // Decide if this error should block the response or just be logged
     }
 
-    const threadComments = mockComments.filter((c) => c.threadId === threadId && !c.parentId)
+    const threadComments = mockComments.filter((c: any) => c.threadId === threadId && !c.parentId)
 
     // Function to recursively fetch replies
     const fetchReplies = (commentId: string): ForumComment[] => {
       return mockComments
-        .filter((c) => c.parentId === commentId)
-        .map((reply) => ({ ...reply, replies: fetchReplies(reply.id) }))
+        .filter((c: any) => c.parentId === commentId)
+        .map((reply: any) => ({ ...reply, replies: fetchReplies(reply.id) }))
     }
 
-    const commentsWithReplies = threadComments.map((comment) => ({
+    const commentsWithReplies = threadComments.map((comment: any) => ({
       ...comment,
       replies: fetchReplies(comment.id),
     }))
@@ -201,7 +201,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     const body = await request.json()
     const { title, content, category, tags, type, isAnonymous, isLocked, isPinned } = body // Add isLocked, isPinned
 
-    const threadIndex = mockThreads.findIndex((t) => t.id === threadId)
+    const threadIndex = mockThreads.findIndex((t: any) => t.id === threadId)
 
     if (threadIndex === -1) {
       return NextResponse.json({ error: "Thread not found" }, { status: 404 })
@@ -236,7 +236,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const threadId = params.id
-    const threadIndex = mockThreads.findIndex((t) => t.id === threadId)
+    const threadIndex = mockThreads.findIndex((t: any) => t.id === threadId)
 
     if (threadIndex === -1) {
       return NextResponse.json({ error: "Thread not found" }, { status: 404 })

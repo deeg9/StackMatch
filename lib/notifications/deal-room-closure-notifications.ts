@@ -141,9 +141,9 @@ export async function notifyClosureRequested(
     }
 
     // Notify all participants except the initiator
-    const otherParticipantIds = participantIds.filter((id) => id !== initiatorId)
+    const otherParticipantIds = participantIds.filter((id: any) => id !== initiatorId)
 
-    const promises = otherParticipantIds.map((userId) =>
+    const promises = otherParticipantIds.map((userId: any) =>
       createNotification(userId, "CLOSURE_REQUESTED", notificationData),
     )
 
@@ -169,7 +169,7 @@ export async function notifyClosureConfirmed(
       outcomeType,
     }
 
-    const promises = participantIds.map((userId) => createNotification(userId, "CLOSURE_CONFIRMED", notificationData))
+    const promises = participantIds.map((userId: any) => createNotification(userId, "CLOSURE_CONFIRMED", notificationData))
 
     await Promise.all(promises)
     return true
@@ -196,9 +196,9 @@ export async function notifyClosureCancelled(
     }
 
     // Notify all participants except the initiator
-    const otherParticipantIds = participantIds.filter((id) => id !== initiatorId)
+    const otherParticipantIds = participantIds.filter((id: any) => id !== initiatorId)
 
-    const promises = otherParticipantIds.map((userId) =>
+    const promises = otherParticipantIds.map((userId: any) =>
       createNotification(userId, "CLOSURE_CANCELLED", notificationData),
     )
 

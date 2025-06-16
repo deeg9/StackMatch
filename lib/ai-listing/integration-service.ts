@@ -24,7 +24,7 @@ export class ListingIntegrationService {
 
     // Process required fields
     const requiredFields = ["title", "categoryId", "budgetMin", "bidDeadline", "aboutBusiness"]
-    requiredFields.forEach((field) => {
+    requiredFields.forEach((field: any) => {
       if (!formState[field]) {
         validationErrors.push(`Missing required field: ${field}`)
       } else {
@@ -47,7 +47,7 @@ export class ListingIntegrationService {
       "timelinePhases",
     ]
 
-    optionalFields.forEach((field) => {
+    optionalFields.forEach((field: any) => {
       if (formState[field]) {
         sanitizedData[field] = sanitizeFieldValue(field, formState[field])
       }
@@ -57,11 +57,11 @@ export class ListingIntegrationService {
     const totalFields = requiredFields.length + optionalFields.length
     let completedFields = 0
 
-    requiredFields.forEach((field) => {
+    requiredFields.forEach((field: any) => {
       if (sanitizedData[field]) completedFields += 1
     })
 
-    optionalFields.forEach((field) => {
+    optionalFields.forEach((field: any) => {
       if (sanitizedData[field]) completedFields += 0.5 // Optional fields count as half
     })
 

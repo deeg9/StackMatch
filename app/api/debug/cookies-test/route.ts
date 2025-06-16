@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
     if (cookieHeader) {
       // Parse cookies manually
-      const cookies = cookieHeader.split(";").map((cookie) => {
+      const cookies = cookieHeader.split(";").map((cookie: any) => {
         const [name, ...valueParts] = cookie.trim().split("=")
         return {
           name: name.trim(),
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
 
       console.log("🔍 COOKIES TEST: Parsed cookies:", cookies.length)
 
-      const supabaseCookies = cookies.filter((c) => c.name.includes("supabase") || c.name.includes("sb-"))
+      const supabaseCookies = cookies.filter((c: any) => c.name.includes("supabase") || c.name.includes("sb-"))
 
       console.log("🔍 COOKIES TEST: Supabase cookies found:", supabaseCookies.length)
 

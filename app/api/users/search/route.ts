@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Filter out the current user from results
-    const filteredUsers = users?.filter((u) => u.id !== user.id) || []
+    const filteredUsers = users?.filter((u: any) => u.id !== user.id) || []
 
     return NextResponse.json({ users: filteredUsers })
   } catch (error: any) {

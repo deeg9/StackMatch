@@ -202,7 +202,7 @@ export function buildConversationPrompt(context: AIPromptContext): string {
 
   // Add current form state
   prompt += `Current Form State:\n`
-  Object.entries(currentFormState).forEach(([field, value]) => {
+  Object.entries(currentFormState).forEach(([field, value]: any) => {
     if (value) {
       prompt += `- ${field}: ${Array.isArray(value) ? value.join(", ") : value}\n`
     }
@@ -213,7 +213,7 @@ export function buildConversationPrompt(context: AIPromptContext): string {
   const recentMessages = conversationHistory.slice(-10)
   if (recentMessages.length > 0) {
     prompt += `Recent Conversation:\n`
-    recentMessages.forEach((msg) => {
+    recentMessages.forEach((msg: any) => {
       prompt += `${msg.role}: ${msg.content}\n`
     })
     prompt += "\n"

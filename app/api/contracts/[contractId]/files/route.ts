@@ -38,7 +38,7 @@ export async function GET(request: Request, { params }: { params: { contractId: 
 
     // Ensure versions is always an array
     const processedFiles =
-      files?.map((file) => ({
+      files?.map((file: any) => ({
         ...file,
         versions: Array.isArray(file.versions) ? file.versions : [],
       })) || []

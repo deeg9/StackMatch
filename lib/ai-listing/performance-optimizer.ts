@@ -13,7 +13,7 @@ export class PerformanceOptimizer {
     }
 
     // Always keep the first system message if present
-    const systemMessage = messages.find((m) => m.role === "system")
+    const systemMessage = messages.find((m: any) => m.role === "system")
 
     // Get the most recent messages
     const recentMessages = messages.slice(-maxMessages)
@@ -68,7 +68,7 @@ export class PerformanceOptimizer {
     }
 
     // Keep the first system message if present
-    const systemMessage = messages.find((m) => m.role === "system")
+    const systemMessage = messages.find((m: any) => m.role === "system")
 
     // Keep the 5 most recent exchanges (10 messages)
     const recentMessages = messages.slice(-10)
@@ -102,7 +102,7 @@ export class PerformanceOptimizer {
    */
   private static generateSummaryTopics(messages: ConversationMessage[]): string {
     // Extract key topics from messages
-    const allText = messages.map((m) => m.content).join(" ")
+    const allText = messages.map((m: any) => m.content).join(" ")
 
     // Simple keyword extraction
     const words = allText.toLowerCase().split(/\W+/)
@@ -123,7 +123,7 @@ export class PerformanceOptimizer {
     const topKeywords = Object.entries(wordCounts)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
-      .map(([word]) => word)
+      .map(([word]: any) => word)
 
     return topKeywords.join(", ")
   }

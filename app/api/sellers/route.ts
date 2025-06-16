@@ -75,11 +75,11 @@ export async function GET(request: NextRequest) {
 
     if (rating) {
       const minRating = Number.parseFloat(rating)
-      filteredSellers = filteredSellers.filter((seller) => seller.averageRating.overallSatisfaction >= minRating)
+      filteredSellers = filteredSellers.filter((seller: any) => seller.averageRating.overallSatisfaction >= minRating)
     }
 
     if (location && location !== "all") {
-      filteredSellers = filteredSellers.filter((seller) => seller.location.includes(location))
+      filteredSellers = filteredSellers.filter((seller: any) => seller.location.includes(location))
     }
 
     return NextResponse.json({

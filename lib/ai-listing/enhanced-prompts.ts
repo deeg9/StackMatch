@@ -68,7 +68,7 @@ function buildContextPrompt(conversationHistory: any[], formData: any, userProfi
   // Add form state
   if (Object.keys(formData).length > 0) {
     prompt += "Current form data:\n"
-    Object.entries(formData).forEach(([field, value]) => {
+    Object.entries(formData).forEach(([field, value]: any) => {
       if (value) {
         const displayValue = Array.isArray(value) ? value.join(", ") : value
         prompt += `- ${field}: ${displayValue}\n`
@@ -90,7 +90,7 @@ function buildContextPrompt(conversationHistory: any[], formData: any, userProfi
   const recentMessages = conversationHistory.slice(-8) // Last 8 messages
   if (recentMessages.length > 0) {
     prompt += "Recent conversation:\n"
-    recentMessages.forEach((msg) => {
+    recentMessages.forEach((msg: any) => {
       prompt += `${msg.role}: ${msg.content}\n`
     })
     prompt += "\n"

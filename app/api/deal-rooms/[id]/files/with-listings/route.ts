@@ -143,7 +143,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       } else if (dealRoomFiles && dealRoomFiles.length > 0) {
         console.log(`🔍 WITH LISTINGS: Found ${dealRoomFiles.length} native files`)
 
-        const formattedNativeFiles = dealRoomFiles.map((file) => {
+        const formattedNativeFiles = dealRoomFiles.map((file: any) => {
           const uploader = file.uploader || {}
           return {
             id: file.id,
@@ -224,8 +224,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                 console.log(`🔍 WITH LISTINGS: Processing ${attachments.length} attachments`)
 
                 const jsonFiles = attachments
-                  .filter((item) => item && (item.name || item.id))
-                  .map((item, index) => {
+                  .filter((item: any) => item && (item.name || item.id))
+                  .map((item: any, index: any) => {
                     const fileName = item.name || `File ${index + 1}`
                     const fileId = item.id || `attachment-${index}`
                     const fileUrl = item.url || `/api/listings/${dealRoom.listing_id}/files/${fileId}`

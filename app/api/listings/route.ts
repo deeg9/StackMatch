@@ -150,7 +150,7 @@ export async function GET(request: NextRequest) {
 
     // Transform the data to match frontend expectations
     const transformedListings =
-      listings?.map((listing) => {
+      listings?.map((listing: any) => {
         // Handle case where profiles or project_categories might be arrays
         const profile = listing.profiles ? (Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles) : null;
         const category = listing.project_categories ? (Array.isArray(listing.project_categories) ? listing.project_categories[0] : listing.project_categories) : null;

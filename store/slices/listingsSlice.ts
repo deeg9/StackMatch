@@ -334,7 +334,7 @@ const listingsSlice = createSlice({
       })
       .addCase(deleteListing.fulfilled, (state, action) => {
         state.isLoading = false
-        state.listings = state.listings.filter((listing: any) => listing.id !== action.payload)
+        state.listings = state.listings.filter((listing: any: any) => listing.id !== action.payload)
         state.pagination.totalItems -= 1
       })
       .addCase(deleteListing.rejected, (state, action) => {

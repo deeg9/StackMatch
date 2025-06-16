@@ -125,7 +125,7 @@ export async function GET() {
 
         console.log("🔍 ADMIN FILE INVESTIGATION: File-related columns found:", fileColumns)
 
-        investigation.findings.targetListing.fileColumns = fileColumns.map((col) => ({
+        investigation.findings.targetListing.fileColumns = fileColumns.map((col: any) => ({
           column: col,
           value: listing[col],
           hasData: listing[col] !== null && listing[col] !== undefined && listing[col] !== "",
@@ -134,7 +134,7 @@ export async function GET() {
 
         // Check for JSON columns that might contain file data
         const jsonColumns = Object.entries(listing)
-          .filter(([key, value]) => {
+          .filter(([key, value]: any) => {
             if (typeof value === "object" && value !== null) {
               const jsonStr = JSON.stringify(value).toLowerCase()
               return (
@@ -146,7 +146,7 @@ export async function GET() {
             }
             return false
           })
-          .map(([key, value]) => ({ column: key, value }))
+          .map(([key, value]: any) => ({ column: key, value }))
 
         console.log("🔍 ADMIN FILE INVESTIGATION: JSON file columns found:", jsonColumns.length)
 
@@ -164,8 +164,8 @@ export async function GET() {
         ]
 
         investigation.findings.targetListing.potentialFileData = potentialFileColumns
-          .filter((col) => listing[col] !== null && listing[col] !== undefined)
-          .map((col) => ({
+          .filter((col: any) => listing[col] !== null && listing[col] !== undefined)
+          .map((col: any) => ({
             column: col,
             value: listing[col],
             type: typeof listing[col],
@@ -229,7 +229,7 @@ export async function GET() {
 
         console.log("🔍 ADMIN FILE INVESTIGATION: Proposal file columns:", fileColumns)
 
-        investigation.findings.targetProposal.fileColumns = fileColumns.map((col) => ({
+        investigation.findings.targetProposal.fileColumns = fileColumns.map((col: any) => ({
           column: col,
           value: proposal[col],
           hasData: proposal[col] !== null && proposal[col] !== undefined && proposal[col] !== "",
@@ -248,8 +248,8 @@ export async function GET() {
         ]
 
         investigation.findings.targetProposal.potentialFileData = potentialFileColumns
-          .filter((col) => proposal[col] !== null && proposal[col] !== undefined)
-          .map((col) => ({
+          .filter((col: any) => proposal[col] !== null && proposal[col] !== undefined)
+          .map((col: any) => ({
             column: col,
             value: proposal[col],
             type: typeof proposal[col],

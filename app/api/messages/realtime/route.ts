@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
     // Format conversations
     const formattedConversations = conversations.map((conv: any) => {
       const convParticipants = participants
-        .filter((p: any) => p.conversation_id === conv.conversations.id)
+        .filter((p: any: any) => p.conversation_id === conv.conversations.id)
         .map((p: any) => ({
           id: p.users.id,
           name: `${p.users.first_name} ${p.users.last_name}`.trim(),

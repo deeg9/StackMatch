@@ -88,7 +88,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     console.log(`🔍 NATIVE FILES: Found ${dealRoomFiles?.length || 0} native files`)
 
     // Format native files
-    const formattedFiles: DealRoomFile[] = (dealRoomFiles || []).map((file) => {
+    const formattedFiles: DealRoomFile[] = (dealRoomFiles || []).map((file: any) => {
       const uploader = file.uploader || {}
       return {
         id: file.id,
