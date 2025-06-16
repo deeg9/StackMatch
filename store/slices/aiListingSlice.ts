@@ -235,13 +235,13 @@ function calculateCompletionPercentage(formData: Partial<ListingFormData>): numb
   const totalFields = requiredFields.length + optionalFields.length
   let completedFields = 0
 
-  requiredFields.forEach((field) => {
+  requiredFields.forEach((field: any) => {
     if (formData[field as keyof ListingFormData]) {
       completedFields += 1
     }
   })
 
-  optionalFields.forEach((field) => {
+  optionalFields.forEach((field: any) => {
     if (formData[field as keyof ListingFormData]) {
       completedFields += 0.5 // Optional fields count for half
     }

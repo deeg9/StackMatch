@@ -205,7 +205,7 @@ export function extractKeywords(text: string): string[] {
     .toLowerCase()
     .replace(/[^\w\s]/g, " ")
     .split(/\s+/)
-    .filter((word) => word.length > 3)
+    .filter((word: any) => word.length > 3)
 
   // Remove common stop words
   const stopWords = new Set([
@@ -257,7 +257,7 @@ export function extractKeywords(text: string): string[] {
     "am",
   ])
 
-  return Array.from(new Set(words.filter((word) => !stopWords.has(word)))).slice(0, 10)
+  return Array.from(new Set(words.filter((word: any) => !stopWords.has(word)))).slice(0, 10)
 }
 
 export function generateFormSummary(formData: Partial<ListingFormData>): string {

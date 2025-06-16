@@ -52,7 +52,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: "Failed to fetch messages" }, { status: 500 })
     }
 
-    const formattedMessages: MessageType[] = messagesData.map((msg) => {
+    const formattedMessages: MessageType[] = messagesData.map((msg: any) => {
       // Handle case where profiles might be an array
       const profile = msg.profiles ? (Array.isArray(msg.profiles) ? msg.profiles[0] : msg.profiles) : null;
       

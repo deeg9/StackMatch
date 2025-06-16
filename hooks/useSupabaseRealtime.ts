@@ -36,7 +36,7 @@ export function useSupabaseRealtime({ table, event = "*", callback, filter, filt
           table,
           ...(filter && filterValue ? { filter: `${filter}=eq.${filterValue}` } : {}),
         },
-        (payload) => {
+        (payload: any) => {
           console.log(`Realtime update for ${table}:`, payload)
           callback(payload)
         },
@@ -59,7 +59,7 @@ export function useSupabaseRealtimeMessages() {
   const reactionsChannelRef = useRef<RealtimeChannel | null>(null)
 
   // Subscribe to messages and reactions in real-time
-  const handleNewMessage = async (payload) => {
+  const handleNewMessage = async (payload: any) => {
     console.log("New message received:", payload)
 
     // Fetch the complete message with user data
@@ -111,7 +111,7 @@ export function useSupabaseRealtimeMessages() {
     }
   }
 
-  const handleConversationUpdate = (payload) => {
+  const handleConversationUpdate = (payload: any) => {
     console.log("Conversation updated:", payload)
     dispatch(
       updateConversation({
@@ -121,7 +121,7 @@ export function useSupabaseRealtimeMessages() {
     )
   }
 
-  const handleReactionUpdate = async (payload) => {
+  const handleReactionUpdate = async (payload: any) => {
     console.log("Reaction updated:", payload)
 
     // Fetch updated reactions for the message
@@ -175,7 +175,7 @@ export function useSupabaseRealtimeMessages() {
         console.log("Presence sync:", state)
 
         // Update online users
-        Object.keys(state).forEach((userId) => {
+        Object.keys(state).forEach((userId: any) => {
           if (userId !== user.id) {
             dispatch(setUserOnline(userId))
           }
@@ -218,7 +218,7 @@ export function useSupabaseRealtimeMessages() {
 
     const typingChannel = createClient()
       .channel(`typing:${activeConversation}`)
-      .on("broadcast", { event: "typing" }, (payload) => {
+      .on("broadcast", { event: "typing" }, (payload: any) => {
         console.log("Typing event:", payload)
         // Handle typing indicators here if needed
       })

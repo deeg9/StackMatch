@@ -101,7 +101,7 @@ const messagesSlice = createSlice({
     setActiveConversationId: (state, action: PayloadAction<string | null>) => {
       state.activeConversationId = action.payload
       if (action.payload) {
-        const conversation = state.conversations.find((c) => c.id === action.payload)
+        const conversation = state.conversations.find((c: any) => c.id === action.payload)
         if (conversation) conversation.unreadCount = 0 // Mark as read locally
       }
     },

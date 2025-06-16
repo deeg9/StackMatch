@@ -317,7 +317,7 @@ const listingsSlice = createSlice({
       })
       .addCase(updateListing.fulfilled, (state, action) => {
         state.isLoading = false
-        const index = state.listings.findIndex((listing) => listing.id === action.payload.id)
+        const index = state.listings.findIndex((listing: any) => listing.id === action.payload.id)
         if (index !== -1) {
           state.listings[index] = action.payload
         }
@@ -334,7 +334,7 @@ const listingsSlice = createSlice({
       })
       .addCase(deleteListing.fulfilled, (state, action) => {
         state.isLoading = false
-        state.listings = state.listings.filter((listing) => listing.id !== action.payload)
+        state.listings = state.listings.filter((listing: any) => listing.id !== action.payload)
         state.pagination.totalItems -= 1
       })
       .addCase(deleteListing.rejected, (state, action) => {

@@ -333,13 +333,13 @@ export class VerificationService {
     const batchSize = 5
     for (let i = 0; i < requests.length; i += batchSize) {
       const batch = requests.slice(i, i + batchSize)
-      const batchPromises = batch.map(async (request) => {
+      const batchPromises = batch.map(async (request: any) => {
         const result = await this.verifyEndorsement(request)
         return { key: `${request.platformId}-${request.certificationId}`, result }
       })
 
       const batchResults = await Promise.allSettled(batchPromises)
-      batchResults.forEach((result) => {
+      batchResults.forEach((result: any) => {
         if (result.status === "fulfilled") {
           results.set(result.value.key, result.value.result)
         }
@@ -347,7 +347,7 @@ export class VerificationService {
 
       // Rate limiting delay between batches
       if (i + batchSize < requests.length) {
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+        await new Promise((resolve: any) => setTimeout(resolve, 1000))
       }
     }
 

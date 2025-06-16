@@ -50,7 +50,7 @@ const forumSlice = createSlice({
       state.threads.unshift(action.payload)
     },
     updateThread: (state, action: PayloadAction<ForumThread>) => {
-      const index = state.threads.findIndex((thread) => thread.id === action.payload.id)
+      const index = state.threads.findIndex((thread: any) => thread.id === action.payload.id)
       if (index !== -1) {
         state.threads[index] = action.payload
       }
@@ -63,7 +63,7 @@ const forumSlice = createSlice({
     },
     addComment: (state, action: PayloadAction<{ threadId: string; comment: ForumComment }>) => {
       const { threadId, comment } = action.payload
-      const thread = state.threads.find((t) => t.id === threadId)
+      const thread = state.threads.find((t: any) => t.id === threadId)
       if (thread) {
         thread.comments.push(comment)
         thread.commentCount = thread.comments.length
@@ -77,15 +77,15 @@ const forumSlice = createSlice({
     },
     updateComment: (state, action: PayloadAction<{ threadId: string; comment: ForumComment }>) => {
       const { threadId, comment } = action.payload
-      const thread = state.threads.find((t) => t.id === threadId)
+      const thread = state.threads.find((t: any) => t.id === threadId)
       if (thread) {
-        const index = thread.comments.findIndex((c) => c.id === comment.id)
+        const index = thread.comments.findIndex((c: any) => c.id === comment.id)
         if (index !== -1) {
           thread.comments[index] = comment
         }
       }
       if (state.currentThread?.id === threadId) {
-        const index = state.currentThread.comments.findIndex((c) => c.id === comment.id)
+        const index = state.currentThread.comments.findIndex((c: any) => c.id === comment.id)
         if (index !== -1) {
           state.currentThread.comments[index] = comment
         }
@@ -93,7 +93,7 @@ const forumSlice = createSlice({
     },
     voteThread: (state, action: PayloadAction<{ threadId: string; voteType: "up" | "down" }>) => {
       const { threadId, voteType } = action.payload
-      const thread = state.threads.find((t) => t.id === threadId)
+      const thread = state.threads.find((t: any) => t.id === threadId)
       if (thread) {
         if (voteType === "up") {
           thread.upvotes += 1
@@ -111,9 +111,9 @@ const forumSlice = createSlice({
     },
     voteComment: (state, action: PayloadAction<{ threadId: string; commentId: string; voteType: "up" | "down" }>) => {
       const { threadId, commentId, voteType } = action.payload
-      const thread = state.threads.find((t) => t.id === threadId)
+      const thread = state.threads.find((t: any) => t.id === threadId)
       if (thread) {
-        const comment = thread.comments.find((c) => c.id === commentId)
+        const comment = thread.comments.find((c: any) => c.id === commentId)
         if (comment) {
           if (voteType === "up") {
             comment.upvotes += 1
@@ -123,7 +123,7 @@ const forumSlice = createSlice({
         }
       }
       if (state.currentThread?.id === threadId) {
-        const comment = state.currentThread.comments.find((c) => c.id === commentId)
+        const comment = state.currentThread.comments.find((c: any) => c.id === commentId)
         if (comment) {
           if (voteType === "up") {
             comment.upvotes += 1
@@ -143,13 +143,13 @@ const forumSlice = createSlice({
       state.notifications.unshift(action.payload)
     },
     markNotificationAsRead: (state, action: PayloadAction<string>) => {
-      const notification = state.notifications.find((n) => n.id === action.payload)
+      const notification = state.notifications.find((n: any) => n.id === action.payload)
       if (notification) {
         notification.isRead = true
       }
     },
     markAllNotificationsAsRead: (state) => {
-      state.notifications.forEach((notification) => {
+      state.notifications.forEach((notification: any) => {
         notification.isRead = true
       })
     },

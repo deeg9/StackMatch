@@ -144,7 +144,7 @@ export async function ensureBucketExists(): Promise<{ success: boolean; error?: 
       return { success: false, error: listError.message }
     }
 
-    const bucketExists = buckets?.some((bucket) => bucket.name === "deal-room-files")
+    const bucketExists = buckets?.some((bucket: any) => bucket.name === "deal-room-files")
 
     if (!bucketExists) {
       console.log("📁 STORAGE: Creating deal-room-files bucket...")

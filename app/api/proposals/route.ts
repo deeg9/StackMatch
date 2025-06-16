@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
 
     // Transform the data for the client
     const transformedProposals =
-      proposals?.map((proposal) => ({
+      proposals?.map((proposal: any) => ({
         ...proposal,
         seller_name: proposal.seller_profile?.profiles?.full_name || "Unknown",
         seller_company: proposal.seller_profile?.profiles?.company_name || "Unknown Company",
