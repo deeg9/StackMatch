@@ -45,7 +45,9 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(timeout 30 git push origin main)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm --version)",
+      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npm run build)"
     ],
     "deny": []
   }

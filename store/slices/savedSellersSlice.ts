@@ -53,7 +53,7 @@ export const removeSavedSeller = createAsyncThunk("savedSellers/removeSavedSelle
   try {
     // Remove from localStorage
     const existingSaved = JSON.parse(localStorage.getItem("savedSellers") || "[]")
-    const updatedSaved = existingSaved.filter((seller: SavedSeller: any) => seller.id !== sellerId)
+    const updatedSaved = existingSaved.filter((seller: SavedSeller) => seller.id !== sellerId)
     localStorage.setItem("savedSellers", JSON.stringify(updatedSaved))
 
     return sellerId

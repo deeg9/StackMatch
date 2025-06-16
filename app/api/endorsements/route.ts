@@ -61,10 +61,10 @@ export async function GET(request: NextRequest) {
     // Filter by providerId if specified
     let filteredEndorsements = endorsements
     if (providerId) {
-      filteredEndorsements = endorsements.filter((e: any: any) => e.providerId === providerId)
+      filteredEndorsements = endorsements.filter((e: any) => e.providerId === providerId)
     }
     if (platformId) {
-      filteredEndorsements = filteredEndorsements.filter((e: any: any) => e.platformId === platformId)
+      filteredEndorsements = filteredEndorsements.filter((e: any) => e.platformId === platformId)
     }
 
     return NextResponse.json({

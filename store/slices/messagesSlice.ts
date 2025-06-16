@@ -181,7 +181,7 @@ const messagesSlice = createSlice({
       const conversationMessages = state.messages[conversationId]
 
       if (conversationMessages) {
-        state.messages[conversationId] = conversationMessages.filter((m: any: any) => m.id !== messageId)
+        state.messages[conversationId] = conversationMessages.filter((m: any) => m.id !== messageId)
 
         // Update last message in conversation if this was the last message
         const conversation = state.conversations.find((c: any) => c.id === conversationId)
@@ -234,7 +234,7 @@ const messagesSlice = createSlice({
     // Remove a conversation
     removeConversation: (state, action: PayloadAction<string>) => {
       const conversationId = action.payload
-      state.conversations = state.conversations.filter((c: any: any) => c.id !== conversationId)
+      state.conversations = state.conversations.filter((c: any) => c.id !== conversationId)
       // Also remove messages for this conversation
       delete state.messages[conversationId]
       // Clear active conversation if it was the removed one
@@ -329,7 +329,7 @@ const messagesSlice = createSlice({
             message.reactions = []
           }
           // Remove existing reaction from this user for this emoji
-          message.reactions = message.reactions.filter((r: any: any) => !(r.emoji === reaction && r.user_id === userId))
+          message.reactions = message.reactions.filter((r: any) => !(r.emoji === reaction && r.user_id === userId))
           // Add new reaction
           message.reactions.push({
             emoji: reaction,
@@ -349,7 +349,7 @@ const messagesSlice = createSlice({
       if (conversationMessages) {
         const message = conversationMessages.find((m: any) => m.id === messageId)
         if (message && message.reactions) {
-          message.reactions = message.reactions.filter((r: any: any) => !(r.emoji === reaction && r.user_id === userId))
+          message.reactions = message.reactions.filter((r: any) => !(r.emoji === reaction && r.user_id === userId))
         }
       }
     },

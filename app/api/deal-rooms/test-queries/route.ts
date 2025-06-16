@@ -193,7 +193,7 @@ export async function GET(request: NextRequest) {
 
     // Calculate overall success
     const allTests = Object.values(testResults.tests)
-    const successfulTests = allTests.filter((test: any: any) => test.success).length
+    const successfulTests = allTests.filter((test: any) => test.success).length
     testResults.success = successfulTests === allTests.length
     testResults.summary = {
       total: allTests.length,

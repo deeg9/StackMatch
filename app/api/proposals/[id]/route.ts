@@ -197,10 +197,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         .eq("proposal_id", proposalId)
 
       const existingMilestoneIds = existingMilestones?.map((m: any) => m.id) || []
-      const updatedMilestoneIds = updateData.milestones.filter((m: any: any) => m.id).map((m: any) => m.id)
+      const updatedMilestoneIds = updateData.milestones.filter((m: any) => m.id).map((m: any) => m.id)
 
       // Find milestones to delete (exist in DB but not in update)
-      const milestonesToDelete = existingMilestoneIds.filter((id: any: any) => !updatedMilestoneIds.includes(id))
+      const milestonesToDelete = existingMilestoneIds.filter((id: any) => !updatedMilestoneIds.includes(id))
 
       if (milestonesToDelete.length > 0) {
         const { error: deleteError } = await supabase.from("proposal_milestones").delete().in("id", milestonesToDelete)

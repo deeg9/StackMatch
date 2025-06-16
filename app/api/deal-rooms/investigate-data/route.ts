@@ -130,7 +130,7 @@ export async function GET(request: NextRequest) {
           }
         : null,
       orphanedRooms: {
-        data: orphanedRooms?.filter((room: any: any) => !room.deal_room_participants || room.deal_room_participants.length === 0),
+        data: orphanedRooms?.filter((room: any) => !room.deal_room_participants || room.deal_room_participants.length === 0),
         error: orphanedError?.message,
       },
     }

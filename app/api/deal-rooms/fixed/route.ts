@@ -115,7 +115,7 @@ export async function GET(request: Request) {
     console.log("🔍 DEAL ROOMS FIXED API: All deal rooms fetched:", dealRooms?.length || 0)
 
     // Filter deal rooms for this user
-    const userDealRooms = dealRooms?.filter((room: any: any) => room.buyer_id === user.id || room.seller_id === user.id) || []
+    const userDealRooms = dealRooms?.filter((room: any) => room.buyer_id === user.id || room.seller_id === user.id) || []
 
     console.log("🔍 DEAL ROOMS FIXED API: User's deal rooms:", userDealRooms.length)
     console.log("🔍 DEAL ROOMS FIXED API: User's deal rooms data:", userDealRooms)

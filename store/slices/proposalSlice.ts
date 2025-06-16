@@ -312,8 +312,8 @@ const proposalSlice = createSlice({
       })
       .addCase(deleteProposal.fulfilled, (state, action: PayloadAction<string>) => {
         state.isLoading = false
-        state.proposals = state.proposals.filter((p: any: any) => p.id !== action.payload)
-        state.dashboardProposals = state.dashboardProposals.filter((p: any: any) => p.id !== action.payload)
+        state.proposals = state.proposals.filter((p: any) => p.id !== action.payload)
+        state.dashboardProposals = state.dashboardProposals.filter((p: any) => p.id !== action.payload)
         if (state.currentProposal?.id === action.payload) {
           state.currentProposal = null
         }
