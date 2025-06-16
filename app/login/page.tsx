@@ -79,81 +79,70 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-slate-900">
-      {/* Simple header */}
-      <header className="border-b bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <ArrowLeft className="h-4 w-4" />
-              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">SM</span>
-              </div>
-              <span className="font-bold text-xl">StackMatch</span>
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+      <div className="w-full max-w-md mx-auto px-4">
+        <div className="bg-slate-800 rounded-lg border border-slate-700 p-8">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-bold text-white mb-2">Sign In</h1>
+            <p className="text-slate-400">Enter your credentials to access your account</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-white">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder=""
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-white">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder=""
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
+                required
+              />
+            </div>
+
+            <Button 
+              type="submit" 
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
+              disabled={isLoading}
+            >
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Sign In
+            </Button>
+          </form>
+
+          <div className="mt-6 text-center text-sm">
+            <Link href="/auth/forgot-password" className="text-blue-400 hover:text-blue-300">
+              Forgot your password?
+            </Link>
+          </div>
+
+          <div className="mt-4 text-center text-sm text-slate-400">
+            Don't have an account?{" "}
+            <Link href="/signup" className="text-blue-400 hover:text-blue-300">
+              Sign up
             </Link>
           </div>
         </div>
-      </header>
-
-      {/* Login form */}
-      <div className="flex-1 flex items-center justify-center py-12 px-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center">Welcome back</CardTitle>
-            <CardDescription className="text-center">Sign in to your StackMatch account</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Sign In
-              </Button>
-            </form>
-
-            <div className="mt-6 text-center text-sm">
-              <Link href="/auth/forgot-password" className="text-primary hover:underline">
-                Forgot your password?
-              </Link>
-            </div>
-
-            <div className="mt-4 text-center text-sm">
-              Don't have an account?{" "}
-              <Link href="/signup" className="text-primary hover:underline">
-                Sign up
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   )

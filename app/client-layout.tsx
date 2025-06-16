@@ -93,7 +93,7 @@ export default function ClientLayout({
 
   return (
     <Provider store={store}>
-      <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange forcedTheme="dark">
         <Providers>
           <LayoutContent>{children}</LayoutContent>
         </Providers>
