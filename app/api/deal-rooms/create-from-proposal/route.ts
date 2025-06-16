@@ -260,7 +260,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: "Failed to create deal room",
-          details: createError instanceof Error ? createError.message : "Unknown error",
+          details: getErrorMessage(createError),
         },
         { status: 500 },
       )

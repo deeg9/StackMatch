@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
     }
 
     const requiredColumns = ["id", "buyer_id", "seller_id", "listing_id", "proposal_id", "status", "last_activity_at"]
-    const existingColumns = dealRoomColumns?.map((c) => c.column_name) || []
+    const existingColumns = dealRoomColumns?.map((c: any) => c.column_name) || []
     const missingColumns = requiredColumns.filter((col) => !existingColumns.includes(col))
 
     // Test 3: Test a simple deal rooms query
@@ -111,9 +111,9 @@ export async function GET(request: NextRequest) {
       .select("indexname")
       .eq("tablename", "deal_rooms")
 
-    const indexNames = indexes?.map((i) => i.indexname) || []
+    const indexNames = indexes?.map((i: any) => i.indexname) || []
     const hasPerformanceIndexes = indexNames.some(
-      (name) => name.includes("buyer_id") || name.includes("seller_id") || name.includes("last_activity"),
+      (name: any) => name.includes("buyer_id") || name.includes("seller_id") || name.includes("last_activity"),
     )
 
     const validationResults = {
@@ -134,7 +134,7 @@ export async function GET(request: NextRequest) {
         dealRoomsCount: dealRoomsTest?.length || 0,
         indexCount: indexes?.length || 0,
       },
-      recommendations: [],
+      recommendations: [] as string[],
     }
 
     // Add recommendations based on results

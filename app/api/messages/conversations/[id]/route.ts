@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { createClient } from "@/lib/supabase/client-wrapper"
-import type { Message as MessageType } from "@/types" // Use our MessageType
+import type { Message as MessageType } from "@/types/conversation-types"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -164,27 +164,14 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     const formattedMessage: MessageType = {
       id: messageData.id,
       conversation_id: messageData.conversation_id,
-      conversationId: messageData.conversation_id, // alias
       sender_id: messageData.sender_id,
       content: messageData.content,
-      attachments: messageData.attachments,
-      is_encrypted: messageData.is_encrypted,
-      encrypted: messageData.is_encrypted, // alias
-      is_edited: messageData.is_edited,
-      edited_at: messageData.edited_at,
+      is_encrypted: messageData.is_encrypted || false,
+      message_type: (messageData.message_type as "TEXT" | "FILE" | "SYSTEM") || "TEXT",
+      file_url: messageData.file_url || null,
+      file_name: messageData.file_name || null,
       created_at: messageData.created_at,
-      timestamp: messageData.created_at, // alias
-      sender: messageProfile
-        ? {
-            id: messageProfile.id,
-            full_name: messageProfile.full_name || "Unknown User",
-            avatar_url: messageProfile.avatar_url || "/placeholder.svg?height=32&width=32",
-          }
-        : {
-            id: senderId,
-            full_name: "You",
-            avatar_url: currentUser.user_metadata?.avatar_url || "/placeholder.svg?height=32&width=32",
-          }, // Fallback for sender if profile join fails
+      updated_at: messageData.updated_at || messageData.created_at,
     }
 
     // TODO: Trigger WebSocket event for real-time update to other participants

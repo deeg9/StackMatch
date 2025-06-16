@@ -13,10 +13,10 @@ export async function GET() {
     console.log("🔍 SCHEMA VALIDATION: Supabase client created")
 
     const results = {
-      listings: { exists: false, columns: [], error: null },
-      proposals: { exists: false, columns: [], error: null },
-      deal_room_files: { exists: false, columns: [], error: null },
-      summary: { allTablesExist: false, allColumnsExist: false, issues: [] },
+      listings: { exists: false, columns: [] as string[], error: null as string | null },
+      proposals: { exists: false, columns: [] as string[], error: null as string | null },
+      deal_room_files: { exists: false, columns: [] as string[], error: null as string | null },
+      summary: { allTablesExist: false, allColumnsExist: false, issues: [] as string[] },
     }
 
     // Test listings table

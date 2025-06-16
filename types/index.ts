@@ -177,16 +177,6 @@ export interface BusinessProfile {
   updatedAt: string
 }
 
-// Message type (for type checker compatibility)
-export interface Message {
-  id: string
-  conversationId: string
-  senderId: string
-  content: string
-  type: "TEXT" | "IMAGE" | "FILE" | "SYSTEM"
-  createdAt: string
-  updatedAt: string
-}
 
 // Portfolio Item type
 export interface PortfolioItem {

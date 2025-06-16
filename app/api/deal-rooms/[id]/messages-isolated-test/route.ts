@@ -35,7 +35,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         hasUser: !!authResult.user,
         hasError: !!authResult.error,
         userId: authResult.user?.id,
-        errorMessage: authResult.error?.message,
+        errorMessage: authResult.error ? getErrorMessage(authResult.error) : null,
       })
 
       if (authResult.error) {
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         return NextResponse.json({
           success: true,
           step: "auth_error",
-          error: authResult.getErrorMessage(error),
+          error: getErrorMessage(authResult.error),
           details: "Authentication failed but function completed",
         })
       }

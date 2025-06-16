@@ -32,7 +32,14 @@
       "Bash(timeout 30 npx next build)",
       "Bash(npm uninstall:*)",
       "Bash(npm cache clean:*)",
-      "Bash(yarn)"
+      "Bash(yarn)",
+      "Bash(rm:*)",
+      "Bash(grep:*)",
+      "Bash(timeout 30 npx tsc:*)",
+      "Bash(timeout 60 npx tsc:*)",
+      "Bash(timeout 120 npm run build 2 >& 1)",
+      "Bash(pkill:*)",
+      "Bash(timeout 90 npm run build)"
     ],
     "deny": []
   }

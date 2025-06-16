@@ -89,8 +89,8 @@ export const validateApiResponse = <T>(
   data: unknown,
   validator: (obj: unknown) => obj is T,
   errorMessage: string
-): T => {\
-  if (!validator(data)) {\
+): T => {
+  if (!validator(data)) {
     throw new Error(`${errorMessage}: Invalid data structure`)
   }
   return data
@@ -101,15 +101,15 @@ export const validateArrayResponse = <T>(
   data: unknown,
   validator: (obj: unknown) => obj is T,
   errorMessage: string
-): T[] => {\
-  if (!Array.isArray(data)) {\
+): T[] => {
+  if (!Array.isArray(data)) {
     throw new Error(`${errorMessage}: Expected array`)
   }
   
-  return data.map((item, index) => {\
-    if (!validator(item)) {\
+  return data.map((item, index) => {
+    if (!validator(item)) {
       throw new Error(`${errorMessage}: Invalid item at index ${index}`)
     }
     return item
-  })\
+  })
 }

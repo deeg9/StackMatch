@@ -9,8 +9,10 @@ const templates: Record<string, CategoryTemplate> = {
     description: "Custom websites, web applications, and digital platforms",
     icon: "🌐",
     color: "blue",
-    estimatedTime: "10-15 minutes",
-    popularityRank: 1,
+    value: "web-development",
+    label: "Web Development",
+    avgTime: "10-15 minutes",
+    popularity: 1,
     qualificationQuestions: [
       {
         id: "project_type",
@@ -91,12 +93,14 @@ const templates: Record<string, CategoryTemplate> = {
   },
   "mobile-development": {
     id: "mobile-development",
+    value: "mobile-development",
+    label: "Mobile Development",
     name: "Mobile Development",
     description: "iOS and Android mobile applications",
     icon: "📱",
     color: "green",
-    estimatedTime: "12-18 minutes",
-    popularityRank: 2,
+    avgTime: "12-18 minutes",
+    popularity: 2,
     qualificationQuestions: [
       {
         id: "platform",
@@ -141,12 +145,14 @@ const templates: Record<string, CategoryTemplate> = {
   },
   design: {
     id: "design",
+    value: "design",
+    label: "Design & Creative",
     name: "Design & Creative",
     description: "UI/UX design, branding, and creative services",
     icon: "🎨",
     color: "purple",
-    estimatedTime: "8-12 minutes",
-    popularityRank: 3,
+    avgTime: "8-12 minutes",
+    popularity: 3,
     qualificationQuestions: [
       {
         id: "design_type",

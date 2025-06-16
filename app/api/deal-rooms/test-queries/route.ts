@@ -28,7 +28,8 @@ export async function GET(request: NextRequest) {
       success: true,
       timestamp: new Date().toISOString(),
       userId: user.id,
-      tests: {},
+      tests: {} as any,
+      summary: {} as any,
     }
 
     // Test 1: Basic deal rooms query
@@ -192,7 +193,7 @@ export async function GET(request: NextRequest) {
 
     // Calculate overall success
     const allTests = Object.values(testResults.tests)
-    const successfulTests = allTests.filter((test) => test.success).length
+    const successfulTests = allTests.filter((test: any) => test.success).length
     testResults.success = successfulTests === allTests.length
     testResults.summary = {
       total: allTests.length,

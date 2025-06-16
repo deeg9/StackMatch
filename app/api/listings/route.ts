@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (filters.status) {
-      query = query.eq("status", filters.status.toUpperCase())
+      query = query.eq("status", filters.status.toUpperCase() as "DRAFT" | "ACTIVE" | "CLOSED" | "AWARDED" | "CANCELLED")
     } else {
       // By default, only show active listings
       query = query.eq("status", "ACTIVE")
@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
     const { count } = await supabase
       .from("listings")
       .select("*", { count: "exact", head: true })
-      .eq("status", filters.status ? filters.status.toUpperCase() : "ACTIVE")
+      .eq("status", filters.status ? filters.status.toUpperCase() as "DRAFT" | "ACTIVE" | "CLOSED" | "AWARDED" | "CANCELLED" : "ACTIVE")
 
     // Apply sorting
     query = query.order(filters.sortBy, { ascending: filters.sortOrder === "asc" })
@@ -177,7 +177,7 @@ export async function GET(request: NextRequest) {
           categorySlug: category?.slug,
           views: listing.view_count || 0,
           growth: "N/A", // This would need to be calculated based on view trends
-          isNew: new Date(listing.created_at).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000, // New if created within 7 days
+          isNew: listing.created_at ? new Date(listing.created_at).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000 : false, // New if created within 7 days
           isActive: listing.status === "ACTIVE",
           created_at: listing.created_at,
           updated_at: listing.updated_at,

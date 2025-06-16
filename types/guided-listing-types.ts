@@ -25,6 +25,11 @@ export interface EnhanceResponseResponse {
   success: boolean
 }
 
+export interface LoadTemplateResponse {
+  template: CategoryTemplate
+  success: boolean
+}
+
 export interface CompletenessCheckRequest {
   formData: GuidedListingFormData
   templateId: string
