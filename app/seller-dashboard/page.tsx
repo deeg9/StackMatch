@@ -5,6 +5,9 @@ import { createClient } from "@/utils/supabase/server"
 import SellerDashboardClientPage from "./client-page"
 import type { UserProfile, SellerProfile, Proposal, Listing } from "@/types"
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic'
+
 // Define basic types if not already present in @/types
 export interface DashboardProposal extends Proposal {
   client_company_name?: string

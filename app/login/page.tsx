@@ -14,9 +14,13 @@ import { useClientAuth } from "@/hooks/useClientAuth"
 import { createClient } from "@/utils/supabase/client"
 
 export default function LoginPage() {
+  console.log("🔐 LOGIN DEBUG: LoginPage component rendering")
+  
   const router = useRouter()
   const searchParams = useSearchParams()
   const { signIn, user, loading } = useClientAuth()
+  
+  console.log("🔐 LOGIN DEBUG: Auth state - user:", !!user, "loading:", loading)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
