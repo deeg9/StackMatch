@@ -39,7 +39,9 @@
       "Bash(timeout 60 npx tsc:*)",
       "Bash(timeout 120 npm run build 2 >& 1)",
       "Bash(pkill:*)",
-      "Bash(timeout 90 npm run build)"
+      "Bash(timeout 90 npm run build)",
+      "Bash(git add:*)",
+      "Bash(git restore:*)"
     ],
     "deny": []
   }
