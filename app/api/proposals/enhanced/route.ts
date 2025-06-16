@@ -63,19 +63,34 @@ export async function GET(request: NextRequest) {
     query = query.order(sort_by, { ascending })
 
     // Get total count for pagination
-    const { count, error: countError } = await supabase
+    let countQuery = supabase
       .from("proposals")
       .select("*", { count: "exact", head: true })
-      // Re-apply filters for accurate count
-      .if(status && status !== "ALL", (q) => q.eq("status", status))
-      .if(listing_id, (q) => q.eq("listing_id", listing_id))
-      .if(provider_id, (q) => q.eq("provider_id", provider_id))
-      .if(pricing_model && pricing_model !== "ALL", (q) => q.eq("pricing_model", pricing_model))
-      .if(budget_min, (q) => q.gte("total_budget", Number.parseFloat(budget_min)))
-      .if(budget_max, (q) => q.lte("total_budget", Number.parseFloat(budget_max)))
-      .if(search, (q) =>
-        q.or(`title.ilike.%${search}%,executive_summary.ilike.%${search}%,technical_approach.ilike.%${search}%`),
-      )
+    
+    // Apply filters conditionally
+    if (status && status !== "ALL") {
+      countQuery = countQuery.eq("status", status)
+    }
+    if (listing_id) {
+      countQuery = countQuery.eq("listing_id", listing_id)
+    }
+    if (provider_id) {
+      countQuery = countQuery.eq("provider_id", provider_id)
+    }
+    if (pricing_model && pricing_model !== "ALL") {
+      countQuery = countQuery.eq("pricing_model", pricing_model)
+    }
+    if (budget_min) {
+      countQuery = countQuery.gte("total_budget", Number.parseFloat(budget_min))
+    }
+    if (budget_max) {
+      countQuery = countQuery.lte("total_budget", Number.parseFloat(budget_max))
+    }
+    if (search) {
+      countQuery = countQuery.or(`title.ilike.%${search}%,executive_summary.ilike.%${search}%,technical_approach.ilike.%${search}%`)
+    }
+    
+    const { count, error: countError } = await countQuery
 
     if (countError) {
       console.error("Error fetching proposal count:", countError)
