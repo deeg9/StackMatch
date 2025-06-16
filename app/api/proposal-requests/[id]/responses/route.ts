@@ -16,7 +16,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   try {
     const body = await req.json()
     const { requestId, response } = bodySchema.parse(body)
-    const supabase = createRouteHandlerClient({ cookies })
+    const supabase = createRouteHandlerClient({ cookies: await cookies() })
 
     const {
       data: { user },

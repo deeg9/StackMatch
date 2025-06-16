@@ -7,8 +7,8 @@ import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension
  * Wrapper around Supabase client to handle strict type issues
  * This provides a more flexible interface while maintaining type safety where needed
  */
-export function createClient(cookieStore?: ReadonlyRequestCookies) {
-  const supabase = cookieStore ? createServerClientWithCookies(cookieStore) : createSupabaseClient()
+export async function createClient(cookieStore?: ReadonlyRequestCookies) {
+  const supabase = cookieStore ? createServerClientWithCookies(cookieStore) : await createSupabaseClient()
   
   // Create server client with cookies if provided
   function createServerClientWithCookies(cookies: ReadonlyRequestCookies) {

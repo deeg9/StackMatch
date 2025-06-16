@@ -3,7 +3,7 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js"
 import { cookies } from "next/headers"
 import type { Database } from "@/types/supabase"
 
-export function createClient() {
+export async function createClient() {
   const cookieStore = await cookies()
 
   // Log the environment variables (without revealing secrets)
