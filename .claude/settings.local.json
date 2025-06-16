@@ -41,7 +41,10 @@
       "Bash(pkill:*)",
       "Bash(timeout 90 npm run build)",
       "Bash(git add:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(timeout 30 git push origin main)"
     ],
     "deny": []
   }
