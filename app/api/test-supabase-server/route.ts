@@ -23,7 +23,7 @@ export async function GET() {
       const cookieStore = cookies()
       supabase = createClient(cookieStore)
       console.log("🔍 SUPABASE TEST: Client created successfully")
-    } catch (clientError) {
+    } catch (clientError: unknown) {
       console.error("🔍 SUPABASE TEST: Client creation failed:", clientError)
       return NextResponse.json({
         success: false,
@@ -59,7 +59,7 @@ export async function GET() {
         authErrorCode: authError?.code,
       }
       console.log("🔍 SUPABASE TEST: Auth test:", authTest)
-    } catch (authException) {
+    } catch (authException: unknown) {
       authTest = {
         error: "Auth call failed",
         details: authException.message,
@@ -79,7 +79,7 @@ export async function GET() {
         dbErrorCode: dbError?.code,
       }
       console.log("🔍 SUPABASE TEST: Database test:", dbTest)
-    } catch (dbException) {
+    } catch (dbException: unknown) {
       dbTest = {
         error: "Database query failed",
         details: dbException.message,
@@ -102,7 +102,7 @@ export async function GET() {
         bpErrorCode: bpError?.code,
       }
       console.log("🔍 SUPABASE TEST: Buyer profiles test:", buyerProfileTest)
-    } catch (bpException) {
+    } catch (bpException: unknown) {
       buyerProfileTest = {
         error: "Buyer profiles query failed",
         details: bpException.message,
@@ -127,7 +127,7 @@ export async function GET() {
         cErrorCode: cError?.code,
       }
       console.log("🔍 SUPABASE TEST: Christopher test:", christopherTest)
-    } catch (cException) {
+    } catch (cException: unknown) {
       christopherTest = {
         error: "Christopher query failed",
         details: cException.message,
@@ -147,7 +147,7 @@ export async function GET() {
         christopher: christopherTest,
       },
     })
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("🔍 SUPABASE TEST: Unexpected error:", error)
     return NextResponse.json({
       success: false,

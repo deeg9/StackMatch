@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     let createClient
     try {
       const supabaseModule = await import("@/lib/supabase/server")
-      createClient = supabaseModule.createServerClient
+      createClient = supabaseModule.createClient
       console.log("🔍 SUPABASE TEST: createClient imported successfully")
     } catch (importError: any) {
       console.error("🔍 SUPABASE TEST: Import error:", importError)

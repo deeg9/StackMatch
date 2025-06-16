@@ -1,3 +1,5 @@
+import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
+
 export async function GET() {
   console.log("🔵 SUPABASE TEST: Starting Supabase connection test")
 

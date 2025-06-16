@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
     // Apply availability filter if the field exists
     if (availability === "true") {
       filteredData = filteredData.filter(
-        (provider) => provider.is_accepting_projects === true || provider.available === true,
+        (provider: any) => provider.is_accepting_projects === true || provider.available === true,
       )
     }
 
@@ -95,21 +95,21 @@ export async function GET(request: NextRequest) {
     // Sort the results manually based on the requested sort field
     if (sortBy === "rating") {
       // Mock sorting by rating - in real implementation, use provider_metrics
-      filteredData.sort((a, b) => {
+      filteredData.sort((a: any, b: any) => {
         const ratingA = Math.random() * 5 // Mock rating
         const ratingB = Math.random() * 5 // Mock rating
         return sortOrder === "asc" ? ratingA - ratingB : ratingB - ratingA
       })
     } else if (sortBy === "projects") {
       // Mock sorting by projects completed
-      filteredData.sort((a, b) => {
+      filteredData.sort((a: any, b: any) => {
         const projectsA = Math.floor(Math.random() * 100) // Mock projects
         const projectsB = Math.floor(Math.random() * 100) // Mock projects
         return sortOrder === "asc" ? projectsA - projectsB : projectsB - projectsA
       })
     } else if (sortBy === "response_time") {
       // Mock sorting by response time
-      filteredData.sort((a, b) => {
+      filteredData.sort((a: any, b: any) => {
         const timeA = Math.random() * 24 // Mock response time in hours
         const timeB = Math.random() * 24 // Mock response time in hours
         return sortOrder === "asc" ? timeA - timeB : timeB - timeA
