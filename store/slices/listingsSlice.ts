@@ -46,6 +46,7 @@ interface ListingsFilters {
   sortOrder: "asc" | "desc"
   location: string | null
   skills: string[]
+  page: number
 }
 
 interface ListingsPagination {
@@ -76,6 +77,7 @@ const initialFilters: ListingsFilters = {
   sortOrder: "desc",
   location: null,
   skills: [],
+  page: 1,
 }
 
 const initialPagination: ListingsPagination = {
