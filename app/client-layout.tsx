@@ -31,8 +31,6 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const { user, loading } = useClientAuth()
   const [shouldShowNavigation, setShouldShowNavigation] = useState(false)
-  
-  console.log("🔧 CLIENT LAYOUT DEBUG: LayoutContent render - pathname:", pathname, "user:", !!user, "loading:", loading)
 
   useEffect(() => {
     // Don't show navigation while loading
@@ -86,20 +84,16 @@ export default function ClientLayout({
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    console.log("🔧 CLIENT LAYOUT DEBUG: ClientLayout useEffect - setting isClient to true")
     setIsClient(true)
   }, [])
 
-  console.log("🔧 CLIENT LAYOUT DEBUG: ClientLayout render - isClient:", isClient)
-
   if (!isClient) {
-    console.log("🔧 CLIENT LAYOUT DEBUG: Not client-side yet, returning null")
     return null
   }
 
   return (
     <Provider store={store}>
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
         <Providers>
           <LayoutContent>{children}</LayoutContent>
         </Providers>

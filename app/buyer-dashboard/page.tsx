@@ -13,8 +13,6 @@ import { RecentProposalsSection } from "@/components/buyer-dashboard/recent-prop
 import Link from "next/link"
 
 export default function BuyerDashboardPage() {
-  console.log("💼 BUYER DASHBOARD DEBUG: Component starting to render")
-  
   const router = useRouter()
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)

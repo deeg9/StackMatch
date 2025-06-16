@@ -26,21 +26,15 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
-  console.log("🔍 DEBUG: SignupPage render")
-  console.log("🔍 DEBUG: User loading:", loading)
-  console.log("🔍 DEBUG: User authenticated:", !!user)
-
   // Redirect if already authenticated
   useEffect(() => {
     if (user && !loading) {
-      console.log("🔍 DEBUG: User already authenticated, redirecting")
       router.push("/browse-listings")
     }
   }, [user, loading, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("🔍 DEBUG: Signup form submitted")
 
     if (!email || !password || !confirmPassword || !fullName) {
       setError("Please fill in all fields")

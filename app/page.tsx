@@ -9,17 +9,12 @@ import { ArrowRight, Users, Zap, Shield } from "lucide-react"
 import { useClientAuth } from "@/hooks/useClientAuth"
 
 export default function HomePage() {
-  console.log("🏠 HOMEPAGE DEBUG: Component starting to render")
-  
   const { user, loading } = useClientAuth()
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    console.log("🏠 HOMEPAGE DEBUG: useEffect triggered, setting isClient to true")
     setIsClient(true)
   }, [])
-
-  console.log("🏠 HOMEPAGE DEBUG: Render state - isClient:", isClient, "loading:", loading, "user:", !!user)
 
   if (!isClient) {
     return (

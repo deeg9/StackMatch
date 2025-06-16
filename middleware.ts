@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Simple passthrough middleware - just logs requests and continues
+// Simple passthrough middleware
 export function middleware(request: NextRequest) {
-  console.log(`🔍 MIDDLEWARE: ${request.method} ${request.url}`)
   return NextResponse.next()
 }
 
