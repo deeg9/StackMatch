@@ -5,7 +5,14 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
 
 // Create admin client for storage operations
-const supabaseAdmin = await createClient(supabaseUrl, supabaseServiceKey)
+let supabaseAdmin: any = null
+
+function getSupabaseAdmin() {
+  if (!supabaseAdmin) {
+    supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+  }
+  return supabaseAdmin
+}
 
 export interface UploadResult {
   success: boolean
@@ -48,7 +55,7 @@ export async function uploadFile(file: File, dealRoomId: string, category: strin
     const uint8Array = new Uint8Array(arrayBuffer)
 
     // Upload to Supabase Storage (bucket should already exist)
-    const { data, error } = await supabaseAdmin.storage.from("deal-room-files").upload(filePath, uint8Array, {
+    const { data, error } = await getSupabaseAdmin().storage.from("deal-room-files").upload(filePath, uint8Array, {
       contentType: file.type,
       cacheControl: "3600",
       upsert: false,
@@ -65,7 +72,7 @@ export async function uploadFile(file: File, dealRoomId: string, category: strin
     console.log("📁 STORAGE: Upload successful:", data.path)
 
     // Get public URL
-    const { data: urlData } = supabaseAdmin.storage.from("deal-room-files").getPublicUrl(filePath)
+    const { data: urlData } = getSupabaseAdmin().storage.from("deal-room-files").getPublicUrl(filePath)
 
     console.log("📁 STORAGE: Public URL generated:", urlData.publicUrl)
 
@@ -90,7 +97,7 @@ export async function deleteFile(filePath: string): Promise<{ success: boolean; 
   try {
     console.log("📁 STORAGE: Deleting file:", filePath)
 
-    const { error } = await supabaseAdmin.storage.from("deal-room-files").remove([filePath])
+    const { error } = await getSupabaseAdmin().storage.from("deal-room-files").remove([filePath])
 
     if (error) {
       console.error("📁 STORAGE: Delete error:", getErrorMessage(error))
@@ -115,6 +122,6 @@ export async function deleteFile(filePath: string): Promise<{ success: boolean; 
  * Get public URL for a file
  */
 export function getFileUrl(filePath: string): string {
-  const { data } = supabaseAdmin.storage.from("deal-room-files").getPublicUrl(filePath)
+  const { data } = getSupabaseAdmin().storage.from("deal-room-files").getPublicUrl(filePath)
   return data.publicUrl
 }
