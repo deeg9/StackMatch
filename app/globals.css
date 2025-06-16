@@ -78,13 +78,14 @@
 /* Ticker animation */
 .ticker-container {
   width: 100%;
+  overflow: hidden;
 }
 
 .ticker-content {
   display: inline-block;
   white-space: nowrap;
-  animation: ticker 60s linear infinite;
-  padding-right: 100%; /* Ensure there's no gap at the end */
+  animation: ticker 30s linear infinite;
+  padding-right: 100%;
 }
 
 .ticker-content:hover {
@@ -93,9 +94,9 @@
 
 @keyframes ticker {
   0% {
-    transform: translateX(0);
+    transform: translateX(100%);
   }
   100% {
-    transform: translateX(-50%); /* Only move half way since we duplicated the content */
+    transform: translateX(-100%);
   }
 }
