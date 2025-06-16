@@ -115,6 +115,8 @@ export interface DealRoomFile {
   is_latest: boolean
   created_at: string
   updated_at: string
+  file_type?: string
+  blob_url?: string
 }
 
 export interface DealRoomMessage {
@@ -137,6 +139,18 @@ export interface DealRoomDocument {
   created_at: string
   updated_at: string | null
   created_by_id: string | null
+}
+
+export interface DealRoomParticipant {
+  id: string
+  deal_room_id: string
+  user_id: string
+  role: "BUYER" | "SELLER"
+  joined_at: string
+  permissions?: string[]
+  user_full_name?: string
+  user_email?: string
+  role_in_deal_room?: string
 }
 
 // New interface for deal room closures
@@ -170,6 +184,10 @@ export interface ContractFile {
   uploaded_by: string
   created_at: string
   updated_at: string
+  versions?: ContractFileVersion[]
+  file_name?: string
+  category?: string
+  current_version?: number
 }
 
 export interface ContractFileVersion {
@@ -183,4 +201,8 @@ export interface ContractFileVersion {
   uploaded_by: string
   created_at: string
   updated_at: string
+  uploader?: {
+    id: string
+    full_name: string
+  }
 }

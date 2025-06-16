@@ -10,7 +10,7 @@ export async function GET() {
     console.log(`🔍 SIMPLE FILE INVESTIGATION: Creating Supabase client...`)
 
     // Create a direct Supabase client using environment variables
-    const supabase = createClient(
+    const supabase = await createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL || "",
       process.env.SUPABASE_SERVICE_ROLE_KEY || "",
     )

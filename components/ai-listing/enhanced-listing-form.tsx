@@ -3,7 +3,8 @@
 import type React from "react"
 
 import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { useAppSelector } from "@/hooks/useAppSelector"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -15,7 +16,7 @@ import { Undo, Eye, Save, Send, Plus, X } from "lucide-react"
 import { updateFormField, undoFieldChange, enhanceField } from "@/store/slices/aiListingSlice"
 import { AIFieldEnhancer } from "./ai-field-enhancer"
 import type { RootState } from "@/store"
-import type { ListingFormData } from "@/types/listing-types"
+import type { ListingFormData, DetailedNeed, SuccessMetric } from "@/types/listing-types"
 
 interface EnhancedListingFormProps {
   onSubmit: (isDraft: boolean) => Promise<void>
@@ -23,7 +24,7 @@ interface EnhancedListingFormProps {
 }
 
 export function EnhancedListingForm({ onSubmit, isLoading }: EnhancedListingFormProps) {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [showPreview, setShowPreview] = useState(false)
 
   const {
@@ -34,7 +35,7 @@ export function EnhancedListingForm({ onSubmit, isLoading }: EnhancedListingForm
     enhancementSuggestions,
     activeEnhancement,
     formCompletionPercentage,
-  } = useSelector((state: RootState) => state.aiListing)
+  } = useAppSelector((state) => state.aiListing)
 
   // Mock categories - in real app, fetch from API
   const categories = [
@@ -287,15 +288,22 @@ export function EnhancedListingForm({ onSubmit, isLoading }: EnhancedListingForm
                   <Label>Specific Requirements</Label>
                   <AIFieldEnhancer
                     fieldName="detailedNeeds"
-                    currentValue={(formData.detailedNeeds || []).join("\n")}
+                    currentValue={(formData.detailedNeeds || []).map(need => typeof need === 'string' ? need : need.title || need.description).join("\n")}
                     onEnhance={handleEnhanceField}
                     isProcessing={activeEnhancement === "detailedNeeds"}
                   />
                 </div>
                 <ArrayInput
-                  items={formData.detailedNeeds || []}
-                  onAddItem={(item) => addArrayItem("detailedNeeds", item)}
-                  onRemoveItem={(index) => removeArrayItem("detailedNeeds", index)}
+                  items={(formData.detailedNeeds || []).map(need => typeof need === 'string' ? need : need.title || need.description || '')}
+                  onAddItem={(item) => {
+                    const currentNeeds = formData.detailedNeeds || []
+                    const newNeed = { id: Date.now().toString(), title: item, description: item }
+                    handleFieldChange('detailedNeeds', [...currentNeeds, newNeed])
+                  }}
+                  onRemoveItem={(index) => {
+                    const currentNeeds = formData.detailedNeeds || []
+                    handleFieldChange('detailedNeeds', currentNeeds.filter((_, i) => i !== index))
+                  }}
                   placeholder="Add a specific requirement"
                   className={getFieldClassName("detailedNeeds")}
                 />
@@ -307,15 +315,22 @@ export function EnhancedListingForm({ onSubmit, isLoading }: EnhancedListingForm
                   <Label>Success Metrics & KPIs</Label>
                   <AIFieldEnhancer
                     fieldName="successMetrics"
-                    currentValue={(formData.successMetrics || []).join("\n")}
+                    currentValue={(formData.successMetrics || []).map(metric => typeof metric === 'string' ? metric : metric.label || metric.currentValue).join("\n")}
                     onEnhance={handleEnhanceField}
                     isProcessing={activeEnhancement === "successMetrics"}
                   />
                 </div>
                 <ArrayInput
-                  items={formData.successMetrics || []}
-                  onAddItem={(item) => addArrayItem("successMetrics", item)}
-                  onRemoveItem={(index) => removeArrayItem("successMetrics", index)}
+                  items={(formData.successMetrics || []).map(metric => typeof metric === 'string' ? metric : metric.label || metric.currentValue || '')}
+                  onAddItem={(item) => {
+                    const currentMetrics = formData.successMetrics || []
+                    const newMetric = { id: Date.now().toString(), label: item, currentValue: '', targetValue: '', unit: '' }
+                    handleFieldChange('successMetrics', [...currentMetrics, newMetric])
+                  }}
+                  onRemoveItem={(index) => {
+                    const currentMetrics = formData.successMetrics || []
+                    handleFieldChange('successMetrics', currentMetrics.filter((_, i) => i !== index))
+                  }}
                   placeholder="Add a success metric or KPI"
                   className={getFieldClassName("successMetrics")}
                 />
@@ -532,7 +547,7 @@ function ListingPreview({ formData }: { formData: Partial<ListingFormData> }) {
             <h4 className="font-medium mb-2">Requirements</h4>
             <ul className="list-disc list-inside space-y-1 text-slate-300">
               {formData.detailedNeeds.map((need, index) => (
-                <li key={index}>{need}</li>
+                <li key={index}>{typeof need === 'string' ? need : need.title || need.description}</li>
               ))}
             </ul>
           </div>

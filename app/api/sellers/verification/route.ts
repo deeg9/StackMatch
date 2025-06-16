@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { providerId, verificationType, documents, businessInfo } = body
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Create verification request
     const verificationRequest = {
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Provider ID is required" }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { data, error } = await supabase
       .from("verification_requests")

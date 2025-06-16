@@ -23,7 +23,7 @@ interface UseSupabaseRealtimeProps {
 
 export function useSupabaseRealtime({ table, event = "*", callback, filter, filterValue }: UseSupabaseRealtimeProps) {
   useEffect(() => {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Set up the subscription
     const subscription = supabase
@@ -168,7 +168,7 @@ export function useSupabaseRealtimeMessages() {
     })
 
     // Subscribe to user presence
-    const presenceChannel = createClient()
+    const presenceChannel = await createClient()
       .channel("online-users")
       .on("presence", { event: "sync" }, () => {
         const state = presenceChannel.presenceState()
@@ -216,7 +216,7 @@ export function useSupabaseRealtimeMessages() {
   useEffect(() => {
     if (!activeConversation || !user?.id) return
 
-    const typingChannel = createClient()
+    const typingChannel = await createClient()
       .channel(`typing:${activeConversation}`)
       .on("broadcast", { event: "typing" }, (payload: any) => {
         console.log("Typing event:", payload)
@@ -233,7 +233,7 @@ export function useSupabaseRealtimeMessages() {
   const startTyping = async (conversationId: string) => {
     if (!user?.id) return
 
-    const channel = createClient().channel(`typing:${conversationId}`)
+    const channel = await createClient().channel(`typing:${conversationId}`)
     await channel.send({
       type: "broadcast",
       event: "typing",
@@ -248,7 +248,7 @@ export function useSupabaseRealtimeMessages() {
   const stopTyping = async (conversationId: string) => {
     if (!user?.id) return
 
-    const channel = createClient().channel(`typing:${conversationId}`)
+    const channel = await createClient().channel(`typing:${conversationId}`)
     await channel.send({
       type: "broadcast",
       event: "typing",

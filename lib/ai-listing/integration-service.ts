@@ -24,15 +24,16 @@ export class ListingIntegrationService {
 
     // Process required fields
     const requiredFields = ["title", "categoryId", "budgetMin", "bidDeadline", "aboutBusiness"]
-    requiredFields.forEach((field: any) => {
-      if (!formState[field]) {
+    requiredFields.forEach((field: string) => {
+      const fieldValue = formState[field as keyof typeof formState]
+      if (!fieldValue) {
         validationErrors.push(`Missing required field: ${field}`)
       } else {
-        const { isValid, error } = validateFieldValue(field, formState[field])
+        const { isValid, error } = validateFieldValue(field, fieldValue)
         if (!isValid) {
           validationErrors.push(error || `Invalid value for ${field}`)
         }
-        sanitizedData[field] = sanitizeFieldValue(field, formState[field])
+        sanitizedData[field] = sanitizeFieldValue(field, fieldValue)
       }
     })
 
@@ -47,9 +48,10 @@ export class ListingIntegrationService {
       "timelinePhases",
     ]
 
-    optionalFields.forEach((field: any) => {
-      if (formState[field]) {
-        sanitizedData[field] = sanitizeFieldValue(field, formState[field])
+    optionalFields.forEach((field: string) => {
+      const fieldValue = formState[field as keyof typeof formState]
+      if (fieldValue) {
+        sanitizedData[field] = sanitizeFieldValue(field, fieldValue)
       }
     })
 
@@ -57,11 +59,11 @@ export class ListingIntegrationService {
     const totalFields = requiredFields.length + optionalFields.length
     let completedFields = 0
 
-    requiredFields.forEach((field: any) => {
+    requiredFields.forEach((field: string) => {
       if (sanitizedData[field]) completedFields += 1
     })
 
-    optionalFields.forEach((field: any) => {
+    optionalFields.forEach((field: string) => {
       if (sanitizedData[field]) completedFields += 0.5 // Optional fields count as half
     })
 
@@ -102,7 +104,7 @@ export class ListingIntegrationService {
     conversationId?: string,
   ): Promise<{ success: boolean; listingId?: string; error?: string }> {
     try {
-      const supabase = createClient()
+      const supabase = await createClient()
 
       // Prepare listing data
       const listingRecord = {
@@ -153,7 +155,7 @@ export class ListingIntegrationService {
     listingId: string,
   ): Promise<{ success: boolean; formData?: Partial<ListingFormData>; error?: string }> {
     try {
-      const supabase = createClient()
+      const supabase = await createClient()
 
       const { data, error } = await supabase.from("listings").select("*").eq("id", listingId).single()
 
@@ -162,7 +164,7 @@ export class ListingIntegrationService {
       }
 
       // Parse requirements JSON
-      let requirements = {}
+      let requirements: Partial<ListingFormData> = {}
       try {
         requirements = data.requirements ? JSON.parse(data.requirements) : {}
       } catch (e) {
@@ -212,7 +214,7 @@ export class ListingIntegrationService {
     },
   ): Promise<void> {
     try {
-      const supabase = createClient()
+      const supabase = await createClient()
 
       await supabase.from("ai_usage_metrics").insert({
         user_id: userId,

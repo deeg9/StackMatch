@@ -15,8 +15,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
   try {
     // Setup
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const cookieStore = await cookies()
+    const supabase = await createClient(cookieStore)
 
     const {
       data: { user },

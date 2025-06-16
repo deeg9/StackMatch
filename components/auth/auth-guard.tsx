@@ -72,12 +72,12 @@ export function AuthGuard({ children, requiredUserType, redirectTo = "/login" }:
         // Update Redux store
         dispatch(
           setUser({
-            id: profile.id,
-            email: profile.email,
-            user_type: profile.user_type,
-            company_name: profile.company_name,
-            full_name: profile.full_name,
-            avatar_url: profile.avatar_url,
+            id: profile.id as string,
+            email: profile.email as string,
+            name: (profile.full_name || profile.company_name || profile.email) as string,
+            userType: (profile.user_type as "BUSINESS" | "PROVIDER" | "ADMIN") || "BUSINESS",
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           }),
         )
 

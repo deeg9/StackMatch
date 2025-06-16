@@ -17,8 +17,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     }
 
     console.log("🔍 WITHDRAW API: Creating Supabase client with cookies...")
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const cookieStore = await cookies()
+    const supabase = await createClient(cookieStore)
     console.log("🔍 WITHDRAW API: Supabase client created successfully")
 
     // Get user

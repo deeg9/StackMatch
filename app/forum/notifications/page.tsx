@@ -198,7 +198,7 @@ export default function ForumNotificationsPage() {
                                 <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0" />
                               )}
                               <span className="text-xs text-muted-foreground">
-                                {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
+                                {formatDistanceToNow(new Date(notification.createdAt || notification.created_at), { addSuffix: true })}
                               </span>
                             </div>
                           </div>

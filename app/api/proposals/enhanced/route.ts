@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/server"
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { searchParams } = new URL(request.url)
 
     // Get query parameters
@@ -140,7 +140,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const proposalData = await request.json()
 
     // Validate required fields

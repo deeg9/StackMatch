@@ -105,7 +105,7 @@ export function RealTimeActivityFeed({ dealRoomId, maxHeight = "400px" }: RealTi
             .single()
 
           if (newActivity) {
-            setActivities((prev) => [newActivity, ...prev])
+            setActivities((prev) => [newActivity as Activity, ...prev])
           }
         },
       )

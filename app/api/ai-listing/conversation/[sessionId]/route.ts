@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, { params }: { params: { sessionI
     }
 
     const { sessionId } = params
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { data: conversation, error } = await supabase
       .from("listing_conversations")
@@ -49,7 +49,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { sessi
     }
 
     const { sessionId } = params
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { error } = await supabase
       .from("listing_conversations")

@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     // Test 2: Create Supabase client
     console.log("🔍 CREATE SIMPLE: Test 2 - Creating Supabase client")
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Test 3: Get authenticated user
     console.log("🔍 CREATE SIMPLE: Test 3 - Getting authenticated user")

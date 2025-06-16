@@ -24,7 +24,7 @@ interface NotificationData {
 // Function to create a notification
 async function createNotification(userId: string, type: NotificationType, data: NotificationData) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Generate notification content based on type
     const { title, message } = generateNotificationContent(type, data)

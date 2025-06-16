@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Provider ID is required" }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createClient()
     const offset = (page - 1) * limit
 
     const { data, error, count } = await supabase
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { data, error } = await supabase.from("provider_reviews").insert(body).select().single()
 

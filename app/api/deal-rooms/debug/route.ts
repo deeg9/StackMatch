@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
     // Test 2: Can we create a Supabase client?
     console.log("🔍 DEBUG API: Test 2 - Creating Supabase client")
-    const supabase = createClient()
+    const supabase = await createClient()
     console.log("🔍 DEBUG API: Supabase client created successfully")
 
     // Test 3: Can we get the authenticated user?

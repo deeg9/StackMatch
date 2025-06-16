@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     console.log("[SERVER] 🔍 AI CONVERSATION: Message received, session:", sessionId)
 
     // Get user from session
-    const supabase = createClient()
+    const supabase = await createClient()
     const {
       data: { session },
     } = await supabase.auth.getSession()

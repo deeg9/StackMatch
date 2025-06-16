@@ -9,7 +9,7 @@ let supabaseInstance: ReturnType<typeof createClient> | null = null
  */
 export function getSupabaseClient() {
   if (!supabaseInstance) {
-    supabaseInstance = createClient()
+    supabaseInstance = await createClient()
   }
   return supabaseInstance
 }

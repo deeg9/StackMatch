@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   try {
     console.log("🔍 DEAL ROOMS FIXED API: Starting...")
 
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const { searchParams } = new URL(request.url)
     const status = searchParams.get("status") || "all"
     // Always use created_at for sorting since we know it exists

@@ -45,7 +45,6 @@ export default function EditListingPage() {
 
         // Transform rawData to ListingFormData shape
         const transformedData: Partial<ListingFormData> = {
-          id: rawData.id,
           title: rawData.title,
           // description: rawData.description, // Form uses aboutBusiness/aboutCompany
           categoryId: rawData.category_id,

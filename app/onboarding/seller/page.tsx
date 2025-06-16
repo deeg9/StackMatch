@@ -43,23 +43,38 @@ export default function SellerOnboardingPage() {
     team_size: "",
 
     // Services & Expertise
-    primary_services: [],
-    secondary_services: [],
-    industries_served: [],
-    technologies: [],
-    certifications: [],
+    primary_services: [] as string[],
+    secondary_services: [] as string[],
+    industries_served: [] as string[],
+    technologies: [] as string[],
+    certifications: [] as string[],
 
     // Experience & Portfolio
     years_experience: "",
-    portfolio_projects: [],
-    case_studies: [],
-    client_testimonials: [],
+    portfolio_projects: [] as Array<{
+      title: string
+      description: string
+      technologies: string
+      url?: string
+    }>,
+    case_studies: [] as Array<{
+      title: string
+      challenge: string
+      solution: string
+      results: string
+    }>,
+    client_testimonials: [] as Array<{
+      client_name: string
+      company: string
+      testimonial: string
+      rating: number
+    }>,
 
     // Business Preferences
     project_size_preference: "",
     budget_range_preference: "",
     availability: "",
-    preferred_communication: [],
+    preferred_communication: [] as string[],
     notification_preferences: {
       email: true,
       in_app: true,

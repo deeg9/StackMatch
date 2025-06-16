@@ -7,7 +7,7 @@ export async function GET() {
   try {
     console.log("🔍 DEBUG STRUCTURE: Starting...")
 
-    const supabase = createClient()
+    const supabase = await createClient()
     const currentUser = await getCurrentUser()
 
     if (!currentUser) {

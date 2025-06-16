@@ -161,8 +161,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
 
     // Increment view count using RPC
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const cookieStore = await cookies()
+    const supabase = await createClient(cookieStore)
     const { error: rpcError } = await supabase.rpc("increment_view_count", {
       p_table_name: "forum_threads",
       p_record_id: threadId,

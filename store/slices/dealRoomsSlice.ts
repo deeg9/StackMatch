@@ -89,6 +89,9 @@ interface DealRoomsState {
   }
   closureLoading: boolean
   closureError: string | null
+  activeDealRoom?: DealRoom | null
+  currentFile?: any
+  versions?: any[]
 }
 
 const initialState: DealRoomsState = {
@@ -107,6 +110,9 @@ const initialState: DealRoomsState = {
   closures: {},
   closureLoading: false,
   closureError: null,
+  activeDealRoom: null,
+  currentFile: null,
+  versions: [],
 }
 
 // Async thunk for requesting deal room closure
@@ -267,6 +273,18 @@ const dealRoomsSlice = createSlice({
         success: false,
       }
     },
+    addFile: (state, action: PayloadAction<{ dealRoomId: string; file: any }>) => {
+      const dealRoom = state.dealRooms.find(dr => dr.id === action.payload.dealRoomId)
+      if (dealRoom) {
+        dealRoom.files.push(action.payload.file)
+      }
+    },
+    removeFile: (state, action: PayloadAction<{ dealRoomId: string; fileId: string }>) => {
+      const dealRoom = state.dealRooms.find(dr => dr.id === action.payload.dealRoomId)
+      if (dealRoom) {
+        dealRoom.files = dealRoom.files.filter(file => file.id !== action.payload.fileId)
+      }
+    },
   },
   extraReducers: (builder) => {
     // Request closure
@@ -298,16 +316,16 @@ const dealRoomsSlice = createSlice({
       // Store the closure information
       state.closures[action.payload.dealRoomId] = {
         id: action.payload.closureId,
-        dealRoomId: action.payload.dealRoomId,
-        initiatorId: action.meta.arg.initiatorId || "",
-        initiatorType: action.meta.arg.initiatorType || "BUYER",
-        reasonCategory: action.meta.arg.reasonCategory,
-        reasonDescription: action.meta.arg.reasonDescription,
-        outcomeType: ClosureOutcomeType.CANCELLED,
-        requestedAt: new Date().toISOString(),
-        coolingPeriodEndsAt: action.payload.coolingPeriodEndsAt,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        deal_room_id: action.payload.dealRoomId,
+        initiator_id: action.meta.arg.initiatorId || "",
+        initiator_type: action.meta.arg.initiatorType || "BUYER",
+        reason_category: action.meta.arg.reasonCategory,
+        reason_description: action.meta.arg.reasonDescription,
+        outcome_type: ClosureOutcomeType.CANCELLED,
+        requested_at: new Date().toISOString(),
+        cooling_period_ends_at: action.payload.coolingPeriodEndsAt,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       }
     })
     builder.addCase(requestDealRoomClosure.rejected, (state, action) => {
@@ -345,9 +363,9 @@ const dealRoomsSlice = createSlice({
 
       // Update the closure information
       if (state.closures[action.payload.dealRoomId]) {
-        state.closures[action.payload.dealRoomId].outcomeType = action.meta.arg.outcomeType
-        state.closures[action.payload.dealRoomId].finalizedAt = new Date().toISOString()
-        state.closures[action.payload.dealRoomId].updatedAt = new Date().toISOString()
+        state.closures[action.payload.dealRoomId].outcome_type = action.meta.arg.outcomeType
+        state.closures[action.payload.dealRoomId].finalized_at = new Date().toISOString()
+        state.closures[action.payload.dealRoomId].updated_at = new Date().toISOString()
       }
     })
     builder.addCase(confirmDealRoomClosure.rejected, (state, action) => {
@@ -382,9 +400,9 @@ const dealRoomsSlice = createSlice({
 
       // Update the closure information
       if (state.closures[action.payload.dealRoomId]) {
-        state.closures[action.payload.dealRoomId].outcomeType = ClosureOutcomeType.CANCELLED
-        state.closures[action.payload.dealRoomId].finalizedAt = new Date().toISOString()
-        state.closures[action.payload.dealRoomId].updatedAt = new Date().toISOString()
+        state.closures[action.payload.dealRoomId].outcome_type = ClosureOutcomeType.CANCELLED
+        state.closures[action.payload.dealRoomId].finalized_at = new Date().toISOString()
+        state.closures[action.payload.dealRoomId].updated_at = new Date().toISOString()
       }
     })
     builder.addCase(cancelDealRoomClosure.rejected, (state, action) => {
@@ -418,5 +436,9 @@ const dealRoomsSlice = createSlice({
   },
 })
 
-export const { setDealRooms, updateFilters, setLoading, setError, resetClosureOperation } = dealRoomsSlice.actions
+export const { setDealRooms, updateFilters, setLoading, setError, resetClosureOperation, addFile, removeFile } = dealRoomsSlice.actions
+
+// Export DealRoomFile type alias
+export type DealRoomFile = DealRoom['files'][0]
+
 export default dealRoomsSlice.reducer

@@ -24,8 +24,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   try {
     // Step 1: Authentication
     console.log(`🔍 FILES DEBUG: Step 1 - Authentication`)
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const cookieStore = await cookies()
+    const supabase = await createClient(cookieStore)
 
     const { user, error: authError } = await authenticateUser(request)
 

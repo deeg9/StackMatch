@@ -32,7 +32,7 @@ export async function GET() {
     const { createClient } = await import("@supabase/supabase-js")
     console.log("🔵 SUPABASE TEST: Supabase import successful")
 
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabase = await createClient(supabaseUrl, supabaseKey)
     console.log("🔵 SUPABASE TEST: Client created")
 
     // Try a simple query

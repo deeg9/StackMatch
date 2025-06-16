@@ -8,8 +8,8 @@ export async function GET() {
   console.log("🔍 ADMIN FILE INVESTIGATION: Timestamp:", new Date().toISOString())
 
   try {
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const cookieStore = await cookies()
+    const supabase = await createClient(cookieStore)
 
     console.log("🔍 ADMIN FILE INVESTIGATION: Supabase client created")
 

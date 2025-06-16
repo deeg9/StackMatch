@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Calendar as CalendarComponent } from "@/components/ui/calendar"
+// import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
@@ -159,7 +159,7 @@ export function StatusFiltersPanel({ filters, onFiltersChange }: StatusFiltersPa
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0 bg-slate-800 border-slate-700" align="start">
-            <CalendarComponent
+            {/* <CalendarComponent
               initialFocus
               mode="range"
               defaultMonth={filters.dateRange?.from}
@@ -167,7 +167,7 @@ export function StatusFiltersPanel({ filters, onFiltersChange }: StatusFiltersPa
               onSelect={(range) => onFiltersChange({ ...filters, dateRange: range })}
               numberOfMonths={2}
               className="bg-slate-800 text-white"
-            />
+            /> */}\n            <p className="p-4 text-sm text-slate-400">Date range picker temporarily disabled</p>
           </PopoverContent>
         </Popover>
       </div>

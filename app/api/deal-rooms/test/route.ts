@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   console.log("🔍 API DEBUG: Test endpoint reached")
 
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Test authentication
     const {

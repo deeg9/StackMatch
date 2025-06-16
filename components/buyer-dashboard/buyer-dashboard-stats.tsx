@@ -96,7 +96,7 @@ export function BuyerDashboardStats() {
         let totalInvested = 0
         if (!investedError && completedProjects) {
           totalInvested = completedProjects.reduce((sum, project) => {
-            const budget = project.budget_max || project.budget_min || 0
+            const budget = (project.budget_max as number) || (project.budget_min as number) || 0
             return sum + budget
           }, 0)
         }

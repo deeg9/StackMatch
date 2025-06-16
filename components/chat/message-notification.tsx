@@ -17,7 +17,7 @@ export function MessageNotification({ onOpenChat }: MessageNotificationProps) {
   const { conversations } = useSelector((state: RootState) => state.messages)
   const [notifications, setNotifications] = useState<string[]>([])
 
-  const unreadConversations = conversations.filter((conv) => conv.unreadCount > 0)
+  const unreadConversations = conversations.filter((conv) => (conv.unreadCount || 0) > 0)
 
   useEffect(() => {
     // Show notification for new unread conversations
@@ -71,7 +71,7 @@ export function MessageNotification({ onOpenChat }: MessageNotificationProps) {
                       <X className="h-3 w-3" />
                     </Button>
                   </div>
-                  <p className="text-xs text-muted-foreground">{otherUser?.company}</p>
+                  <p className="text-xs text-muted-foreground">{(otherUser as any)?.company}</p>
                   {conversation.lastMessage && (
                     <>
                       <p className="text-sm mt-1 truncate">{conversation.lastMessage.content}</p>
@@ -91,9 +91,9 @@ export function MessageNotification({ onOpenChat }: MessageNotificationProps) {
                       <MessageSquare className="h-3 w-3 mr-1" />
                       Reply
                     </Button>
-                    {conversation.unreadCount > 1 && (
+                    {(conversation.unreadCount || 0) > 1 && (
                       <span className="text-xs text-muted-foreground">
-                        +{conversation.unreadCount - 1} more messages
+                        +{(conversation.unreadCount || 0) - 1} more messages
                       </span>
                     )}
                   </div>

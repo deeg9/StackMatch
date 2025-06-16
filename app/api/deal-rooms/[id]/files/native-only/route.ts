@@ -30,8 +30,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   console.log(`🔍 NATIVE FILES: Starting native files implementation for deal room: ${dealRoomId}`)
 
   try {
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const cookieStore = await cookies()
+    const supabase = await createClient(cookieStore)
 
     // Authenticate user
     const { user, error: authError } = await authenticateUser(request)

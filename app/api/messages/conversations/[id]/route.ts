@@ -10,7 +10,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: "Conversation ID is required" }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createClient()
     const {
       data: { user: currentUser },
     } = await supabase.auth.getUser()
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   try {
     const conversationId = params.id
     // Ensure senderId comes from authenticated user, not request body for security
-    const supabase = createClient()
+    const supabase = await createClient()
     const {
       data: { user: currentUser },
     } = await supabase.auth.getUser()

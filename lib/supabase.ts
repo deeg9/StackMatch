@@ -12,7 +12,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 const fallbackUrl = "https://demo.supabase.co"
 const fallbackKey = "demo-key"
 
-export const supabase = createClient(supabaseUrl || fallbackUrl, supabaseAnonKey || fallbackKey)
+export const supabase = await createClient(supabaseUrl || fallbackUrl, supabaseAnonKey || fallbackKey)
 
 export function createRouteHandlerClient({ cookies: cookieStore }: { cookies: () => any }) {
   try {

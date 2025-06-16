@@ -46,7 +46,7 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
   const [isNewFileDialogOpen, setIsNewFileDialogOpen] = useState(false)
   const [newFileName, setNewFileName] = useState("")
   const [newFileDescription, setNewFileDescription] = useState("")
-  const [newFileCategory, setNewFileCategory] = useState<ContractFileCategory>("AGREEMENT")
+  const [newFileCategory, setNewFileCategory] = useState<ContractFileCategory>("main")
   const [isCreatingFile, setIsCreatingFile] = useState(false)
 
   const fetchContractFiles = useCallback(async () => {
@@ -115,7 +115,7 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
       setIsNewFileDialogOpen(false)
       setNewFileName("")
       setNewFileDescription("")
-      setNewFileCategory("AGREEMENT")
+      setNewFileCategory("main")
     } catch (error: any) {
       toast({ title: "Error Creating File", description: getErrorMessage(error), variant: "destructive" })
     } finally {
@@ -127,12 +127,12 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
     <Card>
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
-          {contract.contract_name}
+          {(contract as any).contract_name || 'Contract'}
           <Badge variant={contract.status === "ACTIVE" ? "default" : "secondary"}>{contract.status}</Badge>
         </CardTitle>
         <CardDescription>
-          Created on {format(new Date(contract.created_at), "PPP")} by {contract.creator?.full_name || "Unknown User"}
-          {contract.summary && <p className="mt-1 text-sm">{contract.summary}</p>}
+          Created on {format(new Date(contract.created_at), "PPP")} by {(contract as any).creator?.full_name || "Unknown User"}
+          {(contract as any).summary && <p className="mt-1 text-sm">{(contract as any).summary}</p>}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -174,7 +174,7 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
                       <SelectContent>
                         {(
                           [
-                            "AGREEMENT",
+                            "main",
                             "STATEMENT_OF_WORK",
                             "AMENDMENT",
                             "APPENDIX",
@@ -230,19 +230,19 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
                 {files.map((file) => (
                   <>
                     <TableRow key={file.id}>
-                      <TableCell className="font-medium">{file.file_name}</TableCell>
+                      <TableCell className="font-medium">{(file as any).file_name}</TableCell>
                       <TableCell>
-                        <Badge variant="outline">{file.category.replace(/_/g, " ")}</Badge>
+                        <Badge variant="outline">{(file as any).category.replace(/_/g, " ")}</Badge>
                       </TableCell>
                       <TableCell>
-                        {file.current_version ? `v${file.current_version.version_number}` : "No versions"}
+                        {(file as any).current_version ? `v${(file as any).current_version.version_number}` : "No versions"}
                       </TableCell>
                       <TableCell>{format(new Date(file.updated_at), "PPp")}</TableCell>
                       <TableCell className="space-x-1">
-                        {file.current_version && (
+                        {(file as any).current_version && (
                           <>
                             <Button variant="outline" size="sm" asChild>
-                              <a href={file.current_version.blob_url} target="_blank" rel="noopener noreferrer">
+                              <a href={(file as any).current_version.blob_url} target="_blank" rel="noopener noreferrer">
                                 <Download className="mr-1 h-3 w-3" /> Download
                               </a>
                             </Button>
@@ -251,7 +251,7 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
                               variant="outline"
                               size="sm"
                               onClick={() =>
-                                alert(`Previewing ${file.file_name} v${file.current_version?.version_number}`)
+                                alert(`Previewing ${(file as any).file_name} v${(file as any).current_version?.version_number}`)
                               }
                             >
                               <Eye className="mr-1 h-3 w-3" /> Preview
@@ -260,7 +260,7 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
                         )}
                         <Button variant="ghost" size="sm" onClick={() => toggleVersionHistory(file.id)}>
                           <History className="mr-1 h-3 w-3" /> {showVersionHistory[file.id] ? "Hide" : "History"} (
-                          {file.versions.length})
+                          {file.versions?.length || 0})
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -268,7 +268,7 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
                       <TableRow>
                         <TableCell colSpan={5}>
                           <div className="p-4 bg-muted/50 rounded-md">
-                            <h5 className="text-sm font-semibold mb-2">Version History for {file.file_name}</h5>
+                            <h5 className="text-sm font-semibold mb-2">Version History for {(file as any).file_name}</h5>
                             {file.versions && file.versions.length > 0 ? (
                               <ul className="space-y-2">
                                 {file.versions.map((version) => (
@@ -286,7 +286,7 @@ export function ContractDetailsView({ contract: initialContract, dealRoomId }: C
                                         </p>
                                       )}
                                     </div>
-                                    <Button variant="outline" size="xs" asChild>
+                                    <Button variant="outline" size="sm" asChild>
                                       <a href={version.blob_url} target="_blank" rel="noopener noreferrer">
                                         <Download className="mr-1 h-3 w-3" /> Download
                                       </a>

@@ -35,7 +35,7 @@ export function StackJackCopilot() {
   const pathname = usePathname()
 
   const shouldRender =
-    auth.isAuthenticated && (auth.user?.user_type === "BUYER" || auth.user?.user_type === "SELLER") && pathname !== "/"
+    auth.isAuthenticated && (auth.user?.userType === "BUSINESS" || auth.user?.userType === "PROVIDER") && pathname !== "/"
 
   useEffect(() => {
     if (isOpen && inputRef.current) {

@@ -12,6 +12,7 @@ export type {
   FileType,
   ContractFile,
   ContractFileVersion,
+  DealRoomParticipant,
   // Add Approval if/when you define it
 } from "./deal-room-types"
 
@@ -24,6 +25,18 @@ export type {
   ConversationParticipant,
   Message,
 } from "./conversation-types"
+
+// Forum types
+export type {
+  ForumThread,
+  ForumComment,
+  ForumCategory,
+  ForumNotification,
+  ForumUser,
+  ForumThreadType,
+  CreateForumThreadPayload,
+  CreateForumCommentPayload,
+} from "./forum-types"
 
 // Additional missing types
 export interface AuthUser {
@@ -114,6 +127,17 @@ export interface Listing {
   created_at: string
   budget_min?: number | null
   budget_max?: number | null
+  // Extended properties for UI compatibility
+  companyLogo?: string | null
+  companyName?: string | null
+  location?: string | null
+  isNew?: boolean
+  isActive?: boolean
+  tags?: string[] | null
+  budget?: number | string | null
+  deadline?: string | null
+  growth?: number | null
+  views?: number | null
   // ... other listing fields
 }
 
@@ -323,3 +347,32 @@ export interface SellerBadge {
   earnedAt: string
   createdAt: string
 }
+
+
+// Seller type
+export interface Seller {
+  id: string
+  name: string
+  email: string
+  company_name?: string
+  skills: string[]
+  rating: number
+  completedProjects: number
+  location: string
+  hourlyRate: number
+  availability: string
+  profile_image?: string
+  bio?: string
+  is_top_rated?: boolean
+  average_rating?: number
+  total_reviews?: number
+  projects_count?: number
+  description?: string
+  expertise?: string[]
+  response_time?: string
+  experience?: string
+  hourly_rate?: number
+}
+
+// Contract File Category type
+export type ContractFileCategory = "main" | "addendum" | "supporting" | "amendment"

@@ -7,7 +7,7 @@ import { ExternalLinkIcon, User2Icon } from "lucide-react"
 import { ProposalRequestButton } from "@/components/proposal-requests/proposal-request-button"
 
 async function getSeller(id: string) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: seller, error } = await supabase.from("sellers").select("*").eq("user_id", id).single()
 
   if (error) {
@@ -70,7 +70,7 @@ export default async function SellerPage({ params }: { params: { id: string } })
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           <div className="flex gap-4">
-            <ProposalRequestButton sellerId={seller.user_id} sellerName={seller.company_name} />
+            <ProposalRequestButton onClick={() => console.log('Request proposal for seller:', seller.user_id)} />
           </div>
           <Badge>{seller.category}</Badge>
         </CardFooter>

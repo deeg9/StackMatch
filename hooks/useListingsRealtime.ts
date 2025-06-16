@@ -9,7 +9,7 @@ interface UseListingsRealtimeProps {
 
 export function useListingsRealtime({ onUpdate }: UseListingsRealtimeProps) {
   useEffect(() => {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Set up the subscription for listings table
     const channel = supabase

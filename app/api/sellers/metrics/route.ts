@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Provider ID is required" }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { data, error } = await supabase.from("provider_metrics").select("*").eq("provider_id", providerId).single()
 
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Provider ID is required" }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Call the stored procedure to update metrics
     const { data, error } = await supabase.rpc("update_provider_metrics", {

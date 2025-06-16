@@ -1,10 +1,8 @@
-import { useSelector } from "react-redux"
 import ProposalForm from "./ProposalForm"
 import ProposalDashboard from "./ProposalDashboard"
 import ProposalSearch from "./ProposalSearch"
 
 const ProposalPage = () => {
-  const proposals = useSelector((state) => state.proposals)
 
   return (
     <div>
@@ -25,8 +23,8 @@ const ProposalPage = () => {
         </ul>
       </p>
       <ProposalForm />
-      <ProposalDashboard proposals={proposals} />
-      <ProposalSearch proposals={proposals} />
+      <ProposalDashboard />
+      <ProposalSearch />
     </div>
   )
 }

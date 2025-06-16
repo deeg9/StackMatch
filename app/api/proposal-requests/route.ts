@@ -7,8 +7,7 @@ import { ProposalNotificationService } from "@/lib/notifications/proposal-notifi
 export const dynamic = "force-dynamic"
 
 export async function POST(request: Request) {
-  const cookieStore = cookies()
-  const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+  const supabase = createRouteHandlerClient({ cookies })
 
   try {
     const {

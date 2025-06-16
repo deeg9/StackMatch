@@ -77,7 +77,7 @@ export interface SellerProfile {
 
 export async function getCurrentUser(): Promise<UserProfile | null> {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const {
       data: { user },
@@ -123,7 +123,7 @@ export async function logUserActivity(
   request?: Request,
 ) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const ipAddress = request?.headers.get("x-forwarded-for") || request?.headers.get("x-real-ip") || "unknown"
     const userAgent = request?.headers.get("user-agent") || "unknown"

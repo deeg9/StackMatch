@@ -46,7 +46,7 @@ export async function GET() {
     try {
       // Use dynamic import to avoid potential issues
       const { createClient } = await import("@/lib/supabase/server")
-      const supabase = createClient()
+      const supabase = await createClient()
 
       const { data, error } = await supabase.from("listing_conversations").select("id").limit(1)
 
@@ -68,7 +68,7 @@ export async function GET() {
     console.log("[SERVER] 🔍 AI TEST CONNECTION: Testing authentication...")
     try {
       const { createClient } = await import("@/lib/supabase/server")
-      const supabase = createClient()
+      const supabase = await createClient()
 
       const {
         data: { session },

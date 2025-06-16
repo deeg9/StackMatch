@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     let supabase
     try {
       const { createClient } = await import("@supabase/supabase-js")
-      supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+      supabase = await createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
 
       results.steps.push({
         step: 2,

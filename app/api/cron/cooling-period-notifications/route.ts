@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Get the date for tomorrow
     const tomorrow = new Date()

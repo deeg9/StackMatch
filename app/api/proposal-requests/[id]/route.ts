@@ -4,7 +4,7 @@ import { getCurrentUser } from "@/lib/auth/api-utils"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const user = await getCurrentUser(supabase)
 
     if (!user) {
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const user = await getCurrentUser(supabase)
 
     if (!user) {
@@ -77,7 +77,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const user = await getCurrentUser(supabase)
 
     if (!user) {

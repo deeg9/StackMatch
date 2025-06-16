@@ -37,7 +37,7 @@ export async function generateAIResponseServer(prompt: string, sessionId: string
 async function saveConversationToDatabase(sessionId: string, userId: string, userMessage: string, aiResponse: string) {
   try {
     console.log("[SERVER] 🤖 AI UTILS: Saving conversation to database...")
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Check if conversation exists
     const { data: existingConversation, error: fetchError } = await supabase

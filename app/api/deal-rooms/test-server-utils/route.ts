@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     console.log("🔍 SERVER UTILS TEST: Step 1 - Testing cookies import")
     try {
       const { cookies } = await import("next/headers")
-      const cookieStore = cookies()
+      const cookieStore = await cookies()
 
       results.steps.push({
         step: 1,
@@ -39,8 +39,8 @@ export async function GET(request: NextRequest) {
     try {
       const { createClient } = await import("@/utils/supabase/server")
       const { cookies } = await import("next/headers")
-      const cookieStore = cookies()
-      const supabase = createClient(cookieStore)
+      const cookieStore = await cookies()
+      const supabase = await createClient(cookieStore)
 
       results.steps.push({
         step: 2,

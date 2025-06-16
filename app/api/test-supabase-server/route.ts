@@ -20,8 +20,8 @@ export async function GET() {
     // Test 2: Client Creation
     let supabase
     try {
-      const cookieStore = cookies()
-      supabase = createClient(cookieStore)
+      const cookieStore = await cookies()
+      supabase = await createClient(cookieStore)
       console.log("🔍 SUPABASE TEST: Client created successfully")
     } catch (clientError: unknown) {
       console.error("🔍 SUPABASE TEST: Client creation failed:", clientError)

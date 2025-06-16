@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   console.log("🔍 TEST SELLER PROFILE: GET /api/test-seller-profile called")
 
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     console.log("🔍 TEST SELLER PROFILE: Supabase client created")
 
     const {

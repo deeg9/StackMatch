@@ -19,6 +19,9 @@ export interface ConversationSession {
   updatedAt: Date
 }
 
+// AI Listing Session - alias for ConversationSession
+export type AIListingSession = ConversationSession
+
 // API request/response types
 export interface SendMessageRequest {
   sessionId: string

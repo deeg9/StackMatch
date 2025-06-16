@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     console.log("🔍 BUYER ONBOARDING: Starting complete onboarding...")
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Get the authenticated user
     const {

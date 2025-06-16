@@ -11,8 +11,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     console.log("🔍 DEBUG API: Proposal ID:", proposalId)
 
     console.log("🔍 DEBUG API: Creating Supabase client with cookies...")
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const cookieStore = await cookies()
+    const supabase = await createClient(cookieStore)
     console.log("🔍 DEBUG API: Supabase client created successfully")
 
     // Test auth

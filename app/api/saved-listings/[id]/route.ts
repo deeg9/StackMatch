@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/client-wrapper"
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const {
       data: { user },
       error: authError,

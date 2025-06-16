@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     // Create Supabase client
     let supabase
     try {
-      supabase = createClient()
+      supabase = await createClient()
       console.log("🔍 DEAL ROOM API: Supabase client created")
     } catch (supabaseError) {
       console.error("🔍 DEAL ROOM API: Failed to create Supabase client:", supabaseError)

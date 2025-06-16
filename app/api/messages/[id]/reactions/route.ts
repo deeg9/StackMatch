@@ -8,7 +8,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     if (!messageId) {
       return NextResponse.json({ error: "Message ID is required" }, { status: 400 })
     }
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { data: reactionsData, error } = await supabase
       .from("message_reactions")
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     const messageId = params.id
     const { emoji } = (await request.json()) as { emoji: string }
 
-    const supabase = createClient()
+    const supabase = await createClient()
     const {
       data: { user: currentUser },
     } = await supabase.auth.getUser()

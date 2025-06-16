@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     console.log("🔍 DEAL ROOMS API: Token format valid, creating Supabase client...")
 
     // Create Supabase client with the token
-    const supabase = createClient(
+    const supabase = await createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL || "",
       process.env.SUPABASE_SERVICE_ROLE_KEY || "",
       {

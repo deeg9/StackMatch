@@ -30,7 +30,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // Step 2: Create Supabase client
     console.log("🟡 CAREFUL TEST: Step 2 - Creating Supabase client")
     const { createClient } = await import("@supabase/supabase-js")
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabase = await createClient(supabaseUrl, supabaseKey)
     console.log("🟡 CAREFUL TEST: Supabase client created")
 
     // Step 3: Test basic query

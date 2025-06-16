@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "User ID is required" }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Get conversation IDs the user is part of
     const { data: participations, error: participationError } = await supabase
@@ -183,7 +183,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Context ID (listing or proposal) required for this type" }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createClient()
     const {
       data: { user: currentUser },
     } = await supabase.auth.getUser()

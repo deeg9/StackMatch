@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       limit,
     })
 
-    const supabase = createClient()
+    const supabase = await createClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 
   try {
     console.log("🔍 API DEBUG: About to create Supabase client")
-    const supabase = createClient()
+    const supabase = await createClient()
     console.log("🔍 API DEBUG: Supabase client created successfully")
 
     console.log("🔍 API DEBUG: Getting user authentication")

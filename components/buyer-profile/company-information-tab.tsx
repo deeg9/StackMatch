@@ -22,7 +22,7 @@ export default function CompanyInformationTab({ profile }: CompanyInformationTab
   const [formData, setFormData] = useState({
     company_name: profile?.company_name || "",
     company_description: profile?.company_description || "",
-    detailed_company_description: profile?.detailed_company_description || "",
+    detailed_company_description: (profile as any)?.detailed_company_description || "",
     website_url: profile?.website_url || "",
     industry: profile?.industry || "",
     company_size: profile?.company_size || "",
@@ -30,7 +30,7 @@ export default function CompanyInformationTab({ profile }: CompanyInformationTab
     headquarters_location: profile?.headquarters_location || "",
     annual_revenue_range: profile?.annual_revenue_range || "",
     primary_contact_name: profile?.primary_contact_name || "",
-    primary_contact_title: profile?.primary_contact_title || "",
+    primary_contact_title: (profile as any)?.primary_contact_title || "",
     primary_contact_email: profile?.primary_contact_email || "",
     primary_contact_phone: profile?.primary_contact_phone || "",
   })
@@ -48,7 +48,7 @@ export default function CompanyInformationTab({ profile }: CompanyInformationTab
     setFormData({
       company_name: profile?.company_name || "",
       company_description: profile?.company_description || "",
-      detailed_company_description: profile?.detailed_company_description || "",
+      detailed_company_description: (profile as any)?.detailed_company_description || "",
       website_url: profile?.website_url || "",
       industry: profile?.industry || "",
       company_size: profile?.company_size || "",
@@ -56,7 +56,7 @@ export default function CompanyInformationTab({ profile }: CompanyInformationTab
       headquarters_location: profile?.headquarters_location || "",
       annual_revenue_range: profile?.annual_revenue_range || "",
       primary_contact_name: profile?.primary_contact_name || "",
-      primary_contact_title: profile?.primary_contact_title || "",
+      primary_contact_title: (profile as any)?.primary_contact_title || "",
       primary_contact_email: profile?.primary_contact_email || "",
       primary_contact_phone: profile?.primary_contact_phone || "",
     })
@@ -272,7 +272,7 @@ export default function CompanyInformationTab({ profile }: CompanyInformationTab
         </CardHeader>
         <CardContent>
           <p className="text-gray-300">
-            {profile?.detailed_company_description ||
+            {(profile as any)?.detailed_company_description ||
               profile?.company_description ||
               "No company description provided."}
           </p>
@@ -342,8 +342,8 @@ export default function CompanyInformationTab({ profile }: CompanyInformationTab
             </div>
             <p className="text-white font-medium">
               {profile?.primary_contact_name || "Not specified"}
-              {profile?.primary_contact_title && (
-                <span className="text-gray-400 text-sm block">{profile.primary_contact_title}</span>
+              {(profile as any)?.primary_contact_title && (
+                <span className="text-gray-400 text-sm block">{(profile as any).primary_contact_title}</span>
               )}
             </p>
           </CardContent>

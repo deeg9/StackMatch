@@ -506,7 +506,7 @@ const aiListingSlice = createSlice({
       })
       .addCase(saveDraft.fulfilled, (state, action) => {
         console.log("✅ REDUX: saveDraft fulfilled")
-        state.lastSaved = action.payload.savedAt
+        state.lastSaved = typeof action.payload.savedAt === 'string' ? action.payload.savedAt : action.payload.savedAt.toISOString()
         state.error = null
       })
       .addCase(saveDraft.rejected, (state, action) => {

@@ -7,8 +7,8 @@ export async function GET() {
   console.log("🔍 FILE SYSTEM INVESTIGATION: Starting comprehensive investigation...")
 
   try {
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const cookieStore = await cookies()
+    const supabase = await createClient(cookieStore)
 
     // Get authenticated user
     const {

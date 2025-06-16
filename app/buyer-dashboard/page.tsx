@@ -92,10 +92,11 @@ export default function BuyerDashboardPage() {
           const user: User = {
             id: session.user.id,
             email: session.user.email || '',
-            name: profile.full_name || profile.company_name || 'Unknown',
+            name: (typeof profile.full_name === 'string' ? profile.full_name : '') || 
+                  (typeof profile.company_name === 'string' ? profile.company_name : '') || 'Unknown',
             userType: profile.user_type === 'buyer' ? 'BUSINESS' : 'PROVIDER',
-            createdAt: profile.created_at || new Date().toISOString(),
-            updatedAt: profile.updated_at || new Date().toISOString(),
+            createdAt: (typeof profile.created_at === 'string' ? profile.created_at : '') || new Date().toISOString(),
+            updatedAt: (typeof profile.updated_at === 'string' ? profile.updated_at : '') || new Date().toISOString(),
           }
           dispatch(setUser(user))
         }

@@ -90,7 +90,7 @@ export function useNotifications() {
   useEffect(() => {
     if (!user?.id) return
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Subscribe to new notifications
     const subscription = supabase

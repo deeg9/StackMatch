@@ -3,21 +3,10 @@
 import React from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-
-interface ProposalResponse {
-  id: string
-  proposalText: string
-  budget: number
-  timeline: string
-  status: string
-  seller: {
-    name: string
-    rating: number
-  }
-  createdAt: string
-}
+import { ProposalResponse } from "@/types/proposal-request-types"
 
 interface ProposalResponsesListProps {
+  requestId: string
   responses: ProposalResponse[]
 }
 
@@ -36,24 +25,24 @@ export function ProposalResponsesList({ responses }: ProposalResponsesListProps)
         <Card key={response.id}>
           <CardHeader>
             <div className="flex justify-between items-start">
-              <CardTitle className="text-lg">{response.seller.name}</CardTitle>
-              <Badge variant={response.status === 'accepted' ? 'default' : 'secondary'}>
+              <CardTitle className="text-lg">Proposal #{response.id.slice(0, 8)}</CardTitle>
+              <Badge variant={response.status === 'ACCEPTED' ? 'default' : 'secondary'}>
                 {response.status}
               </Badge>
             </div>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-700 mb-4">{response.proposalText}</p>
+            <p className="text-gray-700 mb-4">{response.scope_description}</p>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="font-medium">Budget:</span> ${response.budget.toLocaleString()}
+                <span className="font-medium">Budget:</span> ${response.price.toLocaleString()}
               </div>
               <div>
-                <span className="font-medium">Timeline:</span> {response.timeline}
+                <span className="font-medium">Timeline:</span> {response.timeline_days} days
               </div>
             </div>
             <div className="mt-2 text-xs text-gray-500">
-              Submitted: {new Date(response.createdAt).toLocaleDateString()}
+              Submitted: {new Date(response.created_at).toLocaleDateString()}
             </div>
           </CardContent>
         </Card>

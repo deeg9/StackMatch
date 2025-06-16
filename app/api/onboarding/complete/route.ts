@@ -4,7 +4,7 @@ import { getCurrentUser, logUserActivity } from "@/lib/auth"
 
 export async function POST(request: Request) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const currentUser = await getCurrentUser()
 
     if (!currentUser) {

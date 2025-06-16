@@ -107,7 +107,7 @@ export function RecentProposalsSection() {
         } else {
           console.log("🔍 PROPOSALS: Fetched proposals:", data?.length || 0)
           console.log("🔍 PROPOSALS: Sample data:", data?.[0])
-          setProposals(data || [])
+          setProposals((data as unknown as Proposal[]) || [])
         }
       } catch (err) {
         console.error("🔍 PROPOSALS: Unexpected error:", err)

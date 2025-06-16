@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import type { RootState } from "@/store"
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent } from "@/components/ui/tabs"
@@ -29,7 +30,7 @@ const steps = [
 
 export default function BuyerOnboardingPage() {
   const router = useRouter()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const auth = useSelector((state: RootState) => state.auth)
 
   // Fix: Add null check and default values for buyerProfile
@@ -50,16 +51,42 @@ export default function BuyerOnboardingPage() {
     headquarters_location: "",
     website_url: "",
     annual_revenue_range: "",
-    project_types: [],
+    company_logo_url: "",
+    contact_person_name: "",
+    contact_person_title: "",
+    contact_person_email: "",
+    contact_person_phone: "",
+    project_types: [] as string[],
     typical_budget_range: "",
     decision_timeline: "",
-    preferred_communication: [],
+    annual_project_budget: "",
+    average_project_duration: "",
+    project_management_methodology: [] as string[],
+    typical_team_size: 1,
+    primary_business_objectives: [] as string[],
+    preferred_communication: [] as string[],
     notification_preferences: {
       email: true,
       in_app: true,
       proposal_updates: true,
       marketing: false,
     },
+    social_media: {
+      linkedin: "",
+      twitter: "",
+      facebook: "",
+    },
+    verification_document_url: "",
+    preferred_meeting_times: [] as string[],
+    preferred_languages: [] as string[],
+    timezone: "",
+    business_challenges: "",
+    success_metrics: [] as string[],
+    previous_experience: "",
+    preferred_provider_size: "",
+    preferred_provider_location: [] as string[],
+    required_certifications: [] as string[],
+    partnership_goals: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [saveStatus, setSaveStatus] = useState<null | "success" | "error">(null)
@@ -71,7 +98,7 @@ export default function BuyerOnboardingPage() {
   // Load existing profile data if available
   useEffect(() => {
     if (auth?.user?.id) {
-      dispatch(fetchBuyerProfile(auth.user.id) as any)
+      dispatch(fetchBuyerProfile())
     }
   }, [dispatch, auth?.user?.id])
 
@@ -88,6 +115,11 @@ export default function BuyerOnboardingPage() {
         headquarters_location: profile.headquarters_location || prevData.headquarters_location,
         website_url: profile.website_url || prevData.website_url,
         annual_revenue_range: profile.annual_revenue_range || prevData.annual_revenue_range,
+        company_logo_url: profile.company_logo_url || prevData.company_logo_url,
+        contact_person_name: profile.contact_person_name || prevData.contact_person_name,
+        contact_person_title: profile.contact_person_title || prevData.contact_person_title,
+        contact_person_email: profile.contact_person_email || prevData.contact_person_email,
+        contact_person_phone: profile.contact_person_phone || prevData.contact_person_phone,
       }))
     }
   }, [profile])

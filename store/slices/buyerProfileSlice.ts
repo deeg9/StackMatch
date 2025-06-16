@@ -10,6 +10,14 @@ export interface BuyerProfile {
   company_description?: string
   website_url?: string
   company_address?: string
+  founded_year?: number
+  headquarters_location?: string
+  annual_revenue_range?: string
+  company_logo_url?: string
+  contact_person_name?: string
+  contact_person_title?: string
+  contact_person_email?: string
+  contact_person_phone?: string
   primary_contact_name?: string
   primary_contact_email?: string
   primary_contact_phone?: string

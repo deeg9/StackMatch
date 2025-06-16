@@ -11,7 +11,7 @@ export async function GET() {
 
   try {
     debugInfo.step = "getting_cookies"
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
 
     debugInfo.step = "checking_auth_cookie"
     const authTokenCookie = cookieStore.get("sb-lnxceojnwkrmxxsulorp-auth-token")

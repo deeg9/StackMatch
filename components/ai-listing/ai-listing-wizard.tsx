@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
-import { useDispatch, useSelector } from "react-redux"
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { useAppSelector } from "@/hooks/useAppSelector"
 import { useRouter } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -28,7 +29,7 @@ interface AIListingWizardProps {
 }
 
 export function AIListingWizard({ onSubmit, onCancel, existingListingId }: AIListingWizardProps) {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const router = useRouter()
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -36,15 +37,18 @@ export function AIListingWizard({ onSubmit, onCancel, existingListingId }: AILis
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true)
 
   const {
-    sessionId,
+    currentSessionId: sessionId,
     formData,
-    conversationCollapsed,
+    isConversationPanelOpen: conversationCollapsed,
     formCompletionPercentage,
     isLoading,
     error,
-    messages,
-    lastSavedAt,
-  } = useSelector((state: RootState) => state.aiListing)
+    lastSaved: lastSavedAt,
+    sessions,
+  } = useAppSelector((state) => state.aiListing)
+
+  // Get current session messages
+  const messages = sessionId && sessions[sessionId] ? sessions[sessionId].messages : []
 
   // Initialize session on mount
   useEffect(() => {
@@ -53,14 +57,65 @@ export function AIListingWizard({ onSubmit, onCancel, existingListingId }: AILis
 
     // If we have an existing listing ID, load that data
     if (existingListingId) {
-      dispatch(loadExistingData(existingListingId))
+      // Fetch the existing listing data and load it into the form
+      const loadListing = async () => {
+        try {
+          const response = await fetch(`/api/listings/${existingListingId}`)
+          if (!response.ok) {
+            throw new Error(`Failed to fetch listing: ${response.statusText}`)
+          }
+
+          const listingData = await response.json()
+
+          // Transform the API response to match ListingFormData structure
+          const formData: Partial<ListingFormData> = {
+            title: listingData.title || "",
+            description: listingData.description || "",
+            categoryId: listingData.category_id,
+            budgetMin: listingData.budget_min?.toString(),
+            budgetMax: listingData.budget_max?.toString(),
+            bidDeadline: listingData.bid_deadline,
+            projectStartDate: listingData.project_start_date,
+            projectDuration: listingData.project_duration,
+            requiredSkills: listingData.skills || [],
+            locationPreference: listingData.location_preference,
+            remotePreference: listingData.remote_preference,
+            aboutBusiness: listingData.about_business,
+            aboutCompany: listingData.about_company,
+            successMetrics: listingData.success_metrics || [],
+            currentChallenges: listingData.current_challenges || [],
+            timelinePhases: listingData.timeline_phases || [],
+            tags: listingData.tags || [],
+            attachments: listingData.attachments || [],
+          }
+
+          // Dispatch the action with the correct payload structure
+          dispatch(loadExistingData({ formData }))
+
+          toast({
+            title: "Listing Loaded",
+            description: "Existing listing data has been loaded.",
+          })
+        } catch (error) {
+          console.error("Failed to load existing listing:", error)
+          toast({
+            title: "Error",
+            description: "Failed to load existing listing data.",
+            variant: "destructive",
+          })
+        }
+      }
+
+      loadListing()
     }
 
     return () => {
       // Cleanup on unmount
-      dispatch(clearSession())
+      if (newSessionId) {
+        dispatch(clearSession(newSessionId))
+      }
     }
-  }, [dispatch, existingListingId])
+  }, [dispatch, existingListingId, toast])
 
   // Auto-save every 30 seconds (only if enabled and we have content)
   useEffect(() => {
@@ -88,13 +143,13 @@ export function AIListingWizard({ onSubmit, onCancel, existingListingId }: AILis
     if (!sessionId) return
 
     try {
-      await dispatch(
+      dispatch(
         saveDraft({
           sessionId,
           formState: formData,
           conversationData: messages,
         }),
-      ).unwrap()
+      )
 
       if (!silent) {
         toast({
@@ -178,7 +233,9 @@ export function AIListingWizard({ onSubmit, onCancel, existingListingId }: AILis
   }
 
   const handleCancel = () => {
-    dispatch(clearSession())
+    if (sessionId) {
+      dispatch(clearSession(sessionId))
+    }
     onCancel?.()
   }
 

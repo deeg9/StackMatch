@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import type { ConversationMessage } from "@/types/ai-listing-types-clean"
 import { getErrorMessage, getErrorStack } from "@/lib/utils/error-handler"
 import { useState, useEffect, useRef } from "react"
 import { useAppDispatch } from "@/hooks/useAppDispatch"
@@ -141,16 +142,16 @@ export function AIConversationPanel({ formState = {}, onFormStateUpdate, classNa
       console.log("🔍 UI: Sending message:", messageToSend)
 
       // Send to AI
-      const result = await dispatch(
+      dispatch(
         sendMessage({
           sessionId: sessionId,
           message: messageToSend,
           currentFormState: formState,
           stage: "introduction",
         }),
-      ).unwrap()
+      )
 
-      console.log("✅ UI: Message sent successfully:", result)
+      console.log("✅ UI: Message dispatch sent")
     } catch (error) {
       console.error("❌ UI: Failed to send message:", error)
       toast({
@@ -161,27 +162,18 @@ export function AIConversationPanel({ formState = {}, onFormStateUpdate, classNa
     }
   }
 
-  const handleSaveDraft = async () => {
+  const handleSaveDraft = () => {
     if (!currentSession) return
 
-    try {
-      await dispatch(
-        saveDraft({
-          sessionId: sessionId,
-          formState,
-          conversationData: currentSession.messages,
-        }),
-      ).unwrap()
+    dispatch(
+      saveDraft({
+        sessionId: sessionId,
+        formState,
+        conversationData: currentSession.messages,
+      }),
+    )
 
-      console.log("✅ Draft saved successfully")
-    } catch (error) {
-      console.error("❌ Save draft failed:", error)
-      toast({
-        title: "Save draft failed",
-        description: error instanceof Error ? getErrorMessage(error) : "Unknown error occurred",
-        variant: "destructive",
-      })
-    }
+    console.log("✅ Draft save dispatched")
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -220,7 +212,7 @@ export function AIConversationPanel({ formState = {}, onFormStateUpdate, classNa
         {/* Messages */}
         <ScrollArea className="h-96 w-full border rounded-md p-4">
           <div className="space-y-4">
-            {messages.map((msg, index) => (
+            {messages.map((msg: ConversationMessage, index: number) => (
               <div
                 key={`${msg.id || index}-${index}`}
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}

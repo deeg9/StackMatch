@@ -5,7 +5,7 @@ export async function getSimpleCurrentUser() {
   try {
     console.log("🔍 AUTH SIMPLE: Starting getSimpleCurrentUser...")
 
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
 
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
       console.error("🔍 AUTH SIMPLE: Missing Supabase environment variables")

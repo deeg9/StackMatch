@@ -7,6 +7,29 @@ export interface ForumUser {
   reputation?: number
 }
 
+export interface ForumCategory {
+  id: string
+  name: string
+  description?: string
+  thread_count?: number
+  color?: string
+}
+
+export interface ForumNotification {
+  id: string
+  user_id: string
+  type: string
+  message: string
+  is_read: boolean
+  created_at: string
+  related_thread_id?: string
+  related_comment_id?: string
+  isRead?: boolean
+  createdAt?: string
+  threadId?: string
+  commentId?: string
+}
+
 export type ForumThreadType = "DISCUSSION" | "QUESTION" | "ANNOUNCEMENT" | "POLL"
 
 export interface ForumThread {

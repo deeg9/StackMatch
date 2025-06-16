@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/server"
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { searchParams } = new URL(request.url)
 
     const listing_id = searchParams.get("listing_id")
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const questionData = await request.json()
 
     // Validate required fields

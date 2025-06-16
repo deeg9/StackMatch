@@ -20,8 +20,8 @@ const origin = getURL()
 
 export async function POST(req: Request, { params }: { params: { id: string } }) {
   try {
-    const cookieStore = cookies()
-    const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+    const cookieStore = await cookies()
+    const supabase = createRouteHandlerClient({ cookies })
     const {
       data: { user },
     } = await supabase.auth.getUser()

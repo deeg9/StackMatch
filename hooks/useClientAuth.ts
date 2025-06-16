@@ -63,6 +63,27 @@ export function useClientAuth() {
     }
   }
 
+  const signUp = async (email: string, password: string, metadata?: Record<string, any>) => {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: metadata,
+        },
+      })
+
+      if (error) {
+        throw error
+      }
+
+      return data
+    } catch (error) {
+      console.error("Sign up error:", error)
+      throw error
+    }
+  }
+
   const signOut = async () => {
     try {
       const { error } = await supabase.auth.signOut()
@@ -79,6 +100,7 @@ export function useClientAuth() {
     user,
     loading,
     signIn,
+    signUp,
     signOut,
   }
 }

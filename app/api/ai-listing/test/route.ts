@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
     // Test database connection
     const { createClient } = await import("@/lib/supabase/server")
-    const supabase = createClient()
+    const supabase = await createClient()
 
     console.log("[SERVER] 🔍 AI LISTING TEST: Testing database connection...")
     const { data, error } = await supabase.from("listing_conversations").select("count").limit(1)

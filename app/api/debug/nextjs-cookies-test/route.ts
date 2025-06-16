@@ -12,7 +12,7 @@ export async function GET() {
 
     // Try to call cookies function
     console.log("🔍 NEXTJS COOKIES TEST: Calling cookies()...")
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     console.log("🔍 NEXTJS COOKIES TEST: Cookies() called successfully")
 
     // Try to get all cookies

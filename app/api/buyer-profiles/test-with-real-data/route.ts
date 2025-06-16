@@ -10,7 +10,7 @@ export async function GET() {
   try {
     console.log("🔍 TESTING WITH REAL DATA...")
 
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+    const supabase = await createClient(supabaseUrl, supabaseServiceKey)
 
     // Test with Christopher's actual user ID
     const christopherUserId = "1cae22cb-1311-48ca-9caa-47d474c0a20e"

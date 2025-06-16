@@ -24,7 +24,7 @@ export interface CreateNotificationParams {
 }
 
 export class NotificationService {
-  private supabase = createClient()
+  private supabase = await createClient()
 
   async createNotification(params: CreateNotificationParams) {
     try {

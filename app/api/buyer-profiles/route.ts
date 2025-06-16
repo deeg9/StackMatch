@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     let supabase
     try {
       console.log("🔍 BUYER PROFILE API: Creating direct Supabase client with service role...")
-      supabase = createClient(supabaseUrl, supabaseServiceKey)
+      supabase = await createClient(supabaseUrl, supabaseServiceKey)
 
       const clientCheck = {
         hasClient: !!supabase,
@@ -150,7 +150,7 @@ export async function PUT(request: NextRequest) {
     console.log("🔍 BUYER PROFILE API: Starting PUT request...")
 
     // Create Supabase client
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+    const supabase = await createClient(supabaseUrl, supabaseServiceKey)
     console.log("🔍 BUYER PROFILE API: PUT - Supabase client created")
 
     // Get the request body
@@ -212,7 +212,7 @@ export async function POST(request: NextRequest) {
     console.log("🔍 BUYER PROFILE API: Starting POST request...")
 
     // Create Supabase client
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+    const supabase = await createClient(supabaseUrl, supabaseServiceKey)
     console.log("🔍 BUYER PROFILE API: POST - Supabase client created")
 
     // Get the request body

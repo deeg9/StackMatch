@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     console.log("🔍 TEST CREATION: Step 2 - Creating Supabase client")
     let supabase
     try {
-      supabase = createClient()
+      supabase = await createClient()
       console.log("🔍 TEST CREATION: Supabase client created successfully")
     } catch (supabaseError: any) {
       console.error("🔍 TEST CREATION: Supabase client creation error:", supabaseError)

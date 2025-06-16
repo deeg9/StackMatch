@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const sellerId = searchParams.get("sellerId")
     const userId = searchParams.get("userId")
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     let query = supabase.from("seller_profiles").select(`
         *,
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { data, error } = await supabase.from("seller_profiles").insert(body).select().single()
 
@@ -66,7 +66,7 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
     const { id, ...updates } = body
-    const supabase = createClient()
+    const supabase = await createClient()
 
     const { data, error } = await supabase.from("seller_profiles").update(updates).eq("id", id).select().single()
 

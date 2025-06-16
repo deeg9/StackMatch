@@ -12,7 +12,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     // Step 2: Create client (we know this works)
     const { createClient } = await import("@supabase/supabase-js")
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabase = await createClient(supabaseUrl, supabaseKey)
     console.log("🟢 WORKING TEST: Supabase client created")
 
     // Step 3: Check if deal room exists

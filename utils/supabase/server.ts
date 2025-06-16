@@ -11,13 +11,13 @@ const CACHE_EXPIRATION = 5 * 60 * 1000
 // Last cleanup timestamp
 let lastCleanup = Date.now()
 
-export function createClient(cookieStore?: ReturnType<typeof cookies>) {
+export async function createClient(cookieStore?: Awaited<ReturnType<typeof cookies>>) {
   // Generate a unique request ID for this server component render
   // This is more reliable than using the cookie store object as a WeakMap key
   const requestId = Math.random().toString(36).substring(2, 15)
   console.log(`🔍 SUPABASE SERVER [${requestId}]: Creating server client...`)
 
-  const store = cookieStore || cookies()
+  const store = cookieStore || await cookies()
 
   // Get all cookies for debugging
   let allCookies: string[] = []

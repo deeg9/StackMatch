@@ -47,7 +47,12 @@
       "Bash(timeout 30 git push origin main)",
       "Bash(find:*)",
       "Bash(npm --version)",
-      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npm run build)"
+      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npm run build)",
+      "Bash(rg:*)",
+      "Bash(export NODE_OPTIONS=\"--max-old-space-size=6144\")",
+      "Bash(timeout 300s npm run build)",
+      "Bash(timeout 30s npx tsc:*)",
+      "Bash(timeout 180s npm run build --silent)"
     ],
     "deny": []
   }

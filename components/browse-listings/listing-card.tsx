@@ -49,7 +49,7 @@ export function ListingCard({ listing }: ListingCardProps) {
           .from("proposals")
           .select("id")
           .eq("listing_id", listing.id)
-          .eq("seller_id", sellerProfile.id)
+          .eq("seller_id", sellerProfile.id as string)
           .single()
 
         setHasSubmittedProposal(!!proposal)
@@ -144,12 +144,12 @@ export function ListingCard({ listing }: ListingCardProps) {
           <SaveListingButton
             listing={{
               id: listing.id,
-              companyName: listing.companyName,
+              companyName: listing.companyName || 'Unknown Company',
               title: listing.title,
-              budget: listing.budget,
-              deadline: listing.deadline,
-              location: listing.location,
-              tags: listing.tags,
+              budget: typeof listing.budget === 'number' ? listing.budget.toString() : (listing.budget || 'Not specified'),
+              deadline: listing.deadline || 'No deadline',
+              location: listing.location || 'Remote',
+              tags: listing.tags || [],
             }}
             size="sm"
             className="flex-1"

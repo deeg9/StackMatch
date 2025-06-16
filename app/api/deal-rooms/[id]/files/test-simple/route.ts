@@ -24,7 +24,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     // Test 2: Cookie store access
     console.log(`🔍 SIMPLE TEST: Test 2 - Cookie store`)
     try {
-      const cookieStore = cookies()
+      const cookieStore = await cookies()
       testResults.tests.cookieStore = { success: true, message: "Cookie store accessible" }
     } catch (error: any) {
       testResults.tests.cookieStore = { success: false, error: getErrorMessage(error) }
@@ -34,8 +34,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     // Test 3: Supabase client creation
     console.log(`🔍 SIMPLE TEST: Test 3 - Supabase client`)
     try {
-      const cookieStore = cookies()
-      const supabase = createClient(cookieStore)
+      const cookieStore = await cookies()
+      const supabase = await createClient(cookieStore)
       testResults.tests.supabaseClient = { success: true, message: "Supabase client created" }
 
       // Test 4: Authentication

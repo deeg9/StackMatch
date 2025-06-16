@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     console.log("[SERVER] 🔍 AI SAVE DRAFT: Draft save requested for session:", sessionId)
 
     // Get user from session
-    const supabase = createClient()
+    const supabase = await createClient()
     const {
       data: { session },
     } = await supabase.auth.getSession()

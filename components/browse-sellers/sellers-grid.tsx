@@ -46,17 +46,22 @@ export function SellersGrid() {
           const profile = seller.profiles ? (Array.isArray(seller.profiles) ? seller.profiles[0] : seller.profiles) : null;
           
           return {
-            id: seller.id,
-            user_id: seller.user_id,
-            company_name: profile?.company_name || "Company Name",
+            id: seller.id as string,
+            name: (profile?.company_name as string) || "Company Name",
+            email: (profile?.email as string) || "contact@company.com",
+            company_name: (profile?.company_name as string) || "Company Name",
             description: `${seller.business_type || "Technology"} provider with ${seller.years_in_business || 0}+ years of experience`,
             location: "United States",
             rating: 4.5 + Math.random() * 0.5,
+            completedProjects: Math.floor(Math.random() * 50) + 10,
             projects_count: Math.floor(Math.random() * 50) + 10,
-            expertise: seller.expertise_areas || ["Web Development", "Mobile Apps", "Cloud Services"],
+            skills: (seller.expertise_areas as string[]) || ["Web Development", "Mobile Apps", "Cloud Services"],
+            expertise: (seller.expertise_areas as string[]) || ["Web Development", "Mobile Apps", "Cloud Services"],
             response_time: "< 24 hours",
             experience: `${seller.years_in_business || 0}+ years`,
-            hourly_rate: `$${seller.hourly_rate_min || 50}-${seller.hourly_rate_max || 150}/hr`,
+            hourlyRate: (seller.hourly_rate_min as number) || 50,
+            hourly_rate: (seller.hourly_rate_min as number) || 50,
+            availability: "Available now",
             is_top_rated: Math.random() > 0.7,
           };
         })

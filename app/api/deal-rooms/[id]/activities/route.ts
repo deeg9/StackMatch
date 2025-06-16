@@ -4,8 +4,8 @@ import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const cookieStore = await cookies()
+  const supabase = await createClient(cookieStore)
   const dealRoomId = params.id
 
   try {

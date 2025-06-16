@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get("sortBy") || "rating"
     const sortOrder = searchParams.get("sortOrder") || "desc"
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Start building the query - only select from provider_profiles for now
     let dbQuery = supabase.from("provider_profiles").select("*")

@@ -4,7 +4,7 @@ import { cookies } from "next/headers"
 import type { Database } from "@/types/supabase"
 
 export function createClient() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
 
   // Log the environment variables (without revealing secrets)
   console.log(

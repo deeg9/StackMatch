@@ -74,6 +74,7 @@ export default function CreateListingPage() {
   const [selectedTemplate, setSelectedTemplate] = useState<CategoryTemplate | null>(null)
   const [showGuidedForm, setShowGuidedForm] = useState(false)
   const [isClient, setIsClient] = useState(false)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null)
 
   console.log("🔍 DEBUG: CreateListingPage render")
   console.log("🔍 DEBUG: Selected template:", selectedTemplate?.value || "none")
@@ -91,12 +92,20 @@ export default function CreateListingPage() {
     }
   }, [])
 
-  const handleCategorySelect = (template: CategoryTemplate) => {
-    console.log("🔍 DEBUG: Category selected:", template.value)
+  const handleCategorySelect = (categoryId: string) => {
+    console.log("🔍 DEBUG: Category selected:", categoryId)
+    
+    const template = categories.find(cat => cat.value === categoryId || cat.id === categoryId)
+    if (!template) {
+      console.error("❌ DEBUG: Template not found for category:", categoryId)
+      return
+    }
+    
     console.log("🔍 DEBUG: Template qualification sections:", template.qualificationSections?.length || 0)
 
     try {
       setSelectedTemplate(template)
+      setSelectedCategoryId(categoryId)
       setShowGuidedForm(true)
       console.log("✅ DEBUG: Category selection successful")
     } catch (error) {
@@ -141,10 +150,24 @@ export default function CreateListingPage() {
   }
 
   console.log("🔍 DEBUG: Rendering CategorySelectionGrid")
+  
+  // Transform CategoryTemplate[] to Category[]
+  const transformedCategories = categories.map(template => ({
+    id: template.id || template.value,
+    name: template.name,
+    description: template.description,
+    icon: template.icon, // emoji string will work as React.ReactNode
+    popular: template.popularity <= 2 // mark top 2 as popular
+  }))
+  
   try {
     return (
       <div className="min-h-screen bg-slate-950">
-        <CategorySelectionGrid onCategorySelect={handleCategorySelect} categories={categories} />
+        <CategorySelectionGrid 
+          categories={transformedCategories} 
+          selectedCategoryId={selectedCategoryId}
+          onSelectCategory={handleCategorySelect} 
+        />
       </div>
     )
   } catch (error) {

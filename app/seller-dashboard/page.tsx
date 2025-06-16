@@ -24,7 +24,7 @@ export interface Deadline {
 }
 
 export interface SellerDashboardData {
-  userProfile: UserProfile | null
+  userProfile: Partial<UserProfile> | null
   sellerProfile: SellerProfile | null
   displayName: string
   activeProposalsCount: number
@@ -42,7 +42,7 @@ export default async function SellerDashboardPage() {
   console.log("🔍 DASHBOARD DEBUG: Starting seller dashboard page load...")
 
   try {
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     console.log("🔍 DASHBOARD DEBUG: Got cookie store")
 
     // Log all cookies for debugging
@@ -59,7 +59,7 @@ export default async function SellerDashboardPage() {
     console.log("🔍 DASHBOARD DEBUG: Auth token cookie present:", !!authTokenCookie)
     console.log("🔍 DASHBOARD DEBUG: Refresh token cookie present:", !!refreshTokenCookie)
 
-    const supabase = createClient(cookieStore)
+    const supabase = await createClient(cookieStore)
     console.log("🔍 DASHBOARD DEBUG: Created Supabase client")
 
     // Try to get the session first
@@ -111,7 +111,7 @@ export default async function SellerDashboardPage() {
     console.log(`🔍 DASHBOARD DEBUG: User found: ${currentUser.id} (${currentUser.email})`)
 
     // Initialize default values to prevent errors
-    let userProfileData: UserProfile | null = null
+    let userProfileData: Partial<UserProfile> | null = null
     let sellerProfileData: SellerProfile | null = null
     let activeProposalsCount = 0
     const wonListingsCount = 0

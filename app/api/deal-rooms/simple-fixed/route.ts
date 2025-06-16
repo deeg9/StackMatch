@@ -7,7 +7,7 @@ export async function GET() {
   try {
     console.log("🔍 SIMPLE FIXED API: Starting...")
 
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
 
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
       console.error("🔍 SIMPLE FIXED API: Missing Supabase environment variables")

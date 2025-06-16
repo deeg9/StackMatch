@@ -19,7 +19,7 @@ export async function GET() {
     console.log("🔍 SIMPLE DEAL ROOMS API: User authenticated:", currentUser.id, currentUser.user_type)
 
     // Create Supabase client
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
 
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
       console.error("🔍 SIMPLE DEAL ROOMS API: Missing Supabase environment variables")

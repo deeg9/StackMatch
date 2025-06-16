@@ -8,7 +8,7 @@ export async function GET() {
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
     const { createClient } = await import("@supabase/supabase-js")
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabase = await createClient(supabaseUrl, supabaseKey)
 
     console.log("🔍 SCHEMA VALIDATION: Supabase client created")
 

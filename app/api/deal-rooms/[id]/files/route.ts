@@ -8,7 +8,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
     const { createClient } = await import("@supabase/supabase-js")
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabase = await createClient(supabaseUrl, supabaseKey)
 
     console.log("🔧 FILES API: Supabase client created")
 
@@ -176,7 +176,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
     // Create Supabase client for database operations
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabase = await createClient(supabaseUrl, supabaseKey)
 
     console.log("📤 FILES API: Supabase client created")
 
@@ -337,7 +337,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     // Create Supabase client
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabase = await createClient(supabaseUrl, supabaseKey)
 
     // Get file record
     const { data: fileRecord, error: fetchError } = await supabase

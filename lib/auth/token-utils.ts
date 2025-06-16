@@ -5,7 +5,7 @@ export async function getCurrentToken(): Promise<{ token: string | null; success
   try {
     console.log("🔑 TOKEN UTILS: Getting current token...")
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Get the current session
     const {
@@ -37,7 +37,7 @@ export async function refreshToken(): Promise<string | null> {
   try {
     console.log("🔑 TOKEN UTILS: Refreshing token...")
 
-    const supabase = createClient()
+    const supabase = await createClient()
 
     // Refresh the session
     const {

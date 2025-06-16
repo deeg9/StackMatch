@@ -46,7 +46,7 @@ const SellerDashboardClientPage = ({ dashboardData }: SellerDashboardClientPageP
   }
 
   return (
-    <AuthGuard requiredUserType="seller" userProfileId={sellerProfile.user_id}>
+    <AuthGuard requiredUserType="seller">
       <div className="min-h-screen bg-background text-foreground">
         <div className="px-4 sm:px-6 lg:px-8 py-8">
           {/* Welcome Section */}

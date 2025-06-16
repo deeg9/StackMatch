@@ -30,7 +30,7 @@ export async function GET() {
 
   try {
     console.log(`🔍 [${requestId}] USER PROFILE API: Getting cookies...`)
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
 
     // Debug cookies
     let allCookies: Array<{ name: string; hasValue: boolean; valueLength: number }> = []
@@ -77,7 +77,7 @@ export async function GET() {
     }
 
     console.log(`🔍 [${requestId}] USER PROFILE API: Creating Supabase client...`)
-    const supabase = createClient(cookieStore)
+    const supabase = await createClient(cookieStore)
     console.log(`🔍 [${requestId}] USER PROFILE API: Supabase client created successfully`)
 
     // Try to get user with timeout

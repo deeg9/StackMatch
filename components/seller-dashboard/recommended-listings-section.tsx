@@ -10,7 +10,7 @@ interface DashboardListing extends Listing {
   company_name?: string
   budget_min?: number
   budget_max?: number
-  tags?: string[] // Example
+  tags?: string[] | null // Allow null to match base Listing interface
 }
 
 interface RecommendedListingsSectionProps {
