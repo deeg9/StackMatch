@@ -86,9 +86,12 @@ export async function POST(request: NextRequest) {
     } else {
       // Create new profile
       console.log("🔍 BUYER ONBOARDING: Creating new profile")
-      profileData.created_at = new Date().toISOString()
+      const profileDataWithCreatedAt = {
+        ...profileData,
+        created_at: new Date().toISOString()
+      }
 
-      const { data, error } = await supabase.from("buyer_profiles").insert(profileData).select().single()
+      const { data, error } = await supabase.from("buyer_profiles").insert(profileDataWithCreatedAt).select().single()
 
       if (error) {
         console.error("🔍 BUYER ONBOARDING: Create error:", error)
