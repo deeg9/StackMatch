@@ -15,6 +15,11 @@ interface ForumState {
   searchTerm: string
   isLoading: boolean
   error: string | null
+  unreadCount: number
+  reputation: number
+  reputationLevels: any[]
+  subscribedTags: string[]
+  subscribedThreads: string[]
 }
 
 const initialState: ForumState = {
@@ -31,6 +36,11 @@ const initialState: ForumState = {
   searchTerm: "",
   isLoading: false,
   error: null,
+  unreadCount: 0,
+  reputation: 0,
+  reputationLevels: [],
+  subscribedTags: [],
+  subscribedThreads: [],
 }
 
 const forumSlice = createSlice({

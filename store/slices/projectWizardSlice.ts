@@ -17,6 +17,9 @@ interface ProjectWizardData {
   title: string
   description: string
   category: ProjectCategory | null
+  subcategory?: string
+  summary?: string
+  tags?: string[]
 
   // Step 2: Requirements
   requirements: ProjectRequirement[]
@@ -29,6 +32,8 @@ interface ProjectWizardData {
   // Step 3: Budget & Location
   budget: number | null
   budgetType: "fixed" | "hourly" | null
+  budgetMin?: number
+  budgetMax?: number
   location: string
   isRemote: boolean
 
@@ -36,6 +41,30 @@ interface ProjectWizardData {
   deadline: string
   attachments: string[]
   additionalNotes: string
+
+  // Step 5: Publishing Settings
+  visibility?: "PUBLIC" | "PRIVATE" | "INVITE_ONLY"
+  biddingType?: "SEALED" | "OPEN"
+  biddingDeadline?: string
+  maxProposals?: number
+  autoShortlist?: boolean
+
+  // Additional fields found in components
+  questionsAnswers?: Record<string, any>
+  documents?: any[]
+  businessContext?: string
+  successCriteria?: string[]
+  communicationPreferences?: string
+  evaluationCriteria?: string[]
+  teamSize?: number
+  projectType?: string
+  complexity?: "LOW" | "MEDIUM" | "HIGH"
+  urgency?: "LOW" | "MEDIUM" | "HIGH"
+  outcomes?: string[]
+  kpis?: string[]
+  providerQuestions?: string[]
+  workingHours?: string
+  timezone?: string
 }
 
 interface ProjectWizardState {
@@ -43,6 +72,7 @@ interface ProjectWizardState {
   totalSteps: number
   data: ProjectWizardData
   isSubmitting: boolean
+  isLoading: boolean
   error: string | null
 }
 
@@ -70,6 +100,7 @@ const initialState: ProjectWizardState = {
   totalSteps: 4,
   data: initialData,
   isSubmitting: false,
+  isLoading: false,
   error: null,
 }
 
@@ -146,6 +177,9 @@ const projectWizardSlice = createSlice({
     setSubmitting: (state, action: PayloadAction<boolean>) => {
       state.isSubmitting = action.payload
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload
+    },
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload
     },
@@ -173,6 +207,7 @@ export const {
   addAttachment,
   removeAttachment,
   setSubmitting,
+  setLoading,
   setError,
   resetWizard,
 } = projectWizardSlice.actions

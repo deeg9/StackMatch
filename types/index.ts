@@ -168,6 +168,8 @@ export interface User {
   userType: "BUSINESS" | "PROVIDER" | "ADMIN"
   createdAt: string
   updatedAt: string
+  company?: string
+  full_name?: string
 }
 
 // Project type  

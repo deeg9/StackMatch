@@ -51,7 +51,9 @@ export interface ForumThread {
   }
   hasBestAnswer?: boolean
   pollOptions?: { id: string; text: string; votes: number }[] | null
-  // comments?: ForumComment[] // Optionally populated for individual thread view
+  comments?: ForumComment[] // Array of comments
+  commentCount?: number // Direct comment count property
+  lastActivity?: string // Last activity timestamp
 }
 
 export interface ForumComment {

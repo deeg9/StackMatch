@@ -353,4 +353,7 @@ const listingsSlice = createSlice({
 
 export const { updateFilters, setPage, clearFilters } = listingsSlice.actions
 
+// Export async thunks with aliases for compatibility
+export { createListing as addListing }
+
 export default listingsSlice.reducer
