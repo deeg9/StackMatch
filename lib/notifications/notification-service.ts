@@ -24,11 +24,19 @@ export interface CreateNotificationParams {
 }
 
 export class NotificationService {
-  private supabase = await createClient()
+  private supabase: any = null
+
+  private async getSupabase() {
+    if (!this.supabase) {
+      this.supabase = await createClient()
+    }
+    return this.supabase
+  }
 
   async createNotification(params: CreateNotificationParams) {
     try {
-      const { data, error } = await this.supabase
+      const supabase = await this.getSupabase()
+      const { data, error } = await supabase
         .from("notifications")
         .insert({
           user_id: params.userId,
