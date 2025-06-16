@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client"
 import { useSelector, useDispatch } from "react-redux"
 import type { RootState } from "@/store"
 import { setUser } from "@/store/slices/authSlice"
+import type { User } from "@/types"
 import { BuyerDashboardStats } from "@/components/buyer-dashboard/buyer-dashboard-stats"
 import { RecentListingsSection } from "@/components/buyer-dashboard/recent-listings-section"
 import { RecentProposalsSection } from "@/components/buyer-dashboard/recent-proposals-section"
@@ -87,7 +88,16 @@ export default function BuyerDashboardPage() {
 
         // Update Redux store if it doesn't have the user
         if (!reduxUser) {
-          dispatch(setUser(userData))
+          // Create a User object with the required fields
+          const user: User = {
+            id: session.user.id,
+            email: session.user.email || '',
+            name: profile.full_name || profile.company_name || 'Unknown',
+            userType: profile.user_type === 'buyer' ? 'BUSINESS' : 'PROVIDER',
+            createdAt: profile.created_at || new Date().toISOString(),
+            updatedAt: profile.updated_at || new Date().toISOString(),
+          }
+          dispatch(setUser(user))
         }
       } catch (err: any) {
         console.error("Error checking auth:", err)
