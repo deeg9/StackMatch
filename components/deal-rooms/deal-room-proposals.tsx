@@ -8,7 +8,7 @@ import {
   Download, 
   Eye, 
   Edit, 
-  Compare,
+  GitCompare,
   CheckCircle2,
   Clock,
   XCircle,
@@ -85,7 +85,7 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
         
         <div className="flex gap-2">
           <Button variant="outline">
-            <Compare className="w-4 h-4 mr-2" />
+            <GitCompare className="w-4 h-4 mr-2" />
             Compare Versions
           </Button>
           <Button className="bg-stackmatch-blue hover:bg-stackmatch-navy">

@@ -11,7 +11,7 @@ import {
   Users, 
   DollarSign,
   MoreVertical,
-  Enter,
+  ArrowRight,
   Eye,
   Calendar,
   Clock,
@@ -196,7 +196,7 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
         {/* Action Buttons */}
         <div className="flex gap-2 pt-2">
           <Button className="flex-1 bg-stackmatch-blue hover:bg-stackmatch-navy">
-            <Enter className="w-4 h-4 mr-2" />
+            <ArrowRight className="w-4 h-4 mr-2" />
             Enter Room
           </Button>
           

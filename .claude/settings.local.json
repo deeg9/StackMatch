@@ -8,7 +8,10 @@
       "Bash(git commit:*)",
       "Bash(grep:*)",
       "Bash(npm install:*)",
-      "Bash(npm run type-check:*)"
+      "Bash(npm run type-check:*)",
+      "Bash(npm run lint)",
+      "Bash(rg:*)",
+      "Bash(true)"
     ],
     "deny": []
   }
