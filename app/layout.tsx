@@ -1,14 +1,36 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import ClientLayout from "./client-layout"
+import type { Metadata } from 'next'
+import { Inter, Source_Sans_Pro } from 'next/font/google'
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+  weight: ['400', '500', '600', '700']
+})
+
+const sourceSansPro = Source_Sans_Pro({
+  subsets: ['latin'],
+  variable: '--font-source-sans-pro',
+  weight: ['400', '500', '600', '700']
+})
 
 export const metadata: Metadata = {
-  title: "StackMatch - Connect with Top Software Providers",
-  description: "Find and hire the best software development teams for your projects",
+  title: 'StackMatch - Intelligent Software Procurement',
+  description: 'Transform your B2B software procurement process with expert-guided workflows, AI-powered matching, and secure deal rooms. End the chaos of software buying.',
+  keywords: 'B2B software procurement, enterprise software, procurement consulting, software marketplace, deal rooms',
+  authors: [{ name: 'StackMatch Team' }],
+  openGraph: {
+    title: 'StackMatch - Intelligent Software Procurement',
+    description: 'Transform your B2B software procurement process with expert-guided workflows and AI-powered matching.',
+    url: 'https://stackmatch.io',
+    siteName: 'StackMatch',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'StackMatch - Intelligent Software Procurement',
+    description: 'Transform your B2B software procurement process with expert-guided workflows and AI-powered matching.',
+  },
 }
 
 export default function RootLayout({
@@ -16,43 +38,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  console.log("🔍 DEBUG: RootLayout rendering")
-  console.log("🔍 DEBUG: Environment:", process.env.NODE_ENV)
-  console.log("🔍 DEBUG: Next.js version:", process.env.NEXT_RUNTIME || "unknown")
-
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              console.log("🔍 DEBUG: HTML head loaded");
-              console.log("🔍 DEBUG: User agent:", navigator.userAgent);
-              console.log("🔍 DEBUG: Connection:", navigator.connection ? navigator.connection.effectiveType : "unknown");
-              
-              // Monitor chunk loading errors
-              window.addEventListener('error', function(e) {
-                if (e.message && e.message.includes('Loading chunk')) {
-                  console.error("❌ CHUNK ERROR:", e.message);
-                  console.error("❌ CHUNK ERROR Source:", e.filename);
-                  console.error("❌ CHUNK ERROR Line:", e.lineno);
-                  console.error("❌ CHUNK ERROR Stack:", e.error?.stack);
-                }
-              });
-              
-              // Monitor unhandled promise rejections (common with chunk loading)
-              window.addEventListener('unhandledrejection', function(e) {
-                console.error("❌ UNHANDLED REJECTION:", e.reason);
-                if (e.reason && e.reason.toString().includes('Loading chunk')) {
-                  console.error("❌ CHUNK LOADING REJECTION:", e.reason);
-                }
-              });
-            `,
-          }}
-        />
-      </head>
-      <body className={inter.className}>
-        <ClientLayout>{children}</ClientLayout>
+    <html lang="en" className={`${inter.variable} ${sourceSansPro.variable}`}>
+      <body className={`${inter.className} antialiased`}>
+        {children}
       </body>
     </html>
   )

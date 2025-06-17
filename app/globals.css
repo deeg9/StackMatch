@@ -4,65 +4,61 @@
 
 @layer base {
   :root {
+    /* StackMatch Brand Colors */
+    --stackmatch-navy: #1A2B4C;
+    --stackmatch-blue: #4A73CC;
+    --trust-green: #22C55E;
+    --success-green: #16A34A;
+    --attention-orange: #F59E0B;
+    --information-blue: #3B82F6;
+    --charcoal: #374151;
+    --medium-gray: #6B7280;
+    --light-gray: #D1D5DB;
+    --background-gray: #F9FAFB;
+
+    /* CSS Custom Properties for shadcn/ui */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 221.2 83.2% 53.3%;
+    --primary: 221 83% 53%;
     --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-
+    --ring: 221 83% 53%;
     --radius: 0.5rem;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 84% 4.9%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.5% 48%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -73,64 +69,93 @@
   body {
     @apply bg-background text-foreground;
   }
-  
-  /* Landing page specific overrides */
-  body.landing-page {
-    background: none !important;
+}
+
+/* Custom Typography Classes */
+@layer components {
+  .font-display {
+    font-family: var(--font-inter);
+    font-weight: 600;
   }
   
-  /* Ensure landing page gradient always shows */
-  .landing-page-wrapper {
-    position: relative;
-    min-height: 100vh;
-    width: 100%;
+  .font-display-bold {
+    font-family: var(--font-inter);
+    font-weight: 700;
   }
   
-  /* Force gradient background to display */
-  [data-page="landing"] {
-    background: linear-gradient(to bottom right, rgb(15 23 42), rgb(30 58 138), rgb(67 56 202)) !important;
+  .font-body {
+    font-family: var(--font-source-sans-pro);
+    font-weight: 400;
   }
   
-  /* Ensure landing page gradient always shows */
-  body:has([data-landing-page="true"]) {
-    background: none !important;
-  }
-  
-  /* Override any potential theme background on root page */
-  html:has([data-landing-page="true"]),
-  html:has([data-landing-page="true"]) body {
-    background: transparent !important;
+  .font-body-medium {
+    font-family: var(--font-source-sans-pro);
+    font-weight: 500;
   }
 }
 
-/* Ticker animation */
-.ticker-container {
-  width: 100%;
-  overflow: hidden;
-}
-
-.ticker-content {
-  display: inline-block;
-  white-space: nowrap;
-  animation: ticker 30s linear infinite;
-  padding-right: 100%;
-}
-
-.ticker-content:hover {
-  animation-play-state: paused;
-}
-
-@keyframes ticker {
-  0% {
-    transform: translateX(100%);
+/* Custom animations and effects */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-in-out;
   }
-  100% {
-    transform: translateX(-100%);
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
   }
 }
 
-/* Grid pattern background */
-.bg-grid-pattern {
-  background-image: radial-gradient(circle at 1px 1px, rgba(var(--foreground), 0.15) 1px, transparent 0);
-  background-size: 20px 20px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom button hover effects */
+.btn-glow:hover {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(135deg, #1A2B4C 0%, #4A73CC 50%, #22C55E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

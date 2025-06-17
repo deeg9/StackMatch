@@ -1,217 +1,427 @@
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Target, Star, Sparkles, CheckCircle2, Shield, Users, Zap, Globe, Rocket, ArrowRight, PlayCircle } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { ArrowRight, CheckCircle, Users, Zap, Shield, TrendingUp, Building2, Clock, DollarSign } from "lucide-react"
+import Link from "next/link"
 
-// Force static generation - no dynamic server-side features
-export const dynamic = 'force-static'
-// Add revalidate to ensure fresh builds
-export const revalidate = false
-
-export default function HomePage() {
-  // Debug logging for production
-  console.log('🎨 LANDING PAGE: Rendering beautiful gradient design')
-  
-  // Show unauthenticated version by default for static generation
-  // This ensures the beautiful design always renders consistently
-  const user = null
-
-  // Debug logging for deployment troubleshooting
-  if (typeof window !== 'undefined') {
-    console.log('🎨 Landing page rendered with beautiful gradient design')
-    console.log('🔍 Current pathname:', window.location.pathname)
-    console.log('🔍 Document title:', document.title)
-  }
-
+export default function LandingPage() {
   return (
-    <div data-page="landing" className="landing-page-wrapper">
-      {/* Override any parent background with maximum specificity */}
-      <div 
-        className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 -z-10" 
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'linear-gradient(to bottom right, rgb(15 23 42), rgb(30 58 138), rgb(67 56 202))',
-          zIndex: -10
-        }}
-      />
-      
-      <div className="relative z-10 min-h-screen w-full overflow-hidden" data-landing-page="true">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-indigo-400/20 to-cyan-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-purple-400/10 to-pink-600/10 rounded-full blur-3xl animate-ping"></div>
-        </div>
-
-        {/* Hero Section - Full Height */}
-        <section className="relative z-20 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto text-center">
-            {/* Top Badge */}
-            <div className="inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-600/20 backdrop-blur-sm border border-blue-400/30 mb-12 group hover:from-blue-500/30 hover:to-purple-600/30 transition-all duration-300">
-              <Sparkles className="w-6 h-6 mr-3 text-blue-400 group-hover:text-blue-300" />
-              <span className="text-blue-100 font-semibold text-lg">Connecting Innovation Worldwide</span>
-            </div>
-            
-            {/* Main Headline */}
-            <h1 className="text-7xl md:text-8xl lg:text-9xl font-black mb-8 leading-tight">
-              <span className="block bg-gradient-to-r from-white via-blue-50 to-blue-200 bg-clip-text text-transparent">
-                Welcome to
-              </span>
-              <span className="block bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent animate-pulse mt-4">
+    <div className="min-h-screen bg-[#F9FAFB]">
+      {/* Navigation */}
+      <nav className="bg-[#1A2B4C] border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <div className="text-2xl font-bold text-white">
                 StackMatch
-              </span>
-            </h1>
-            
-            {/* Subtitle */}
-            <p className="text-2xl md:text-3xl text-blue-100/90 mb-16 max-w-5xl mx-auto leading-relaxed font-light">
-              The premium platform where <span className="text-white font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">visionary buyers</span> meet <span className="text-white font-bold bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">exceptional sellers</span> to bring extraordinary projects to life.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-8 justify-center mb-24">
-              <Link href="/signup">
-                <Button size="lg" className="group relative w-full sm:w-auto px-12 py-8 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 border-0 rounded-3xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2">
-                  <span className="relative z-10 flex items-center">
-                    Get Started Free
-                    <Rocket className="ml-4 h-7 w-7 group-hover:translate-y-[-4px] transition-transform" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-                </Button>
-              </Link>
-              <Link href="/login">
-                <Button variant="outline" size="lg" className="group w-full sm:w-auto px-12 py-8 text-xl font-bold bg-white/10 hover:bg-white/20 text-white border-3 border-white/40 hover:border-white/60 rounded-3xl backdrop-blur-sm transition-all duration-300 transform hover:scale-110 hover:-translate-y-2">
-                  <span className="flex items-center">
-                    Watch Demo
-                    <PlayCircle className="ml-4 h-7 w-7 group-hover:scale-125 transition-transform" />
-                  </span>
-                </Button>
-              </Link>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-              {[
-                { number: "50k+", label: "Active Projects", icon: Target },
-                { number: "98%", label: "Success Rate", icon: CheckCircle2 },
-                { number: "$100M+", label: "Projects Value", icon: Star }
-              ].map((stat, index) => (
-                <div key={index} className="group text-center p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 transform hover:scale-110">
-                  <stat.icon className="w-12 h-12 text-blue-400 mx-auto mb-6 group-hover:text-blue-300 transition-colors" />
-                  <div className="text-5xl font-black text-white mb-3 group-hover:scale-110 transition-transform duration-300">{stat.number}</div>
-                  <div className="text-blue-200/80 font-semibold text-lg">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="relative z-20 py-40 bg-gradient-to-b from-transparent to-black/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-24">
-              <div className="inline-block mb-8 px-8 py-3 text-lg bg-gradient-to-r from-blue-500/20 to-purple-600/20 text-blue-200 border border-blue-400/30 rounded-full backdrop-blur-sm">
-                Why Choose StackMatch
               </div>
-              <h2 className="text-6xl md:text-7xl font-black mb-8 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-                Built for Excellence
-              </h2>
-              <p className="text-2xl text-blue-100/70 max-w-4xl mx-auto font-light">
-                Experience the perfect blend of innovation, security, and results that sets industry standards.
-              </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {[
-                {
-                  icon: Shield,
-                  title: "Enterprise Security",
-                  description: "Bank-grade security with verified profiles and secure payment processing. Your projects are protected at every step.",
-                  gradient: "from-blue-500 to-cyan-500"
-                },
-                {
-                  icon: Users,
-                  title: "Elite Network",
-                  description: "Connect with top-tier professionals and industry leaders. Quality is guaranteed through our rigorous vetting process.",
-                  gradient: "from-purple-500 to-pink-500"
-                },
-                {
-                  icon: Zap,
-                  title: "Lightning Fast",
-                  description: "Match with the perfect collaborators in minutes, not weeks. Our AI-powered matching system accelerates success.",
-                  gradient: "from-yellow-500 to-orange-500"
-                },
-                {
-                  icon: Globe,
-                  title: "Global Reach",
-                  description: "Access talent and opportunities from around the world. Break geographical barriers and think globally.",
-                  gradient: "from-green-500 to-teal-500"
-                },
-                {
-                  icon: Star,
-                  title: "Proven Results",
-                  description: "Track record of delivering exceptional outcomes. From startups to enterprise, we enable success at every scale.",
-                  gradient: "from-indigo-500 to-purple-500"
-                },
-                {
-                  icon: Rocket,
-                  title: "Innovation First",
-                  description: "Cutting-edge technology and modern development practices. Built for scale, performance, and the future.",
-                  gradient: "from-red-500 to-pink-500"
-                }
-              ].map((feature, index) => (
-                <Card key={index} className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 rounded-3xl transition-all duration-500 transform hover:scale-110 hover:-translate-y-4 p-10">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <CardContent className="relative z-10 p-0">
-                    <div className={`w-20 h-20 bg-gradient-to-br ${feature.gradient} rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 shadow-xl`}>
-                      <feature.icon className="w-10 h-10 text-white" />
-                    </div>
-                    <h3 className="text-3xl font-bold text-white mb-6 group-hover:text-blue-100 transition-colors">{feature.title}</h3>
-                    <p className="text-blue-100/70 leading-relaxed font-light text-lg group-hover:text-blue-100/90 transition-colors">
-                      {feature.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4">
+                <Link href="#how-it-works" className="text-white hover:text-[#4A73CC] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  How It Works
+                </Link>
+                <Link href="#solutions" className="text-white hover:text-[#4A73CC] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Solutions
+                </Link>
+                <Link href="#pricing" className="text-white hover:text-[#4A73CC] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Pricing
+                </Link>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" className="text-white hover:text-[#4A73CC] hover:bg-transparent">
+                Sign In
+              </Button>
+              <Button className="bg-[#22C55E] hover:bg-[#16A34A] text-white">
+                Get Started
+              </Button>
             </div>
           </div>
-        </section>
+        </div>
+      </nav>
 
-        {/* Final CTA Section */}
-        <section className="relative z-20 py-40 bg-gradient-to-b from-black/30 to-black/50">
-          <div className="max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <div className="bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm rounded-3xl p-16 border border-white/20">
-              <h2 className="text-5xl md:text-6xl font-black mb-8 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-                Ready to Transform Your Ideas?
-              </h2>
-              <p className="text-2xl text-blue-100/80 mb-16 max-w-3xl mx-auto font-light">
-                Join thousands of successful projects and discover what makes StackMatch the preferred platform for innovators worldwide.
-              </p>
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#1A2B4C] to-[#4A73CC] text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <Badge className="bg-[#22C55E] text-white hover:bg-[#16A34A] px-3 py-1">
+                  Transforming $260B in Annual Procurement Failures
+                </Badge>
+                <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+                  Intelligent Software Procurement
+                </h1>
+                <p className="text-xl text-blue-100 leading-relaxed">
+                  End the chaos of software buying. StackMatch connects mid-market companies with expert consultants and verified vendors through structured workflows that guarantee success.
+                </p>
+              </div>
               
-              <div className="flex flex-col sm:flex-row gap-8 justify-center">
-                <Link href="/signup">
-                  <Button size="lg" className="group relative w-full sm:w-auto px-12 py-8 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 border-0 rounded-3xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-110">
-                    <span className="relative z-10 flex items-center">
-                      Join StackMatch
-                      <ArrowRight className="ml-4 h-7 w-7 group-hover:translate-x-2 transition-transform" />
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-                  </Button>
-                </Link>
-                <Link href="/login">
-                  <Button variant="outline" size="lg" className="group w-full sm:w-auto px-12 py-8 text-xl font-bold bg-white/10 hover:bg-white/20 text-white border-3 border-white/40 hover:border-white/60 rounded-3xl backdrop-blur-sm transition-all duration-300 transform hover:scale-110">
-                    Sign In
-                    <CheckCircle2 className="ml-4 h-7 w-7 group-hover:scale-125 transition-transform" />
-                  </Button>
-                </Link>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="bg-[#22C55E] hover:bg-[#16A34A] text-white px-8 py-4 text-lg">
+                  Start Your Project
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#1A2B4C] px-8 py-4 text-lg">
+                  Watch Demo
+                </Button>
+              </div>
+
+              <div className="flex items-center space-x-8 pt-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold">66%</div>
+                  <div className="text-sm text-blue-200">Projects Fail</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">121</div>
+                  <div className="text-sm text-blue-200">Day Sales Cycles</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">$260B</div>
+                  <div className="text-sm text-blue-200">Annual Waste</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="bg-white rounded-2xl shadow-2xl p-8 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-[#1A2B4C]">Deal Room: CRM Migration</h3>
+                    <Badge className="bg-[#22C55E] text-white">Active</Badge>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-[#4A73CC] rounded-full flex items-center justify-center">
+                        <Users className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-[#374151]">3 Vendors Matched</div>
+                        <div className="text-xs text-[#6B7280]">Salesforce, HubSpot, Pipedrive</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-[#22C55E] rounded-full flex items-center justify-center">
+                        <Shield className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-[#374151]">Expert Consultant Assigned</div>
+                        <div className="text-xs text-[#6B7280]">Sarah Chen, CRM Specialist</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-[#F59E0B] rounded-full flex items-center justify-center">
+                        <Clock className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-[#374151]">Timeline: 45 days</div>
+                        <div className="text-xs text-[#6B7280]">60% faster than industry average</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="pt-4 border-t border-[#D1D5DB]">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[#6B7280]">Projected Savings</span>
+                      <span className="font-semibold text-[#22C55E]">$125,000</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+        
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-[#22C55E] rounded-full opacity-10"></div>
+        <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-32 h-32 bg-[#F59E0B] rounded-full opacity-10"></div>
+      </section>
+
+      {/* Problem Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-4xl font-bold text-[#1A2B4C]">The B2B Software Buying Crisis</h2>
+            <p className="text-xl text-[#6B7280] max-w-3xl mx-auto">
+              Mid-market companies waste billions annually on failed software procurement. The process is broken, complex, and costly.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="border-2 border-red-100 hover:border-red-200 transition-colors">
+              <CardContent className="p-8 text-center space-y-4">
+                <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto">
+                  <TrendingUp className="w-8 h-8 text-red-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-red-600">66%</h3>
+                <p className="text-[#374151] font-medium">Projects Fail to Meet Objectives</p>
+                <p className="text-sm text-[#6B7280]">Only 31% of software projects complete on time and within budget</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-orange-100 hover:border-orange-200 transition-colors">
+              <CardContent className="p-8 text-center space-y-4">
+                <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto">
+                  <Clock className="w-8 h-8 text-orange-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-orange-600">121 Days</h3>
+                <p className="text-[#374151] font-medium">Average Sales Cycle Length</p>
+                <p className="text-sm text-[#6B7280]">Enterprise deals often extend 6-12 months with complexity</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-red-100 hover:border-red-200 transition-colors">
+              <CardContent className="p-8 text-center space-y-4">
+                <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto">
+                  <DollarSign className="w-8 h-8 text-red-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-red-600">$260B</h3>
+                <p className="text-[#374151] font-medium">Annual Procurement Failures</p>
+                <p className="text-sm text-[#6B7280]">Massive financial waste from poor software buying decisions</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Solution Section */}
+      <section className="py-20 bg-[#F9FAFB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-4xl font-bold text-[#1A2B4C]">The StackMatch Solution</h2>
+            <p className="text-xl text-[#6B7280] max-w-3xl mx-auto">
+              A three-sided marketplace that connects buyers, sellers, and expert consultants through intelligent, structured workflows.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <Card className="border-2 border-[#4A73CC] hover:shadow-lg transition-shadow">
+              <CardContent className="p-8 space-y-6">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-[#4A73CC] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Building2 className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1A2B4C] mb-2">For Buyers</h3>
+                  <p className="text-[#6B7280] mb-6">Mid-market companies seeking software solutions</p>
+                </div>
+                
+                <ul className="space-y-3">
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Guided listing workflow</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Expert consultant matching</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Secure deal rooms</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Pre-qualified vendors</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-[#22C55E] hover:shadow-lg transition-shadow">
+              <CardContent className="p-8 space-y-6">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-[#22C55E] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Shield className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1A2B4C] mb-2">For Consultants</h3>
+                  <p className="text-[#6B7280] mb-6">Procurement experts and specialists</p>
+                </div>
+                
+                <ul className="space-y-3">
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">AI-powered project matching</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Collaborative deal management</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Vetted marketplace access</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Premium project opportunities</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-[#F59E0B] hover:shadow-lg transition-shadow">
+              <CardContent className="p-8 space-y-6">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-[#F59E0B] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Zap className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1A2B4C] mb-2">For Sellers</h3>
+                  <p className="text-[#6B7280] mb-6">Software vendors and solution providers</p>
+                </div>
+                
+                <ul className="space-y-3">
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">High-quality, structured RFPs</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Pre-qualified buyers</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Faster sales cycles</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-[#22C55E]" />
+                    <span className="text-sm text-[#374151]">Transparent deal processes</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-4xl font-bold text-[#1A2B4C]">How StackMatch Works</h2>
+            <p className="text-xl text-[#6B7280] max-w-3xl mx-auto">
+              A simple, guided process that transforms chaotic software procurement into structured success.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-[#4A73CC] rounded-full flex items-center justify-center mx-auto">
+                <span className="text-white font-bold text-xl">1</span>
+              </div>
+              <h3 className="text-lg font-semibold text-[#1A2B4C]">Define Your Needs</h3>
+              <p className="text-sm text-[#6B7280]">
+                Use our guided workflow to articulate business requirements and strategic goals clearly.
+              </p>
+            </div>
+
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-[#22C55E] rounded-full flex items-center justify-center mx-auto">
+                <span className="text-white font-bold text-xl">2</span>
+              </div>
+              <h3 className="text-lg font-semibold text-[#1A2B4C]">Get Expert Help</h3>
+              <p className="text-sm text-[#6B7280]">
+                AI matches you with specialized consultants who manage the entire procurement process.
+              </p>
+            </div>
+
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-[#F59E0B] rounded-full flex items-center justify-center mx-auto">
+                <span className="text-white font-bold text-xl">3</span>
+              </div>
+              <h3 className="text-lg font-semibold text-[#1A2B4C]">Review Proposals</h3>
+              <p className="text-sm text-[#6B7280]">
+                Receive high-quality proposals from pre-qualified vendors in secure deal rooms.
+              </p>
+            </div>
+
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-[#16A34A] rounded-full flex items-center justify-center mx-auto">
+                <span className="text-white font-bold text-xl">4</span>
+              </div>
+              <h3 className="text-lg font-semibold text-[#1A2B4C]">Close Successfully</h3>
+              <p className="text-sm text-[#6B7280]">
+                Negotiate and close deals with expert guidance and transparent collaboration tools.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-[#1A2B4C] to-[#4A73CC] text-white">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold mb-6">
+            Ready to Transform Your Software Procurement?
+          </h2>
+          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            Join the companies already saving time, money, and reducing risk with StackMatch's intelligent procurement platform.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="bg-[#22C55E] hover:bg-[#16A34A] text-white px-8 py-4 text-lg">
+              Start Your Project Today
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#1A2B4C] px-8 py-4 text-lg">
+              Schedule a Demo
+            </Button>
+          </div>
+          
+          <p className="text-sm text-blue-200 mt-6">
+            No credit card required • Free consultation • Expert guidance included
+          </p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#1A2B4C] text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+              <div className="text-2xl font-bold">StackMatch</div>
+              <p className="text-blue-200 text-sm">
+                Intelligent software procurement for mid-market companies.
+              </p>
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Platform</h3>
+              <ul className="space-y-2 text-sm text-blue-200">
+                <li><Link href="#" className="hover:text-white transition-colors">For Buyers</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">For Sellers</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">For Consultants</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Pricing</Link></li>
+              </ul>
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Company</h3>
+              <ul className="space-y-2 text-sm text-blue-200">
+                <li><Link href="#" className="hover:text-white transition-colors">About</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Careers</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Contact</Link></li>
+              </ul>
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Support</h3>
+              <ul className="space-y-2 text-sm text-blue-200">
+                <li><Link href="#" className="hover:text-white transition-colors">Help Center</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Documentation</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Terms of Service</Link></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-blue-800 pt-8 mt-8 text-center text-sm text-blue-200">
+            <p>&copy; 2024 StackMatch. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

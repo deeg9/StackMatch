@@ -1,14 +1,14 @@
 import type { Config } from "tailwindcss"
 
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-    "*.{js,ts,jsx,tsx,mdx}",
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -19,6 +19,19 @@ const config = {
     },
     extend: {
       colors: {
+        // StackMatch Brand Colors
+        'stackmatch-navy': '#1A2B4C',
+        'stackmatch-blue': '#4A73CC',
+        'trust-green': '#22C55E',
+        'success-green': '#16A34A',
+        'attention-orange': '#F59E0B',
+        'information-blue': '#3B82F6',
+        'charcoal': '#374151',
+        'medium-gray': '#6B7280',
+        'light-gray': '#D1D5DB',
+        'background-gray': '#F9FAFB',
+        
+        // shadcn/ui color system
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -52,28 +65,15 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        lightMode: {
-          background: "#FFFFFF",
-          foreground: "#000000",
-          card: "#FFFFFF",
-          cardForeground: "#000000",
-          popover: "#FFFFFF",
-          popoverForeground: "#000000",
-          muted: "#F5F5F5",
-          mutedForeground: "#737373",
-          accent: "#E0E0E0",
-          accentForeground: "#000000",
-          destructive: "#EF4444",
-          destructiveForeground: "#FFFFFF",
-          border: "#D4D4D4",
-          input: "#D4D4D4",
-          ring: "#2563EB",
-        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        'display': ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        'body': ['var(--font-source-sans-pro)', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {
@@ -84,27 +84,41 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        ticker: {
-          "0%": { transform: "translateX(100%)" },
-          "100%": { transform: "translateX(-100%)" },
+        fadeIn: {
+          '0%': { 
+            opacity: '0',
+            transform: 'translateY(20px)'
+          },
+          '100%': { 
+            opacity: '1',
+            transform: 'translateY(0)'
+          },
         },
+        slideUp: {
+          '0%': { 
+            opacity: '0',
+            transform: 'translateY(40px)'
+          },
+          '100%': { 
+            opacity: '1',
+            transform: 'translateY(0)'
+          },
+        },
+        float: {
+          '0%, 100%': { 
+            transform: 'translateY(0px)'
+          },
+          '50%': { 
+            transform: 'translateY(-20px)'
+          },
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        ticker: "ticker 30s linear infinite",
-      },
-      backgroundColor: {
-        DEFAULT: "hsl(var(--background))",
-        light: "var(--lightMode-background)",
-      },
-      textColor: {
-        DEFAULT: "hsl(var(--foreground))",
-        light: "var(--lightMode-foreground)",
-      },
-      cardColor: {
-        DEFAULT: "hsl(var(--card))",
-        light: "var(--lightMode-card)",
+        "fade-in": "fadeIn 0.6s ease-in-out",
+        "slide-up": "slideUp 0.8s ease-out",
+        "float": "float 6s ease-in-out infinite",
       },
     },
   },
