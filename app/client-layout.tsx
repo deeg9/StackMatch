@@ -27,13 +27,27 @@ const ONBOARDING_PATHS = ["/onboarding"]
 // Public pages where navigation should be shown differently
 const PUBLIC_ONLY_PATHS = ["/"]
 
-function LayoutContent({ children }: { children: React.ReactNode }) {
+function LayoutContent({ children, isClient }: { children: React.ReactNode; isClient: boolean }) {
   const pathname = usePathname()
   const { user, loading } = useClientAuth()
   const [shouldShowNavigation, setShouldShowNavigation] = useState(false)
 
   useEffect(() => {
-    // Don't show navigation while loading
+    // Only run navigation logic on client side for auth-dependent pages
+    if (!isClient) {
+      // For SSR/SSG, set default navigation visibility based on path only
+      if (EXCLUDED_PATHS.some((path) => pathname.startsWith(path)) ||
+          ONBOARDING_PATHS.some((path) => pathname.startsWith(path))) {
+        setShouldShowNavigation(false)
+      } else if (PUBLIC_ONLY_PATHS.includes(pathname)) {
+        setShouldShowNavigation(true)
+      } else {
+        setShouldShowNavigation(false)
+      }
+      return
+    }
+
+    // Client-side navigation logic with auth
     if (loading) {
       setShouldShowNavigation(false)
       return
@@ -65,15 +79,16 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
     // Default: hide navigation for unauthenticated users on non-public paths
     setShouldShowNavigation(false)
-  }, [pathname, user, loading])
+  }, [pathname, user, loading, isClient])
 
-  // Special handling for landing page - bypass layout constraints
+  // Special handling for landing page - bypass layout constraints completely
+  // This ensures the beautiful gradient design always renders without interference
   if (pathname === "/") {
     return (
-      <>
+      <div className="w-full">
         {children}
         <Toaster />
-      </>
+      </div>
     )
   }
 
@@ -97,15 +112,13 @@ export default function ClientLayout({
     setIsClient(true)
   }, [])
 
-  if (!isClient) {
-    return null
-  }
-
+  // Always render for static pages - don't block SSR/SSG
+  // The conditional rendering will happen inside LayoutContent
   return (
     <Provider store={store}>
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange forcedTheme="dark">
         <Providers>
-          <LayoutContent>{children}</LayoutContent>
+          <LayoutContent isClient={isClient}>{children}</LayoutContent>
         </Providers>
       </ThemeProvider>
     </Provider>

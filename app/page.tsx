@@ -2,20 +2,30 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Target, Star, Sparkles, CheckCircle2, Shield, Users, Zap, Globe, Rocket, ArrowRight, PlayCircle } from "lucide-react"
+
 // Force static generation - no dynamic server-side features
 export const dynamic = 'force-static'
+// Add revalidate to ensure fresh builds
+export const revalidate = false
 
 export default function HomePage() {
   // Show unauthenticated version by default for static generation
-  // This ensures the beautiful design always renders
+  // This ensures the beautiful design always renders consistently
   const user = null
+
+  // Debug logging for deployment troubleshooting
+  if (typeof window !== 'undefined') {
+    console.log('🎨 Landing page rendered with beautiful gradient design')
+    console.log('🔍 Current pathname:', window.location.pathname)
+    console.log('🔍 Document title:', document.title)
+  }
 
   return (
     <>
       {/* Override any parent background with maximum specificity */}
       <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 -z-10" />
       
-      <div className="relative z-10 min-h-screen w-full overflow-hidden">
+      <div className="relative z-10 min-h-screen w-full overflow-hidden" data-landing-page="true">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
