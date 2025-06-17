@@ -53,7 +53,8 @@
       "Bash(timeout 300s npm run build)",
       "Bash(timeout 30s npx tsc:*)",
       "Bash(timeout 180s npm run build --silent)",
-      "Bash(timeout 60s npm run build:*)"
+      "Bash(timeout 60s npm run build:*)",
+      "Bash(npm run dev:*)"
     ],
     "deny": []
   }
