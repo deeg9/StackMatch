@@ -1,6 +1,7 @@
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Target, Star, Sparkles, CheckCircle2, Shield, Users, Zap, Globe } from "lucide-react"
-import { AuthEnhancedCTA } from "@/components/auth-enhanced-cta"
+import { Target, Star, Sparkles, CheckCircle2, Shield, Users, Zap, Globe, Rocket, ArrowRight, PlayCircle } from "lucide-react"
 // Force static generation - no dynamic server-side features
 export const dynamic = 'force-static'
 
@@ -48,8 +49,23 @@ export default function HomePage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-8 justify-center mb-24">
-              <AuthEnhancedCTA variant="primary" />
-              <AuthEnhancedCTA variant="secondary" />
+              <Link href="/signup">
+                <Button size="lg" className="group relative w-full sm:w-auto px-12 py-8 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 border-0 rounded-3xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2">
+                  <span className="relative z-10 flex items-center">
+                    Get Started Free
+                    <Rocket className="ml-4 h-7 w-7 group-hover:translate-y-[-4px] transition-transform" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+                </Button>
+              </Link>
+              <Link href="/login">
+                <Button variant="outline" size="lg" className="group w-full sm:w-auto px-12 py-8 text-xl font-bold bg-white/10 hover:bg-white/20 text-white border-3 border-white/40 hover:border-white/60 rounded-3xl backdrop-blur-sm transition-all duration-300 transform hover:scale-110 hover:-translate-y-2">
+                  <span className="flex items-center">
+                    Watch Demo
+                    <PlayCircle className="ml-4 h-7 w-7 group-hover:scale-125 transition-transform" />
+                  </span>
+                </Button>
+              </Link>
             </div>
 
             {/* Stats Grid */}
@@ -152,8 +168,21 @@ export default function HomePage() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-8 justify-center">
-                <AuthEnhancedCTA variant="primary" />
-                <AuthEnhancedCTA variant="secondary" />
+                <Link href="/signup">
+                  <Button size="lg" className="group relative w-full sm:w-auto px-12 py-8 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 border-0 rounded-3xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-110">
+                    <span className="relative z-10 flex items-center">
+                      Join StackMatch
+                      <ArrowRight className="ml-4 h-7 w-7 group-hover:translate-x-2 transition-transform" />
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+                  </Button>
+                </Link>
+                <Link href="/login">
+                  <Button variant="outline" size="lg" className="group w-full sm:w-auto px-12 py-8 text-xl font-bold bg-white/10 hover:bg-white/20 text-white border-3 border-white/40 hover:border-white/60 rounded-3xl backdrop-blur-sm transition-all duration-300 transform hover:scale-110">
+                    Sign In
+                    <CheckCircle2 className="ml-4 h-7 w-7 group-hover:scale-125 transition-transform" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
