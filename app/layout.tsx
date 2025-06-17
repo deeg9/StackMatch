@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Source_Sans_Pro } from 'next/font/google'
+import { Inter, Source_Sans_3 } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({ 
@@ -8,7 +8,7 @@ const inter = Inter({
   weight: ['400', '500', '600', '700']
 })
 
-const sourceSansPro = Source_Sans_Pro({
+const sourceSans3 = Source_Sans_3({
   subsets: ['latin'],
   variable: '--font-source-sans-pro',
   weight: ['400', '500', '600', '700']
@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${sourceSansPro.variable}`}>
+    <html lang="en" className={`${inter.variable} ${sourceSans3.variable}`}>
       <body className={`${inter.className} antialiased`}>
         {children}
       </body>
