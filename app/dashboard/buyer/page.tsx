@@ -16,85 +16,101 @@ import Link from "next/link"
 import { TickerBanner } from "@/components/ticker/ticker-banner"
 import { cn } from "@/lib/utils"
 
-// Mock data - will be replaced with real data from Supabase
-const mockStats = {
-  activeListings: 3,
-  totalProposals: 12,
-  completedProjects: 0,
-  successRate: 85,
-  totalInvested: 125000
+// Type definitions for API responses
+interface DashboardStats {
+  activeListings: number
+  totalProposals: number
+  completedProjects: number
+  successRate: number
+  totalInvested: number
 }
 
-const mockListings = [
-  {
-    id: '1',
-    title: 'Enterprise CRM System Implementation',
-    status: 'active',
-    category: 'CRM Software',
-    budgetMin: 50000,
-    budgetMax: 100000,
-    createdAt: '2 days ago',
-    proposalCount: 5
-  },
-  {
-    id: '2',
-    title: 'HR Management Platform Selection',
-    status: 'active',
-    category: 'HR Software',
-    budgetMin: 30000,
-    budgetMax: 60000,
-    createdAt: '5 days ago',
-    proposalCount: 3
-  },
-  {
-    id: '3',
-    title: 'Cloud Infrastructure Migration',
-    status: 'draft',
-    category: 'Cloud Services',
-    budgetMin: null,
-    budgetMax: null,
-    createdAt: '1 week ago',
-    proposalCount: 0
-  }
-]
+interface Listing {
+  id: string
+  title: string
+  status: string
+  category: string
+  budgetMin: number | null
+  budgetMax: number | null
+  createdAt: string
+  proposalCount: number
+}
 
-const mockProposals = [
-  {
-    id: '1',
-    sellerName: 'TechCorp Solutions',
-    sellerAvatar: null,
-    proposedBudget: 75000,
-    listingTitle: 'Enterprise CRM System Implementation',
-    status: 'submitted',
-    submittedAt: '1 hour ago'
-  },
-  {
-    id: '2',
-    sellerName: 'CloudWorks Inc',
-    sellerAvatar: null,
-    proposedBudget: 45000,
-    listingTitle: 'HR Management Platform Selection',
-    status: 'under_review',
-    submittedAt: '3 hours ago'
-  },
-  {
-    id: '3',
-    sellerName: 'DataSync Pro',
-    sellerAvatar: null,
-    proposedBudget: 82000,
-    listingTitle: 'Enterprise CRM System Implementation',
-    status: 'submitted',
-    submittedAt: '6 hours ago'
-  }
-]
+interface Proposal {
+  id: string
+  sellerName: string
+  sellerAvatar: string | null
+  proposedBudget: number
+  listingTitle: string
+  status: string
+  submittedAt: string
+}
 
 export default function BuyerDashboard() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [statsLoading, setStatsLoading] = useState(true)
+  const [listingsLoading, setListingsLoading] = useState(true)
+  const [proposalsLoading, setProposalsLoading] = useState(true)
+  
+  const [stats, setStats] = useState<DashboardStats>({
+    activeListings: 0,
+    totalProposals: 0,
+    completedProjects: 0,
+    successRate: 0,
+    totalInvested: 0
+  })
+  const [listings, setListings] = useState<Listing[]>([])
+  const [proposals, setProposals] = useState<Proposal[]>([])
 
   useEffect(() => {
-    // Simulate loading
-    setTimeout(() => setStatsLoading(false), 1000)
+    // Fetch dashboard stats
+    const fetchStats = async () => {
+      try {
+        const response = await fetch('/api/dashboard/buyer/stats')
+        if (response.ok) {
+          const data = await response.json()
+          setStats(data)
+        }
+      } catch (error) {
+        console.error('Error fetching stats:', error)
+      } finally {
+        setStatsLoading(false)
+      }
+    }
+
+    // Fetch recent listings
+    const fetchListings = async () => {
+      try {
+        const response = await fetch('/api/dashboard/buyer/listings')
+        if (response.ok) {
+          const data = await response.json()
+          setListings(data)
+        }
+      } catch (error) {
+        console.error('Error fetching listings:', error)
+      } finally {
+        setListingsLoading(false)
+      }
+    }
+
+    // Fetch recent proposals
+    const fetchProposals = async () => {
+      try {
+        const response = await fetch('/api/dashboard/buyer/proposals')
+        if (response.ok) {
+          const data = await response.json()
+          setProposals(data)
+        }
+      } catch (error) {
+        console.error('Error fetching proposals:', error)
+      } finally {
+        setProposalsLoading(false)
+      }
+    }
+
+    fetchStats()
+    fetchListings()
+    fetchProposals()
   }, [])
 
   const getStatusColor = (status: string) => {
@@ -224,7 +240,7 @@ export default function BuyerDashboard() {
                 <div>
                   <p className="text-sm text-[#6B7280] font-medium">Active Listings</p>
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : mockStats.activeListings}
+                    {statsLoading ? '...' : stats.activeListings}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-[#4A73CC]/10 rounded-full flex items-center justify-center">
@@ -244,7 +260,7 @@ export default function BuyerDashboard() {
                 <div>
                   <p className="text-sm text-[#6B7280] font-medium">Total Proposals</p>
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : mockStats.totalProposals}
+                    {statsLoading ? '...' : stats.totalProposals}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
@@ -264,7 +280,7 @@ export default function BuyerDashboard() {
                 <div>
                   <p className="text-sm text-[#6B7280] font-medium">Completed</p>
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : mockStats.completedProjects}
+                    {statsLoading ? '...' : stats.completedProjects}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-[#F59E0B]/10 rounded-full flex items-center justify-center">
@@ -287,10 +303,10 @@ export default function BuyerDashboard() {
                 </div>
                 <div className="space-y-2">
                   <p className="text-2xl font-bold text-[#1A2B4C]">
-                    {statsLoading ? '...' : `${mockStats.successRate}%`}
+                    {statsLoading ? '...' : `${stats.successRate}%`}
                   </p>
                   <Progress 
-                    value={statsLoading ? 0 : mockStats.successRate} 
+                    value={statsLoading ? 0 : stats.successRate} 
                     className="h-2"
                     indicatorClassName="bg-[#3B82F6]"
                   />
@@ -309,7 +325,7 @@ export default function BuyerDashboard() {
                 <div>
                   <p className="text-sm text-[#6B7280] font-medium">Total Invested</p>
                   <p className="text-2xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : `$${mockStats.totalInvested.toLocaleString()}`}
+                    {statsLoading ? '...' : `$${stats.totalInvested.toLocaleString()}`}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
@@ -333,7 +349,17 @@ export default function BuyerDashboard() {
               </Link>
             </CardHeader>
             <CardContent className="space-y-4">
-              {mockListings.length === 0 ? (
+              {listingsLoading ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="p-4 border rounded-lg animate-pulse">
+                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                      <div className="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
+                      <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+                    </div>
+                  ))}
+                </div>
+              ) : listings.length === 0 ? (
                 <div className="text-center py-12">
                   <FileText className="h-12 w-12 text-[#D1D5DB] mx-auto mb-4" />
                   <p className="text-[#6B7280] mb-4">No listings yet</p>
@@ -344,7 +370,7 @@ export default function BuyerDashboard() {
                   </Link>
                 </div>
               ) : (
-                mockListings.map((listing, index) => (
+                listings.map((listing, index) => (
                   <div
                     key={listing.id}
                     className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
@@ -399,7 +425,22 @@ export default function BuyerDashboard() {
               </Link>
             </CardHeader>
             <CardContent className="space-y-4">
-              {mockProposals.length === 0 ? (
+              {proposalsLoading ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="p-4 border rounded-lg animate-pulse">
+                      <div className="flex items-start space-x-3">
+                        <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+                        <div className="flex-1">
+                          <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+                          <div className="h-3 bg-gray-200 rounded w-3/4 mb-2"></div>
+                          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : proposals.length === 0 ? (
                 <div className="text-center py-12">
                   <Activity className="h-12 w-12 text-[#D1D5DB] mx-auto mb-4" />
                   <p className="text-[#6B7280] mb-4">No proposals received yet</p>
@@ -408,7 +449,7 @@ export default function BuyerDashboard() {
                   </p>
                 </div>
               ) : (
-                mockProposals.map((proposal, index) => (
+                proposals.map((proposal, index) => (
                   <div
                     key={proposal.id}
                     className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
