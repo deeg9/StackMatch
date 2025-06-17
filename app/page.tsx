@@ -9,6 +9,9 @@ export const dynamic = 'force-static'
 export const revalidate = false
 
 export default function HomePage() {
+  // Debug logging for production
+  console.log('🎨 LANDING PAGE: Rendering beautiful gradient design')
+  
   // Show unauthenticated version by default for static generation
   // This ensures the beautiful design always renders consistently
   const user = null
@@ -21,9 +24,20 @@ export default function HomePage() {
   }
 
   return (
-    <>
+    <div data-page="landing" className="landing-page-wrapper">
       {/* Override any parent background with maximum specificity */}
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 -z-10" />
+      <div 
+        className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 -z-10" 
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'linear-gradient(to bottom right, rgb(15 23 42), rgb(30 58 138), rgb(67 56 202))',
+          zIndex: -10
+        }}
+      />
       
       <div className="relative z-10 min-h-screen w-full overflow-hidden" data-landing-page="true">
         {/* Animated Background Elements */}
@@ -198,6 +212,6 @@ export default function HomePage() {
           </div>
         </section>
       </div>
-    </>
+    </div>
   )
 }

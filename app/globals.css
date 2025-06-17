@@ -80,6 +80,18 @@
   }
   
   /* Ensure landing page gradient always shows */
+  .landing-page-wrapper {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+  }
+  
+  /* Force gradient background to display */
+  [data-page="landing"] {
+    background: linear-gradient(to bottom right, rgb(15 23 42), rgb(30 58 138), rgb(67 56 202)) !important;
+  }
+  
+  /* Ensure landing page gradient always shows */
   body:has([data-landing-page="true"]) {
     background: none !important;
   }
