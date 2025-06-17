@@ -48,7 +48,3 @@ export default function BrowseSellersLoading() {
     </div>
   )
 }
-
-export function BrowseSellersLoading() {
-  return <BrowseSellersLoading />
-}

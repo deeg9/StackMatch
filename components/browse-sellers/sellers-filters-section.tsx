@@ -21,7 +21,7 @@ export function SellersFiltersSection() {
     selectedLocation && { key: 'location', label: selectedLocation, value: selectedLocation },
     selectedExperience && { key: 'experience', label: selectedExperience, value: selectedExperience },
     selectedAvailability && { key: 'availability', label: selectedAvailability, value: selectedAvailability },
-  ].filter(Boolean)
+  ].filter((filter): filter is { key: string; label: string; value: string } => Boolean(filter))
 
   const clearAllFilters = () => {
     setSelectedCategory('')

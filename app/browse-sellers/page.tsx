@@ -4,7 +4,7 @@ import { TickerBanner } from '@/components/ticker/ticker-banner'
 import { BrowseSellersHeader } from '@/components/browse-sellers/browse-sellers-header'
 import { SellersFiltersSection } from '@/components/browse-sellers/sellers-filters-section'
 import { SellersGrid } from '@/components/browse-sellers/sellers-grid'
-import { BrowseSellersLoading } from './loading'
+import BrowseSellersLoading from './loading'
 
 export default function BrowseSellersPage() {
   return (

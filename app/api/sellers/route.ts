@@ -1,6 +1,148 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 
+// Mock data for now since seller_profiles relationship doesn't exist yet
+const mockSellers = [
+  {
+    id: '1',
+    name: 'Sarah Chen',
+    title: 'Full-Stack Developer',
+    company: 'TechFlow Solutions',
+    location: 'San Francisco, CA',
+    avatar: '/api/placeholder/64/64',
+    rating: 4.9,
+    reviewCount: 127,
+    responseTime: 'Responds within 2 hours',
+    isOnline: true,
+    isTopRated: true,
+    skills: ['React', 'Node.js', 'TypeScript', 'AWS', 'MongoDB'],
+    experience: '8+ years',
+    startingPrice: 85,
+    pricingModel: 'hourly' as const,
+    completedProjects: 45,
+    successRate: 98,
+    portfolioImages: ['/api/placeholder/200/200', '/api/placeholder/200/200', '/api/placeholder/200/200'],
+    isVerified: true,
+    languages: ['English', 'Mandarin'],
+    availability: 'Available Now'
+  },
+  {
+    id: '2',
+    name: 'Marcus Rodriguez',
+    title: 'Mobile App Developer',
+    company: 'AppCraft Studio',
+    location: 'Austin, TX',
+    avatar: '/api/placeholder/64/64',
+    rating: 4.8,
+    reviewCount: 89,
+    responseTime: 'Responds within 1 hour',
+    isOnline: true,
+    isTopRated: true,
+    skills: ['React Native', 'Swift', 'Kotlin', 'Firebase', 'Redux'],
+    experience: '6+ years',
+    startingPrice: 75,
+    pricingModel: 'hourly' as const,
+    completedProjects: 32,
+    successRate: 96,
+    portfolioImages: ['/api/placeholder/200/200', '/api/placeholder/200/200', '/api/placeholder/200/200'],
+    isVerified: true,
+    languages: ['English', 'Spanish'],
+    availability: 'Available Now'
+  },
+  {
+    id: '3',
+    name: 'Emily Johnson',
+    title: 'UI/UX Designer',
+    company: 'DesignCore',
+    location: 'New York, NY',
+    avatar: '/api/placeholder/64/64',
+    rating: 4.9,
+    reviewCount: 156,
+    responseTime: 'Responds within 30 minutes',
+    isOnline: false,
+    isTopRated: true,
+    skills: ['Figma', 'Adobe XD', 'Sketch', 'Prototyping', 'User Research'],
+    experience: '7+ years',
+    startingPrice: 3500,
+    pricingModel: 'fixed' as const,
+    completedProjects: 78,
+    successRate: 99,
+    portfolioImages: ['/api/placeholder/200/200', '/api/placeholder/200/200', '/api/placeholder/200/200'],
+    isVerified: true,
+    languages: ['English'],
+    availability: 'Within 1 Week'
+  },
+  {
+    id: '4',
+    name: 'David Kim',
+    title: 'Data Scientist',
+    company: 'DataLab Inc',
+    location: 'Seattle, WA',
+    avatar: '/api/placeholder/64/64',
+    rating: 4.7,
+    reviewCount: 93,
+    responseTime: 'Responds within 4 hours',
+    isOnline: true,
+    isTopRated: false,
+    skills: ['Python', 'Machine Learning', 'TensorFlow', 'SQL', 'R'],
+    experience: '5+ years',
+    startingPrice: 95,
+    pricingModel: 'hourly' as const,
+    completedProjects: 28,
+    successRate: 94,
+    portfolioImages: ['/api/placeholder/200/200', '/api/placeholder/200/200', '/api/placeholder/200/200'],
+    isVerified: true,
+    languages: ['English', 'Korean'],
+    availability: 'Available Now'
+  },
+  {
+    id: '5',
+    name: 'Lisa Thompson',
+    title: 'Digital Marketing Specialist',
+    company: 'GrowthHack Media',
+    location: 'Remote',
+    avatar: '/api/placeholder/64/64',
+    rating: 4.8,
+    reviewCount: 134,
+    responseTime: 'Responds within 1 hour',
+    isOnline: true,
+    isTopRated: true,
+    skills: ['SEO', 'Google Ads', 'Facebook Ads', 'Analytics', 'Content Strategy'],
+    experience: '9+ years',
+    startingPrice: 65,
+    pricingModel: 'hourly' as const,
+    completedProjects: 67,
+    successRate: 97,
+    portfolioImages: ['/api/placeholder/200/200', '/api/placeholder/200/200', '/api/placeholder/200/200'],
+    isVerified: true,
+    languages: ['English'],
+    availability: 'Within 1 Week'
+  },
+  {
+    id: '6',
+    name: 'Ahmed Hassan',
+    title: 'Cybersecurity Expert',
+    company: 'SecureNet Solutions',
+    location: 'Toronto, Canada',
+    avatar: '/api/placeholder/64/64',
+    rating: 4.9,
+    reviewCount: 71,
+    responseTime: 'Responds within 2 hours',
+    isOnline: false,
+    isTopRated: true,
+    skills: ['Penetration Testing', 'Security Auditing', 'CISSP', 'Ethical Hacking', 'Risk Assessment'],
+    experience: '12+ years',
+    startingPrice: 120,
+    pricingModel: 'hourly' as const,
+    completedProjects: 19,
+    successRate: 100,
+    portfolioImages: ['/api/placeholder/200/200', '/api/placeholder/200/200', '/api/placeholder/200/200'],
+    isVerified: true,
+    languages: ['English', 'Arabic'],
+    availability: 'Within 1 Month'
+  }
+]
+
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient()
@@ -23,166 +165,71 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '20')
     const search = searchParams.get('search')
 
-    // Build query for seller profiles
-    let query = supabase
-      .from('profiles')
-      .select(`
-        id,
-        email,
-        created_at,
-        user_type,
-        seller_profiles (
-          company_name,
-          business_description,
-          website_url,
-          location,
-          skills,
-          experience_years,
-          hourly_rate_min,
-          hourly_rate_max,
-          availability_status,
-          response_time_hours,
-          total_projects_completed,
-          success_rate,
-          rating,
-          total_reviews,
-          is_verified,
-          languages,
-          portfolio_urls,
-          certifications,
-          specializations
-        )
-      `)
-      .eq('user_type', 'seller')
-      .not('seller_profiles', 'is', null)
+    // For now, return mock data with applied filters
+    let filteredSellers = mockSellers
 
     // Apply filters
     if (category) {
-      query = query.contains('seller_profiles.specializations', [category])
+      filteredSellers = filteredSellers.filter(seller => 
+        seller.title.toLowerCase().includes(category.toLowerCase()) ||
+        seller.skills.some(skill => skill.toLowerCase().includes(category.toLowerCase()))
+      )
     }
 
     if (location && location !== 'remote') {
-      query = query.ilike('seller_profiles.location', `%${location}%`)
-    }
-
-    if (experience) {
-      const yearRanges = {
-        'entry': [0, 2],
-        'mid': [3, 5],
-        'senior': [6, 10],
-        'expert': [11, 999]
-      }
-      const range = yearRanges[experience as keyof typeof yearRanges]
-      if (range) {
-        query = query.gte('seller_profiles.experience_years', range[0])
-        if (range[1] !== 999) {
-          query = query.lte('seller_profiles.experience_years', range[1])
-        }
-      }
-    }
-
-    if (availability) {
-      const availabilityMap = {
-        'immediate': 'available_now',
-        'week': 'available_soon',
-        'month': 'limited_availability',
-        'flexible': 'flexible'
-      }
-      const mappedAvailability = availabilityMap[availability as keyof typeof availabilityMap]
-      if (mappedAvailability) {
-        query = query.eq('seller_profiles.availability_status', mappedAvailability)
-      }
+      filteredSellers = filteredSellers.filter(seller =>
+        seller.location.toLowerCase().includes(location.toLowerCase())
+      )
     }
 
     if (search) {
-      query = query.or(`
-        seller_profiles.company_name.ilike.%${search}%,
-        seller_profiles.business_description.ilike.%${search}%,
-        seller_profiles.skills.cs.{${search}}
-      `)
+      const searchLower = search.toLowerCase()
+      filteredSellers = filteredSellers.filter(seller =>
+        seller.name.toLowerCase().includes(searchLower) ||
+        seller.title.toLowerCase().includes(searchLower) ||
+        seller.company.toLowerCase().includes(searchLower) ||
+        seller.skills.some(skill => skill.toLowerCase().includes(searchLower))
+      )
     }
 
     // Apply sorting
     switch (sortBy) {
       case 'rating':
-        query = query.order('rating', { ascending: false, foreignTable: 'seller_profiles' })
+        filteredSellers.sort((a, b) => b.rating - a.rating)
         break
       case 'price-low':
-        query = query.order('hourly_rate_min', { ascending: true, foreignTable: 'seller_profiles' })
+        filteredSellers.sort((a, b) => a.startingPrice - b.startingPrice)
         break
       case 'price-high':
-        query = query.order('hourly_rate_max', { ascending: false, foreignTable: 'seller_profiles' })
+        filteredSellers.sort((a, b) => b.startingPrice - a.startingPrice)
         break
       case 'response-time':
-        query = query.order('response_time_hours', { ascending: true, foreignTable: 'seller_profiles' })
+        filteredSellers.sort((a, b) => {
+          const aTime = parseInt(a.responseTime.match(/\d+/)?.[0] || '24')
+          const bTime = parseInt(b.responseTime.match(/\d+/)?.[0] || '24')
+          return aTime - bTime
+        })
         break
       case 'recent':
-        query = query.order('created_at', { ascending: false })
+        // Mock recent activity - shuffle for demo
+        filteredSellers = filteredSellers.sort(() => Math.random() - 0.5)
         break
       default: // relevance
-        query = query.order('rating', { ascending: false, foreignTable: 'seller_profiles' })
-        query = query.order('total_reviews', { ascending: false, foreignTable: 'seller_profiles' })
+        filteredSellers.sort((a, b) => b.rating - a.rating)
     }
 
     // Apply pagination
-    const from = (page - 1) * limit
-    const to = from + limit - 1
-    query = query.range(from, to)
-
-    const { data: sellers, error, count } = await query
-
-    if (error) {
-      console.error('Error fetching sellers:', error)
-      return NextResponse.json({ error: 'Failed to fetch sellers' }, { status: 500 })
-    }
-
-    // Transform data for frontend
-    const transformedSellers = sellers?.map(seller => ({
-      id: seller.id,
-      name: seller.email?.split('@')[0] || 'Anonymous', // Fallback name
-      title: seller.seller_profiles?.specializations?.[0] || 'Professional',
-      company: seller.seller_profiles?.company_name || 'Independent',
-      location: seller.seller_profiles?.location || 'Remote',
-      avatar: `/api/placeholder/64/64`, // Placeholder avatar
-      rating: seller.seller_profiles?.rating || 4.5,
-      reviewCount: seller.seller_profiles?.total_reviews || 0,
-      responseTime: `Responds within ${seller.seller_profiles?.response_time_hours || 4} hours`,
-      isOnline: Math.random() > 0.3, // Mock online status
-      isTopRated: (seller.seller_profiles?.rating || 0) >= 4.8,
-      skills: seller.seller_profiles?.skills || [],
-      experience: `${seller.seller_profiles?.experience_years || 1}+ years`,
-      startingPrice: seller.seller_profiles?.hourly_rate_min || 50,
-      pricingModel: 'hourly' as const,
-      completedProjects: seller.seller_profiles?.total_projects_completed || 0,
-      successRate: seller.seller_profiles?.success_rate || 95,
-      portfolioImages: seller.seller_profiles?.portfolio_urls?.slice(0, 3) || [
-        '/api/placeholder/200/200',
-        '/api/placeholder/200/200',
-        '/api/placeholder/200/200'
-      ],
-      isVerified: seller.seller_profiles?.is_verified || false,
-      languages: seller.seller_profiles?.languages || ['English'],
-      availability: seller.seller_profiles?.availability_status === 'available_now' 
-        ? 'Available Now' 
-        : seller.seller_profiles?.availability_status === 'available_soon'
-        ? 'Within 1 Week'
-        : 'Within 1 Month'
-    })) || []
-
-    // Get total count for pagination
-    const { count: totalCount } = await supabase
-      .from('profiles')
-      .select('id', { count: 'exact', head: true })
-      .eq('user_type', 'seller')
-      .not('seller_profiles', 'is', null)
+    const startIndex = (page - 1) * limit
+    const endIndex = startIndex + limit
+    const paginatedSellers = filteredSellers.slice(startIndex, endIndex)
 
     return NextResponse.json({
-      sellers: transformedSellers,
+      sellers: paginatedSellers,
       pagination: {
         page,
         limit,
-        total: totalCount || 0,
-        totalPages: Math.ceil((totalCount || 0) / limit)
+        total: filteredSellers.length,
+        totalPages: Math.ceil(filteredSellers.length / limit)
       }
     })
 
