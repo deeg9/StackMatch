@@ -1,50 +1,18 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight, Target, Star, Sparkles, Rocket, CheckCircle2, PlayCircle, Shield, Users, Zap, Globe } from "lucide-react"
-import { useClientAuth } from "@/hooks/useClientAuth"
+import { Target, Star, Sparkles, CheckCircle2, Shield, Users, Zap, Globe } from "lucide-react"
+import { AuthEnhancedCTA } from "@/components/auth-enhanced-cta"
+// Force static generation - no dynamic server-side features
+export const dynamic = 'force-static'
 
 export default function HomePage() {
-  const { user, loading } = useClientAuth()
-  const [isClient, setIsClient] = useState(false)
-
-  useEffect(() => {
-    setIsClient(true)
-    
-    // Add landing page class to body for CSS overrides
-    document.body.classList.add('landing-page')
-    
-    // Cleanup on unmount
-    return () => {
-      document.body.classList.remove('landing-page')
-    }
-  }, [])
-
-  if (!isClient || loading) {
-    return (
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center z-50">
-        <div className="relative">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-400"></div>
-          <div className="absolute inset-0 animate-pulse">
-            <div className="rounded-full h-16 w-16 bg-gradient-to-r from-blue-400 to-purple-500 opacity-20"></div>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  // Show unauthenticated version by default for static generation
+  // This ensures the beautiful design always renders
+  const user = null
 
   return (
     <>
       {/* Override any parent background with maximum specificity */}
-      <div className="!fixed !inset-0 !bg-gradient-to-br !from-slate-900 !via-blue-900 !to-indigo-900 !z-[-10]" style={{
-        position: 'fixed !important',
-        inset: '0 !important',
-        background: 'linear-gradient(to bottom right, rgb(15 23 42), rgb(30 58 138), rgb(67 56 202)) !important',
-        zIndex: '-10 !important'
-      }} />
+      <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 -z-10" />
       
       <div className="relative z-10 min-h-screen w-full overflow-hidden">
         {/* Animated Background Elements */}
@@ -80,47 +48,8 @@ export default function HomePage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-8 justify-center mb-24">
-              {user ? (
-                <>
-                  <Link href="/browse-listings">
-                    <Button size="lg" className="group relative w-full sm:w-auto px-12 py-8 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 border-0 rounded-3xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2">
-                      <span className="relative z-10 flex items-center">
-                        Browse Listings
-                        <ArrowRight className="ml-4 h-7 w-7 group-hover:translate-x-2 transition-transform" />
-                      </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-                    </Button>
-                  </Link>
-                  <Link href="/create-listing">
-                    <Button variant="outline" size="lg" className="group w-full sm:w-auto px-12 py-8 text-xl font-bold bg-white/10 hover:bg-white/20 text-white border-3 border-white/40 hover:border-white/60 rounded-3xl backdrop-blur-sm transition-all duration-300 transform hover:scale-110 hover:-translate-y-2">
-                      <span className="flex items-center">
-                        Post a Project
-                        <Target className="ml-4 h-7 w-7 group-hover:rotate-12 transition-transform" />
-                      </span>
-                    </Button>
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link href="/signup">
-                    <Button size="lg" className="group relative w-full sm:w-auto px-12 py-8 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 border-0 rounded-3xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2">
-                      <span className="relative z-10 flex items-center">
-                        Get Started Free
-                        <Rocket className="ml-4 h-7 w-7 group-hover:translate-y-[-4px] transition-transform" />
-                      </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-                    </Button>
-                  </Link>
-                  <Link href="/login">
-                    <Button variant="outline" size="lg" className="group w-full sm:w-auto px-12 py-8 text-xl font-bold bg-white/10 hover:bg-white/20 text-white border-3 border-white/40 hover:border-white/60 rounded-3xl backdrop-blur-sm transition-all duration-300 transform hover:scale-110 hover:-translate-y-2">
-                      <span className="flex items-center">
-                        Watch Demo
-                        <PlayCircle className="ml-4 h-7 w-7 group-hover:scale-125 transition-transform" />
-                      </span>
-                    </Button>
-                  </Link>
-                </>
-              )}
+              <AuthEnhancedCTA variant="primary" />
+              <AuthEnhancedCTA variant="secondary" />
             </div>
 
             {/* Stats Grid */}
@@ -223,42 +152,8 @@ export default function HomePage() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-8 justify-center">
-                {user ? (
-                  <>
-                    <Link href="/browse-listings">
-                      <Button size="lg" className="group relative w-full sm:w-auto px-12 py-8 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 border-0 rounded-3xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-110">
-                        <span className="relative z-10 flex items-center">
-                          Explore Projects
-                          <ArrowRight className="ml-4 h-7 w-7 group-hover:translate-x-2 transition-transform" />
-                        </span>
-                      </Button>
-                    </Link>
-                    <Link href="/create-listing">
-                      <Button variant="outline" size="lg" className="group w-full sm:w-auto px-12 py-8 text-xl font-bold bg-white/10 hover:bg-white/20 text-white border-3 border-white/40 hover:border-white/60 rounded-3xl backdrop-blur-sm transition-all duration-300 transform hover:scale-110">
-                        Start Your Project
-                        <Target className="ml-4 h-7 w-7 group-hover:rotate-12 transition-transform" />
-                      </Button>
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <Link href="/signup">
-                      <Button size="lg" className="group relative w-full sm:w-auto px-12 py-8 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 border-0 rounded-3xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-110">
-                        <span className="relative z-10 flex items-center">
-                          Join StackMatch
-                          <ArrowRight className="ml-4 h-7 w-7 group-hover:translate-x-2 transition-transform" />
-                        </span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-                      </Button>
-                    </Link>
-                    <Link href="/login">
-                      <Button variant="outline" size="lg" className="group w-full sm:w-auto px-12 py-8 text-xl font-bold bg-white/10 hover:bg-white/20 text-white border-3 border-white/40 hover:border-white/60 rounded-3xl backdrop-blur-sm transition-all duration-300 transform hover:scale-110">
-                        Sign In
-                        <CheckCircle2 className="ml-4 h-7 w-7 group-hover:scale-125 transition-transform" />
-                      </Button>
-                    </Link>
-                  </>
-                )}
+                <AuthEnhancedCTA variant="primary" />
+                <AuthEnhancedCTA variant="secondary" />
               </div>
             </div>
           </div>
