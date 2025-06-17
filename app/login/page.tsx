@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { ArrowRight, Building2, Mail, Lock, Eye, EyeOff, Sparkles } from "lucide-react"
+import { ArrowRight, Building2, Mail, Lock, Eye, EyeOff, Sparkles, Clock } from "lucide-react"
 import Link from "next/link"
 
 export default function LoginPage() {
