@@ -8,13 +8,15 @@ import {
   FolderOpen, 
   Calendar, 
   FileSignature,
-  Clock
+  Clock,
+  Video
 } from 'lucide-react'
 import { DealRoomDiscussion } from './deal-room-discussion'
 import { DealRoomProposals } from './deal-room-proposals'
 import { DealRoomDocuments } from './deal-room-documents'
 import { DealRoomTimeline } from './deal-room-timeline'
 import { DealRoomTerms } from './deal-room-terms'
+import { DealRoomMeetingNotes } from './deal-room-meeting-notes'
 
 interface DealRoomTabsProps {
   dealRoom: any
@@ -58,6 +60,13 @@ export function DealRoomTabs({ dealRoom, activeTab, setActiveTab }: DealRoomTabs
       icon: FileSignature,
       badge: 3, // pending terms
       component: DealRoomTerms
+    },
+    {
+      id: 'meeting-notes',
+      label: 'Meeting Notes',
+      icon: Video,
+      badge: 4, // recordings available
+      component: DealRoomMeetingNotes
     }
   ]
 
