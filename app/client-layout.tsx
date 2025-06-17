@@ -67,6 +67,16 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
     setShouldShowNavigation(false)
   }, [pathname, user, loading])
 
+  // Special handling for landing page - bypass layout constraints
+  if (pathname === "/") {
+    return (
+      <>
+        {children}
+        <Toaster />
+      </>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {shouldShowNavigation && <Navigation />}

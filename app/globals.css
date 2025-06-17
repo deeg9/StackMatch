@@ -73,6 +73,11 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Landing page specific overrides */
+  body.landing-page {
+    background: none !important;
+  }
 }
 
 /* Ticker animation */

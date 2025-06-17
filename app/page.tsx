@@ -13,6 +13,14 @@ export default function HomePage() {
 
   useEffect(() => {
     setIsClient(true)
+    
+    // Add landing page class to body for CSS overrides
+    document.body.classList.add('landing-page')
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.classList.remove('landing-page')
+    }
   }, [])
 
   if (!isClient || loading) {
@@ -30,8 +38,13 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Override any parent background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 -z-10" />
+      {/* Override any parent background with maximum specificity */}
+      <div className="!fixed !inset-0 !bg-gradient-to-br !from-slate-900 !via-blue-900 !to-indigo-900 !z-[-10]" style={{
+        position: 'fixed !important',
+        inset: '0 !important',
+        background: 'linear-gradient(to bottom right, rgb(15 23 42), rgb(30 58 138), rgb(67 56 202)) !important',
+        zIndex: '-10 !important'
+      }} />
       
       <div className="relative z-10 min-h-screen w-full overflow-hidden">
         {/* Animated Background Elements */}
