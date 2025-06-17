@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
 
     // Get proposals for this buyer's listings
     const listingIds = activeListings?.map(l => l.id) || []
-    let proposalsData = []
+    let proposalsData: any[] = []
     let proposalsError = null
     
     if (listingIds.length > 0) {
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
         .select('id, listing_id, status')
         .in('listing_id', listingIds)
       
-      proposalsData = data
+      proposalsData = data || []
       proposalsError = error
     }
     
@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
 
     const stats = {
       activeListings: activeListings?.length || 0,
-      totalProposals: proposalsData?.length || 0,
+      totalProposals: proposalsData.length,
       completedProjects: completedDeals?.length || 0,
       successRate,
       totalInvested
