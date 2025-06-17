@@ -33,24 +33,24 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+    <div className="min-h-screen bg-background flex items-center justify-center">
       <div className="text-center max-w-2xl mx-auto px-4">
-        <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+        <h1 className="text-4xl lg:text-5xl font-bold mb-6">
           Welcome to StackMatch
         </h1>
-        <p className="text-xl text-slate-300 mb-8">
+        <p className="text-xl text-muted-foreground mb-8">
           The platform to connect with buyers and sellers for your project needs.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           {user ? (
             <>
               <Link href="/browse-listings">
-                <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700">
+                <Button size="lg" className="w-full sm:w-auto">
                   Browse Listings
                 </Button>
               </Link>
               <Link href="/create-listing">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-600 text-slate-300 hover:bg-slate-800">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   Post a Project
                 </Button>
               </Link>
@@ -58,12 +58,12 @@ export default function HomePage() {
           ) : (
             <>
               <Link href="/signup">
-                <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700">
+                <Button size="lg" className="w-full sm:w-auto">
                   Get Started
                 </Button>
               </Link>
               <Link href="/login">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-600 text-slate-300 hover:bg-slate-800">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   Browse Listings
                 </Button>
               </Link>

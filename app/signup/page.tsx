@@ -94,91 +94,89 @@ export default function SignupPage() {
   console.log("🔍 DEBUG: SignupPage rendering signup form")
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+    <div className="min-h-screen bg-background flex items-center justify-center">
       <div className="w-full max-w-md mx-auto px-4">
-        <div className="bg-slate-800 rounded-lg border border-slate-700 p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-white mb-2">Sign Up</h1>
-            <p className="text-slate-400">Enter your information to create an account</p>
-          </div>
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle>Sign Up</CardTitle>
+            <CardDescription>Enter your information to create an account</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <Alert variant="destructive">
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
+              <div className="space-y-2">
+                <Label htmlFor="fullName">Full Name</Label>
+                <Input
+                  id="fullName"
+                  type="text"
+                  placeholder="John Doe"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="fullName" className="text-white">Full Name</Label>
-              <Input
-                id="fullName"
-                type="text"
-                placeholder="John Doe"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                required
-              />
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder=""
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="space-y-3">
+                <Label>I am a:</Label>
+                <RadioGroup value={userType} onValueChange={(value) => setUserType(value as "buyer" | "seller")}>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="buyer" id="buyer" />
+                    <Label htmlFor="buyer">Buyer</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="seller" id="seller" />
+                    <Label htmlFor="seller">Seller</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              <Button 
+                type="submit" 
+                className="w-full" 
+                disabled={isLoading}
+              >
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Create Account
+              </Button>
+            </form>
+
+            <div className="mt-6 text-center text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <Link href="/login" className="text-primary hover:underline">
+                Log in
+              </Link>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-white">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-white">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder=""
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                required
-              />
-            </div>
-
-            <div className="space-y-3">
-              <Label className="text-white">I am a:</Label>
-              <RadioGroup value={userType} onValueChange={(value) => setUserType(value as "buyer" | "seller")}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="buyer" id="buyer" />
-                  <Label htmlFor="buyer" className="text-slate-300">Buyer</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="seller" id="seller" />
-                  <Label htmlFor="seller" className="text-slate-300">Seller</Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            <Button 
-              type="submit" 
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
-              disabled={isLoading}
-            >
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Create Account
-            </Button>
-          </form>
-
-          <div className="mt-6 text-center text-sm text-slate-400">
-            Already have an account?{" "}
-            <Link href="/login" className="text-blue-400 hover:text-blue-300">
-              Log in
-            </Link>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

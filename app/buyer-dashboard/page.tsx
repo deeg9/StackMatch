@@ -10,6 +10,9 @@ import type { User } from "@/types"
 import { BuyerDashboardStats } from "@/components/buyer-dashboard/buyer-dashboard-stats"
 import { RecentListingsSection } from "@/components/buyer-dashboard/recent-listings-section"
 import { RecentProposalsSection } from "@/components/buyer-dashboard/recent-proposals-section"
+import { TickerBanner } from "@/components/ticker/ticker-banner"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 
 export default function BuyerDashboardPage() {
@@ -161,195 +164,59 @@ export default function BuyerDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-background">
       {/* Ticker Banner */}
-      <div className="bg-slate-800 text-slate-300 py-2 px-4 text-sm overflow-hidden">
-        <div className="ticker-container">
-          <div className="ticker-content">
-            <span className="inline-block mx-8">🚨 Enterprise AWS migration listing awarded to CloudExperts</span>
-            <span className="inline-block mx-8">📋 ERP Implementation for Manufacturing due in 24 hours</span>
-            <span className="inline-block mx-8">⚡ AI and Machine Learning projects trending with 40% increase</span>
-          </div>
-        </div>
-      </div>
+      <TickerBanner />
 
-      <div className="px-6 py-8">
+      <div className="container mx-auto px-6 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-white">Welcome back, {user?.full_name || "Christopher Fill"}</h1>
-                <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">
-                  buyer
-                </span>
+            <div className="flex items-center gap-4">
+              <div>
+                <div className="flex items-center gap-3 mb-2">
+                  <h1 className="text-3xl font-bold">Welcome back, {user?.full_name || "Christopher Fill"}</h1>
+                  <Badge variant="secondary" className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">
+                    buyer
+                  </Badge>
+                </div>
+                <p className="text-muted-foreground">
+                  StackMatch • Manage your listings and review proposals
+                </p>
               </div>
-              <p className="text-slate-400">
-                StackMatch • Manage your listings and review proposals
-              </p>
             </div>
 
             <div className="flex items-center gap-3">
               <Link href="/create-listing">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium flex items-center gap-2">
                   <span className="text-lg">+</span>
                   Create Listing
-                </button>
+                </Button>
               </Link>
               <Link href="/deal-rooms">
-                <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2">
+                <Button className="bg-green-600 hover:bg-green-700 text-white font-medium flex items-center gap-2">
                   📊 Deal Rooms
-                </button>
+                </Button>
               </Link>
             </div>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-slate-400 text-sm mb-1">Active Listings</p>
-                <p className="text-3xl font-bold text-white">4</p>
-              </div>
-              <div className="bg-blue-500 p-3 rounded-lg">
-                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                  <path fillRule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 001 1h6a1 1 0 001-1V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-slate-400 text-sm mb-1">Total Proposals</p>
-                <p className="text-3xl font-bold text-white">0</p>
-              </div>
-              <div className="bg-green-500 p-3 rounded-lg">
-                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-slate-400 text-sm mb-1">Completed Projects</p>
-                <p className="text-3xl font-bold text-white">0</p>
-              </div>
-              <div className="bg-purple-500 p-3 rounded-lg">
-                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
+        <div className="mb-8">
+          <BuyerDashboardStats />
         </div>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Listings */}
-          <div className="bg-slate-800 rounded-lg border border-slate-700 p-6">
-            <h2 className="text-xl font-semibold text-white mb-6">Your Recent Listings</h2>
-            
-            <div className="space-y-4">
-              {/* Listing Item */}
-              <div className="border border-slate-600 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium text-white">TEST4</h3>
-                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">ACTIVE</span>
-                </div>
-                <p className="text-slate-400 text-sm mb-2">CRM Software • $50 - $80 • Created 13 days ago</p>
-              </div>
-
-              <div className="border border-slate-600 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium text-white">TEST3</h3>
-                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">ACTIVE</span>
-                </div>
-                <p className="text-slate-400 text-sm mb-2">CRM Software • $90 - $90 • Created 13 days ago</p>
-              </div>
-
-              <div className="border border-slate-600 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium text-white">TEST2</h3>
-                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">ACTIVE</span>
-                </div>
-                <p className="text-slate-400 text-sm mb-2">CRM Software • $80 - $100 • Created 13 days ago</p>
-              </div>
-
-              <div className="border border-slate-600 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium text-white">TEST</h3>
-                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">ACTIVE</span>
-                </div>
-                <p className="text-slate-400 text-sm mb-2">CRM Software • $50 - $60 • Created 13 days ago</p>
-              </div>
-            </div>
-
-            <div className="mt-6 text-center">
-              <Link href="/listings" className="text-blue-400 hover:text-blue-300 text-sm">
-                View All Listings →
-              </Link>
-            </div>
+          <div>
+            <RecentListingsSection />
           </div>
 
           {/* Recent Proposals */}
-          <div className="bg-slate-800 rounded-lg border border-slate-700 p-6">
-            <h2 className="text-xl font-semibold text-white mb-6">Recent Proposals Received</h2>
-            <p className="text-slate-400 text-sm mb-4">Latest proposals submitted to your listings</p>
-            
-            <div className="space-y-4">
-              {/* Proposal Item */}
-              <div className="border border-slate-600 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-                      T
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-white">TechCorp Solutions</h3>
-                      <p className="text-slate-400 text-sm">For: CRM System Implementation</p>
-                    </div>
-                  </div>
-                  <span className="bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">SUBMITTED</span>
-                </div>
-                <p className="text-white font-bold">$45,000.00</p>
-                <div className="mt-2 flex gap-2">
-                  <button className="text-blue-400 text-sm hover:text-blue-300">👁 View</button>
-                </div>
-              </div>
-
-              <div className="border border-slate-600 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
-                      D
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-white">DevPro Inc</h3>
-                      <p className="text-slate-400 text-sm">For: E-commerce Platform Upgrade</p>
-                    </div>
-                  </div>
-                  <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">UNDER REVIEW</span>
-                </div>
-                <p className="text-white font-bold">$32,000.00</p>
-                <div className="mt-2 flex gap-2">
-                  <button className="text-blue-400 text-sm hover:text-blue-300">👁 View</button>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 text-center">
-              <Link href="/proposals" className="text-blue-400 hover:text-blue-300 text-sm">
-                View All My Proposals →
-              </Link>
-            </div>
+          <div>
+            <RecentProposalsSection />
           </div>
         </div>
       </div>
