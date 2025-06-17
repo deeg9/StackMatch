@@ -107,6 +107,10 @@
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
+  
+  .animate-ticker {
+    animation: ticker 40s linear infinite;
+  }
 }
 
 @keyframes fadeIn {
@@ -138,6 +142,26 @@
   50% {
     transform: translateY(-20px);
   }
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Ticker styles */
+.ticker-wrapper {
+  display: flex;
+  overflow: hidden;
+}
+
+.ticker-content {
+  display: flex;
+  white-space: nowrap;
 }
 
 /* Smooth scrolling */
