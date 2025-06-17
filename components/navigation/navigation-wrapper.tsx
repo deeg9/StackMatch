@@ -48,30 +48,15 @@ export function NavigationWrapper() {
     checkAuth()
   }, [])
 
+  // Only show navigation for authenticated users
   if (loading) {
-    // Loading skeleton for navigation
-    return (
-      <nav className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-slate-200 rounded-lg animate-pulse"></div>
-              <div className="ml-3 w-32 h-6 bg-slate-200 rounded animate-pulse"></div>
-            </div>
-            <div className="hidden lg:flex items-center space-x-8">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-24 h-4 bg-slate-200 rounded animate-pulse"></div>
-              ))}
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-20 h-8 bg-slate-200 rounded animate-pulse"></div>
-              <div className="w-24 h-8 bg-slate-200 rounded animate-pulse"></div>
-              <div className="w-28 h-8 bg-slate-200 rounded animate-pulse"></div>
-            </div>
-          </div>
-        </div>
-      </nav>
-    )
+    // Return null during loading to avoid flash
+    return null
+  }
+
+  // Only render the global navigation if user is authenticated
+  if (!user) {
+    return null
   }
 
   return (

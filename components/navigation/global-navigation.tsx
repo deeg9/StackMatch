@@ -55,10 +55,10 @@ export function GlobalNavigation({ user, notificationCount = 0, messageCount = 0
   }, [user])
 
   const mainNavigation = [
+    { href: `/dashboard/${user?.userType || 'buyer'}`, label: 'Dashboard', icon: LayoutDashboard },
     { href: '/browse-sellers', label: 'Browse Sellers', icon: Users },
-    { href: '/browse-listings', label: 'Browse Listings', icon: FileText },
-    { href: '/how-it-works', label: 'How It Works', icon: HelpCircle },
-    { href: '/pricing', label: 'Pricing', icon: CreditCard },
+    { href: '/deal-rooms', label: 'Deal Rooms', icon: Briefcase },
+    { href: '/stacktalk', label: 'StackTalk', icon: MessageSquare },
   ]
 
   const userMenuItems = user ? [
@@ -117,222 +117,169 @@ export function GlobalNavigation({ user, notificationCount = 0, messageCount = 0
             })}
           </div>
 
-          {/* Right Side Actions */}
-          <div className="flex items-center space-x-4">
-            {!user ? (
-              /* Non-logged in users */
-              <div className="flex items-center space-x-3">
-                <Link href="/login">
-                  <Button variant="ghost" className="text-charcoal hover:text-stackmatch-blue">
-                    Sign In
-                  </Button>
-                </Link>
-                <Link href="/create-listing">
-                  <Button variant="outline" className="border-stackmatch-blue text-stackmatch-blue hover:bg-stackmatch-blue hover:text-white">
-                    <Plus className="w-4 h-4 mr-1" />
-                    Post a Project
-                  </Button>
-                </Link>
-                <Link href="/signup">
-                  <Button className="bg-stackmatch-blue hover:bg-stackmatch-navy">
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
-            ) : (
-              /* Logged in users */
-              <div className="flex items-center space-x-3">
-                {/* Search - Desktop only */}
-                <div className="hidden md:flex relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    className="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-stackmatch-blue/20 focus:border-stackmatch-blue w-64"
-                  />
-                </div>
+          {/* Right Side Actions - Only for authenticated users */}
+          <div className="flex items-center space-x-3">
+            {/* Notifications */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell className="w-5 h-5 text-charcoal" />
+                  {notificationCount > 0 && (
+                    <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center bg-red-500 text-white text-xs">
+                      {notificationCount > 9 ? '9+' : notificationCount}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80">
+                <DropdownMenuLabel className="flex items-center justify-between">
+                  <span>Notifications</span>
+                  {notificationCount > 0 && (
+                    <Badge variant="secondary" className="text-xs">
+                      {notificationCount} new
+                    </Badge>
+                  )}
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {notifications.slice(0, 3).map((notification) => (
+                  <DropdownMenuItem key={notification.id} className="flex items-start space-x-3 p-3">
+                    <div className={cn(
+                      "w-2 h-2 rounded-full mt-2",
+                      notification.unread ? "bg-stackmatch-blue" : "bg-slate-300"
+                    )} />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-stackmatch-navy">{notification.title}</p>
+                      <p className="text-xs text-medium-gray">{notification.time}</p>
+                    </div>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-center py-2">
+                  <Link href="/notifications" className="text-stackmatch-blue text-sm font-medium">
+                    View All Notifications
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-                {/* Notifications */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="relative">
-                      <Bell className="w-5 h-5 text-charcoal" />
-                      {notificationCount > 0 && (
-                        <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center bg-red-500 text-white text-xs">
-                          {notificationCount > 9 ? '9+' : notificationCount}
-                        </Badge>
+            {/* Messages */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <MessageSquare className="w-5 h-5 text-charcoal" />
+                  {messageCount > 0 && (
+                    <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center bg-trust-green text-white text-xs">
+                      {messageCount > 9 ? '9+' : messageCount}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80">
+                <DropdownMenuLabel>Messages</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-center py-4 text-medium-gray">
+                  No new messages
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-center py-2">
+                  <Link href="/messages" className="text-stackmatch-blue text-sm font-medium">
+                    View All Messages
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* User Avatar Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-2 p-2">
+                  <div className="relative">
+                    <Avatar className="w-8 h-8">
+                      <AvatarImage src={user?.avatar} alt={user?.name} />
+                      <AvatarFallback className="bg-stackmatch-blue text-white text-sm">
+                        {user?.name.split(' ').map(n => n[0]).join('') || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                    {user?.isOnline && (
+                      <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-trust-green rounded-full border-2 border-white" />
+                    )}
+                    {user?.isVerified && (
+                      <div className="absolute -top-0.5 -right-0.5">
+                        <Shield className="w-3 h-3 text-trust-green" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="hidden md:block text-left">
+                    <div className="flex items-center space-x-1">
+                      <span className="text-sm font-medium text-stackmatch-navy">{user?.name || 'User'}</span>
+                      {user?.isVerified && <Shield className="w-3 h-3 text-trust-green" />}
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Badge
+                        variant="secondary"
+                        className={cn(
+                          "text-xs capitalize",
+                          user?.userType === 'buyer' ? "bg-stackmatch-blue/10 text-stackmatch-blue" : "bg-trust-green/10 text-trust-green"
+                        )}
+                      >
+                        {user?.userType || 'user'}
+                      </Badge>
+                      {user && user.profileCompletion < 100 && (
+                        <span className="text-xs text-medium-gray">
+                          {user.profileCompletion}% complete
+                        </span>
                       )}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-80">
-                    <DropdownMenuLabel className="flex items-center justify-between">
-                      <span>Notifications</span>
-                      {notificationCount > 0 && (
-                        <Badge variant="secondary" className="text-xs">
-                          {notificationCount} new
-                        </Badge>
-                      )}
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    {notifications.slice(0, 3).map((notification) => (
-                      <DropdownMenuItem key={notification.id} className="flex items-start space-x-3 p-3">
-                        <div className={cn(
-                          "w-2 h-2 rounded-full mt-2",
-                          notification.unread ? "bg-stackmatch-blue" : "bg-slate-300"
-                        )} />
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-stackmatch-navy">{notification.title}</p>
-                          <p className="text-xs text-medium-gray">{notification.time}</p>
-                        </div>
-                      </DropdownMenuItem>
-                    ))}
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-center py-2">
-                      <Link href="/notifications" className="text-stackmatch-blue text-sm font-medium">
-                        View All Notifications
+                    </div>
+                  </div>
+                  <ChevronDown className="w-4 h-4 text-medium-gray" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>
+                  <div className="flex items-center space-x-2">
+                    <span>{user?.name || 'User'}</span>
+                    {user?.isVerified && <Shield className="w-4 h-4 text-trust-green" />}
+                  </div>
+                  <div className="text-xs text-medium-gray font-normal">{user?.email}</div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                
+                {userMenuItems.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <DropdownMenuItem key={item.href} asChild>
+                      <Link href={item.href} className="flex items-center space-x-2">
+                        <Icon className="w-4 h-4" />
+                        <span>{item.label}</span>
                       </Link>
                     </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                {/* Messages */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="relative">
-                      <MessageSquare className="w-5 h-5 text-charcoal" />
-                      {messageCount > 0 && (
-                        <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center bg-trust-green text-white text-xs">
-                          {messageCount > 9 ? '9+' : messageCount}
-                        </Badge>
-                      )}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-80">
-                    <DropdownMenuLabel>Messages</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-center py-4 text-medium-gray">
-                      No new messages
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-center py-2">
-                      <Link href="/messages" className="text-stackmatch-blue text-sm font-medium">
-                        View All Messages
-                      </Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                {/* Post Project Button */}
-                <Link href="/create-listing">
-                  <Button className="bg-trust-green hover:bg-success-green text-white">
-                    <Plus className="w-4 h-4 mr-1" />
-                    Post Project
-                  </Button>
-                </Link>
-
-                {/* User Avatar Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center space-x-2 p-2">
-                      <div className="relative">
-                        <Avatar className="w-8 h-8">
-                          <AvatarImage src={user.avatar} alt={user.name} />
-                          <AvatarFallback className="bg-stackmatch-blue text-white text-sm">
-                            {user.name.split(' ').map(n => n[0]).join('')}
-                          </AvatarFallback>
-                        </Avatar>
-                        {user.isOnline && (
-                          <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-trust-green rounded-full border-2 border-white" />
-                        )}
-                        {user.isVerified && (
-                          <div className="absolute -top-0.5 -right-0.5">
-                            <Shield className="w-3 h-3 text-trust-green" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="hidden md:block text-left">
-                        <div className="flex items-center space-x-1">
-                          <span className="text-sm font-medium text-stackmatch-navy">{user.name}</span>
-                          {user.isVerified && <Shield className="w-3 h-3 text-trust-green" />}
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Badge
-                            variant="secondary"
-                            className={cn(
-                              "text-xs capitalize",
-                              user.userType === 'buyer' ? "bg-stackmatch-blue/10 text-stackmatch-blue" : "bg-trust-green/10 text-trust-green"
-                            )}
-                          >
-                            {user.userType}
-                          </Badge>
-                          {user.profileCompletion < 100 && (
-                            <span className="text-xs text-medium-gray">
-                              {user.profileCompletion}% complete
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <ChevronDown className="w-4 h-4 text-medium-gray" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel>
-                      <div className="flex items-center space-x-2">
-                        <span>{user.name}</span>
-                        {user.isVerified && <Shield className="w-4 h-4 text-trust-green" />}
-                      </div>
-                      <div className="text-xs text-medium-gray font-normal">{user.email}</div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    
-                    {userMenuItems.map((item) => {
-                      const Icon = item.icon
-                      return (
-                        <DropdownMenuItem key={item.href} asChild>
-                          <Link href={item.href} className="flex items-center space-x-2">
-                            <Icon className="w-4 h-4" />
-                            <span>{item.label}</span>
-                          </Link>
-                        </DropdownMenuItem>
-                      )
-                    })}
-                    
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleSignOut} className="text-red-600 focus:text-red-600">
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Sign Out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            )}
-
-            {/* Mobile menu button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden"
-            >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </Button>
+                  )
+                })}
+                
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut} className="text-red-600 focus:text-red-600">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
+
+          {/* Mobile menu button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden"
+          >
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </Button>
         </div>
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t border-slate-200 py-4">
             <div className="space-y-2">
-              {/* Mobile search */}
-              <div className="relative mb-4">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-stackmatch-blue/20 focus:border-stackmatch-blue"
-                />
-              </div>
-
               {/* Main navigation links */}
               {mainNavigation.map((item) => {
                 const Icon = item.icon
@@ -355,90 +302,59 @@ export function GlobalNavigation({ user, notificationCount = 0, messageCount = 0
                 )
               })}
 
-              {user && (
-                <>
-                  <div className="pt-4 mt-4 border-t border-slate-200">
-                    <div className="flex items-center space-x-3 px-3 py-2 mb-2">
-                      <div className="relative">
-                        <Avatar className="w-10 h-10">
-                          <AvatarImage src={user.avatar} alt={user.name} />
-                          <AvatarFallback className="bg-stackmatch-blue text-white">
-                            {user.name.split(' ').map(n => n[0]).join('')}
-                          </AvatarFallback>
-                        </Avatar>
-                        {user.isOnline && (
-                          <CircleDot className="absolute -bottom-1 -right-1 w-4 h-4 text-trust-green" />
-                        )}
-                      </div>
-                      <div>
-                        <div className="flex items-center space-x-1">
-                          <span className="text-sm font-medium text-stackmatch-navy">{user.name}</span>
-                          {user.isVerified && <Shield className="w-3 h-3 text-trust-green" />}
-                        </div>
-                        <Badge
-                          variant="secondary"
-                          className={cn(
-                            "text-xs capitalize",
-                            user.userType === 'buyer' ? "bg-stackmatch-blue/10 text-stackmatch-blue" : "bg-trust-green/10 text-trust-green"
-                          )}
-                        >
-                          {user.userType}
-                        </Badge>
-                      </div>
-                    </div>
-
-                    {userMenuItems.map((item) => {
-                      const Icon = item.icon
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm text-charcoal hover:text-stackmatch-blue hover:bg-slate-50 transition-all"
-                        >
-                          <Icon className="w-5 h-5" />
-                          <span>{item.label}</span>
-                        </Link>
-                      )
-                    })}
-
-                    <button
-                      onClick={handleSignOut}
-                      className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50 transition-all w-full text-left mt-2"
-                    >
-                      <LogOut className="w-5 h-5" />
-                      <span>Sign Out</span>
-                    </button>
+              <div className="pt-4 mt-4 border-t border-slate-200">
+                <div className="flex items-center space-x-3 px-3 py-2 mb-2">
+                  <div className="relative">
+                    <Avatar className="w-10 h-10">
+                      <AvatarImage src={user?.avatar} alt={user?.name} />
+                      <AvatarFallback className="bg-stackmatch-blue text-white">
+                        {user?.name.split(' ').map(n => n[0]).join('') || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                    {user?.isOnline && (
+                      <CircleDot className="absolute -bottom-1 -right-1 w-4 h-4 text-trust-green" />
+                    )}
                   </div>
-                </>
-              )}
-
-              {!user && (
-                <div className="pt-4 mt-4 border-t border-slate-200 space-y-2">
-                  <Link
-                    href="/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-center py-2 px-4 border border-stackmatch-blue text-stackmatch-blue rounded-lg hover:bg-stackmatch-blue hover:text-white transition-all"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/signup"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-center py-2 px-4 bg-stackmatch-blue text-white rounded-lg hover:bg-stackmatch-navy transition-all"
-                  >
-                    Get Started
-                  </Link>
-                  <Link
-                    href="/create-listing"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-center py-2 px-4 bg-trust-green text-white rounded-lg hover:bg-success-green transition-all"
-                  >
-                    <Plus className="w-4 h-4 inline mr-1" />
-                    Post a Project
-                  </Link>
+                  <div>
+                    <div className="flex items-center space-x-1">
+                      <span className="text-sm font-medium text-stackmatch-navy">{user?.name || 'User'}</span>
+                      {user?.isVerified && <Shield className="w-3 h-3 text-trust-green" />}
+                    </div>
+                    <Badge
+                      variant="secondary"
+                      className={cn(
+                        "text-xs capitalize",
+                        user?.userType === 'buyer' ? "bg-stackmatch-blue/10 text-stackmatch-blue" : "bg-trust-green/10 text-trust-green"
+                      )}
+                    >
+                      {user?.userType || 'user'}
+                    </Badge>
+                  </div>
                 </div>
-              )}
+
+                {userMenuItems.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm text-charcoal hover:text-stackmatch-blue hover:bg-slate-50 transition-all"
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span>{item.label}</span>
+                    </Link>
+                  )
+                })}
+
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50 transition-all w-full text-left mt-2"
+                >
+                  <LogOut className="w-5 h-5" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
             </div>
           </div>
         )}
