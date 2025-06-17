@@ -66,12 +66,12 @@ export async function GET(request: NextRequest) {
     const completedRooms = completedDeals?.length || 0
     const successRate = totalRooms > 0 ? Math.round((completedRooms / totalRooms) * 100) : 0
 
-    // Calculate total invested based on active and completed listings
+    // Calculate total invested based on active and awarded listings
     const allListings = await supabase
       .from('listings')
       .select('budget_min, budget_max')
       .eq('buyer_id', user.id)
-      .in('status', ['ACTIVE', 'COMPLETED'])
+      .in('status', ['ACTIVE', 'AWARDED'])
     
     const totalInvested = allListings.data?.reduce((sum, listing) => {
       const avgBudget = ((listing.budget_min || 0) + (listing.budget_max || 0)) / 2
