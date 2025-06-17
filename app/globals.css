@@ -100,3 +100,9 @@
     transform: translateX(-100%);
   }
 }
+
+/* Grid pattern background */
+.bg-grid-pattern {
+  background-image: radial-gradient(circle at 1px 1px, rgba(var(--foreground), 0.15) 1px, transparent 0);
+  background-size: 20px 20px;
+}
