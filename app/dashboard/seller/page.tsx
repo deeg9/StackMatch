@@ -73,19 +73,25 @@ export default function SellerDashboard() {
   const [recommendedListings, setRecommendedListings] = useState<RecommendedListing[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  // Mock seller data - replace with actual API calls
-  const sellerName = "Christopher Fill"
-  const sellerCompany = "StackMatch"
-  const sellerAvatar = "/api/placeholder/40/40"
+  const [profile, setProfile] = useState<{
+    id: string
+    email: string
+    full_name: string
+    company_name: string
+    user_type: string
+    avatar_url?: string
+  } | null>(null)
+  const [profileLoading, setProfileLoading] = useState(true)
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         // Fetch all data in parallel
-        const [statsRes, proposalsRes, recommendationsRes] = await Promise.all([
+        const [statsRes, proposalsRes, recommendationsRes, profileRes] = await Promise.all([
           fetch('/api/dashboard/seller/stats'),
           fetch('/api/dashboard/seller/proposals'),
-          fetch('/api/dashboard/seller/recommendations')
+          fetch('/api/dashboard/seller/recommendations'),
+          fetch('/api/user/profile')
         ])
 
         if (statsRes.ok) {
@@ -101,6 +107,11 @@ export default function SellerDashboard() {
         if (recommendationsRes.ok) {
           const recommendationsData = await recommendationsRes.json()
           setRecommendedListings(recommendationsData)
+        }
+
+        if (profileRes.ok) {
+          const profileData = await profileRes.json()
+          setProfile(profileData)
         }
 
         // Mock deadlines for now (in production, this would come from contracts/milestones)
@@ -129,6 +140,7 @@ export default function SellerDashboard() {
         console.error('Error fetching dashboard data:', error)
       } finally {
         setIsLoading(false)
+        setProfileLoading(false)
       }
     }
 
@@ -197,22 +209,24 @@ export default function SellerDashboard() {
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-4 lg:space-y-0">
               <div className="flex items-center space-x-4">
                 <Avatar className="h-16 w-16 border-4 border-[#22C55E] shadow-lg">
-                  <AvatarImage src={sellerAvatar} alt={sellerName} />
+                  <AvatarImage src={profile?.avatar_url || "/api/placeholder/40/40"} alt={profile?.full_name || 'User'} />
                   <AvatarFallback className="bg-[#22C55E] text-white text-xl font-bold">
-                    {sellerName.split(' ').map(n => n[0]).join('')}
+                    {profile?.full_name?.split(' ').map(n => n[0]).join('') || 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="space-y-2">
                   <div className="flex items-center space-x-3">
                     <h1 className="text-3xl font-bold text-[#1A2B4C]">
-                      Welcome back, {sellerName}
+                      Welcome back, {profileLoading ? '...' : profile?.full_name || 'User'}
                     </h1>
                     <Badge className="bg-[#22C55E] hover:bg-[#16A34A] text-white px-3 py-1">
                       <User className="h-4 w-4 mr-1" />
                       Seller
                     </Badge>
                   </div>
-                  <p className="text-[#6B7280] text-lg">{sellerCompany}</p>
+                  <p className="text-[#6B7280] text-lg">
+                    {profileLoading ? 'Loading...' : profile?.company_name || 'Your Company'}
+                  </p>
                 </div>
               </div>
               <div className="flex space-x-4">

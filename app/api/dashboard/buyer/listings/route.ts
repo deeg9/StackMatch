@@ -5,8 +5,15 @@ export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient()
     
-    // Get current user (mock for now)
-    const mockUserId = '12345678-1234-1234-1234-123456789012'
+    // Get current authenticated user
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
     
     // Get recent listings with category information
     const { data: listings, error } = await supabase
@@ -22,7 +29,7 @@ export async function GET(request: NextRequest) {
           name
         )
       `)
-      .eq('buyer_id', mockUserId)
+      .eq('buyer_id', user.id)
       .order('created_at', { ascending: false })
       .limit(5)
     

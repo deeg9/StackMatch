@@ -46,11 +46,21 @@ interface Proposal {
   submittedAt: string
 }
 
+interface UserProfile {
+  id: string
+  email: string
+  full_name: string
+  company_name: string
+  user_type: string
+  avatar_url?: string
+}
+
 export default function BuyerDashboard() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [statsLoading, setStatsLoading] = useState(true)
   const [listingsLoading, setListingsLoading] = useState(true)
   const [proposalsLoading, setProposalsLoading] = useState(true)
+  const [profileLoading, setProfileLoading] = useState(true)
   
   const [stats, setStats] = useState<DashboardStats>({
     activeListings: 0,
@@ -61,6 +71,7 @@ export default function BuyerDashboard() {
   })
   const [listings, setListings] = useState<Listing[]>([])
   const [proposals, setProposals] = useState<Proposal[]>([])
+  const [profile, setProfile] = useState<UserProfile | null>(null)
 
   useEffect(() => {
     // Fetch dashboard stats
@@ -108,9 +119,25 @@ export default function BuyerDashboard() {
       }
     }
 
+    // Fetch user profile
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch('/api/user/profile')
+        if (response.ok) {
+          const data = await response.json()
+          setProfile(data)
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error)
+      } finally {
+        setProfileLoading(false)
+      }
+    }
+
     fetchStats()
     fetchListings()
     fetchProposals()
+    fetchProfile()
   }, [])
 
   const getStatusColor = (status: string) => {
@@ -205,8 +232,12 @@ export default function BuyerDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div className="space-y-2 animate-fade-in">
-              <h1 className="text-4xl font-bold">Welcome back, John!</h1>
-              <p className="text-blue-200">Acme Corporation • Mid-Market Enterprise</p>
+              <h1 className="text-4xl font-bold">
+                Welcome back, {profileLoading ? '...' : profile?.full_name || 'User'}!
+              </h1>
+              <p className="text-blue-200">
+                {profileLoading ? 'Loading...' : `${profile?.company_name || 'Your Company'} • ${profile?.user_type === 'buyer' ? 'Mid-Market Enterprise' : 'Professional Services'}`}
+              </p>
             </div>
             <div className="flex space-x-4 animate-slide-up">
               <Link href="/create-listing">

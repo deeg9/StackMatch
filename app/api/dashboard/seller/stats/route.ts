@@ -5,15 +5,21 @@ export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient()
     
-    // Get current user (we'll simulate for now since auth is disabled)
-    // In production, this would get user from session
-    const mockUserId = '1cae22cb-1311-48ca-9caa-47d474c0a20e' // Christopher's user ID
+    // Get current authenticated user
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
     
     // Get active proposals count
     const { data: activeProposals, error: proposalsError } = await supabase
       .from('proposals')
       .select('id')
-      .eq('seller_id', mockUserId)
+      .eq('seller_id', user.id)
       .in('status', ['SUBMITTED', 'UNDER_REVIEW'])
     
     if (proposalsError) {
@@ -24,7 +30,7 @@ export async function GET(request: NextRequest) {
     const { data: wonProposals, error: wonError } = await supabase
       .from('proposals')
       .select('id')
-      .eq('seller_id', mockUserId)
+      .eq('seller_id', user.id)
       .eq('status', 'ACCEPTED')
     
     if (wonError) {
@@ -35,7 +41,7 @@ export async function GET(request: NextRequest) {
     const { data: allProposals, error: allProposalsError } = await supabase
       .from('proposals')
       .select('id, status')
-      .eq('seller_id', mockUserId)
+      .eq('seller_id', user.id)
     
     if (allProposalsError) {
       console.error('Error fetching all proposals:', allProposalsError)
@@ -50,7 +56,7 @@ export async function GET(request: NextRequest) {
     const { data: completedDeals, error: dealsError } = await supabase
       .from('deal_rooms')
       .select('id')
-      .eq('seller_id', mockUserId)
+      .eq('seller_id', user.id)
       .eq('status', 'COMPLETED')
     
     if (dealsError) {

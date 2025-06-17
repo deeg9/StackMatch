@@ -5,14 +5,21 @@ export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient()
     
-    // Get current user (mock for now)
-    const mockUserId = '12345678-1234-1234-1234-123456789012'
+    // Get current authenticated user
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
     
     // First get buyer's listings
     const { data: listings, error: listingsError } = await supabase
       .from('listings')
       .select('id')
-      .eq('buyer_id', mockUserId)
+      .eq('buyer_id', user.id)
     
     if (listingsError) {
       console.error('Error fetching buyer listings:', listingsError)
