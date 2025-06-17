@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       .from('proposals')
       .select('id')
       .eq('seller_id', mockUserId)
-      .in('status', ['SUBMITTED', 'UNDER_REVIEW', 'SHORTLISTED'])
+      .in('status', ['SUBMITTED', 'UNDER_REVIEW'])
     
     if (proposalsError) {
       console.error('Error fetching active proposals:', proposalsError)

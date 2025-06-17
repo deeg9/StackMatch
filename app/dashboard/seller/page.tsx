@@ -44,7 +44,7 @@ interface Proposal {
   clientCompany: string
   proposalAmount: number
   dueDate: string
-  status: 'accepted' | 'submitted' | 'shortlisted' | 'rejected'
+  status: 'accepted' | 'submitted' | 'under_review' | 'rejected' | 'withdrawn' | 'draft'
   submittedAt: string
 }
 
@@ -138,9 +138,11 @@ export default function SellerDashboard() {
   const getStatusBadgeVariant = (status: Proposal['status']) => {
     switch (status) {
       case 'accepted': return 'default'
-      case 'shortlisted': return 'secondary'
+      case 'under_review': return 'secondary'
       case 'submitted': return 'outline' 
       case 'rejected': return 'destructive'
+      case 'withdrawn': return 'destructive'
+      case 'draft': return 'outline'
       default: return 'outline'
     }
   }
@@ -148,9 +150,11 @@ export default function SellerDashboard() {
   const getStatusIcon = (status: Proposal['status']) => {
     switch (status) {
       case 'accepted': return <CheckCircle className="h-4 w-4" />
-      case 'shortlisted': return <Target className="h-4 w-4" />
+      case 'under_review': return <Target className="h-4 w-4" />
       case 'submitted': return <Hourglass className="h-4 w-4" />
       case 'rejected': return <XCircle className="h-4 w-4" />
+      case 'withdrawn': return <XCircle className="h-4 w-4" />
+      case 'draft': return <AlertCircle className="h-4 w-4" />
       default: return <AlertCircle className="h-4 w-4" />
     }
   }
