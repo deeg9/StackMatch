@@ -19,10 +19,36 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    // Simulate API call
-    setTimeout(() => {
+    
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        // Redirect based on user type
+        if (data.user_type === 'buyer') {
+          window.location.href = '/dashboard/buyer'
+        } else if (data.user_type === 'seller') {
+          window.location.href = '/dashboard/seller'
+        } else {
+          window.location.href = '/dashboard'
+        }
+      } else {
+        alert(data.error || 'Login failed')
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      alert('Login failed. Please try again.')
+    } finally {
       setIsLoading(false)
-    }, 2000)
+    }
   }
 
   return (
