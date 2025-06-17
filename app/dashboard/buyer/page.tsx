@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { TickerBanner } from "@/components/ticker/ticker-banner"
+import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 import { cn } from "@/lib/utils"
 
 // Type definitions for API responses
@@ -173,59 +174,8 @@ export default function BuyerDashboard() {
       {/* Ticker Banner */}
       <TickerBanner />
 
-      {/* Navigation */}
-      <nav className="bg-[#1A2B4C] border-b sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-white hover:text-[#4A73CC] transition-colors">
-                StackMatch
-              </Link>
-              <Badge className="ml-3 bg-[#4A73CC] text-white">Buyer</Badge>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-white hover:text-[#4A73CC] hover:bg-white/10 relative"
-              >
-                <MessageSquare className="h-5 w-5" />
-                <span className="absolute top-0 right-0 h-2 w-2 bg-[#22C55E] rounded-full animate-pulse"></span>
-              </Button>
-              
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-white hover:text-[#4A73CC] hover:bg-white/10 relative"
-              >
-                <Bell className="h-5 w-5" />
-                <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsDarkMode(!isDarkMode)}
-                className="text-white hover:text-[#4A73CC] hover:bg-white/10"
-              >
-                {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </Button>
-
-              <Button
-                variant="ghost"
-                className="text-white hover:text-[#4A73CC] hover:bg-white/10"
-              >
-                <Avatar className="h-8 w-8 mr-2">
-                  <AvatarImage src="/avatar.png" />
-                  <AvatarFallback className="bg-[#4A73CC] text-white">JD</AvatarFallback>
-                </Avatar>
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* Global Navigation */}
+      <NavigationWrapper />
 
       {/* Header Section */}
       <div className="bg-gradient-to-r from-[#1A2B4C] to-[#4A73CC] text-white py-12">

@@ -3,47 +3,13 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, CheckCircle, Users, Zap, Shield, TrendingUp, Building2, Clock, DollarSign } from "lucide-react"
 import Link from "next/link"
+import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#F9FAFB]">
       {/* Navigation */}
-      <nav className="bg-[#1A2B4C] border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="text-2xl font-bold text-white">
-                StackMatch
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <Link href="#how-it-works" className="text-white hover:text-[#4A73CC] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                  How It Works
-                </Link>
-                <Link href="#solutions" className="text-white hover:text-[#4A73CC] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                  Solutions
-                </Link>
-                <Link href="#pricing" className="text-white hover:text-[#4A73CC] px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                  Pricing
-                </Link>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/login">
-                <Button variant="ghost" className="text-white hover:text-[#4A73CC] hover:bg-transparent">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button className="bg-[#22C55E] hover:bg-[#16A34A] text-white">
-                  Get Started
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <NavigationWrapper />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#1A2B4C] to-[#4A73CC] text-white">

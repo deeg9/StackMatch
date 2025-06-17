@@ -22,6 +22,8 @@ import {
   Eye
 } from "lucide-react"
 import Link from "next/link"
+import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
+import { TickerBanner } from '@/components/ticker/ticker-banner'
 
 // Types
 interface Category {
@@ -197,24 +199,9 @@ export default function CreateListingPage() {
   if (currentView === 'category') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
-        {/* Navigation */}
-        <nav className="bg-[#1A2B4C] border-b">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <Link href="/dashboard/buyer" className="flex items-center">
-                <div className="text-2xl font-bold text-white hover:text-[#4A73CC] transition-colors">
-                  StackMatch
-                </div>
-              </Link>
-              <Link href="/dashboard/buyer">
-                <Button variant="ghost" className="text-white hover:text-[#4A73CC] hover:bg-white/10">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </nav>
+        {/* Global Navigation */}
+        <TickerBanner />
+        <NavigationWrapper />
 
         {/* Header Section */}
         <div className="bg-gradient-to-r from-[#1A2B4C] to-[#4A73CC] text-white py-16">
@@ -312,35 +299,9 @@ export default function CreateListingPage() {
   // Form View - Guided Multi-Step Process
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
-      {/* Navigation */}
-      <nav className="bg-[#1A2B4C] border-b sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/dashboard/buyer" className="flex items-center">
-              <div className="text-2xl font-bold text-white hover:text-[#4A73CC] transition-colors">
-                StackMatch
-              </div>
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                className="text-white hover:text-[#22C55E] hover:bg-white/10"
-                onClick={() => {/* Save draft logic */}}
-              >
-                <Save className="h-4 w-4 mr-2" />
-                Save Draft
-              </Button>
-              <Link href="/dashboard/buyer">
-                <Button variant="ghost" size="sm" className="text-white hover:text-[#4A73CC] hover:bg-white/10">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Exit
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* Global Navigation */}
+      <TickerBanner />
+      <NavigationWrapper />
 
       <div className="flex min-h-[calc(100vh-64px)]">
         {/* Left Sidebar - Progress Indicator */}
