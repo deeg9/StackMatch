@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -27,6 +28,12 @@ interface DealRoomCardProps {
 }
 
 export function DealRoomCard({ room, index }: DealRoomCardProps) {
+  const router = useRouter()
+
+  const handleEnterRoom = () => {
+    router.push(`/deal-rooms/${room.id}`)
+  }
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'negotiating':
@@ -195,7 +202,10 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
 
         {/* Action Buttons */}
         <div className="flex gap-2 pt-2">
-          <Button className="flex-1 bg-stackmatch-blue hover:bg-stackmatch-navy">
+          <Button 
+            onClick={handleEnterRoom}
+            className="flex-1 bg-stackmatch-blue hover:bg-stackmatch-navy"
+          >
             <ArrowRight className="w-4 h-4 mr-2" />
             Enter Room
           </Button>
