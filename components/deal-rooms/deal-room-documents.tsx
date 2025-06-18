@@ -56,7 +56,6 @@ import {
   Hash,
   Folder,
   FileSpreadsheet,
-  FilePdf,
   FileCode
 } from 'lucide-react'
 
@@ -295,7 +294,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
   const getFileIcon = (fileType: string, className = "w-5 h-5") => {
     switch (fileType.toLowerCase()) {
       case 'pdf':
-        return <FilePdf className={`${className} text-red-500`} />
+        return <FileText className={`${className} text-red-500`} />
       case 'docx':
       case 'doc':
         return <FileText className={`${className} text-blue-500`} />

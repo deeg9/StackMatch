@@ -11,7 +11,12 @@
       "Bash(npm run type-check:*)",
       "Bash(npm run lint)",
       "Bash(rg:*)",
-      "Bash(true)"
+      "Bash(true)",
+      "Bash(node:*)",
+      "Bash(timeout 60s npm run build)",
+      "Bash(npx tsc:*)",
+      "Bash(timeout 90s npm run build)",
+      "Bash(npx next lint:*)"
     ],
     "deny": []
   }
