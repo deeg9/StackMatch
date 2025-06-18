@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
-  Bell, MessageSquare, Menu, X, ChevronDown, Plus, Users, FileText,
+  Bell, MessageSquare, Menu, X, ChevronDown, Plus, Users,
   HelpCircle, CreditCard, Settings, LayoutDashboard, Briefcase, LogOut,
   Search, Star, Shield, CircleDot, Heart
 } from 'lucide-react'
@@ -62,9 +62,6 @@ export function GlobalNavigation({ user, notificationCount = 0, messageCount = 0
   ]
 
   const userMenuItems = user ? [
-    { href: `/dashboard/${user.userType}`, label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/my-projects', label: 'My Projects', icon: FileText },
-    { href: '/deal-rooms', label: 'Deal Rooms', icon: Briefcase },
     { href: '/profile', label: 'Profile Settings', icon: Settings },
     { href: '/saved-sellers', label: 'Saves', icon: Heart },
     { href: '/billing', label: 'Billing', icon: CreditCard },
