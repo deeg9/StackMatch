@@ -107,7 +107,10 @@ export default function BasicInformationStep({
               
               <Button
                 variant="outline"
-                onClick={() => document.querySelector('input[type="file"]')?.click()}
+                onClick={() => {
+                  const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement
+                  fileInput?.click()
+                }}
                 className="flex items-center gap-2"
               >
                 <Camera className="w-4 h-4" />
