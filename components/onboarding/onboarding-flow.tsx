@@ -141,27 +141,61 @@ export default function OnboardingFlow() {
 
   const getCurrentStepData = () => {
     const stepId = steps[currentStep].id
-    const stepData = {
-      basic: onboardingData.basicInfo,
-      about: onboardingData.aboutBio,
-      skills: onboardingData.skills,
-      languages: onboardingData.languages,
-      education: onboardingData.education,
-      work: onboardingData.workHistory,
-      contact: onboardingData.contact,
-      availability: onboardingData.availability,
-      pricing: onboardingData.pricing,
-      portfolio: onboardingData.portfolio,
-      complete: onboardingData
+    switch (stepId) {
+      case 'basic':
+        return onboardingData.basicInfo
+      case 'about':
+        return onboardingData.aboutBio
+      case 'skills':
+        return onboardingData.skills
+      case 'languages':
+        return onboardingData.languages
+      case 'education':
+        return onboardingData.education
+      case 'work':
+        return onboardingData.workHistory
+      case 'contact':
+        return onboardingData.contact
+      case 'availability':
+        return onboardingData.availability
+      case 'pricing':
+        return onboardingData.pricing
+      case 'portfolio':
+        return onboardingData.portfolio
+      case 'complete':
+        return onboardingData
+      default:
+        return onboardingData.basicInfo
     }
-    return stepData[stepId as keyof typeof stepData]
   }
 
   const updateStepData = (stepId: string, data: any) => {
-    setOnboardingData(prev => ({
-      ...prev,
-      [stepId]: data
-    }))
+    setOnboardingData(prev => {
+      switch (stepId) {
+        case 'basic':
+          return { ...prev, basicInfo: data }
+        case 'about':
+          return { ...prev, aboutBio: data }
+        case 'skills':
+          return { ...prev, skills: data }
+        case 'languages':
+          return { ...prev, languages: data }
+        case 'education':
+          return { ...prev, education: data }
+        case 'work':
+          return { ...prev, workHistory: data }
+        case 'contact':
+          return { ...prev, contact: data }
+        case 'availability':
+          return { ...prev, availability: data }
+        case 'pricing':
+          return { ...prev, pricing: data }
+        case 'portfolio':
+          return { ...prev, portfolio: data }
+        default:
+          return prev
+      }
+    })
   }
 
   const markStepComplete = (stepId: string) => {
@@ -197,37 +231,119 @@ export default function OnboardingFlow() {
 
   const renderCurrentStep = () => {
     const stepId = steps[currentStep].id
-    const commonProps = {
-      data: getCurrentStepData(),
-      onUpdate: (data: any) => updateStepData(stepId, data),
-      onNext: nextStep,
-      onPrev: prevStep,
-      userType: onboardingData.userType
-    }
+    const stepData = getCurrentStepData()
 
     switch (stepId) {
       case 'basic':
-        return <BasicInformationStep {...commonProps} />
+        return (
+          <BasicInformationStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'about':
-        return <AboutBioStep {...commonProps} />
+        return (
+          <AboutBioStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'skills':
-        return <SkillsExpertiseStep {...commonProps} />
+        return (
+          <SkillsExpertiseStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'languages':
-        return <LanguagesStep {...commonProps} />
+        return (
+          <LanguagesStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'education':
-        return <EducationCertificationsStep {...commonProps} />
+        return (
+          <EducationCertificationsStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'work':
-        return <WorkHistoryStep {...commonProps} />
+        return (
+          <WorkHistoryStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'contact':
-        return <ContactInformationStep {...commonProps} />
+        return (
+          <ContactInformationStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'availability':
-        return <AvailabilityPreferencesStep {...commonProps} />
+        return (
+          <AvailabilityPreferencesStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'pricing':
-        return <PricingInformationStep {...commonProps} />
+        return (
+          <PricingInformationStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'portfolio':
-        return <PortfolioSetupStep {...commonProps} />
+        return (
+          <PortfolioSetupStep
+            data={stepData as any}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       case 'complete':
-        return <CompletionStep {...commonProps} />
+        return (
+          <CompletionStep
+            data={onboardingData}
+            onUpdate={(data: any) => updateStepData(stepId, data)}
+            onNext={nextStep}
+            onPrev={prevStep}
+            userType={onboardingData.userType}
+          />
+        )
       default:
         return null
     }
