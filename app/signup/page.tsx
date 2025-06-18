@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -11,6 +12,7 @@ import { ArrowRight, Building2, Mail, Lock, Eye, EyeOff, User, Briefcase, Shoppi
 import Link from "next/link"
 
 export default function SignUpPage() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -62,12 +64,42 @@ export default function SignUpPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!passwordMatch) return
+    
+    // Validate password match
+    if (!passwordMatch) {
+      return
+    }
+    
+    // Validate password strength
+    if (passwordStrength < 50) {
+      return
+    }
+    
     setIsLoading(true)
-    // Simulate API call
-    setTimeout(() => {
+    
+    try {
+      // Simulate API call to create account
+      // In production, this would be an actual API call to create the user
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // Store user data in localStorage for the onboarding flow
+      // In production, this would be handled by your auth system
+      localStorage.setItem('onboardingData', JSON.stringify({
+        userType: formData.userType,
+        fullName: formData.fullName,
+        email: formData.email,
+        company: formData.company,
+        isNewUser: true
+      }))
+      
+      // Navigate to the onboarding page
+      // The onboarding component will handle different user types internally
+      router.push('/onboarding')
+    } catch (error) {
+      // Handle error - in production, show an error message to the user
+      console.error('Signup error:', error)
       setIsLoading(false)
-    }, 2000)
+    }
   }
 
   return (
