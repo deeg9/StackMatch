@@ -37,15 +37,15 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'negotiating':
-        return 'bg-yellow-500 text-white'
+        return 'bg-information-blue text-white'
       case 'agreement-reached':
-        return 'bg-trust-green text-white'
+        return 'bg-success-green text-white'
       case 'pending-approval':
         return 'bg-attention-orange text-white'
       case 'completed':
-        return 'bg-information-blue text-white'
+        return 'bg-success-green text-white'
       default:
-        return 'bg-slate-500 text-white'
+        return 'bg-medium-gray text-white'
     }
   }
 
@@ -111,18 +111,28 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {/* Participants */}
+        {/* Participants - Enhanced with Better Avatars */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex -space-x-2">
-              <Avatar className="w-8 h-8 border-2 border-white">
+              <Avatar className="w-10 h-10 border-2 border-white shadow-sm">
                 <AvatarImage src={room.participants.buyer.avatar} alt={room.participants.buyer.name} />
-                <AvatarFallback>{room.participants.buyer.name[0]}</AvatarFallback>
+                <AvatarFallback className="bg-stackmatch-blue text-white font-semibold">
+                  {room.participants.buyer.name[0]}
+                </AvatarFallback>
               </Avatar>
-              <Avatar className="w-8 h-8 border-2 border-white">
+              <Avatar className="w-10 h-10 border-2 border-white shadow-sm">
                 <AvatarImage src={room.participants.seller.avatar} alt={room.participants.seller.name} />
-                <AvatarFallback>{room.participants.seller.name[0]}</AvatarFallback>
+                <AvatarFallback className="bg-trust-green text-white font-semibold">
+                  {room.participants.seller.name[0]}
+                </AvatarFallback>
               </Avatar>
+              {/* Additional participants indicator */}
+              {room.participants.totalCount > 2 && (
+                <div className="w-10 h-10 border-2 border-white shadow-sm rounded-full bg-slate-100 flex items-center justify-center">
+                  <span className="text-xs font-medium text-medium-gray">+{room.participants.totalCount - 2}</span>
+                </div>
+              )}
             </div>
             
             <div className="text-sm">
@@ -200,27 +210,35 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Action Buttons - Improved Hierarchy */}
         <div className="flex gap-2 pt-2">
           <Button 
             onClick={handleEnterRoom}
-            className="flex-1 bg-stackmatch-blue hover:bg-stackmatch-navy"
+            className="flex-1 bg-stackmatch-blue hover:bg-stackmatch-navy text-white shadow-sm"
           >
             <ArrowRight className="w-4 h-4 mr-2" />
             Enter Room
           </Button>
           
-          <Button variant="outline" size="sm">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            className="text-stackmatch-blue hover:text-stackmatch-navy hover:bg-stackmatch-blue/5"
+          >
             <MessageCircle className="w-4 h-4 mr-1" />
-            Quick Message
+            Message
           </Button>
           
-          <Button variant="outline" size="sm">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            className="text-stackmatch-blue hover:text-stackmatch-navy hover:bg-stackmatch-blue/5"
+          >
             <Eye className="w-4 h-4 mr-1" />
-            View Proposal
+            Proposal
           </Button>
           
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" className="text-medium-gray hover:text-stackmatch-navy">
             <MoreVertical className="w-4 h-4" />
           </Button>
         </div>

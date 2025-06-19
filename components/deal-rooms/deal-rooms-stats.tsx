@@ -10,22 +10,14 @@ import {
   MessageCircle,
   CheckCircle2,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  Zap,
+  Target,
+  Users2
 } from 'lucide-react'
 
 export function DealRoomsStats() {
   const stats = [
-    {
-      title: 'Active Negotiations',
-      value: '12',
-      subtitle: '3 new this week',
-      trend: '+25%',
-      trendUp: true,
-      icon: Briefcase,
-      color: 'text-stackmatch-blue',
-      bgColor: 'bg-stackmatch-blue/10',
-      borderColor: 'hover:border-stackmatch-blue'
-    },
     {
       title: 'Total Deal Value',
       value: '$2.4M',
@@ -33,31 +25,50 @@ export function DealRoomsStats() {
       trend: '+12%',
       trendUp: true,
       icon: DollarSign,
-      color: 'text-trust-green',
-      bgColor: 'bg-trust-green/10',
-      borderColor: 'hover:border-trust-green'
+      color: 'text-success-green',
+      bgColor: 'bg-success-green/10',
+      borderColor: 'hover:border-success-green',
+      sparklineData: [180, 220, 190, 240, 210, 250, 280, 240],
+      description: 'Total value of active deals showing strong growth'
     },
     {
-      title: 'Response Metrics',
-      value: '2.5h',
-      subtitle: '24 unread messages',
-      trend: '-15%',
-      trendUp: false,
-      icon: Clock,
-      color: 'text-attention-orange',
-      bgColor: 'bg-attention-orange/10',
-      borderColor: 'hover:border-attention-orange'
+      title: 'Average Deal Velocity',
+      value: '45 days',
+      subtitle: '2x faster than industry avg',
+      trend: '-18%',
+      trendUp: true,
+      icon: Zap,
+      color: 'text-information-blue',
+      bgColor: 'bg-information-blue/10',
+      borderColor: 'hover:border-information-blue',
+      sparklineData: [65, 58, 52, 48, 45, 47, 43, 45],
+      description: 'Average time from first contact to deal closure'
     },
     {
-      title: 'Success Rate',
+      title: 'Deal Win Rate',
       value: '89%',
       subtitle: '8 deals closed this month',
       trend: '+5%',
       trendUp: true,
-      icon: CheckCircle2,
-      color: 'text-information-blue',
-      bgColor: 'bg-information-blue/10',
-      borderColor: 'hover:border-information-blue'
+      icon: Target,
+      color: 'text-success-green',
+      bgColor: 'bg-success-green/10',
+      borderColor: 'hover:border-success-green',
+      sparklineData: [82, 85, 88, 86, 89, 91, 88, 89],
+      description: 'Percentage of engaged deals that result in successful closure'
+    },
+    {
+      title: 'Active Negotiations',
+      value: '12',
+      subtitle: '3 new this week',
+      trend: '+25%',
+      trendUp: true,
+      icon: Users2,
+      color: 'text-stackmatch-navy',
+      bgColor: 'bg-stackmatch-navy/10',
+      borderColor: 'hover:border-stackmatch-navy',
+      sparklineData: [8, 9, 10, 11, 12, 10, 11, 12],
+      description: 'Current active deal rooms with ongoing negotiations'
     }
   ]
 
@@ -79,9 +90,24 @@ export function DealRoomsStats() {
                   <p className="text-sm font-medium text-medium-gray">
                     {stat.title}
                   </p>
-                  <p className="text-3xl font-bold text-stackmatch-navy group-hover:scale-105 transition-transform">
-                    {stat.value}
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <p className={`text-3xl font-bold group-hover:scale-105 transition-transform ${stat.color}`}>
+                      {stat.value}
+                    </p>
+                    {/* Mini Sparkline */}
+                    <div className="flex items-end gap-px h-8">
+                      {stat.sparklineData.map((point, idx) => (
+                        <div
+                          key={idx}
+                          className={`w-1 rounded-sm transition-all duration-300 group-hover:opacity-80 ${stat.bgColor.replace('/10', '/30')}`}
+                          style={{
+                            height: `${(point / Math.max(...stat.sparklineData)) * 100}%`,
+                            animationDelay: `${idx * 50}ms`
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
                   <div className="flex items-center gap-2">
                     <p className="text-xs text-medium-gray">
                       {stat.subtitle}
@@ -96,8 +122,13 @@ export function DealRoomsStats() {
                   </div>
                 </div>
                 
-                <div className={`${stat.bgColor} p-3 rounded-xl group-hover:scale-110 transition-transform`}>
-                  <Icon className={`w-6 h-6 ${stat.color}`} />
+                <div className={`${stat.bgColor} p-3 rounded-xl group-hover:scale-110 transition-transform relative overflow-hidden`}>
+                  <Icon className={`w-6 h-6 ${stat.color} relative z-10`} />
+                  {/* Subtle background pattern */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-current" />
+                    <div className="absolute bottom-1 left-1 w-1 h-1 rounded-full bg-current" />
+                  </div>
                 </div>
               </div>
             </CardContent>

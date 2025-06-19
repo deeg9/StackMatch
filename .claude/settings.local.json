@@ -17,8 +17,12 @@
       "Bash(npx tsc:*)",
       "Bash(timeout 90s npm run build)",
       "Bash(npx next lint:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(ls:*)",
+      "Bash(npm outdated)",
+      "Bash(npm update:*)"
     ],
     "deny": []
-  }
+  },
+  "enableAllProjectMcpServers": false
 }

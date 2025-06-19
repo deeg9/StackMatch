@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -16,10 +17,20 @@ import {
   CheckCircle2,
   AlertTriangle,
   TrendingUp,
-  Bell
+  Bell,
+  ExternalLink
 } from 'lucide-react'
 
 export function DealRoomsSidebar() {
+  const router = useRouter()
+
+  const handleDeadlineClick = (deadline: any) => {
+    router.push(`/deal-rooms/${deadline.dealRoomId}?tab=timeline&action=${deadline.action}`)
+  }
+
+  const handleActionClick = (action: any) => {
+    router.push(`/deal-rooms/${action.dealRoomId}?tab=${action.type === 'message' ? 'discussion' : action.type === 'proposal' ? 'proposals' : 'documents'}&action=${action.action}`)
+  }
   const recentActivity = [
     {
       id: 1,
@@ -61,21 +72,27 @@ export function DealRoomsSidebar() {
       title: 'Contract review due',
       project: 'CRM Implementation',
       date: 'Today, 5:00 PM',
-      priority: 'high'
+      priority: 'high',
+      dealRoomId: 'crm-impl-001',
+      action: 'contract-review'
     },
     {
       id: 2,
       title: 'Final proposal submission',
       project: 'E-commerce Platform',
       date: 'Tomorrow, 2:00 PM',
-      priority: 'medium'
+      priority: 'medium',
+      dealRoomId: 'ecom-platform-002',
+      action: 'proposal-submission'
     },
     {
       id: 3,
       title: 'Client meeting',
       project: 'Marketing Automation',
       date: 'Jan 25, 10:00 AM',
-      priority: 'low'
+      priority: 'low',
+      dealRoomId: 'marketing-auto-003',
+      action: 'meeting-prep'
     }
   ]
 
@@ -84,19 +101,25 @@ export function DealRoomsSidebar() {
       id: 1,
       title: 'Review proposal for HealthTech Solutions',
       type: 'proposal',
-      urgency: 'high'
+      urgency: 'high',
+      dealRoomId: 'healthtech-004',
+      action: 'review-proposal'
     },
     {
       id: 2,
       title: 'Sign NDA for RetailFlow project',
       type: 'document',
-      urgency: 'medium'
+      urgency: 'medium',
+      dealRoomId: 'retailflow-005',
+      action: 'sign-nda'
     },
     {
       id: 3,
       title: 'Respond to questions in DataDriven deal',
       type: 'message',
-      urgency: 'low'
+      urgency: 'low',
+      dealRoomId: 'datadriven-006',
+      action: 'respond-messages'
     }
   ]
 
@@ -143,26 +166,23 @@ export function DealRoomsSidebar() {
 
   return (
     <div className="space-y-6 animate-slide-up">
-      {/* Quick Actions */}
-      <Card>
+      {/* AI Tips Section */}
+      <Card className="border-information-blue/20 bg-gradient-to-br from-information-blue/5 to-stackmatch-blue/5">
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-stackmatch-blue" />
-            Quick Actions
+            <TrendingUp className="w-5 h-5 text-information-blue" />
+            AI Insights
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <Button className="w-full justify-start bg-stackmatch-blue hover:bg-stackmatch-navy">
-            <Plus className="w-4 h-4 mr-2" />
-            Create Room
-          </Button>
-          <Button variant="outline" className="w-full justify-start">
-            <Users className="w-4 h-4 mr-2" />
-            Import Contacts
-          </Button>
-          <Button variant="outline" className="w-full justify-start">
-            <Upload className="w-4 h-4 mr-2" />
-            Upload Templates
+          <div className="p-3 bg-white/50 rounded-lg border border-information-blue/10">
+            <p className="text-sm text-stackmatch-navy font-medium">💡 Smart Tip</p>
+            <p className="text-sm text-medium-gray mt-1">
+              You have 3 deals idle for over a week. Consider sending follow-up messages to maintain momentum.
+            </p>
+          </div>
+          <Button variant="ghost" className="w-full text-information-blue hover:bg-information-blue/10">
+            View All Insights
           </Button>
         </CardContent>
       </Card>
@@ -216,11 +236,16 @@ export function DealRoomsSidebar() {
         <CardContent>
           <div className="space-y-3">
             {upcomingDeadlines.map((deadline) => (
-              <div key={deadline.id} className="p-3 border border-slate-200 rounded-lg hover:shadow-sm transition-shadow">
+              <div 
+                key={deadline.id} 
+                className="p-3 border border-slate-200 rounded-lg hover:shadow-sm transition-all cursor-pointer hover:border-stackmatch-blue/50 group"
+                onClick={() => handleDeadlineClick(deadline)}
+              >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <p className="font-medium text-stackmatch-navy text-sm">
+                    <p className="font-medium text-stackmatch-navy text-sm group-hover:text-stackmatch-blue transition-colors flex items-center gap-1">
                       {deadline.title}
+                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </p>
                     <p className="text-xs text-medium-gray mt-1">
                       {deadline.project}
@@ -253,10 +278,12 @@ export function DealRoomsSidebar() {
             {pendingActions.map((action) => (
               <div 
                 key={action.id} 
-                className={`p-3 border-l-4 rounded-r-lg ${getUrgencyColor(action.urgency)} cursor-pointer hover:shadow-sm transition-shadow`}
+                className={`p-3 border-l-4 rounded-r-lg ${getUrgencyColor(action.urgency)} cursor-pointer hover:shadow-sm transition-all group`}
+                onClick={() => handleActionClick(action)}
               >
-                <p className="font-medium text-stackmatch-navy text-sm">
+                <p className="font-medium text-stackmatch-navy text-sm group-hover:text-stackmatch-blue transition-colors flex items-center gap-1">
                   {action.title}
+                  <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </p>
                 <div className="flex items-center justify-between mt-2">
                   <Badge variant="outline" className="text-xs">
