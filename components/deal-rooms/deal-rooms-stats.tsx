@@ -21,15 +21,14 @@ export function DealRoomsStats() {
     {
       title: 'Total Deal Value',
       value: '$2.4M',
-      subtitle: 'Avg: $200K per deal',
+      subtitle: 'Avg. $200k per deal',
       trend: '+12%',
       trendUp: true,
       icon: DollarSign,
-      color: 'text-success-green',
-      bgColor: 'bg-success-green/10',
-      borderColor: 'hover:border-success-green',
-      sparklineData: [180, 220, 190, 240, 210, 250, 280, 240],
-      description: 'Total value of active deals showing strong growth'
+      color: 'text-charcoal',
+      bgColor: 'bg-charcoal/10',
+      borderColor: 'hover:border-charcoal',
+      sparklineData: [180, 220, 190, 240, 210, 250, 280, 240]
     },
     {
       title: 'Average Deal Velocity',
@@ -38,24 +37,22 @@ export function DealRoomsStats() {
       trend: '-18%',
       trendUp: true,
       icon: Zap,
-      color: 'text-information-blue',
-      bgColor: 'bg-information-blue/10',
-      borderColor: 'hover:border-information-blue',
-      sparklineData: [65, 58, 52, 48, 45, 47, 43, 45],
-      description: 'Average time from first contact to deal closure'
+      color: 'text-[#3B82F6]',
+      bgColor: 'bg-[#3B82F6]/10',
+      borderColor: 'hover:border-[#3B82F6]',
+      sparklineData: [65, 58, 52, 48, 45, 47, 43, 45]
     },
     {
-      title: 'Deal Win Rate',
+      title: 'Agreements Reached',
       value: '89%',
       subtitle: '8 deals closed this month',
       trend: '+5%',
       trendUp: true,
       icon: Target,
-      color: 'text-success-green',
-      bgColor: 'bg-success-green/10',
-      borderColor: 'hover:border-success-green',
-      sparklineData: [82, 85, 88, 86, 89, 91, 88, 89],
-      description: 'Percentage of engaged deals that result in successful closure'
+      color: 'text-[#16A34A]',
+      bgColor: 'bg-[#16A34A]/10',
+      borderColor: 'hover:border-[#16A34A]',
+      sparklineData: [82, 85, 88, 86, 89, 91, 88, 89]
     },
     {
       title: 'Active Negotiations',
@@ -64,11 +61,10 @@ export function DealRoomsStats() {
       trend: '+25%',
       trendUp: true,
       icon: Users2,
-      color: 'text-stackmatch-navy',
-      bgColor: 'bg-stackmatch-navy/10',
-      borderColor: 'hover:border-stackmatch-navy',
-      sparklineData: [8, 9, 10, 11, 12, 10, 11, 12],
-      description: 'Current active deal rooms with ongoing negotiations'
+      color: 'text-charcoal',
+      bgColor: 'bg-charcoal/10',
+      borderColor: 'hover:border-charcoal',
+      sparklineData: [8, 9, 10, 11, 12, 10, 11, 12]
     }
   ]
 

@@ -10,8 +10,6 @@ interface DealRoomsFiltersProps {
   setSearchQuery: (query: string) => void
   statusFilter: string
   setStatusFilter: (status: string) => void
-  roleFilter: string
-  setRoleFilter: (role: string) => void
   dateFilter: string
   setDateFilter: (date: string) => void
   sortBy: string
@@ -23,8 +21,6 @@ export function DealRoomsFilters({
   setSearchQuery,
   statusFilter,
   setStatusFilter,
-  roleFilter,
-  setRoleFilter,
   dateFilter,
   setDateFilter,
   sortBy,
@@ -77,17 +73,6 @@ export function DealRoomsFilters({
           </SelectContent>
         </Select>
 
-        {/* Role Filter */}
-        <Select value={roleFilter} onValueChange={setRoleFilter}>
-          <SelectTrigger className="w-40 border-medium-gray/30 text-medium-gray hover:border-medium-gray transition-colors">
-            <SelectValue placeholder="Role" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Roles</SelectItem>
-            <SelectItem value="buyer">As Buyer</SelectItem>
-            <SelectItem value="seller">As Seller</SelectItem>
-          </SelectContent>
-        </Select>
 
         {/* Date Filter */}
         <Select value={dateFilter} onValueChange={setDateFilter}>

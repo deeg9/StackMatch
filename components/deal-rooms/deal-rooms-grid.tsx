@@ -9,7 +9,6 @@ interface DealRoomsGridProps {
   setSelectedTab: (tab: string) => void
   searchQuery: string
   statusFilter: string
-  roleFilter: string
   dateFilter: string
   sortBy: string
 }
@@ -19,7 +18,6 @@ export function DealRoomsGrid({
   setSelectedTab,
   searchQuery,
   statusFilter,
-  roleFilter,
   dateFilter,
   sortBy
 }: DealRoomsGridProps) {
@@ -28,7 +26,7 @@ export function DealRoomsGrid({
     {
       id: 'DR-001',
       title: 'CRM Implementation for Healthcare Startup',
-      status: 'negotiating',
+      status: 'in-progress',
       stage: 'proposal-review',
       stageProgress: 60,
       createdDate: '2024-01-15',
@@ -52,12 +50,11 @@ export function DealRoomsGrid({
       },
       communication: {
         unreadMessages: 3,
-        documentsCount: 8,
         pendingApprovals: 2
       },
-      signatures: {
-        nda: 'signed',
-        contract: 'pending'
+      documents: {
+        total: 8,
+        pendingSignature: 2
       },
       category: 'active'
     },
@@ -88,19 +85,18 @@ export function DealRoomsGrid({
       },
       communication: {
         unreadMessages: 0,
-        documentsCount: 15,
         pendingApprovals: 1
       },
-      signatures: {
-        nda: 'signed',
-        contract: 'pending'
+      documents: {
+        total: 15,
+        pendingSignature: 1
       },
       category: 'active'
     },
     {
       id: 'DR-003',
       title: 'Marketing Automation Setup',
-      status: 'pending-approval',
+      status: 'pending-signature',
       stage: 'initial-discussion',
       stageProgress: 25,
       createdDate: '2024-01-20',
@@ -124,12 +120,11 @@ export function DealRoomsGrid({
       },
       communication: {
         unreadMessages: 5,
-        documentsCount: 4,
         pendingApprovals: 0
       },
-      signatures: {
-        nda: 'pending',
-        contract: 'not-started'
+      documents: {
+        total: 4,
+        pendingSignature: 3
       },
       category: 'pending'
     },
@@ -156,18 +151,87 @@ export function DealRoomsGrid({
       },
       financials: {
         proposedValue: '$75,000',
-        paymentTerms: 'Completed'
+        paymentTerms: 'Monthly'
       },
       communication: {
         unreadMessages: 0,
-        documentsCount: 22,
         pendingApprovals: 0
       },
-      signatures: {
-        nda: 'signed',
-        contract: 'signed'
+      documents: {
+        total: 22,
+        pendingSignature: 0
       },
       category: 'completed'
+    },
+    {
+      id: 'DR-005',
+      title: 'Enterprise HR System Integration',
+      status: 'implementation',
+      stage: 'implementation',
+      stageProgress: 70,
+      createdDate: '2024-01-05',
+      lastActivity: '1 hour ago',
+      participants: {
+        buyer: {
+          name: 'Jennifer Liu',
+          avatar: '/api/placeholder/40/40',
+          company: 'TechCorp Enterprise'
+        },
+        seller: {
+          name: 'Marcus Thompson',
+          avatar: '/api/placeholder/40/40',
+          company: 'HR Systems Pro'
+        },
+        totalCount: 8
+      },
+      financials: {
+        proposedValue: '$180,000',
+        paymentTerms: 'Milestone-based'
+      },
+      communication: {
+        unreadMessages: 2,
+        pendingApprovals: 1
+      },
+      documents: {
+        total: 25,
+        pendingSignature: 0
+      },
+      category: 'active'
+    },
+    {
+      id: 'DR-006',
+      title: 'Mobile App Development',
+      status: 'go-live',
+      stage: 'go-live-preparation',
+      stageProgress: 95,
+      createdDate: '2023-11-20',
+      lastActivity: '4 hours ago',
+      participants: {
+        buyer: {
+          name: 'Alex Chen',
+          avatar: '/api/placeholder/40/40',
+          company: 'StartupFlow'
+        },
+        seller: {
+          name: 'Sophie Williams',
+          avatar: '/api/placeholder/40/40',
+          company: 'Mobile Innovators'
+        },
+        totalCount: 5
+      },
+      financials: {
+        proposedValue: '$95,000',
+        paymentTerms: 'Fixed Price'
+      },
+      communication: {
+        unreadMessages: 1,
+        pendingApprovals: 0
+      },
+      documents: {
+        total: 18,
+        pendingSignature: 0
+      },
+      category: 'active'
     }
   ]
 

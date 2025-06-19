@@ -36,16 +36,22 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'negotiating':
-        return 'bg-information-blue text-white'
+      case 'in-progress':
+        return 'bg-[#3B82F6] text-white'
+      case 'pending-signature':
+        return 'bg-[#F59E0B] text-white'
       case 'agreement-reached':
-        return 'bg-success-green text-white'
-      case 'pending-approval':
-        return 'bg-attention-orange text-white'
+        return 'bg-[#16A34A] text-white'
+      case 'implementation':
+        return 'bg-[#3B82F6] text-white'
+      case 'go-live':
+        return 'bg-[#3B82F6] text-white'
       case 'completed':
-        return 'bg-success-green text-white'
+        return 'bg-[#16A34A] text-white'
+      case 'archived':
+        return 'bg-[#6B7280] text-white'
       default:
-        return 'bg-medium-gray text-white'
+        return 'bg-[#6B7280] text-white'
     }
   }
 
@@ -87,7 +93,7 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
               <h3 className="font-semibold text-stackmatch-navy group-hover:text-stackmatch-blue transition-colors line-clamp-1">
                 {room.title}
               </h3>
-              <Badge variant="outline" className="text-xs">
+              <Badge variant="outline" className="text-xs text-[#6B7280] border-[#6B7280]/30">
                 {room.id}
               </Badge>
             </div>
@@ -159,7 +165,7 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
         {/* Financials */}
         <div className="bg-slate-50 rounded-lg p-3 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-medium-gray">Deal Value</span>
+            <span className="text-sm text-medium-gray">Value</span>
             <span className="font-semibold text-stackmatch-navy flex items-center gap-1">
               <DollarSign className="w-4 h-4" />
               {room.financials.proposedValue}
@@ -171,22 +177,14 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
           </div>
         </div>
 
-        {/* Communication & Documents */}
-        <div className="grid grid-cols-3 gap-4">
+        {/* Communication Metrics */}
+        <div className="grid grid-cols-2 gap-4">
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 text-sm font-medium text-stackmatch-navy">
               <MessageCircle className="w-4 h-4" />
               {room.communication.unreadMessages}
             </div>
             <div className="text-xs text-medium-gray">Unread</div>
-          </div>
-          
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-1 text-sm font-medium text-stackmatch-navy">
-              <FileText className="w-4 h-4" />
-              {room.communication.documentsCount}
-            </div>
-            <div className="text-xs text-medium-gray">Documents</div>
           </div>
           
           <div className="text-center">
@@ -198,23 +196,25 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
           </div>
         </div>
 
-        {/* Signatures Status */}
+        {/* Documents Section */}
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center gap-2">
-            {getSignatureIcon(room.signatures.nda)}
-            <span className="text-medium-gray">NDA</span>
+            <FileText className="w-4 h-4 text-stackmatch-navy" />
+            <span className="text-medium-gray">Documents</span>
+            <span className="font-medium text-stackmatch-navy">{room.documents?.total || 8}</span>
           </div>
-          <div className="flex items-center gap-2">
-            {getSignatureIcon(room.signatures.contract)}
-            <span className="text-medium-gray">Contract</span>
-          </div>
+          {room.documents?.pendingSignature > 0 && (
+            <span className="text-[#F59E0B] text-xs font-medium">
+              ({room.documents.pendingSignature} Pending Signature)
+            </span>
+          )}
         </div>
 
         {/* Action Buttons - Improved Hierarchy */}
         <div className="flex gap-2 pt-2">
           <Button 
             onClick={handleEnterRoom}
-            className="flex-1 bg-stackmatch-blue hover:bg-stackmatch-navy text-white shadow-sm"
+            className="flex-1 bg-[#4A73CC] hover:bg-[#1A2B4C] text-white shadow-sm"
           >
             <ArrowRight className="w-4 h-4 mr-2" />
             Enter Room
@@ -223,23 +223,17 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
           <Button 
             variant="ghost" 
             size="sm"
-            className="text-stackmatch-blue hover:text-stackmatch-navy hover:bg-stackmatch-blue/5"
+            className="text-[#4A73CC] hover:text-[#1A2B4C] hover:bg-[#4A73CC]/5 px-3"
           >
-            <MessageCircle className="w-4 h-4 mr-1" />
             Message
           </Button>
           
           <Button 
             variant="ghost" 
             size="sm"
-            className="text-stackmatch-blue hover:text-stackmatch-navy hover:bg-stackmatch-blue/5"
+            className="text-[#4A73CC] hover:text-[#1A2B4C] hover:bg-[#4A73CC]/5 px-3"
           >
-            <Eye className="w-4 h-4 mr-1" />
-            Proposal
-          </Button>
-          
-          <Button variant="ghost" size="icon" className="text-medium-gray hover:text-stackmatch-navy">
-            <MoreVertical className="w-4 h-4" />
+            View Proposal
           </Button>
         </div>
       </CardContent>

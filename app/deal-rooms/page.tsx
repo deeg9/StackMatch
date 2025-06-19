@@ -13,7 +13,6 @@ export default function DealRoomsPage() {
   const [selectedTab, setSelectedTab] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
-  const [roleFilter, setRoleFilter] = useState('all')
   const [dateFilter, setDateFilter] = useState('all')
   const [sortBy, setSortBy] = useState('recent')
 
@@ -32,8 +31,6 @@ export default function DealRoomsPage() {
           setSearchQuery={setSearchQuery}
           statusFilter={statusFilter}
           setStatusFilter={setStatusFilter}
-          roleFilter={roleFilter}
-          setRoleFilter={setRoleFilter}
           dateFilter={dateFilter}
           setDateFilter={setDateFilter}
           sortBy={sortBy}
@@ -52,7 +49,6 @@ export default function DealRoomsPage() {
               setSelectedTab={setSelectedTab}
               searchQuery={searchQuery}
               statusFilter={statusFilter}
-              roleFilter={roleFilter}
               dateFilter={dateFilter}
               sortBy={sortBy}
             />
