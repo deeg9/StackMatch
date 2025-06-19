@@ -26,7 +26,7 @@ export function DealRoomsGrid({
     {
       id: 'DR-001',
       title: 'CRM Implementation for Healthcare Startup',
-      status: 'in-progress',
+      status: 'active',
       stage: 'proposal-review',
       stageProgress: 60,
       createdDate: '2024-01-15',
@@ -56,7 +56,7 @@ export function DealRoomsGrid({
         total: 8,
         pendingSignature: 2
       },
-      category: 'active'
+      category: 'agreement-reached'
     },
     {
       id: 'DR-002',
@@ -91,7 +91,7 @@ export function DealRoomsGrid({
         total: 15,
         pendingSignature: 1
       },
-      category: 'active'
+      category: 'agreement-reached'
     },
     {
       id: 'DR-003',
@@ -126,7 +126,7 @@ export function DealRoomsGrid({
         total: 4,
         pendingSignature: 3
       },
-      category: 'pending'
+      category: 'pending-signature'
     },
     {
       id: 'DR-004',
@@ -166,7 +166,7 @@ export function DealRoomsGrid({
     {
       id: 'DR-005',
       title: 'Enterprise HR System Integration',
-      status: 'implementation',
+      status: 'implementing',
       stage: 'implementation',
       stageProgress: 70,
       createdDate: '2024-01-05',
@@ -196,7 +196,7 @@ export function DealRoomsGrid({
         total: 25,
         pendingSignature: 0
       },
-      category: 'active'
+      category: 'implementing'
     },
     {
       id: 'DR-006',
@@ -231,20 +231,62 @@ export function DealRoomsGrid({
         total: 18,
         pendingSignature: 0
       },
-      category: 'active'
+      category: 'go-live'
+    },
+    {
+      id: 'DR-007',
+      title: 'Supply Chain Management System',
+      status: 'archived',
+      stage: 'archived',
+      stageProgress: 100,
+      createdDate: '2023-10-05',
+      lastActivity: '2 months ago',
+      participants: {
+        buyer: {
+          name: 'Patricia Brown',
+          avatar: '/api/placeholder/40/40',
+          company: 'LogisticsPlus'
+        },
+        seller: {
+          name: 'Kevin Zhang',
+          avatar: '/api/placeholder/40/40',
+          company: 'SCM Solutions'
+        },
+        totalCount: 7
+      },
+      financials: {
+        proposedValue: '$250,000',
+        paymentTerms: 'Quarterly'
+      },
+      communication: {
+        unreadMessages: 0,
+        pendingApprovals: 0
+      },
+      documents: {
+        total: 35,
+        pendingSignature: 0
+      },
+      category: 'archived'
     }
   ]
 
   const categories = [
     { id: 'all', name: 'All Rooms', count: dealRooms.length },
-    { id: 'active', name: 'Active Negotiations', count: dealRooms.filter(r => r.category === 'active').length },
-    { id: 'pending', name: 'Pending Approval', count: dealRooms.filter(r => r.category === 'pending').length },
-    { id: 'completed', name: 'Recently Completed', count: dealRooms.filter(r => r.category === 'completed').length },
-    { id: 'archived', name: 'Archived', count: 0 }
+    { id: 'active', name: 'Active', count: dealRooms.filter(r => r.category !== 'archived').length },
+    { id: 'pending-signature', name: 'Pending Signature', count: dealRooms.filter(r => r.category === 'pending-signature').length },
+    { id: 'agreement-reached', name: 'Agreement Reached', count: dealRooms.filter(r => r.category === 'agreement-reached').length },
+    { id: 'implementing', name: 'Implementing', count: dealRooms.filter(r => r.category === 'implementing').length },
+    { id: 'go-live', name: 'Go Live', count: dealRooms.filter(r => r.category === 'go-live').length },
+    { id: 'completed', name: 'Completed', count: dealRooms.filter(r => r.category === 'completed').length },
+    { id: 'archived', name: 'Archived', count: dealRooms.filter(r => r.category === 'archived').length }
   ]
 
-  // Filter logic would go here based on search, status, role, date, and sort
-  const filteredRooms = dealRooms // For now, showing all rooms
+  // Filter logic based on selected tab
+  const filteredRooms = dealRooms.filter(room => {
+    if (selectedTab === 'all') return true
+    if (selectedTab === 'active') return room.category !== 'archived'
+    return room.category === selectedTab
+  })
 
   return (
     <div className="space-y-6">

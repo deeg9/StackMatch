@@ -19,7 +19,7 @@ import {
 export function DealRoomsStats() {
   const stats = [
     {
-      title: 'Value of Agreements',
+      title: 'Total Value of Agreements',
       value: '$2.4M',
       subtitle: 'Avg. $200k per deal',
       trend: '+12%',
@@ -44,8 +44,8 @@ export function DealRoomsStats() {
     },
     {
       title: 'Average Implementation Timeline',
-      value: '89%',
-      subtitle: '8 deals closed this month',
+      value: '60 days',
+      subtitle: '3x faster than industry avg',
       trend: '+5%',
       trendUp: true,
       icon: Target,
