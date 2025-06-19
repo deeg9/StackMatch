@@ -10,7 +10,7 @@ import {
   ArrowRight, TrendingUp, Building2, DollarSign, FileText, 
   CheckCircle2, Clock, AlertCircle, Plus, MessageSquare, 
   Bell, ChevronDown, Moon, Sun, Sparkles, Activity,
-  Briefcase, Target, PiggyBank, ArrowUp, ArrowDown
+  Briefcase, Target, PiggyBank, ArrowUp, ArrowDown, Calendar, Users
 } from "lucide-react"
 import Link from "next/link"
 import { TickerBanner } from "@/components/ticker/ticker-banner"
@@ -343,36 +343,46 @@ export default function BuyerDashboard() {
                     className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-2 flex-1">
+                    <div className="space-y-3">
+                      {/* Line 1: Primary Information & Key Constraints */}
+                      <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          <h3 className="font-semibold text-[#1A2B4C] group-hover:text-[#4A73CC] transition-colors">
+                          <h3 className="font-bold text-[#1A2B4C] group-hover:text-[#4A73CC] transition-colors">
                             {listing.title}
                           </h3>
                           <Badge className={getStatusColor(listing.status)}>
                             {listing.status}
                           </Badge>
                         </div>
-                        <div className="flex items-center space-x-4 text-sm text-[#6B7280]">
-                          <span className="flex items-center">
-                            <Building2 className="h-4 w-4 mr-1" />
-                            {listing.category}
-                          </span>
-                          <span className="flex items-center">
-                            <DollarSign className="h-4 w-4 mr-1" />
+                        <div className="flex items-center space-x-4 text-sm text-[#1A2B4C]">
+                          <span className="flex items-center font-medium">
+                            <DollarSign className="h-3 w-3 mr-1" />
                             {formatBudget(listing.budgetMin, listing.budgetMax)}
                           </span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-[#6B7280]">{listing.createdAt}</span>
-                          {listing.proposalCount > 0 && (
-                            <span className="text-[#22C55E] font-medium">
-                              {listing.proposalCount} proposals
-                            </span>
-                          )}
+                          <span className="flex items-center font-medium">
+                            <Calendar className="h-3 w-3 mr-1" />
+                            Due: Jul 15
+                          </span>
                         </div>
                       </div>
-                      <ArrowRight className="h-5 w-5 text-[#D1D5DB] group-hover:text-[#4A73CC] transition-colors" />
+
+                      {/* Line 2: Context & Engagement Metrics */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-[#6B7280] flex items-center">
+                          <Building2 className="h-4 w-4 mr-1" />
+                          {listing.category}
+                        </span>
+                        <div className="flex items-center space-x-4 text-sm text-[#6B7280]">
+                          <span className="flex items-center">
+                            <FileText className="h-3 w-3 mr-1" />
+                            {listing.proposalCount} Proposals
+                          </span>
+                          <span className="flex items-center">
+                            <Users className="h-3 w-3 mr-1" />
+                            2 Deal Rooms
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))
