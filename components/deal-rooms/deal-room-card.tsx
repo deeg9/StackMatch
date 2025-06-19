@@ -87,32 +87,33 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
       style={{ animationDelay: `${index * 100}ms` }}
     >
       <CardHeader className="pb-4">
-        <div className="flex items-start justify-between">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-stackmatch-navy group-hover:text-stackmatch-blue transition-colors line-clamp-1">
-                {room.title}
-              </h3>
-              <Badge variant="outline" className="text-xs text-[#6B7280] border-[#6B7280]/30">
-                {room.id}
-              </Badge>
-            </div>
-            
-            <div className="flex items-center gap-4 text-sm text-medium-gray">
-              <span className="flex items-center gap-1">
-                <Calendar className="w-3 h-3" />
-                {room.createdDate}
-              </span>
-              <span className="flex items-center gap-1">
-                <Clock className="w-3 h-3" />
-                {room.lastActivity}
-              </span>
-            </div>
+        <div className="space-y-3">
+          {/* Line 1: Title */}
+          <h3 className="font-semibold text-[#374151] text-lg leading-tight group-hover:text-stackmatch-blue transition-colors">
+            {room.title}
+          </h3>
+          
+          {/* Line 2: Subtitle with ID and Status */}
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-[#6B7280]">
+              {room.id}
+            </span>
+            <Badge className={getStatusColor(room.status)}>
+              {room.status.replace('-', ' ')}
+            </Badge>
           </div>
           
-          <Badge className={getStatusColor(room.status)}>
-            {room.status.replace('-', ' ')}
-          </Badge>
+          {/* Date and Activity Info */}
+          <div className="flex items-center gap-4 text-sm text-medium-gray pt-1">
+            <span className="flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              {room.createdDate}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="w-3 h-3" />
+              {room.lastActivity}
+            </span>
+          </div>
         </div>
       </CardHeader>
 
