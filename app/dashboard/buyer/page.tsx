@@ -296,7 +296,8 @@ export default function BuyerDashboard() {
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Row 1: Active Procurement - Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Recent Listings */}
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between">
@@ -449,8 +450,95 @@ export default function BuyerDashboard() {
           </Card>
         </div>
 
-        {/* Quick Actions */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Row 2: Asset Management - Your Tech Stack (Full-width) */}
+        <div className="mb-8">
+          <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Your Tech Stack</CardTitle>
+              <Button variant="ghost" size="sm" className="text-[#4A73CC] hover:text-[#1A2B4C]">
+                Manage Software
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </Button>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {/* Tech Stack Items */}
+              <div className="space-y-3">
+                {/* CRM - Salesforce */}
+                <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200">
+                  <div>
+                    <h3 className="font-bold text-[#1A2B4C]">CRM</h3>
+                    <p className="text-sm text-[#6B7280]">Salesforce</p>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <span className="text-sm font-medium text-[#1A2B4C]">$20,000/yr</span>
+                    <Badge className="bg-[#F59E0B] text-[#FFFFFF]">
+                      Renewal Approaching
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Project Management - Asana */}
+                <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200">
+                  <div>
+                    <h3 className="font-bold text-[#1A2B4C]">Project Management</h3>
+                    <p className="text-sm text-[#6B7280]">Asana</p>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <span className="text-sm font-medium text-[#1A2B4C]">$12,000/yr</span>
+                    <Badge className="bg-[#16A34A] text-[#FFFFFF]">
+                      Active
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Communication - Slack */}
+                <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200">
+                  <div>
+                    <h3 className="font-bold text-[#1A2B4C]">Communication</h3>
+                    <p className="text-sm text-[#6B7280]">Slack</p>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <span className="text-sm font-medium text-[#1A2B4C]">$8,400/yr</span>
+                    <Badge className="bg-[#16A34A] text-[#FFFFFF]">
+                      Active
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Analytics - Tableau */}
+                <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200">
+                  <div>
+                    <h3 className="font-bold text-[#1A2B4C]">Analytics</h3>
+                    <p className="text-sm text-[#6B7280]">Tableau</p>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <span className="text-sm font-medium text-[#1A2B4C]">$15,600/yr</span>
+                    <Badge className="bg-[#6B7280] text-[#FFFFFF]">
+                      Inactive
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* HR Management - BambooHR */}
+                <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200">
+                  <div>
+                    <h3 className="font-bold text-[#1A2B4C]">HR Management</h3>
+                    <p className="text-sm text-[#6B7280]">BambooHR</p>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <span className="text-sm font-medium text-[#1A2B4C]">$9,600/yr</span>
+                    <Badge className="bg-[#16A34A] text-[#FFFFFF]">
+                      Active
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Row 3: Navigation & Discovery - Three-column layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300 hover:shadow-lg group cursor-pointer">
             <CardContent className="p-6 text-center">
               <div className="w-16 h-16 bg-[#4A73CC]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
