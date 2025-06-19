@@ -177,38 +177,6 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
           </div>
         </div>
 
-        {/* Communication Metrics */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-1 text-sm font-medium text-stackmatch-navy">
-              <MessageCircle className="w-4 h-4" />
-              {room.communication.unreadMessages}
-            </div>
-            <div className="text-xs text-medium-gray">Unread</div>
-          </div>
-          
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-1 text-sm font-medium text-stackmatch-navy">
-              <Shield className="w-4 h-4" />
-              {room.communication.pendingApprovals}
-            </div>
-            <div className="text-xs text-medium-gray">Pending</div>
-          </div>
-        </div>
-
-        {/* Documents Section */}
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
-            <FileText className="w-4 h-4 text-stackmatch-navy" />
-            <span className="text-medium-gray">Documents</span>
-            <span className="font-medium text-stackmatch-navy">{room.documents?.total || 8}</span>
-          </div>
-          {room.documents?.pendingSignature > 0 && (
-            <span className="text-[#F59E0B] text-xs font-medium">
-              ({room.documents.pendingSignature} Pending Signature)
-            </span>
-          )}
-        </div>
 
         {/* Action Buttons - Improved Hierarchy */}
         <div className="flex gap-2 pt-2">
@@ -235,6 +203,47 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
           >
             View Proposal
           </Button>
+        </div>
+
+        {/* New Three-Column Footer Bar */}
+        <div className="border-t border-gray-200 mt-4 pt-4">
+          <div className="flex items-center justify-between">
+            {/* Column 1: Documents */}
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#6B7280]" />
+              <span className="text-sm text-[#374151]">
+                Documents: <span className="font-medium">{room.documents?.total || 8}</span>
+              </span>
+            </div>
+
+            {/* Column 2: New Messages */}
+            <div className="flex items-center gap-2">
+              <MessageCircle className="w-4 h-4 text-[#6B7280]" />
+              <span className="text-sm text-[#374151]">
+                New Messages: {room.communication.unreadMessages > 0 ? (
+                  <span className="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium rounded-full bg-[#F59E0B] text-white">
+                    {room.communication.unreadMessages}
+                  </span>
+                ) : (
+                  <span className="font-medium">0</span>
+                )}
+              </span>
+            </div>
+
+            {/* Column 3: Pending Tasks */}
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#6B7280]" />
+              <span className="text-sm text-[#374151]">
+                Pending Tasks: {room.communication.pendingApprovals > 0 ? (
+                  <span className="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium rounded-full bg-[#F59E0B] text-white">
+                    {room.communication.pendingApprovals}
+                  </span>
+                ) : (
+                  <span className="font-medium">0</span>
+                )}
+              </span>
+            </div>
+          </div>
         </div>
       </CardContent>
     </Card>
