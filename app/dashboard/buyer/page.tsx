@@ -10,7 +10,7 @@ import {
   ArrowRight, TrendingUp, Building2, DollarSign, FileText, 
   CheckCircle2, Clock, AlertCircle, Plus, MessageSquare, 
   Bell, ChevronDown, Moon, Sun, Sparkles, Activity,
-  Briefcase, Target, PiggyBank
+  Briefcase, Target, PiggyBank, ArrowUp, ArrowDown
 } from "lucide-react"
 import Link from "next/link"
 import { TickerBanner } from "@/components/ticker/ticker-banner"
@@ -186,7 +186,7 @@ export default function BuyerDashboard() {
                 Welcome back, {profileLoading ? '...' : profile?.full_name || 'User'}!
               </h1>
               <p className="text-blue-200">
-                {profileLoading ? 'Loading...' : `${profile?.company_name || 'Your Company'} • ${profile?.user_type === 'buyer' ? 'Mid-Market Enterprise' : 'Professional Services'}`}
+                {profileLoading ? 'Loading...' : `${profile?.company_name || 'Your Company'}`}
               </p>
             </div>
             <div className="flex space-x-4 animate-slide-up">
@@ -194,12 +194,6 @@ export default function BuyerDashboard() {
                 <Button size="lg" className="bg-[#22C55E] hover:bg-[#16A34A] text-white transform hover:scale-105 transition-all duration-200">
                   <Plus className="h-5 w-5 mr-2" />
                   Create Listing
-                </Button>
-              </Link>
-              <Link href="/deal-rooms">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[#1A2B4C] transform hover:scale-105 transition-all duration-200">
-                  <Briefcase className="h-5 w-5 mr-2" />
-                  Deal Rooms
                 </Button>
               </Link>
             </div>
@@ -223,7 +217,10 @@ export default function BuyerDashboard() {
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
                     {statsLoading ? '...' : '4'}
                   </p>
-                  <p className="text-sm text-[#16A34A] mt-1">+3 more than last year</p>
+                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
+                    <ArrowUp className="w-3 h-3 mr-1" />
+                    +3 more than last year
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-[#4A73CC]/10 rounded-full flex items-center justify-center">
                   <FileText className="h-6 w-6 text-[#4A73CC]" />
@@ -244,7 +241,10 @@ export default function BuyerDashboard() {
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
                     {statsLoading ? '...' : '3'}
                   </p>
-                  <p className="text-sm text-[#16A34A] mt-1">+1 more than last week</p>
+                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
+                    <ArrowUp className="w-3 h-3 mr-1" />
+                    +1 more than last week
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
                   <Activity className="h-6 w-6 text-[#22C55E]" />
@@ -265,7 +265,10 @@ export default function BuyerDashboard() {
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
                     {statsLoading ? '...' : '5'}
                   </p>
-                  <p className="text-sm text-[#16A34A] mt-1">+2 more than last year</p>
+                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
+                    <ArrowUp className="w-3 h-3 mr-1" />
+                    +2 more than last year
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-[#F59E0B]/10 rounded-full flex items-center justify-center">
                   <Building2 className="h-6 w-6 text-[#F59E0B]" />
@@ -286,7 +289,10 @@ export default function BuyerDashboard() {
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
                     {statsLoading ? '...' : '$12,500/yr'}
                   </p>
-                  <p className="text-sm text-[#16A34A] mt-1">down 5% from last year</p>
+                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
+                    <ArrowDown className="w-3 h-3 mr-1" />
+                    down 5% from last year
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
                   <DollarSign className="h-6 w-6 text-[#22C55E]" />
@@ -537,8 +543,8 @@ export default function BuyerDashboard() {
           </Card>
         </div>
 
-        {/* Row 3: Navigation & Discovery - Three-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Row 3: Navigation & Discovery - Two-column layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300 hover:shadow-lg group cursor-pointer">
             <CardContent className="p-6 text-center">
               <div className="w-16 h-16 bg-[#4A73CC]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
@@ -556,16 +562,6 @@ export default function BuyerDashboard() {
               </div>
               <h3 className="font-semibold text-[#1A2B4C] mb-2">Analytics</h3>
               <p className="text-sm text-[#6B7280]">View detailed insights and procurement metrics</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-2 hover:border-[#F59E0B] transition-all duration-300 hover:shadow-lg group cursor-pointer">
-            <CardContent className="p-6 text-center">
-              <div className="w-16 h-16 bg-[#F59E0B]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Building2 className="h-8 w-8 text-[#F59E0B]" />
-              </div>
-              <h3 className="font-semibold text-[#1A2B4C] mb-2">Browse Sellers</h3>
-              <p className="text-sm text-[#6B7280]">Discover verified software vendors</p>
             </CardContent>
           </Card>
         </div>
