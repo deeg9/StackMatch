@@ -2,26 +2,47 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from '@/components/ui/select'
+import { 
+  Search, 
+  Plus, 
+  Filter,
+  X
+} from 'lucide-react'
 import { DealRoomCard } from './deal-room-card'
 
 interface DealRoomsGridProps {
   selectedTab: string
   setSelectedTab: (tab: string) => void
   searchQuery: string
-  statusFilter: string
-  roleFilter: string
+  setSearchQuery: (query: string) => void
+  showFilters: boolean
+  setShowFilters: (show: boolean) => void
   dateFilter: string
+  setDateFilter: (filter: string) => void
   sortBy: string
+  setSortBy: (sort: string) => void
 }
 
 export function DealRoomsGrid({
   selectedTab,
   setSelectedTab,
   searchQuery,
-  statusFilter,
-  roleFilter,
+  setSearchQuery,
+  showFilters,
+  setShowFilters,
   dateFilter,
-  sortBy
+  setDateFilter,
+  sortBy,
+  setSortBy
 }: DealRoomsGridProps) {
   // Mock data for deal rooms
   const dealRooms = [
@@ -184,26 +205,108 @@ export function DealRoomsGrid({
 
   return (
     <div className="space-y-6">
-      <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-        <TabsList className="w-full justify-start bg-white border border-slate-200 p-1 h-auto">
-          {categories.map((category) => (
-            <TabsTrigger 
-              key={category.id} 
-              value={category.id}
-              className="flex items-center gap-2 px-4 py-2 data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white"
-            >
-              {category.name}
-              <Badge 
-                variant="secondary" 
-                className="ml-1 data-[state=active]:bg-white/20 data-[state=active]:text-white"
+      {/* Navigation Bar */}
+      <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+        <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full lg:w-auto">
+          <TabsList className="w-full lg:w-auto justify-start bg-white border border-slate-200 p-1 h-auto">
+            {categories.map((category) => (
+              <TabsTrigger 
+                key={category.id} 
+                value={category.id}
+                className="flex items-center gap-2 px-4 py-2 data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white"
               >
-                {category.count}
-              </Badge>
-            </TabsTrigger>
-          ))}
-        </TabsList>
+                {category.name}
+                <Badge 
+                  variant="secondary" 
+                  className="ml-1 data-[state=active]:bg-white/20 data-[state=active]:text-white"
+                >
+                  {category.count}
+                </Badge>
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+        
+        {/* Action Bar */}
+        <div className="flex items-center gap-3">
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
+            <Input
+              type="text"
+              placeholder="Search deal rooms..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-4 w-64"
+            />
+          </div>
+          
+          {/* Filters Toggle */}
+          <Button
+            variant={showFilters ? "secondary" : "outline"}
+            size="sm"
+            onClick={() => setShowFilters(!showFilters)}
+            className="gap-2"
+          >
+            <Filter className="w-4 h-4" />
+            Filters
+            {showFilters && <X className="w-3 h-3" />}
+          </Button>
+          
+          {/* Create Deal Room */}
+          <Button className="bg-stackmatch-blue hover:bg-stackmatch-navy gap-2">
+            <Plus className="w-4 h-4" />
+            Create Deal Room
+          </Button>
+        </div>
+      </div>
+      
+      {/* Advanced Filters (Hidden by default) */}
+      {showFilters && (
+        <div className="bg-slate-50 rounded-lg p-4 animate-slide-up">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm font-medium text-medium-gray mb-2 block">
+                Date Range
+              </label>
+              <Select value={dateFilter} onValueChange={setDateFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select date range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Time</SelectItem>
+                  <SelectItem value="today">Today</SelectItem>
+                  <SelectItem value="week">This Week</SelectItem>
+                  <SelectItem value="month">This Month</SelectItem>
+                  <SelectItem value="quarter">This Quarter</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <label className="text-sm font-medium text-medium-gray mb-2 block">
+                Sort By
+              </label>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sort by..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="recent">Most Recent</SelectItem>
+                  <SelectItem value="value-high">Highest Value</SelectItem>
+                  <SelectItem value="value-low">Lowest Value</SelectItem>
+                  <SelectItem value="progress">Deal Progress</SelectItem>
+                  <SelectItem value="activity">Last Activity</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      <Tabs value={selectedTab} className="w-full">
 
-        <TabsContent value={selectedTab} className="mt-6">
+        <TabsContent value={selectedTab} className="mt-0">
           {filteredRooms.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {filteredRooms.map((room, index) => (
