@@ -36,22 +36,20 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'in-progress':
-        return 'bg-[#3B82F6] text-white'
       case 'pending-signature':
-        return 'bg-[#F59E0B] text-white'
+        return 'bg-[#F59E0B] text-[#FFFFFF]'
       case 'agreement-reached':
-        return 'bg-[#16A34A] text-white'
-      case 'implementation':
-        return 'bg-[#3B82F6] text-white'
+        return 'bg-[#16A34A] text-[#FFFFFF]'
+      case 'implementing':
+        return 'bg-[#3B82F6] text-[#FFFFFF]'
       case 'go-live':
-        return 'bg-[#3B82F6] text-white'
+        return 'bg-[#3B82F6] text-[#FFFFFF]'
       case 'completed':
-        return 'bg-[#16A34A] text-white'
+        return 'bg-[#16A34A] text-[#FFFFFF]'
       case 'archived':
-        return 'bg-[#6B7280] text-white'
+        return 'bg-[#6B7280] text-[#FFFFFF]'
       default:
-        return 'bg-[#6B7280] text-white'
+        return 'bg-[#6B7280] text-[#FFFFFF]'
     }
   }
 
