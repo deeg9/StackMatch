@@ -210,7 +210,7 @@ export default function BuyerDashboard() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Active Listings */}
           <Card className={cn(
             "border-2 hover:border-[#4A73CC] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
@@ -221,8 +221,9 @@ export default function BuyerDashboard() {
                 <div>
                   <p className="text-sm text-[#6B7280] font-medium">Active Listings</p>
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : stats.activeListings}
+                    {statsLoading ? '...' : '4'}
                   </p>
+                  <p className="text-sm text-[#16A34A] mt-1">+3 more than last year</p>
                 </div>
                 <div className="w-12 h-12 bg-[#4A73CC]/10 rounded-full flex items-center justify-center">
                   <FileText className="h-6 w-6 text-[#4A73CC]" />
@@ -231,7 +232,7 @@ export default function BuyerDashboard() {
             </CardContent>
           </Card>
 
-          {/* Total Proposals */}
+          {/* Total Proposals Received */}
           <Card className={cn(
             "border-2 hover:border-[#22C55E] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
             statsLoading && "animate-pulse"
@@ -239,10 +240,11 @@ export default function BuyerDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-[#6B7280] font-medium">Total Proposals</p>
+                  <p className="text-sm text-[#6B7280] font-medium">Total Proposals Received</p>
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : stats.totalProposals}
+                    {statsLoading ? '...' : '3'}
                   </p>
+                  <p className="text-sm text-[#16A34A] mt-1">+1 more than last week</p>
                 </div>
                 <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
                   <Activity className="h-6 w-6 text-[#22C55E]" />
@@ -251,7 +253,7 @@ export default function BuyerDashboard() {
             </CardContent>
           </Card>
 
-          {/* Completed Projects */}
+          {/* Active Software Licenses */}
           <Card className={cn(
             "border-2 hover:border-[#F59E0B] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
             statsLoading && "animate-pulse"
@@ -259,44 +261,20 @@ export default function BuyerDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-[#6B7280] font-medium">Completed</p>
+                  <p className="text-sm text-[#6B7280] font-medium">Active Software Licenses</p>
                   <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : stats.completedProjects}
+                    {statsLoading ? '...' : '5'}
                   </p>
+                  <p className="text-sm text-[#16A34A] mt-1">+2 more than last year</p>
                 </div>
                 <div className="w-12 h-12 bg-[#F59E0B]/10 rounded-full flex items-center justify-center">
-                  <CheckCircle2 className="h-6 w-6 text-[#F59E0B]" />
+                  <Building2 className="h-6 w-6 text-[#F59E0B]" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Success Rate */}
-          <Card className={cn(
-            "border-2 hover:border-[#3B82F6] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
-            statsLoading && "animate-pulse"
-          )}>
-            <CardContent className="p-6">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm text-[#6B7280] font-medium">Success Rate</p>
-                  <Target className="h-5 w-5 text-[#3B82F6]" />
-                </div>
-                <div className="space-y-2">
-                  <p className="text-2xl font-bold text-[#1A2B4C]">
-                    {statsLoading ? '...' : `${stats.successRate}%`}
-                  </p>
-                  <Progress 
-                    value={statsLoading ? 0 : stats.successRate} 
-                    className="h-2"
-                    indicatorClassName="bg-[#3B82F6]"
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Total Invested */}
+          {/* Current Software Cost */}
           <Card className={cn(
             "border-2 hover:border-[#22C55E] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
             statsLoading && "animate-pulse"
@@ -304,13 +282,14 @@ export default function BuyerDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-[#6B7280] font-medium">Total Invested</p>
-                  <p className="text-2xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : `$${stats.totalInvested.toLocaleString()}`}
+                  <p className="text-sm text-[#6B7280] font-medium">Current Software Cost</p>
+                  <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
+                    {statsLoading ? '...' : '$12,500/yr'}
                   </p>
+                  <p className="text-sm text-[#16A34A] mt-1">down 5% from last year</p>
                 </div>
                 <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
-                  <PiggyBank className="h-6 w-6 text-[#22C55E]" />
+                  <DollarSign className="h-6 w-6 text-[#22C55E]" />
                 </div>
               </div>
             </CardContent>
