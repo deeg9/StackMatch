@@ -19,7 +19,7 @@ import {
 export function DealRoomsStats() {
   const stats = [
     {
-      title: 'Total Deal Value',
+      title: 'Value of Agreements',
       value: '$2.4M',
       subtitle: 'Avg. $200k per deal',
       trend: '+12%',
@@ -31,7 +31,7 @@ export function DealRoomsStats() {
       sparklineData: [180, 220, 190, 240, 210, 250, 280, 240]
     },
     {
-      title: 'Average Deal Velocity',
+      title: 'Average Deal Timeline',
       value: '45 days',
       subtitle: '2x faster than industry avg',
       trend: '-18%',
@@ -43,7 +43,7 @@ export function DealRoomsStats() {
       sparklineData: [65, 58, 52, 48, 45, 47, 43, 45]
     },
     {
-      title: 'Agreements Reached',
+      title: 'Average Implementation Timeline',
       value: '89%',
       subtitle: '8 deals closed this month',
       trend: '+5%',
@@ -55,7 +55,7 @@ export function DealRoomsStats() {
       sparklineData: [82, 85, 88, 86, 89, 91, 88, 89]
     },
     {
-      title: 'Active Negotiations',
+      title: 'Active Deal Rooms',
       value: '12',
       subtitle: '3 new this week',
       trend: '+25%',

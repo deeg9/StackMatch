@@ -1,6 +1,6 @@
 'use client'
 
-import { Activity, Briefcase, TrendingUp } from 'lucide-react'
+import { Activity, Briefcase, Clock } from 'lucide-react'
 
 export function DealRoomsHeader() {
   return (
@@ -21,16 +21,16 @@ export function DealRoomsHeader() {
         <div className="flex items-center gap-2">
           <Activity className="w-5 h-5 text-trust-green" />
           <span className="text-medium-gray">
-            <span className="font-semibold text-stackmatch-navy">12</span> active rooms
+            <span className="font-semibold text-stackmatch-navy">15</span> Total Deal Rooms
           </span>
         </div>
         
         <div className="w-1 h-1 bg-medium-gray rounded-full"></div>
         
         <div className="flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-stackmatch-blue" />
+          <Clock className="w-5 h-5 text-stackmatch-blue" />
           <span className="text-medium-gray">
-            <span className="font-semibold text-stackmatch-navy">$2.4M</span> in negotiations
+            <span className="font-semibold text-stackmatch-navy">3</span> Upcoming Deadlines
           </span>
         </div>
       </div>
