@@ -23,7 +23,6 @@ import {
   BarChart3,
   CreditCard,
   Timer,
-  Hash,
   ArrowRight
 } from 'lucide-react'
 
@@ -224,20 +223,6 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
         </CardContent>
       </Card>
 
-      {/* Deal Room ID Card */}
-      <Card className="border-slate-200 shadow-sm">
-        <CardContent className="pt-6">
-          <div className="text-center">
-            <div className="text-xs text-medium-gray mb-1">Deal Room ID</div>
-            <div className="flex items-center justify-center gap-1">
-              <Hash className="w-3 h-3 text-medium-gray" />
-              <span className="text-sm font-mono font-medium text-stackmatch-navy">
-                {dealRoom.id}
-              </span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }

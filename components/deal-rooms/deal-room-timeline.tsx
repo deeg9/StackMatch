@@ -13,7 +13,6 @@ import {
   Users,
   FileText,
   Plus,
-  Target,
   TrendingUp,
   Flag,
   Briefcase,
@@ -423,20 +422,13 @@ export function DealRoomTimeline({ }: DealRoomTimelineProps) {
 
       {/* View Tabs */}
       <Tabs value={activeView} onValueChange={(value) => setActiveView(value as any)} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-white border border-slate-200 p-1">
+        <TabsList className="grid w-full grid-cols-2 bg-white border border-slate-200 p-1">
           <TabsTrigger 
             value="timeline" 
             className="data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white"
           >
             <Activity className="w-4 h-4 mr-2" />
             Timeline View
-          </TabsTrigger>
-          <TabsTrigger 
-            value="milestones" 
-            className="data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white"
-          >
-            <Target className="w-4 h-4 mr-2" />
-            Milestones
           </TabsTrigger>
           <TabsTrigger 
             value="gantt" 
@@ -598,42 +590,6 @@ export function DealRoomTimeline({ }: DealRoomTimelineProps) {
           </div>
         </TabsContent>
 
-        {/* Milestones View */}
-        <TabsContent value="milestones" className="mt-6">
-          <div className="grid gap-4">
-            {allMilestones.map((milestone) => (
-              <Card key={milestone.id} className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-200">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center justify-center w-10 h-10 bg-slate-50 rounded-full">
-                        {getEventIcon(milestone.type, milestone.status)}
-                      </div>
-                      
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-stackmatch-navy">{milestone.title}</h3>
-                          <Badge className={getStatusColor(milestone.status)}>
-                            {milestone.status}
-                          </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            {milestone.phase}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-medium-gray">{milestone.description}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="text-right">
-                      <div className="text-sm font-medium text-stackmatch-navy">{milestone.date}</div>
-                      <div className="text-xs text-medium-gray">{milestone.time}</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
 
         {/* Gantt Chart View */}
         <TabsContent value="gantt" className="mt-6">
