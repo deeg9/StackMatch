@@ -230,9 +230,9 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Header Actions */}
-      <div className="flex items-center justify-between">
-        <div className="relative flex-1 max-w-lg">
+      {/* Search and Filter Row */}
+      <div className="flex items-center gap-4">
+        <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
           <Input 
             placeholder="Search meetings..." 
@@ -240,40 +240,26 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
           />
         </div>
         
-        <div className="flex items-center gap-3 ml-4">
-          
-          <Button variant="outline" size="sm">
-            <Filter className="w-4 h-4 mr-2" />
-            Filter
-          </Button>
-          
-          <Button size="sm" className="bg-stackmatch-blue hover:bg-stackmatch-navy">
-            <Plus className="w-4 h-4 mr-2" />
-            Schedule Meeting
-          </Button>
-          
-          <Button size="sm" className="bg-trust-green hover:bg-success-green">
-            <Video className="w-4 h-4 mr-2" />
-            Start Instant Meeting
-          </Button>
-        </div>
+        <Button variant="outline" size="sm">
+          <Filter className="w-4 h-4 mr-2" />
+          Filter
+        </Button>
       </div>
 
-      {/* Quick Actions Bar */}
+      {/* Primary Actions Bar */}
       <Card className="border-slate-200 bg-gradient-to-r from-stackmatch-blue/5 to-trust-green/5">
         <CardContent className="pt-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <Button variant="outline" className="hover:bg-white/50">
-                <Upload className="w-4 h-4 mr-2" />
-                Upload Recording
+            <div className="flex items-center gap-3">
+              <Button size="sm" className="bg-stackmatch-blue hover:bg-stackmatch-navy">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Meeting
               </Button>
               
-              <Button variant="outline" className="hover:bg-white/50">
-                <FileText className="w-4 h-4 mr-2" />
-                Add Meeting Note
+              <Button size="sm" className="bg-trust-green hover:bg-success-green">
+                <Video className="w-4 h-4 mr-2" />
+                Start Instant Meeting
               </Button>
-              
             </div>
             
             <div className="text-sm text-medium-gray">
