@@ -29,7 +29,8 @@ interface DealRoomMeetingNotesProps {
 }
 
 export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string | undefined) => {
+    if (!status) return 'bg-slate-500 text-white'
     switch (status) {
       case 'scheduled':
         return 'bg-information-blue text-white'
@@ -42,7 +43,8 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
     }
   }
 
-  const getStatusLabel = (status: string) => {
+  const getStatusLabel = (status: string | undefined) => {
+    if (!status) return 'Unknown'
     switch (status) {
       case 'scheduled':
         return 'Scheduled'
@@ -55,7 +57,8 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
     }
   }
 
-  const shouldShowJoinButton = (status: string) => {
+  const shouldShowJoinButton = (status: string | undefined) => {
+    if (!status) return false
     return status === 'scheduled' || status === 'in-progress'
   }
   // Mock data for meetings and notes
