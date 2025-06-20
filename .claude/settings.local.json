@@ -20,7 +20,9 @@
       "Bash(git push:*)",
       "Bash(ls:*)",
       "Bash(npm outdated)",
-      "Bash(npm update:*)"
+      "Bash(npm update:*)",
+      "Bash(timeout 30s npm run dev)",
+      "Bash(npm run dev:*)"
     ],
     "deny": []
   },

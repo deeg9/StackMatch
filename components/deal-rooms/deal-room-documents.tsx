@@ -9,6 +9,7 @@ import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { DealRoomProposals } from './deal-room-proposals'
 import { 
   FileText, 
   Download, 
@@ -68,6 +69,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
   const [activeTab, setActiveTab] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDocuments, setSelectedDocuments] = useState<number[]>([])
+  const [documentSection, setDocumentSection] = useState<'files' | 'proposals'>('files')
 
   // Enhanced documents data
   const documents = [
@@ -378,34 +380,48 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Documents Header */}
-      <Card className="border-slate-200 shadow-sm">
-        <CardContent className="pt-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <FolderOpen className="w-5 h-5 text-stackmatch-blue" />
-                <h2 className="text-xl font-semibold text-stackmatch-navy">Document Library</h2>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge variant="secondary" className="bg-stackmatch-blue/10 text-stackmatch-blue">
-                  {documentStats.total} documents
-                </Badge>
-                <Badge className="bg-trust-green text-white">
-                  {documentStats.signed} signed
-                </Badge>
-                {documentStats.pending > 0 && (
-                  <Badge className="bg-attention-orange text-white">
-                    {documentStats.pending} pending
-                  </Badge>
-                )}
-                {documentStats.expired > 0 && (
-                  <Badge className="bg-red-500 text-white">
-                    {documentStats.expired} expired
-                  </Badge>
-                )}
-              </div>
-            </div>
+      {/* Documents Section Tabs */}
+      <Tabs value={documentSection} onValueChange={(value) => setDocumentSection(value as 'files' | 'proposals')} className="w-full">
+        <TabsList className="grid w-full grid-cols-2 bg-white border border-slate-200 p-1">
+          <TabsTrigger value="files" className="data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white">
+            <FolderOpen className="w-4 h-4 mr-2" />
+            All Files
+          </TabsTrigger>
+          <TabsTrigger value="proposals" className="data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white">
+            <FileText className="w-4 h-4 mr-2" />
+            Proposal Management
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="files" className="mt-6">
+          {/* Documents Header */}
+          <Card className="border-slate-200 shadow-sm">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <FolderOpen className="w-5 h-5 text-stackmatch-blue" />
+                    <h2 className="text-xl font-semibold text-stackmatch-navy">Document Library</h2>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Badge variant="secondary" className="bg-stackmatch-blue/10 text-stackmatch-blue">
+                      {documentStats.total} documents
+                    </Badge>
+                    <Badge className="bg-trust-green text-white">
+                      {documentStats.signed} signed
+                    </Badge>
+                    {documentStats.pending > 0 && (
+                      <Badge className="bg-attention-orange text-white">
+                        {documentStats.pending} pending
+                      </Badge>
+                    )}
+                    {documentStats.expired > 0 && (
+                      <Badge className="bg-red-500 text-white">
+                        {documentStats.expired} expired
+                      </Badge>
+                    )}
+                  </div>
+                </div>
 
             <div className="flex items-center gap-3">
               <div className="relative">
@@ -667,33 +683,40 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
         </TabsContent>
       </Tabs>
 
-      {/* Drag & Drop Upload Area */}
-      <Card className="border-2 border-dashed border-slate-300 hover:border-stackmatch-blue transition-all duration-200 hover:bg-stackmatch-blue/5">
-        <CardContent className="py-12">
-          <div className="text-center">
-            <CloudUpload className="w-12 h-12 text-medium-gray mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-stackmatch-navy mb-2">
-              Drag & Drop Files Here
-            </h3>
-            <p className="text-medium-gray mb-4">
-              or click to browse your computer
-            </p>
-            <div className="flex items-center justify-center gap-3">
-              <Button className="bg-stackmatch-blue hover:bg-stackmatch-navy">
-                <Upload className="w-4 h-4 mr-2" />
-                Choose Files
-              </Button>
-              <Button variant="outline">
-                <Link className="w-4 h-4 mr-2" />
-                Add Link
-              </Button>
-            </div>
-            <p className="text-xs text-medium-gray mt-3">
-              Maximum file size: 50MB • Supported formats: PDF, DOC, XLS, PNG, JPG
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+          {/* Drag & Drop Upload Area */}
+          <Card className="border-2 border-dashed border-slate-300 hover:border-stackmatch-blue transition-all duration-200 hover:bg-stackmatch-blue/5">
+            <CardContent className="py-12">
+              <div className="text-center">
+                <CloudUpload className="w-12 h-12 text-medium-gray mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-stackmatch-navy mb-2">
+                  Drag & Drop Files Here
+                </h3>
+                <p className="text-medium-gray mb-4">
+                  or click to browse your computer
+                </p>
+                <div className="flex items-center justify-center gap-3">
+                  <Button className="bg-stackmatch-blue hover:bg-stackmatch-navy">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Choose Files
+                  </Button>
+                  <Button variant="outline">
+                    <Link className="w-4 h-4 mr-2" />
+                    Add Link
+                  </Button>
+                </div>
+                <p className="text-xs text-medium-gray mt-3">
+                  Maximum file size: 50MB • Supported formats: PDF, DOC, XLS, PNG, JPG
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="proposals" className="mt-6">
+          {/* Proposals Section */}
+          <DealRoomProposals dealRoom={dealRoom} />
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

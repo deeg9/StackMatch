@@ -12,7 +12,6 @@ import {
   Video
 } from 'lucide-react'
 import { DealRoomDiscussion } from './deal-room-discussion'
-import { DealRoomProposals } from './deal-room-proposals'
 import { DealRoomDocuments } from './deal-room-documents'
 import { DealRoomTimeline } from './deal-room-timeline'
 import { DealRoomTerms } from './deal-room-terms'
@@ -34,17 +33,10 @@ export function DealRoomTabs({ dealRoom, activeTab, setActiveTab }: DealRoomTabs
       component: DealRoomDiscussion
     },
     {
-      id: 'proposals',
-      label: 'Proposals',
-      icon: FileText,
-      badge: 2, // active proposals
-      component: DealRoomProposals
-    },
-    {
       id: 'documents',
       label: 'Documents',
       icon: FolderOpen,
-      badge: 8, // total documents
+      badge: 10, // total documents (8 docs + 2 proposals)
       component: DealRoomDocuments
     },
     {
