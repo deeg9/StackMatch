@@ -8,42 +8,24 @@ import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
-  Calendar,
   Clock,
   CheckCircle2,
-  AlertCircle,
   Users,
   FileText,
-  MessageCircle,
-  Upload,
   Plus,
   Target,
   TrendingUp,
-  DollarSign,
-  Play,
-  Pause,
-  Timer,
   Flag,
-  MapPin,
   Briefcase,
   Zap,
-  Star,
-  ChevronRight,
-  ChevronDown,
   Edit,
   Filter,
   CalendarDays,
-  Milestone,
   Activity,
-  Bell,
-  Download,
-  Share2,
   ArrowRight,
   BarChart3,
+  Eye,
   CheckSquare,
-  XCircle,
-  AlertTriangle,
-  PauseCircle,
   PlayCircle,
   Construction,
   Rocket,
@@ -53,12 +35,11 @@ import {
 import { Button } from '@/components/ui/button'
 
 interface DealRoomTimelineProps {
-  dealRoom: any
+  dealRoom?: any
 }
 
-export function DealRoomTimeline({ dealRoom }: DealRoomTimelineProps) {
+export function DealRoomTimeline({ }: DealRoomTimelineProps) {
   const [activeView, setActiveView] = useState<'timeline' | 'milestones' | 'gantt'>('timeline')
-  const [selectedPhase, setSelectedPhase] = useState<string | null>(null)
 
   // Enhanced timeline and milestones data
   const projectPhases = [
@@ -515,7 +496,7 @@ export function DealRoomTimeline({ dealRoom }: DealRoomTimelineProps) {
                     <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-slate-200"></div>
                     
                     <div className="space-y-6">
-                      {phase.milestones.map((milestone, milestoneIndex) => (
+                      {phase.milestones.map((milestone) => (
                         <div key={milestone.id} className="relative flex items-start gap-4">
                           {/* Milestone Marker */}
                           <div className="relative z-10 flex items-center justify-center w-12 h-12 bg-white border-4 border-slate-200 rounded-full">
