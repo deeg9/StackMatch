@@ -175,21 +175,8 @@ export function DealRoomDiscussion({ dealRoom }: DealRoomDiscussionProps) {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Action Buttons */}
-      <div className="flex justify-end items-center gap-3">
-        <Button variant="outline" size="sm">
-          <Video className="w-4 h-4 mr-2" />
-          Start Call
-        </Button>
-        
-        <Button variant="outline" size="sm">
-          <Calendar className="w-4 h-4 mr-2" />
-          Schedule
-        </Button>
-      </div>
-
       {/* Search Bar */}
-      <div className="relative max-w-md">
+      <div className="relative w-full">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
         <Input
           placeholder="Search messages..."

@@ -56,7 +56,7 @@ export function DealRoomTabs({ dealRoom, activeTab, setActiveTab }: DealRoomTabs
   return (
     <div className="animate-fade-in">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full justify-start bg-white border border-slate-200 p-1 h-auto mb-6">
+        <TabsList className="w-full grid grid-cols-4 bg-white border border-slate-200 p-1 h-auto mb-6">
           {tabs.map((tab) => {
             const Icon = tab.icon
             return (
