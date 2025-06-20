@@ -406,46 +406,16 @@ export function DealRoomTimeline({ dealRoom }: DealRoomTimelineProps) {
       {/* Timeline Header */}
       <Card className="border-slate-200 shadow-sm">
         <CardContent className="pt-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Workflow className="w-5 h-5 text-stackmatch-blue" />
-                <h2 className="text-xl font-semibold text-stackmatch-navy">Project Timeline</h2>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge variant="secondary" className="bg-stackmatch-blue/10 text-stackmatch-blue">
-                  {projectPhases.length} phases
-                </Badge>
-                <Badge className="bg-trust-green text-white">
-                  {completedMilestones}/{totalMilestones} milestones
-                </Badge>
-                <Badge variant="outline" className="text-attention-orange border-attention-orange">
-                  {Math.round(overallProgress)}% complete
-                </Badge>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
-                <Input
-                  placeholder="Search timeline..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 w-64"
-                />
-              </div>
-              
-              <Button variant="outline" size="sm">
-                <Filter className="w-4 h-4 mr-2" />
-                Filter
-              </Button>
-              
-              <Button size="sm" className="bg-stackmatch-blue hover:bg-stackmatch-navy">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Milestone
-              </Button>
-            </div>
+          <div className="flex items-center justify-end gap-3 mb-4">
+            <Button variant="outline" size="sm">
+              <Filter className="w-4 h-4 mr-2" />
+              Filter
+            </Button>
+            
+            <Button size="sm" className="bg-stackmatch-blue hover:bg-stackmatch-navy">
+              <Plus className="w-4 h-4 mr-2" />
+              Add Milestone
+            </Button>
           </div>
 
           {/* Overall Progress */}
@@ -457,20 +427,20 @@ export function DealRoomTimeline({ dealRoom }: DealRoomTimelineProps) {
             <Progress value={overallProgress} className="h-3 mb-3" />
             <div className="grid grid-cols-4 gap-4 text-sm">
               <div className="text-center">
-                <div className="font-bold text-stackmatch-blue">{projectPhases.length}</div>
-                <div className="text-medium-gray">Phases</div>
+                <div className="font-bold text-stackmatch-blue">{totalMilestones}</div>
+                <div className="text-medium-gray">Total Milestones</div>
               </div>
               <div className="text-center">
                 <div className="font-bold text-trust-green">{completedMilestones}</div>
-                <div className="text-medium-gray">Completed</div>
+                <div className="text-medium-gray">Completed Milestones</div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-attention-orange">{totalMilestones - completedMilestones}</div>
-                <div className="text-medium-gray">Remaining</div>
+                <div className="font-bold text-attention-orange">{allMilestones.filter(m => m.status !== 'completed').length}</div>
+                <div className="text-medium-gray">Open Tasks</div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-information-blue">${totalBudget.toLocaleString()}</div>
-                <div className="text-medium-gray">Total Budget</div>
+                <div className="font-bold text-information-blue">89</div>
+                <div className="text-medium-gray">Days Remaining</div>
               </div>
             </div>
           </div>
