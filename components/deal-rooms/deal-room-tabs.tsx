@@ -46,7 +46,7 @@ export function DealRoomTabs({ dealRoom, activeTab, setActiveTab }: DealRoomTabs
     },
     {
       id: 'meeting-notes',
-      label: 'Meeting Notes',
+      label: 'Meetings',
       icon: Video,
       badge: 4, // recordings available
       component: DealRoomMeetingNotes

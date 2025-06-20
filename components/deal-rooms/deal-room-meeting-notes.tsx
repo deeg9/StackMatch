@@ -29,6 +29,35 @@ interface DealRoomMeetingNotesProps {
 }
 
 export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'scheduled':
+        return 'bg-information-blue text-white'
+      case 'in-progress':
+        return 'bg-attention-orange text-white'
+      case 'completed':
+        return 'bg-success-green text-white'
+      default:
+        return 'bg-slate-500 text-white'
+    }
+  }
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'scheduled':
+        return 'Scheduled'
+      case 'in-progress':
+        return 'In Progress'
+      case 'completed':
+        return 'Completed'
+      default:
+        return 'Unknown'
+    }
+  }
+
+  const shouldShowJoinButton = (status: string) => {
+    return status === 'scheduled' || status === 'in-progress'
+  }
   // Mock data for meetings and notes
   const meetings = [
     {
@@ -54,6 +83,7 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
         wordCount: 12450,
         url: '#'
       },
+      status: 'completed',
       notes: `## Key Discussion Points
 
 1. **Project Timeline Review**
@@ -148,7 +178,50 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
 3. **Blockers & Risks**
    - Third-party integration delays
    - Resource availability concerns`,
+      status: 'in-progress',
       actionItems: 2
+    },
+    {
+      id: '3',
+      title: 'Sprint Planning Session',
+      date: '2024-02-05',
+      time: '9:00 AM',
+      duration: '2h',
+      attendees: [
+        { name: 'Sarah Johnson', avatar: '/api/placeholder/32/32', present: false },
+        { name: 'Michael Chen', avatar: '/api/placeholder/32/32', present: false },
+        { name: 'David Kim', avatar: '/api/placeholder/32/32', present: false },
+        { name: 'Elena Rodriguez', avatar: '/api/placeholder/32/32', present: false }
+      ],
+      recording: {
+        available: false,
+        duration: null,
+        size: null,
+        url: null
+      },
+      transcript: {
+        available: false,
+        wordCount: null,
+        url: null
+      },
+      status: 'scheduled',
+      notes: `## Agenda
+
+1. **Sprint Goals Definition**
+   - Review product backlog
+   - Set sprint objectives
+   - Capacity planning
+
+2. **Task Breakdown**
+   - Story point estimation
+   - Task assignment
+   - Dependency mapping
+
+3. **Timeline & Deliverables**
+   - Sprint timeline review
+   - Definition of done criteria
+   - Acceptance criteria validation`,
+      actionItems: 0
     }
   ]
 
@@ -195,7 +268,7 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
               
               <Button variant="outline" className="hover:bg-white/50">
                 <FileText className="w-4 h-4 mr-2" />
-                Add Notes
+                Add Meeting Note
               </Button>
               
             </div>
@@ -214,9 +287,14 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
             <CardHeader className="pb-4">
               <div className="flex items-start justify-between">
                 <div className="space-y-2">
-                  <CardTitle className="text-lg text-stackmatch-navy">
-                    {meeting.title}
-                  </CardTitle>
+                  <div className="flex items-center gap-3">
+                    <CardTitle className="text-lg text-stackmatch-navy">
+                      {meeting.title}
+                    </CardTitle>
+                    <Badge className={getStatusColor(meeting.status)}>
+                      {getStatusLabel(meeting.status)}
+                    </Badge>
+                  </div>
                   
                   <div className="flex items-center gap-4 text-sm text-medium-gray">
                     <div className="flex items-center gap-1">
@@ -227,18 +305,15 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
                       <Clock className="w-4 h-4" />
                       {meeting.time} • {meeting.duration}
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Users className="w-4 h-4" />
-                      {meeting.attendees.filter(a => a.present).length}/{meeting.attendees.length} attended
-                    </div>
-                    {meeting.actionItems > 0 && (
-                      <div className="flex items-center gap-1">
-                        <CheckSquare className="w-4 h-4" />
-                        {meeting.actionItems} action items
-                      </div>
-                    )}
                   </div>
                 </div>
+                
+                {shouldShowJoinButton(meeting.status) && (
+                  <Button size="sm" className="bg-trust-green hover:bg-success-green text-white">
+                    <Video className="w-4 h-4 mr-2" />
+                    Join Meeting
+                  </Button>
+                )}
               </div>
             </CardHeader>
             
