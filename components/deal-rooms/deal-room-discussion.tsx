@@ -1,12 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
 import { 
   Send, 
   Paperclip, 
@@ -14,7 +13,6 @@ import {
   Search, 
   MoreVertical,
   Reply,
-  Heart,
   ThumbsUp,
   CheckCheck,
   Clock,
@@ -22,22 +20,12 @@ import {
   Image as ImageIcon,
   Video,
   Calendar,
-  Settings,
-  Users,
   Download,
   Copy,
-  Flag,
   Edit,
-  Trash2,
   Quote,
-  MessageSquare,
   Eye,
-  EyeOff,
-  Star,
-  Archive,
-  Phone,
-  CircleDot,
-  Hash
+  Star
 } from 'lucide-react'
 
 interface DealRoomDiscussionProps {
@@ -184,108 +172,43 @@ export function DealRoomDiscussion({ dealRoom }: DealRoomDiscussionProps) {
     }
   }
 
-  const onlineParticipants = dealRoom.participants.filter((p: any) => p.isOnline)
-  const unreadCount = messages.filter(m => !m.isRead).length
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Chat Header with Actions */}
-      <Card className="border-slate-200 shadow-sm">
-        <CardContent className="pt-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-stackmatch-blue" />
-                <h2 className="text-xl font-semibold text-stackmatch-navy">Discussion</h2>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge variant="secondary" className="bg-stackmatch-blue/10 text-stackmatch-blue">
-                  {messages.length} messages
-                </Badge>
-                {unreadCount > 0 && (
-                  <Badge className="bg-attention-orange text-white">
-                    {unreadCount} unread
-                  </Badge>
-                )}
-                <div className="flex items-center gap-1 text-sm text-medium-gray">
-                  <CircleDot className="w-3 h-3 text-trust-green" />
-                  {onlineParticipants.length} online
-                </div>
-              </div>
-            </div>
+      {/* Action Buttons */}
+      <div className="flex justify-end items-center gap-3">
+        <Button variant="outline" size="sm">
+          <Video className="w-4 h-4 mr-2" />
+          Start Call
+        </Button>
+        
+        <Button variant="outline" size="sm">
+          <Calendar className="w-4 h-4 mr-2" />
+          Schedule
+        </Button>
+      </div>
 
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
-                <Input
-                  placeholder="Search messages..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 w-64"
-                />
-              </div>
-              
-              <Button variant="outline" size="sm">
-                <Video className="w-4 h-4 mr-2" />
-                Start Call
-              </Button>
-              
-              <Button variant="outline" size="sm">
-                <Calendar className="w-4 h-4 mr-2" />
-                Schedule
-              </Button>
-              
-              <Button variant="ghost" size="icon">
-                <Settings className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-
-          {/* Participants Bar */}
-          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-stackmatch-blue/5 to-trust-green/5 rounded-lg">
-            <div className="flex items-center gap-4">
-              <span className="text-sm font-medium text-stackmatch-navy">Participants:</span>
-              <div className="flex items-center gap-2">
-                {dealRoom.participants.map((participant: any) => (
-                  <div key={participant.id} className="flex items-center gap-2">
-                    <div className="relative">
-                      <Avatar className="w-8 h-8">
-                        <AvatarImage src={participant.avatar} alt={participant.name} />
-                        <AvatarFallback>{participant.name[0]}</AvatarFallback>
-                      </Avatar>
-                      {participant.isOnline && (
-                        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-trust-green rounded-full border-2 border-white" />
-                      )}
-                    </div>
-                    <div className="text-sm">
-                      <div className="font-medium text-stackmatch-navy">{participant.name}</div>
-                      <div className="text-xs text-medium-gray">{participant.lastSeen}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <Button variant="outline" size="sm">
-              <Users className="w-4 h-4 mr-2" />
-              Invite
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Search Bar */}
+      <div className="relative max-w-md">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
+        <Input
+          placeholder="Search messages..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10 w-full"
+        />
+      </div>
 
       {/* Main Chat Interface */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Messages Area */}
-        <div className="lg:col-span-3">
-          <Card className="h-[700px] flex flex-col border-slate-200 shadow-sm">
-            {/* Messages Container */}
-            <CardContent className="flex-1 overflow-y-auto p-6 space-y-6">
-              {messages.map((msg) => {
-                const isRepliedMessage = messages.find(m => m.id === msg.repliedTo)
-                
-                return (
-                  <div key={msg.id} className="group animate-slide-up">
+      <div className="w-full">
+        <Card className="h-[700px] flex flex-col border-slate-200 shadow-sm">
+          {/* Messages Container */}
+          <CardContent className="flex-1 overflow-y-auto p-6 space-y-6">
+            {messages.map((msg) => {
+              const isRepliedMessage = messages.find(m => m.id === msg.repliedTo)
+              
+              return (
+                <div key={msg.id} className="group animate-slide-up">
                     {/* Reply indicator */}
                     {msg.repliedTo && isRepliedMessage && (
                       <div className="ml-12 mb-2 p-2 bg-slate-100 rounded-lg border-l-4 border-stackmatch-blue">
@@ -427,175 +350,81 @@ export function DealRoomDiscussion({ dealRoom }: DealRoomDiscussionProps) {
                     </div>
                   </div>
                 )
-              })}
+            })}
 
-              {/* Typing Indicator */}
-              {isTyping && (
-                <div className="flex items-center gap-3 text-medium-gray animate-pulse">
-                  <Avatar className="w-8 h-8">
-                    <AvatarFallback>??</AvatarFallback>
-                  </Avatar>
-                  <div className="text-sm">Someone is typing...</div>
-                </div>
-              )}
-
-              {/* Load Earlier Messages */}
-              <div className="text-center py-4">
-                <Button variant="outline" size="sm">
-                  <Eye className="w-4 h-4 mr-2" />
-                  Load Earlier Messages
-                </Button>
-              </div>
-            </CardContent>
-
-            {/* Message Input */}
-            <div className="p-6 border-t border-slate-200 bg-slate-50">
-              <div className="flex items-end gap-4">
-                <Avatar className="w-10 h-10">
-                  <AvatarFallback>ME</AvatarFallback>
+            {/* Typing Indicator */}
+            {isTyping && (
+              <div className="flex items-center gap-3 text-medium-gray animate-pulse">
+                <Avatar className="w-8 h-8">
+                  <AvatarFallback>??</AvatarFallback>
                 </Avatar>
-                
-                <div className="flex-1 space-y-3">
-                  <div className="relative">
-                    <Input
-                      placeholder="Type your message..."
-                      value={message}
-                      onChange={(e) => {
-                        setMessage(e.target.value)
-                        setIsTyping(e.target.value.length > 0)
-                      }}
-                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                      className="pr-32 py-3 bg-white border-slate-300 focus:border-stackmatch-blue focus:ring-stackmatch-blue"
-                    />
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
-                      <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-stackmatch-blue hover:text-white">
-                        <Paperclip className="w-4 h-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-attention-orange hover:text-white">
-                        <Smile className="w-4 h-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-trust-green hover:text-white">
-                        <ImageIcon className="w-4 h-4" />
-                      </Button>
-                    </div>
+                <div className="text-sm">Someone is typing...</div>
+              </div>
+            )}
+
+            {/* Load Earlier Messages */}
+            <div className="text-center py-4">
+              <Button variant="outline" size="sm">
+                <Eye className="w-4 h-4 mr-2" />
+                Load Earlier Messages
+              </Button>
+            </div>
+          </CardContent>
+
+          {/* Message Input */}
+          <div className="p-6 border-t border-slate-200 bg-slate-50">
+            <div className="flex items-end gap-4">
+              <Avatar className="w-10 h-10">
+                <AvatarFallback>ME</AvatarFallback>
+              </Avatar>
+              
+              <div className="flex-1 space-y-3">
+                <div className="relative">
+                  <Input
+                    placeholder="Type your message..."
+                    value={message}
+                    onChange={(e) => {
+                      setMessage(e.target.value)
+                      setIsTyping(e.target.value.length > 0)
+                    }}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                    className="pr-32 py-3 bg-white border-slate-300 focus:border-stackmatch-blue focus:ring-stackmatch-blue"
+                  />
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+                    <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-stackmatch-blue hover:text-white">
+                      <Paperclip className="w-4 h-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-attention-orange hover:text-white">
+                      <Smile className="w-4 h-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-trust-green hover:text-white">
+                      <ImageIcon className="w-4 h-4" />
+                    </Button>
                   </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="text-xs text-medium-gray">
-                      Press Enter to send, Shift+Enter for new line
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button variant="outline" size="sm">
-                        Save Draft
-                      </Button>
-                      <Button 
-                        onClick={handleSendMessage}
-                        disabled={!message.trim()}
-                        className="bg-stackmatch-blue hover:bg-stackmatch-navy"
-                      >
-                        <Send className="w-4 h-4 mr-2" />
-                        Send
-                      </Button>
-                    </div>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="text-xs text-medium-gray">
+                    Press Enter to send, Shift+Enter for new line
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm">
+                      Save Draft
+                    </Button>
+                    <Button 
+                      onClick={handleSendMessage}
+                      disabled={!message.trim()}
+                      className="bg-stackmatch-blue hover:bg-stackmatch-navy"
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      Send
+                    </Button>
                   </div>
                 </div>
               </div>
             </div>
-          </Card>
-        </div>
-
-        {/* Chat Sidebar */}
-        <div className="space-y-4">
-          {/* Chat Stats */}
-          <Card className="border-slate-200 shadow-sm">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-sm">
-                <Hash className="w-4 h-4" />
-                Chat Stats
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-medium-gray">Total Messages</span>
-                  <span className="font-medium">{messages.length}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-medium-gray">Unread</span>
-                  <span className="font-medium text-stackmatch-blue">{unreadCount}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-medium-gray">Files Shared</span>
-                  <span className="font-medium">3</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-medium-gray">Participants</span>
-                  <span className="font-medium">{dealRoom.participants.length}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-medium-gray">Online Now</span>
-                  <span className="font-medium text-trust-green">{onlineParticipants.length}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quick Actions */}
-          <Card className="border-slate-200 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-sm">Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Button variant="outline" className="w-full justify-start hover:bg-slate-50" size="sm">
-                <FileText className="w-4 h-4 mr-2" />
-                Share Document
-              </Button>
-              <Button variant="outline" className="w-full justify-start hover:bg-slate-50" size="sm">
-                <ImageIcon className="w-4 h-4 mr-2" />
-                Upload Image
-              </Button>
-              <Button variant="outline" className="w-full justify-start hover:bg-slate-50" size="sm">
-                <Video className="w-4 h-4 mr-2" />
-                Start Call
-              </Button>
-              <Button variant="outline" className="w-full justify-start hover:bg-slate-50" size="sm">
-                <Calendar className="w-4 h-4 mr-2" />
-                Schedule Meeting
-              </Button>
-              <Button variant="outline" className="w-full justify-start hover:bg-slate-50" size="sm">
-                <Archive className="w-4 h-4 mr-2" />
-                Export Chat
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Message Settings */}
-          <Card className="border-slate-200 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-sm">Notifications</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-medium-gray">New Messages</span>
-                <Button variant="ghost" size="icon" className="w-8 h-8">
-                  <Eye className="w-4 h-4 text-trust-green" />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-medium-gray">Mentions</span>
-                <Button variant="ghost" size="icon" className="w-8 h-8">
-                  <Eye className="w-4 h-4 text-trust-green" />
-                </Button>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-medium-gray">File Uploads</span>
-                <Button variant="ghost" size="icon" className="w-8 h-8">
-                  <Eye className="w-4 h-4 text-trust-green" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+          </div>
+        </Card>
       </div>
     </div>
   )
