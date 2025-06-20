@@ -14,6 +14,7 @@ import {
   Users, 
   FileText, 
   Download, 
+  Play,
   Upload, 
   Plus,
   Search,
