@@ -155,17 +155,12 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
           
           <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
             <Video className="w-4 h-4 mr-2" />
-            Start Video Call
+            Start Instant Meeting
           </Button>
           
           <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
             <Calendar className="w-4 h-4 mr-2" />
-            Schedule Meeting
-          </Button>
-          
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <FileText className="w-4 h-4 mr-2" />
-            Add Meeting Note
+            Add Meeting
           </Button>
           
           <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
@@ -173,10 +168,6 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
             Set Reminder
           </Button>
           
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Download className="w-4 h-4 mr-2" />
-            Export Room Data
-          </Button>
         </CardContent>
       </Card>
 
