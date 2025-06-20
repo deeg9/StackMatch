@@ -165,8 +165,8 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
           </Button>
           
           <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Users className="w-4 h-4 mr-2" />
-            Invite Participant
+            <FileText className="w-4 h-4 mr-2" />
+            Add Meeting Note
           </Button>
           
           <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
