@@ -482,6 +482,11 @@ export function DealRoomTimeline({ }: DealRoomTimelineProps) {
                         <div className="font-medium text-information-blue">{phase.progress}%</div>
                         <div className="text-xs text-medium-gray">Progress</div>
                       </div>
+                      
+                      <Button variant="outline" size="sm" className="bg-white hover:bg-slate-50">
+                        <Edit className="w-3 h-3 mr-1" />
+                        Edit
+                      </Button>
                     </div>
                   </div>
                   
@@ -548,11 +553,6 @@ export function DealRoomTimeline({ }: DealRoomTimelineProps) {
                                       )}
                                     </div>
                                   </div>
-                                  
-                                  <Button variant="outline" size="sm" className="bg-white hover:bg-slate-50">
-                                    <Edit className="w-3 h-3 mr-1" />
-                                    Edit
-                                  </Button>
                                 </div>
                                 
                                 {/* Deliverables */}
@@ -584,10 +584,6 @@ export function DealRoomTimeline({ }: DealRoomTimelineProps) {
                                       Complete
                                     </Button>
                                   )}
-                                  <Button variant="outline" size="sm">
-                                    <Edit className="w-3 h-3 mr-1" />
-                                    Edit
-                                  </Button>
                                 </div>
                               </CardContent>
                             </Card>
