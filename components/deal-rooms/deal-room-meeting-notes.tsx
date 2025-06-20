@@ -14,16 +14,13 @@ import {
   Users, 
   FileText, 
   Download, 
-  Play, 
   Upload, 
   Plus,
   Search,
   Filter,
-  Mic,
   Link,
   CheckSquare,
   User,
-  ExternalLink
 } from 'lucide-react'
 
 interface DealRoomMeetingNotesProps {
@@ -158,21 +155,15 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
     <div className="space-y-6 animate-fade-in">
       {/* Header Actions */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h2 className="text-xl font-semibold text-stackmatch-navy">Meeting History</h2>
-          <Badge variant="secondary" className="bg-information-blue/10 text-information-blue">
-            {meetings.length} meetings
-          </Badge>
+        <div className="relative flex-1 max-w-lg">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
+          <Input 
+            placeholder="Search meetings..." 
+            className="pl-10 w-full"
+          />
         </div>
         
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
-            <Input 
-              placeholder="Search meetings..." 
-              className="pl-10 w-64"
-            />
-          </div>
+        <div className="flex items-center gap-3 ml-4">
           
           <Button variant="outline" size="sm">
             <Filter className="w-4 h-4 mr-2" />
@@ -206,10 +197,6 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
                 Add Notes
               </Button>
               
-              <Button variant="outline" className="hover:bg-white/50">
-                <Link className="w-4 h-4 mr-2" />
-                Share Meeting Link
-              </Button>
             </div>
             
             <div className="text-sm text-medium-gray">
@@ -250,20 +237,6 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
                       </div>
                     )}
                   </div>
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  {meeting.recording.available && (
-                    <Button variant="outline" size="sm">
-                      <Play className="w-4 h-4 mr-2" />
-                      Play Recording
-                    </Button>
-                  )}
-                  
-                  <Button variant="outline" size="sm">
-                    <Download className="w-4 h-4 mr-2" />
-                    Export
-                  </Button>
                 </div>
               </div>
             </CardHeader>
@@ -312,10 +285,15 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
                           <div>Duration: {meeting.recording.duration}</div>
                           <div>Size: {meeting.recording.size}</div>
                         </div>
-                        <Button size="sm" className="mt-3 bg-stackmatch-blue hover:bg-stackmatch-navy">
-                          <Play className="w-3 h-3 mr-1" />
-                          Watch
-                        </Button>
+                        <div className="flex items-center gap-2 mt-3">
+                          <Button size="sm" className="bg-stackmatch-blue hover:bg-stackmatch-navy">
+                            <Play className="w-3 h-3 mr-1" />
+                            Watch
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Download className="w-3 h-3" />
+                          </Button>
+                        </div>
                       </div>
                     )}
                     
@@ -329,10 +307,15 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
                           <div>Words: {meeting.transcript.wordCount?.toLocaleString()}</div>
                           <div>Searchable text available</div>
                         </div>
-                        <Button size="sm" variant="outline" className="mt-3 border-trust-green text-trust-green hover:bg-trust-green hover:text-white">
-                          <FileText className="w-3 h-3 mr-1" />
-                          Read
-                        </Button>
+                        <div className="flex items-center gap-2 mt-3">
+                          <Button size="sm" variant="outline" className="border-trust-green text-trust-green hover:bg-trust-green hover:text-white">
+                            <FileText className="w-3 h-3 mr-1" />
+                            Read
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Download className="w-3 h-3" />
+                          </Button>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -341,12 +324,8 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
 
               {/* Meeting Notes */}
               <div>
-                <div className="flex items-center justify-between mb-3">
+                <div className="mb-3">
                   <h4 className="text-sm font-semibold text-stackmatch-navy">Meeting Notes</h4>
-                  <Button variant="ghost" size="sm" className="text-xs">
-                    <ExternalLink className="w-3 h-3 mr-1" />
-                    Open in Editor
-                  </Button>
                 </div>
                 
                 <div className="bg-slate-50 rounded-lg p-4">
@@ -363,11 +342,6 @@ export function DealRoomMeetingNotes({ dealRoom }: DealRoomMeetingNotesProps) {
               {/* Quick Actions */}
               <div className="flex items-center justify-between pt-2">
                 <div className="flex items-center gap-3">
-                  <Button variant="ghost" size="sm">
-                    <Mic className="w-4 h-4 mr-2" />
-                    Add Voice Note
-                  </Button>
-                  
                   <Button variant="ghost" size="sm">
                     <FileText className="w-4 h-4 mr-2" />
                     Edit Notes
