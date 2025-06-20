@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
-import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
   Calendar,
@@ -32,19 +31,15 @@ import {
   ChevronRight,
   ChevronDown,
   Edit,
-  MoreVertical,
   Filter,
-  Search,
   CalendarDays,
   Milestone,
   Activity,
   Bell,
-  Eye,
   Download,
   Share2,
   ArrowRight,
   BarChart3,
-  Workflow,
   CheckSquare,
   XCircle,
   AlertTriangle,
@@ -63,7 +58,6 @@ interface DealRoomTimelineProps {
 
 export function DealRoomTimeline({ dealRoom }: DealRoomTimelineProps) {
   const [activeView, setActiveView] = useState<'timeline' | 'milestones' | 'gantt'>('timeline')
-  const [searchQuery, setSearchQuery] = useState('')
   const [selectedPhase, setSelectedPhase] = useState<string | null>(null)
 
   // Enhanced timeline and milestones data
@@ -397,7 +391,6 @@ export function DealRoomTimeline({ dealRoom }: DealRoomTimelineProps) {
   }
 
   const overallProgress = projectPhases.reduce((acc, phase) => acc + phase.progress, 0) / projectPhases.length
-  const totalBudget = projectPhases.reduce((acc, phase) => acc + phase.budget, 0)
   const completedMilestones = allMilestones.filter(m => m.status === 'completed').length
   const totalMilestones = allMilestones.length
 
@@ -505,10 +498,6 @@ export function DealRoomTimeline({ dealRoom }: DealRoomTimelineProps) {
                         <div className="text-xs text-medium-gray">Duration</div>
                       </div>
                       <div className="text-center">
-                        <div className="font-medium text-trust-green">${phase.budget.toLocaleString()}</div>
-                        <div className="text-xs text-medium-gray">Budget</div>
-                      </div>
-                      <div className="text-center">
                         <div className="font-medium text-information-blue">{phase.progress}%</div>
                         <div className="text-xs text-medium-gray">Progress</div>
                       </div>
@@ -579,8 +568,9 @@ export function DealRoomTimeline({ dealRoom }: DealRoomTimelineProps) {
                                     </div>
                                   </div>
                                   
-                                  <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                    <MoreVertical className="w-4 h-4" />
+                                  <Button variant="outline" size="sm" className="bg-white hover:bg-slate-50">
+                                    <Edit className="w-3 h-3 mr-1" />
+                                    Edit
                                   </Button>
                                 </div>
                                 
@@ -613,10 +603,6 @@ export function DealRoomTimeline({ dealRoom }: DealRoomTimelineProps) {
                                       Complete
                                     </Button>
                                   )}
-                                  <Button variant="outline" size="sm">
-                                    <Eye className="w-3 h-3 mr-1" />
-                                    Details
-                                  </Button>
                                   <Button variant="outline" size="sm">
                                     <Edit className="w-3 h-3 mr-1" />
                                     Edit

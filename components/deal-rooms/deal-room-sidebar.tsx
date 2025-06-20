@@ -135,111 +135,6 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
         </CardContent>
       </Card>
 
-      {/* Quick Stats Card */}
-      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2 text-stackmatch-navy">
-            <Activity className="w-5 h-5" />
-            Quick Stats
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-3 bg-stackmatch-blue/5 rounded-lg">
-              <div className="flex items-center justify-center mb-1">
-                <MessageSquare className="w-4 h-4 text-stackmatch-blue" />
-              </div>
-              <div className="text-lg font-bold text-stackmatch-navy">
-                {dealRoom.stats.messagesExchanged}
-              </div>
-              <div className="text-xs text-medium-gray">Messages</div>
-            </div>
-            
-            <div className="text-center p-3 bg-attention-orange/5 rounded-lg">
-              <div className="flex items-center justify-center mb-1">
-                <FileText className="w-4 h-4 text-attention-orange" />
-              </div>
-              <div className="text-lg font-bold text-stackmatch-navy">
-                {dealRoom.stats.documentsShared}
-              </div>
-              <div className="text-xs text-medium-gray">Documents</div>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-3 bg-trust-green/5 rounded-lg">
-              <div className="flex items-center justify-center mb-1">
-                <Video className="w-4 h-4 text-trust-green" />
-              </div>
-              <div className="text-lg font-bold text-stackmatch-navy">
-                {dealRoom.stats.meetingsHeld}
-              </div>
-              <div className="text-xs text-medium-gray">Meetings</div>
-            </div>
-            
-            <div className="text-center p-3 bg-information-blue/5 rounded-lg">
-              <div className="flex items-center justify-center mb-1">
-                <Clock className="w-4 h-4 text-information-blue" />
-              </div>
-              <div className="text-lg font-bold text-stackmatch-navy">
-                {dealRoom.stats.daysSinceCreation}
-              </div>
-              <div className="text-xs text-medium-gray">Days</div>
-            </div>
-          </div>
-
-          <div className="text-center p-3 bg-slate-50 rounded-lg">
-            <div className="text-sm text-medium-gray">Average Response Time</div>
-            <div className="text-lg font-bold text-stackmatch-navy">
-              {dealRoom.stats.averageResponseTime}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Recent Activity Card */}
-      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center justify-between text-stackmatch-navy">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5" />
-              Recent Activity
-            </div>
-            <Button variant="ghost" size="sm" className="text-xs">
-              View All
-              <ArrowRight className="w-3 h-3 ml-1" />
-            </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {dealRoom.recentActivity.map((activity: any) => {
-            const Icon = getActivityIcon(activity.type)
-            const colorClass = getActivityColor(activity.type)
-            
-            return (
-              <div key={activity.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors duration-200">
-                <div className={`p-1.5 rounded-full bg-white border-2 ${colorClass.replace('text-', 'border-')}`}>
-                  <Icon className={`w-3 h-3 ${colorClass}`} />
-                </div>
-                
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs text-medium-gray">{activity.timestamp}</div>
-                  <div className="text-sm font-medium text-stackmatch-navy">
-                    {activity.user}
-                  </div>
-                  <div className="text-xs text-medium-gray">
-                    {activity.action}
-                  </div>
-                  <div className="text-xs text-charcoal font-medium mt-1">
-                    {activity.details}
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </CardContent>
-      </Card>
-
       {/* Quick Actions Card */}
       <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
         <CardHeader className="pb-4">
@@ -283,6 +178,49 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
             <Download className="w-4 h-4 mr-2" />
             Export Room Data
           </Button>
+        </CardContent>
+      </Card>
+
+      {/* Recent Activity Card */}
+      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center justify-between text-stackmatch-navy">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5" />
+              Recent Activity
+            </div>
+            <Button variant="ghost" size="sm" className="text-xs">
+              View All
+              <ArrowRight className="w-3 h-3 ml-1" />
+            </Button>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {dealRoom.recentActivity.map((activity: any) => {
+            const Icon = getActivityIcon(activity.type)
+            const colorClass = getActivityColor(activity.type)
+            
+            return (
+              <div key={activity.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors duration-200">
+                <div className={`p-1.5 rounded-full bg-white border-2 ${colorClass.replace('text-', 'border-')}`}>
+                  <Icon className={`w-3 h-3 ${colorClass}`} />
+                </div>
+                
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs text-medium-gray">{activity.timestamp}</div>
+                  <div className="text-sm font-medium text-stackmatch-navy">
+                    {activity.user}
+                  </div>
+                  <div className="text-xs text-medium-gray">
+                    {activity.action}
+                  </div>
+                  <div className="text-xs text-charcoal font-medium mt-1">
+                    {activity.details}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
         </CardContent>
       </Card>
 
