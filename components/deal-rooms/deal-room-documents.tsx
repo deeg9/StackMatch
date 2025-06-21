@@ -9,6 +9,7 @@ import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { DealRoomProposals } from './deal-room-proposals'
 import { 
   FileText, 
@@ -82,18 +83,19 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       uploadedBy: {
         name: 'Sarah Johnson',
         avatar: '/api/placeholder/32/32',
-        role: 'buyer'
+        role: 'buyer',
+        jobTitle: 'CTO'
       },
       uploadedAt: '2024-01-15',
       lastModified: '2024-01-28',
       status: 'signed',
       priority: 'high',
-      category: 'Legal',
+      category: 'Agreements',
       description: 'Primary service agreement outlining terms, conditions, and obligations for both parties.',
       signers: [
-        { name: 'Sarah Johnson', email: 'sarah@healthtech.com', signed: true, signedAt: '2024-01-25 14:30', ipAddress: '192.168.1.100' },
-        { name: 'Michael Chen', email: 'michael@crmexperts.com', signed: true, signedAt: '2024-01-26 09:15', ipAddress: '192.168.1.101' },
-        { name: 'David Kim', email: 'david@healthtech.com', signed: true, signedAt: '2024-01-27 16:45', ipAddress: '192.168.1.102' }
+        { name: 'Sarah Johnson', email: 'sarah@healthtech.com', jobTitle: 'CTO', signed: true, signedAt: '2024-01-25 14:30', ipAddress: '192.168.1.100' },
+        { name: 'Michael Chen', email: 'michael@crmexperts.com', jobTitle: 'Solutions Architect', signed: true, signedAt: '2024-01-26 09:15', ipAddress: '192.168.1.101' },
+        { name: 'David Kim', email: 'david@healthtech.com', jobTitle: 'Project Manager', signed: true, signedAt: '2024-01-27 16:45', ipAddress: '192.168.1.102' }
       ],
       version: '3.0',
       versions: [
@@ -122,17 +124,18 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       uploadedBy: {
         name: 'Sarah Johnson',
         avatar: '/api/placeholder/32/32',
-        role: 'buyer'
+        role: 'buyer',
+        jobTitle: 'CTO'
       },
       uploadedAt: '2024-01-10',
       lastModified: '2024-01-12',
       status: 'signed',
       priority: 'high',
-      category: 'Legal',
+      category: 'Agreements',
       description: 'Confidentiality agreement protecting sensitive business information shared during negotiations.',
       signers: [
-        { name: 'Sarah Johnson', email: 'sarah@healthtech.com', signed: true, signedAt: '2024-01-10 10:30', ipAddress: '192.168.1.100' },
-        { name: 'Michael Chen', email: 'michael@crmexperts.com', signed: true, signedAt: '2024-01-11 14:20', ipAddress: '192.168.1.101' }
+        { name: 'Sarah Johnson', email: 'sarah@healthtech.com', jobTitle: 'CTO', signed: true, signedAt: '2024-01-10 10:30', ipAddress: '192.168.1.100' },
+        { name: 'Michael Chen', email: 'michael@crmexperts.com', jobTitle: 'Solutions Architect', signed: true, signedAt: '2024-01-11 14:20', ipAddress: '192.168.1.101' }
       ],
       version: '1.0',
       versions: [
@@ -159,13 +162,14 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       uploadedBy: {
         name: 'Sarah Johnson',
         avatar: '/api/placeholder/32/32',
-        role: 'buyer'
+        role: 'buyer',
+        jobTitle: 'CTO'
       },
       uploadedAt: '2024-01-16',
       lastModified: '2024-01-29',
       status: 'approved',
       priority: 'high',
-      category: 'Services/Features',
+      category: 'Services & Features',
       description: 'Comprehensive technical requirements including system architecture, integration needs, and performance criteria.',
       version: '2.1',
       versions: [
@@ -194,7 +198,8 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       uploadedBy: {
         name: 'Michael Chen',
         avatar: '/api/placeholder/32/32',
-        role: 'seller'
+        role: 'seller',
+        jobTitle: 'Solutions Architect'
       },
       uploadedAt: '2024-01-18',
       lastModified: '2024-01-30',
@@ -228,18 +233,19 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       uploadedBy: {
         name: 'Elena Rodriguez',
         avatar: '/api/placeholder/32/32',
-        role: 'seller'
+        role: 'seller',
+        jobTitle: 'Account Manager'
       },
       uploadedAt: '2024-01-20',
       lastModified: '2024-01-31',
       status: 'pending-signature',
       priority: 'high',
-      category: 'Legal',
+      category: 'Agreements',
       description: 'Detailed scope of work including deliverables, timelines, acceptance criteria, and payment milestones.',
       signers: [
-        { name: 'Sarah Johnson', email: 'sarah@healthtech.com', signed: false, signedAt: null, ipAddress: null },
-        { name: 'David Kim', email: 'david@healthtech.com', signed: false, signedAt: null, ipAddress: null },
-        { name: 'Michael Chen', email: 'michael@crmexperts.com', signed: true, signedAt: '2024-01-31 11:20', ipAddress: '192.168.1.101' }
+        { name: 'Sarah Johnson', email: 'sarah@healthtech.com', jobTitle: 'CTO', signed: false, signedAt: null, ipAddress: null },
+        { name: 'David Kim', email: 'david@healthtech.com', jobTitle: 'Project Manager', signed: false, signedAt: null, ipAddress: null },
+        { name: 'Michael Chen', email: 'michael@crmexperts.com', jobTitle: 'Solutions Architect', signed: true, signedAt: '2024-01-31 11:20', ipAddress: '192.168.1.101' }
       ],
       version: '2.0',
       versions: [
@@ -267,7 +273,8 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       uploadedBy: {
         name: 'Michael Chen',
         avatar: '/api/placeholder/32/32',
-        role: 'seller'
+        role: 'seller',
+        jobTitle: 'Solutions Architect'
       },
       uploadedAt: '2024-01-25',
       lastModified: '2024-01-25',
@@ -370,7 +377,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
     }
   }
 
-  const categories = ['All Documents', 'Legal', 'Services/Features', 'Implementation', 'Security & Compliance']
+  const categories = ['All Documents', 'Agreements', 'Services & Features', 'Implementation', 'Security & Compliance']
   const documentStats = {
     total: documents.length,
     signed: documents.filter(d => d.status === 'signed').length,
@@ -505,9 +512,27 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
                         </div>
                       </div>
                       
-                      <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        <MoreVertical className="w-4 h-4" />
-                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <MoreVertical className="w-4 h-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>
+                            <Edit className="w-4 h-4 mr-2" />
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-red-600">
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Delete
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Clock className="w-4 h-4 mr-2" />
+                            Version History
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
 
                     {/* File Metadata */}
@@ -521,17 +546,14 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
                         <span>{doc.uploadedAt}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Eye className="w-3 h-3" />
-                        <span>{doc.viewCount} views</span>
-                      </div>
-                      <div className="flex items-center gap-1">
                         <Download className="w-3 h-3" />
                         <span>{doc.downloadCount} downloads</span>
                       </div>
                     </div>
 
-                    {/* Uploaded By */}
+                    {/* Document Owner */}
                     <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-stackmatch-navy">Owner:</span>
                       <Avatar className="w-6 h-6">
                         <AvatarImage src={doc.uploadedBy.avatar} />
                         <AvatarFallback className="text-xs">{doc.uploadedBy.name[0]}</AvatarFallback>
@@ -541,13 +563,9 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
                       </span>
                       <Badge 
                         variant="outline" 
-                        className={`text-xs ml-auto ${
-                          doc.uploadedBy.role === 'buyer' 
-                            ? 'text-stackmatch-blue border-stackmatch-blue' 
-                            : 'text-trust-green border-trust-green'
-                        }`}
+                        className="text-xs ml-auto text-stackmatch-blue border-stackmatch-blue"
                       >
-                        {doc.uploadedBy.role}
+                        {doc.uploadedBy.jobTitle}
                       </Badge>
                     </div>
 
@@ -562,7 +580,10 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
                                 <Avatar className="w-5 h-5">
                                   <AvatarFallback className="text-xs">{signer.name[0]}</AvatarFallback>
                                 </Avatar>
-                                <span className="text-xs text-medium-gray">{signer.name}</span>
+                                <div className="flex flex-col">
+                                  <span className="text-xs text-medium-gray">{signer.name}</span>
+                                  <span className="text-xs text-stackmatch-blue font-medium">{signer.jobTitle}</span>
+                                </div>
                               </div>
                               {signer.signed ? (
                                 <div className="flex items-center gap-1">
