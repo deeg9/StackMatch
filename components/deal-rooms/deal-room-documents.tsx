@@ -88,7 +88,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       lastModified: '2024-01-28',
       status: 'signed',
       priority: 'high',
-      category: 'Legal Documents',
+      category: 'Legal',
       description: 'Primary service agreement outlining terms, conditions, and obligations for both parties.',
       signers: [
         { name: 'Sarah Johnson', email: 'sarah@healthtech.com', signed: true, signedAt: '2024-01-25 14:30', ipAddress: '192.168.1.100' },
@@ -128,7 +128,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       lastModified: '2024-01-12',
       status: 'signed',
       priority: 'high',
-      category: 'Legal Documents',
+      category: 'Legal',
       description: 'Confidentiality agreement protecting sensitive business information shared during negotiations.',
       signers: [
         { name: 'Sarah Johnson', email: 'sarah@healthtech.com', signed: true, signedAt: '2024-01-10 10:30', ipAddress: '192.168.1.100' },
@@ -165,7 +165,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       lastModified: '2024-01-29',
       status: 'approved',
       priority: 'high',
-      category: 'Project Documentation',
+      category: 'Services/Features',
       description: 'Comprehensive technical requirements including system architecture, integration needs, and performance criteria.',
       version: '2.1',
       versions: [
@@ -200,7 +200,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       lastModified: '2024-01-30',
       status: 'under-review',
       priority: 'medium',
-      category: 'Implementation Plans',
+      category: 'Implementation',
       description: 'Detailed plan for migrating 2.5M+ customer records with zero-downtime strategy and rollback procedures.',
       version: '1.5',
       versions: [
@@ -234,7 +234,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       lastModified: '2024-01-31',
       status: 'pending-signature',
       priority: 'high',
-      category: 'Legal Documents',
+      category: 'Legal',
       description: 'Detailed scope of work including deliverables, timelines, acceptance criteria, and payment milestones.',
       signers: [
         { name: 'Sarah Johnson', email: 'sarah@healthtech.com', signed: false, signedAt: null, ipAddress: null },
@@ -273,7 +273,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
       lastModified: '2024-01-25',
       status: 'new',
       priority: 'medium',
-      category: 'Security Documentation',
+      category: 'Security & Compliance',
       description: 'Comprehensive security analysis including penetration testing results, vulnerability assessment, and compliance verification.',
       version: '1.0',
       versions: [
@@ -370,7 +370,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
     }
   }
 
-  const categories = ['All Documents', 'Legal Documents', 'Project Documentation', 'Implementation Plans', 'Security Documentation']
+  const categories = ['All Documents', 'Legal', 'Services/Features', 'Implementation', 'Security & Compliance']
   const documentStats = {
     total: documents.length,
     signed: documents.filter(d => d.status === 'signed').length,
@@ -448,7 +448,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
           {categories.map((category, index) => (
             <TabsTrigger 
               key={index} 
-              value={index === 0 ? 'all' : category.toLowerCase().replace(' ', '-')}
+              value={index === 0 ? 'all' : category.toLowerCase().replace(/[\s&\/]/g, '-')}
               className="data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white"
             >
               {category}
