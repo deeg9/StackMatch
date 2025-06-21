@@ -394,43 +394,17 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
         </TabsList>
 
         <TabsContent value="files" className="mt-6">
-          {/* Documents Header */}
-          <Card className="border-slate-200 shadow-sm">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <FolderOpen className="w-5 h-5 text-stackmatch-blue" />
-                    <h2 className="text-xl font-semibold text-stackmatch-navy">Document Library</h2>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Badge variant="secondary" className="bg-stackmatch-blue/10 text-stackmatch-blue">
-                      {documentStats.total} documents
-                    </Badge>
-                    <Badge className="bg-trust-green text-white">
-                      {documentStats.signed} signed
-                    </Badge>
-                    {documentStats.pending > 0 && (
-                      <Badge className="bg-attention-orange text-white">
-                        {documentStats.pending} pending
-                      </Badge>
-                    )}
-                    {documentStats.expired > 0 && (
-                      <Badge className="bg-red-500 text-white">
-                        {documentStats.expired} expired
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-
-            <div className="flex items-center gap-3">
-              <div className="relative">
+          {/* Streamlined Documents Header */}
+          <div className="flex items-center justify-between mb-6">
+            {/* Left Side - Search and Filter */}
+            <div className="flex items-center gap-3 flex-1">
+              <div className="relative flex-1 max-w-xl">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
                 <Input
                   placeholder="Search documents..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 w-64"
+                  className="pl-10 w-full"
                 />
               </div>
               
@@ -438,7 +412,10 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
-              
+            </div>
+
+            {/* Right Side - View Toggle and Upload */}
+            <div className="flex items-center gap-3">
               <div className="flex items-center border border-slate-200 rounded-md">
                 <Button 
                   variant={viewMode === 'list' ? 'default' : 'ghost'} 
@@ -464,30 +441,6 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
               </Button>
             </div>
           </div>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-4 gap-4 p-4 bg-gradient-to-r from-stackmatch-blue/5 to-trust-green/5 rounded-lg">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-stackmatch-blue">{documentStats.total}</div>
-              <div className="text-sm text-medium-gray">Total Files</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-trust-green">{documentStats.signed}</div>
-              <div className="text-sm text-medium-gray">Signed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-attention-orange">{documentStats.pending}</div>
-              <div className="text-sm text-medium-gray">Pending</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-information-blue">
-                {documents.reduce((acc, doc) => acc + doc.downloadCount, 0)}
-              </div>
-              <div className="text-sm text-medium-gray">Downloads</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Category Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
