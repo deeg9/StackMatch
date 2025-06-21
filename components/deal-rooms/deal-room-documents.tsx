@@ -395,8 +395,8 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
             All Files
           </TabsTrigger>
           <TabsTrigger value="proposals" className="data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white">
-            <FileText className="w-4 h-4 mr-2" />
-            Proposal Management
+            <PenTool className="w-4 h-4 mr-2" />
+            eSignature
           </TabsTrigger>
         </TabsList>
 

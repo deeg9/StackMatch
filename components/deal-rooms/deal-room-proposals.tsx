@@ -8,41 +8,37 @@ import { Progress } from '@/components/ui/progress'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
   FileText, 
   Download, 
   Eye, 
   Edit, 
-  GitCompare,
   CheckCircle2,
   Clock,
   XCircle,
-  DollarSign,
   Calendar,
   Users,
   MessageSquare,
-  Star,
-  ThumbsUp,
-  ThumbsDown,
   Send,
   Plus,
   Filter,
   Search,
-  TrendingUp,
   AlertCircle,
   CheckSquare,
-  History,
-  FileDown,
-  Printer,
   Share2,
-  Copy,
-  Archive,
-  RefreshCcw,
-  Zap,
-  Target,
+  PenTool,
+  FileSignature,
   Clock3,
-  Briefcase
+  UserCheck,
+  AlertTriangle,
+  FileCheck,
+  RotateCcw,
+  Mail,
+  Copy,
+  History,
+  Shield,
+  Zap
 } from 'lucide-react'
 
 interface DealRoomProposalsProps {
@@ -50,246 +46,327 @@ interface DealRoomProposalsProps {
 }
 
 export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
-  const [selectedProposal, setSelectedProposal] = useState<number | null>(1)
-  const [showComparison, setShowComparison] = useState(false)
-  const [feedback, setFeedback] = useState('')
+  const [activeFilter, setActiveFilter] = useState('all')
+  const [selectedEnvelope, setSelectedEnvelope] = useState<number | null>(1)
+  const [searchQuery, setSearchQuery] = useState('')
 
-  // Enhanced proposals data
-  const proposals = [
+  // Document signing envelopes data
+  const signingEnvelopes = [
     {
       id: 1,
-      title: 'Enterprise CRM Implementation - Premium Package',
-      version: '3.0',
-      status: 'accepted',
-      value: 175000,
-      currency: 'USD',
-      submittedBy: {
-        name: 'Michael Chen',
-        avatar: '/api/placeholder/40/40',
-        title: 'Solutions Architect',
-        company: 'CRM Experts Inc'
-      },
-      submittedAt: '2024-01-15',
-      updatedAt: '2024-01-28',
-      acceptedAt: '2024-01-25',
-      timeline: '6 months',
-      paymentTerms: 'Milestone-based',
-      description: 'Complete enterprise CRM implementation with advanced analytics, custom integrations, data migration, comprehensive training, and 12-month support.',
-      deliverables: [
-        'Custom CRM deployment and configuration',
-        'Data migration from legacy systems (2.5M+ records)',
-        'Third-party integrations (Slack, Salesforce, QuickBooks)',
-        'Advanced analytics and reporting dashboard',
-        'User training and documentation',
-        '12-month premium support and maintenance'
-      ],
-      milestones: [
-        { phase: 'Planning & Discovery', duration: '2 weeks', status: 'completed', payment: 25000 },
-        { phase: 'System Setup & Integration', duration: '8 weeks', status: 'in-progress', payment: 75000 },
-        { phase: 'Data Migration & Testing', duration: '6 weeks', status: 'pending', payment: 50000 },
-        { phase: 'Training & Go-Live', duration: '4 weeks', status: 'pending', payment: 25000 }
-      ],
-      riskFactors: [
-        'Legacy system data quality may require additional cleanup',
-        'Third-party API changes could impact integration timeline',
-        'User adoption training critical for success'
-      ],
-      successMetrics: [
-        '99.9% system uptime',
-        '<2 second page load times',
-        '90% user adoption within 30 days',
-        '50% reduction in manual data entry'
-      ],
-      feedback: [
-        {
-          user: 'Sarah Johnson',
-          rating: 5,
-          comment: 'Excellent comprehensive proposal. The phased approach and risk mitigation strategies are well thought out.',
-          timestamp: '2024-01-20'
+      title: 'Master Service Agreement v3.2',
+      status: 'requires-my-signature',
+      documentType: 'contract',
+      sentDate: '2024-01-28',
+      expiryDate: '2024-02-15',
+      signers: [
+        { 
+          id: 1,
+          name: 'Sarah Johnson', 
+          email: 'sarah@healthtech.com',
+          jobTitle: 'CTO',
+          avatar: '/api/placeholder/32/32',
+          status: 'pending',
+          signedAt: null,
+          isCurrentUser: true
         },
-        {
-          user: 'David Kim',
-          rating: 4,
-          comment: 'Very detailed. Some concerns about the data migration timeline, but overall solid approach.',
-          timestamp: '2024-01-22'
+        { 
+          id: 2,
+          name: 'Michael Chen', 
+          email: 'michael@crmexperts.com',
+          jobTitle: 'Solutions Architect',
+          avatar: '/api/placeholder/32/32',
+          status: 'signed',
+          signedAt: '2024-01-29 14:30',
+          isCurrentUser: false
+        },
+        { 
+          id: 3,
+          name: 'David Kim', 
+          email: 'david@healthtech.com',
+          jobTitle: 'Project Manager',
+          avatar: '/api/placeholder/32/32',
+          status: 'pending',
+          signedAt: null,
+          isCurrentUser: false
         }
       ],
-      attachments: [
-        { name: 'Technical_Architecture_v3.0.pdf', size: '3.2 MB', type: 'pdf' },
-        { name: 'Project_Timeline.xlsx', size: '1.8 MB', type: 'excel' },
-        { name: 'Cost_Breakdown.pdf', size: '892 KB', type: 'pdf' }
-      ]
+      sentBy: {
+        name: 'Elena Rodriguez',
+        jobTitle: 'Account Manager',
+        company: 'CRM Experts Inc'
+      },
+      pages: 12,
+      fieldsRequired: 8,
+      fieldsCompleted: 3,
+      priority: 'high',
+      description: 'Primary service agreement outlining terms, conditions, and obligations for both parties.'
     },
     {
       id: 2,
-      title: 'CRM Implementation - Standard Package',
-      version: '2.1',
-      status: 'under-review',
-      value: 125000,
-      currency: 'USD',
-      submittedBy: {
-        name: 'Elena Rodriguez',
-        avatar: '/api/placeholder/40/40',
-        title: 'Account Manager',
-        company: 'CRM Experts Inc'
-      },
-      submittedAt: '2024-01-20',
-      updatedAt: '2024-01-29',
-      acceptedAt: null,
-      timeline: '4 months',
-      paymentTerms: 'Fixed monthly',
-      description: 'Streamlined CRM implementation with essential features, basic integrations, and standard support package.',
-      deliverables: [
-        'Standard CRM deployment',
-        'Basic data migration',
-        'Essential integrations (Email, Calendar)',
-        'Standard reporting features',
-        'Basic user training',
-        '6-month standard support'
-      ],
-      milestones: [
-        { phase: 'Setup & Configuration', duration: '3 weeks', status: 'pending', payment: 31250 },
-        { phase: 'Data Migration', duration: '4 weeks', status: 'pending', payment: 31250 },
-        { phase: 'Integration & Testing', duration: '5 weeks', status: 'pending', payment: 31250 },
-        { phase: 'Training & Launch', duration: '4 weeks', status: 'pending', payment: 31250 }
-      ],
-      riskFactors: [
-        'Limited customization may not meet all requirements',
-        'Basic support package may be insufficient',
-        'Fewer integrations available'
-      ],
-      successMetrics: [
-        '99.5% system uptime',
-        '<3 second page load times',
-        '80% user adoption within 45 days',
-        '30% reduction in manual processes'
-      ],
-      feedback: [
-        {
-          user: 'Sarah Johnson',
-          rating: 3,
-          comment: 'More budget-friendly but concerned about limited features. Need to evaluate if this meets our long-term needs.',
-          timestamp: '2024-01-25'
+      title: 'Statement of Work (SOW) v2.0',
+      status: 'in-progress',
+      documentType: 'sow',
+      sentDate: '2024-01-25',
+      expiryDate: '2024-02-10',
+      signers: [
+        { 
+          id: 1,
+          name: 'Sarah Johnson', 
+          email: 'sarah@healthtech.com',
+          jobTitle: 'CTO',
+          avatar: '/api/placeholder/32/32',
+          status: 'signed',
+          signedAt: '2024-01-26 09:15',
+          isCurrentUser: true
+        },
+        { 
+          id: 2,
+          name: 'Michael Chen', 
+          email: 'michael@crmexperts.com',
+          jobTitle: 'Solutions Architect',
+          avatar: '/api/placeholder/32/32',
+          status: 'pending',
+          signedAt: null,
+          isCurrentUser: false
+        },
+        { 
+          id: 3,
+          name: 'David Kim', 
+          email: 'david@healthtech.com',
+          jobTitle: 'Project Manager',
+          avatar: '/api/placeholder/32/32',
+          status: 'pending',
+          signedAt: null,
+          isCurrentUser: false
         }
       ],
-      attachments: [
-        { name: 'Standard_Implementation_Plan.pdf', size: '2.1 MB', type: 'pdf' },
-        { name: 'Feature_Comparison.xlsx', size: '1.2 MB', type: 'excel' }
-      ]
+      sentBy: {
+        name: 'Elena Rodriguez',
+        jobTitle: 'Account Manager',
+        company: 'CRM Experts Inc'
+      },
+      pages: 8,
+      fieldsRequired: 12,
+      fieldsCompleted: 4,
+      priority: 'high',
+      description: 'Detailed scope of work including deliverables, timelines, acceptance criteria, and payment milestones.'
     },
     {
       id: 3,
-      title: 'CRM Quick Start - Basic Package',
-      version: '1.0',
-      status: 'rejected',
-      value: 85000,
-      currency: 'USD',
-      submittedBy: {
-        name: 'Michael Chen',
-        avatar: '/api/placeholder/40/40',
-        title: 'Solutions Architect',
-        company: 'CRM Experts Inc'
-      },
-      submittedAt: '2024-01-10',
-      updatedAt: '2024-01-12',
-      acceptedAt: null,
-      timeline: '2 months',
-      paymentTerms: 'Upfront payment',
-      description: 'Basic CRM setup with minimal customization and limited support.',
-      deliverables: [
-        'Basic CRM installation',
-        'Limited data migration',
-        'Minimal training',
-        '3-month basic support'
-      ],
-      milestones: [
-        { phase: 'Installation', duration: '1 week', status: 'rejected', payment: 42500 },
-        { phase: 'Go-Live', duration: '3 weeks', status: 'rejected', payment: 42500 }
-      ],
-      riskFactors: [
-        'Insufficient features for enterprise needs',
-        'Limited support duration',
-        'No advanced integrations'
-      ],
-      successMetrics: [
-        'Basic system functionality',
-        'Minimal user training'
-      ],
-      feedback: [
-        {
-          user: 'Sarah Johnson',
-          rating: 2,
-          comment: 'Too basic for our needs. Lacks essential features and adequate support duration.',
-          timestamp: '2024-01-12'
+      title: 'Non-Disclosure Agreement (NDA)',
+      status: 'completed',
+      documentType: 'nda',
+      sentDate: '2024-01-10',
+      expiryDate: null,
+      completedDate: '2024-01-12',
+      signers: [
+        { 
+          id: 1,
+          name: 'Sarah Johnson', 
+          email: 'sarah@healthtech.com',
+          jobTitle: 'CTO',
+          avatar: '/api/placeholder/32/32',
+          status: 'signed',
+          signedAt: '2024-01-11 10:30',
+          isCurrentUser: true
+        },
+        { 
+          id: 2,
+          name: 'Michael Chen', 
+          email: 'michael@crmexperts.com',
+          jobTitle: 'Solutions Architect',
+          avatar: '/api/placeholder/32/32',
+          status: 'signed',
+          signedAt: '2024-01-12 14:20',
+          isCurrentUser: false
         }
       ],
-      attachments: [
-        { name: 'Basic_Package_Overview.pdf', size: '1.5 MB', type: 'pdf' }
-      ]
+      sentBy: {
+        name: 'Sarah Johnson',
+        jobTitle: 'CTO',
+        company: 'HealthTech Solutions'
+      },
+      pages: 3,
+      fieldsRequired: 4,
+      fieldsCompleted: 4,
+      priority: 'medium',
+      description: 'Confidentiality agreement protecting sensitive business information shared during negotiations.'
+    },
+    {
+      id: 4,
+      title: 'Data Processing Agreement',
+      status: 'draft',
+      documentType: 'dpa',
+      sentDate: null,
+      expiryDate: null,
+      signers: [
+        { 
+          id: 1,
+          name: 'Sarah Johnson', 
+          email: 'sarah@healthtech.com',
+          jobTitle: 'CTO',
+          avatar: '/api/placeholder/32/32',
+          status: 'not-sent',
+          signedAt: null,
+          isCurrentUser: true
+        },
+        { 
+          id: 2,
+          name: 'Michael Chen', 
+          email: 'michael@crmexperts.com',
+          jobTitle: 'Solutions Architect',
+          avatar: '/api/placeholder/32/32',
+          status: 'not-sent',
+          signedAt: null,
+          isCurrentUser: false
+        }
+      ],
+      sentBy: {
+        name: 'Sarah Johnson',
+        jobTitle: 'CTO',
+        company: 'HealthTech Solutions'
+      },
+      pages: 5,
+      fieldsRequired: 6,
+      fieldsCompleted: 0,
+      priority: 'low',
+      description: 'Agreement covering data processing, storage, and privacy compliance requirements.'
     }
   ]
 
-  const getStatusColor = (status: string) => {
+  const getStatusConfig = (status: string) => {
     switch (status) {
-      case 'accepted':
-        return 'bg-trust-green text-white'
-      case 'under-review':
-        return 'bg-attention-orange text-white'
-      case 'rejected':
-        return 'bg-red-500 text-white'
+      case 'requires-my-signature':
+        return {
+          color: 'bg-information-blue text-white',
+          icon: <FileSignature className="w-4 h-4" />,
+          label: 'Requires My Signature',
+          actionLabel: 'Review & Sign'
+        }
+      case 'in-progress':
+        return {
+          color: 'bg-attention-orange text-white',
+          icon: <Clock className="w-4 h-4" />,
+          label: 'Awaiting Signatures',
+          actionLabel: 'View Progress'
+        }
+      case 'completed':
+        return {
+          color: 'bg-trust-green text-white',
+          icon: <CheckCircle2 className="w-4 h-4" />,
+          label: 'Completed',
+          actionLabel: 'View Document'
+        }
       case 'draft':
-        return 'bg-slate-500 text-white'
+        return {
+          color: 'bg-slate-500 text-white',
+          icon: <Edit className="w-4 h-4" />,
+          label: 'Draft',
+          actionLabel: 'Continue Setup'
+        }
+      case 'voided':
+        return {
+          color: 'bg-slate-400 text-white',
+          icon: <XCircle className="w-4 h-4" />,
+          label: 'Voided',
+          actionLabel: 'View Details'
+        }
       default:
-        return 'bg-slate-500 text-white'
+        return {
+          color: 'bg-slate-500 text-white',
+          icon: <FileText className="w-4 h-4" />,
+          label: status,
+          actionLabel: 'View'
+        }
     }
   }
 
-  const getStatusIcon = (status: string) => {
+  const getSignerIcon = (status: string) => {
     switch (status) {
-      case 'accepted':
-        return <CheckCircle2 className="w-4 h-4" />
-      case 'under-review':
-        return <Clock className="w-4 h-4" />
-      case 'rejected':
-        return <XCircle className="w-4 h-4" />
-      case 'draft':
-        return <Edit className="w-4 h-4" />
+      case 'signed':
+        return <CheckCircle2 className="w-3 h-3 text-trust-green" />
+      case 'pending':
+        return <Clock className="w-3 h-3 text-attention-orange" />
+      case 'not-sent':
+        return <Clock3 className="w-3 h-3 text-slate-400" />
       default:
-        return <FileText className="w-4 h-4" />
+        return <Clock className="w-3 h-3 text-slate-400" />
     }
   }
 
-  const selectedProposalData = proposals.find(p => p.id === selectedProposal)
-  const activeProposal = proposals.find(p => p.status === 'accepted')
+  // Calculate dashboard stats
+  const stats = {
+    actionRequired: signingEnvelopes.filter(e => e.status === 'requires-my-signature').length,
+    inProgress: signingEnvelopes.filter(e => e.status === 'in-progress').length,
+    recentlyCompleted: signingEnvelopes.filter(e => e.status === 'completed').length,
+    totalDocuments: signingEnvelopes.length
+  }
+
+  const filterTabs = [
+    { id: 'all', label: 'All', count: signingEnvelopes.length },
+    { id: 'action-required', label: 'Action Required', count: stats.actionRequired },
+    { id: 'in-progress', label: 'In Progress', count: stats.inProgress },
+    { id: 'completed', label: 'Completed', count: stats.recentlyCompleted },
+    { id: 'drafts', label: 'Drafts', count: signingEnvelopes.filter(e => e.status === 'draft').length }
+  ]
+
+  const getFilteredEnvelopes = () => {
+    let filtered = signingEnvelopes
+    
+    switch (activeFilter) {
+      case 'action-required':
+        filtered = signingEnvelopes.filter(e => e.status === 'requires-my-signature')
+        break
+      case 'in-progress':
+        filtered = signingEnvelopes.filter(e => e.status === 'in-progress')
+        break
+      case 'completed':
+        filtered = signingEnvelopes.filter(e => e.status === 'completed')
+        break
+      case 'drafts':
+        filtered = signingEnvelopes.filter(e => e.status === 'draft')
+        break
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter(e => 
+        e.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        e.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    }
+
+    return filtered
+  }
+
+  const selectedEnvelopeData = signingEnvelopes.find(e => e.id === selectedEnvelope)
+  const filteredEnvelopes = getFilteredEnvelopes()
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Proposals Header */}
+      {/* eSignature Dashboard Header */}
       <Card className="border-slate-200 shadow-sm">
         <CardContent className="pt-6">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-stackmatch-blue" />
-                <h2 className="text-xl font-semibold text-stackmatch-navy">Proposal Management</h2>
+                <PenTool className="w-5 h-5 text-stackmatch-blue" />
+                <h2 className="text-xl font-semibold text-stackmatch-navy">Document Signing Hub</h2>
               </div>
-              <div className="flex items-center gap-3">
-                <Badge variant="secondary" className="bg-stackmatch-blue/10 text-stackmatch-blue">
-                  {proposals.length} proposals
-                </Badge>
-                <Badge className="bg-trust-green text-white">
-                  1 accepted
-                </Badge>
-                <Badge className="bg-attention-orange text-white">
-                  1 under review
-                </Badge>
-              </div>
+              <Badge variant="secondary" className="bg-stackmatch-blue/10 text-stackmatch-blue">
+                {stats.totalDocuments} documents
+              </Badge>
             </div>
 
             <div className="flex items-center gap-3">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
-                <Input placeholder="Search proposals..." className="pl-10 w-64" />
+                <Input 
+                  placeholder="Search documents..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 w-64" 
+                />
               </div>
               
               <Button variant="outline" size="sm">
@@ -297,302 +374,399 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
                 Filter
               </Button>
               
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => setShowComparison(!showComparison)}
-              >
-                <GitCompare className="w-4 h-4 mr-2" />
-                Compare
-              </Button>
-              
-              <Button size="sm" className="bg-stackmatch-blue hover:bg-stackmatch-navy">
+              <Button size="sm" className="bg-trust-green hover:bg-success-green">
                 <Plus className="w-4 h-4 mr-2" />
-                Counter-Offer
+                Prepare Document for Signature
               </Button>
             </div>
           </div>
 
-          {/* Quick Stats */}
+          {/* Dashboard KPIs */}
           <div className="grid grid-cols-4 gap-4 p-4 bg-gradient-to-r from-stackmatch-blue/5 to-trust-green/5 rounded-lg">
             <div className="text-center">
-              <div className="text-2xl font-bold text-trust-green">$175K</div>
-              <div className="text-sm text-medium-gray">Accepted Value</div>
+              <div className="text-2xl font-bold text-information-blue">{stats.actionRequired}</div>
+              <div className="text-sm text-medium-gray">Action Required</div>
+              <div className="text-xs text-medium-gray mt-1">Awaiting your signature</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-stackmatch-blue">6</div>
-              <div className="text-sm text-medium-gray">Months Timeline</div>
+              <div className="text-2xl font-bold text-attention-orange">{stats.inProgress}</div>
+              <div className="text-sm text-medium-gray">In Progress</div>
+              <div className="text-xs text-medium-gray mt-1">Awaiting others</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-attention-orange">4</div>
-              <div className="text-sm text-medium-gray">Milestones</div>
+              <div className="text-2xl font-bold text-trust-green">{stats.recentlyCompleted}</div>
+              <div className="text-sm text-medium-gray">Recently Completed</div>
+              <div className="text-xs text-medium-gray mt-1">Last 30 days</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-information-blue">4.5</div>
-              <div className="text-sm text-medium-gray">Avg Rating</div>
+              <div className="text-2xl font-bold text-stackmatch-blue">{stats.totalDocuments}</div>
+              <div className="text-sm text-medium-gray">Total Documents</div>
+              <div className="text-xs text-medium-gray mt-1">All time</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Proposals List */}
-        <div className="lg:col-span-1 space-y-4">
-          <h3 className="font-semibold text-stackmatch-navy">All Proposals</h3>
-          
-          {proposals.map((proposal) => (
-            <Card 
-              key={proposal.id} 
-              className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
-                selectedProposal === proposal.id 
-                  ? 'border-stackmatch-blue shadow-md' 
-                  : 'border-slate-200'
-              }`}
-              onClick={() => setSelectedProposal(proposal.id)}
+      {/* Filter Tabs */}
+      <Tabs value={activeFilter} onValueChange={setActiveFilter} className="w-full">
+        <TabsList className="grid w-full grid-cols-5 bg-white border border-slate-200 p-1">
+          {filterTabs.map((tab) => (
+            <TabsTrigger 
+              key={tab.id} 
+              value={tab.id}
+              className="data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white"
             >
-              <CardContent className="pt-4">
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-medium text-stackmatch-navy truncate">
-                          {proposal.title}
-                        </h4>
-                        <Badge variant="outline" className="text-xs">
-                          v{proposal.version}
-                        </Badge>
-                      </div>
-                      <Badge className={`text-xs ${getStatusColor(proposal.status)}`}>
-                        {getStatusIcon(proposal.status)}
-                        <span className="ml-1">{proposal.status.replace('-', ' ')}</span>
-                      </Badge>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-medium-gray">Value:</span>
-                      <span className="font-semibold text-trust-green">
-                        ${proposal.value.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-medium-gray">Timeline:</span>
-                      <span className="font-medium">{proposal.timeline}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-medium-gray">Updated:</span>
-                      <span className="font-medium">{proposal.updatedAt}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Avatar className="w-6 h-6">
-                      <AvatarImage src={proposal.submittedBy.avatar} />
-                      <AvatarFallback>{proposal.submittedBy.name[0]}</AvatarFallback>
-                    </Avatar>
-                    <span className="text-xs text-medium-gray">
-                      by {proposal.submittedBy.name}
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              {tab.label}
+              {tab.count > 0 && (
+                <Badge 
+                  variant="secondary" 
+                  className="ml-2 data-[state=active]:bg-white/20 data-[state=active]:text-white"
+                >
+                  {tab.count}
+                </Badge>
+              )}
+            </TabsTrigger>
           ))}
-        </div>
+        </TabsList>
 
-        {/* Selected Proposal Details */}
-        <div className="lg:col-span-2">
-          {selectedProposalData && (
-            <Card className="border-slate-200 shadow-sm">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2">
-                    <CardTitle className="flex items-center gap-3">
-                      {selectedProposalData.title}
-                      <Badge variant="outline">v{selectedProposalData.version}</Badge>
-                      <Badge className={getStatusColor(selectedProposalData.status)}>
-                        {getStatusIcon(selectedProposalData.status)}
-                        <span className="ml-1">{selectedProposalData.status.replace('-', ' ')}</span>
-                      </Badge>
-                    </CardTitle>
-                    <p className="text-medium-gray">{selectedProposalData.description}</p>
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm">
-                      <Eye className="w-4 h-4 mr-2" />
-                      View Full
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      <Download className="w-4 h-4 mr-2" />
-                      PDF
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      <Printer className="w-4 h-4 mr-2" />
-                      Print
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
+        <TabsContent value={activeFilter} className="mt-6">
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Signing Envelopes List */}
+            <div className="lg:col-span-1 space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-stackmatch-navy">
+                  {activeFilter === 'all' ? 'All Documents' : filterTabs.find(t => t.id === activeFilter)?.label}
+                </h3>
+                <span className="text-sm text-medium-gray">
+                  {filteredEnvelopes.length} {filteredEnvelopes.length === 1 ? 'document' : 'documents'}
+                </span>
+              </div>
+              
+              {filteredEnvelopes.map((envelope) => {
+                const statusConfig = getStatusConfig(envelope.status)
+                const daysUntilExpiry = envelope.expiryDate ? 
+                  Math.ceil((new Date(envelope.expiryDate).getTime() - new Date().getTime()) / (1000 * 3600 * 24)) : null
 
-              <CardContent className="space-y-6">
-                {/* Key Metrics */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-trust-green/5 rounded-lg">
-                    <DollarSign className="w-6 h-6 text-trust-green mx-auto mb-2" />
-                    <div className="text-xl font-bold text-trust-green">
-                      ${selectedProposalData.value.toLocaleString()}
-                    </div>
-                    <div className="text-sm text-medium-gray">Total Value</div>
-                  </div>
-                  
-                  <div className="text-center p-4 bg-stackmatch-blue/5 rounded-lg">
-                    <Calendar className="w-6 h-6 text-stackmatch-blue mx-auto mb-2" />
-                    <div className="text-xl font-bold text-stackmatch-blue">
-                      {selectedProposalData.timeline}
-                    </div>
-                    <div className="text-sm text-medium-gray">Timeline</div>
-                  </div>
-                  
-                  <div className="text-center p-4 bg-attention-orange/5 rounded-lg">
-                    <Target className="w-6 h-6 text-attention-orange mx-auto mb-2" />
-                    <div className="text-xl font-bold text-attention-orange">
-                      {selectedProposalData.milestones.length}
-                    </div>
-                    <div className="text-sm text-medium-gray">Milestones</div>
-                  </div>
-                  
-                  <div className="text-center p-4 bg-information-blue/5 rounded-lg">
-                    <Star className="w-6 h-6 text-information-blue mx-auto mb-2" />
-                    <div className="text-xl font-bold text-information-blue">
-                      {selectedProposalData.feedback.length > 0 
-                        ? (selectedProposalData.feedback.reduce((acc, f) => acc + f.rating, 0) / selectedProposalData.feedback.length).toFixed(1)
-                        : 'N/A'
-                      }
-                    </div>
-                    <div className="text-sm text-medium-gray">Avg Rating</div>
-                  </div>
-                </div>
+                return (
+                  <Card 
+                    key={envelope.id} 
+                    className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
+                      selectedEnvelope === envelope.id 
+                        ? 'border-stackmatch-blue shadow-md' 
+                        : 'border-slate-200'
+                    }`}
+                    onClick={() => setSelectedEnvelope(envelope.id)}
+                  >
+                    <CardContent className="pt-4">
+                      <div className="space-y-4">
+                        {/* Envelope Header */}
+                        <div className="space-y-2">
+                          <div className="flex items-start justify-between">
+                            <h4 className="font-medium text-stackmatch-navy truncate pr-2">
+                              {envelope.title}
+                            </h4>
+                            {envelope.priority === 'high' && (
+                              <AlertTriangle className="w-4 h-4 text-attention-orange flex-shrink-0" />
+                            )}
+                          </div>
+                          
+                          <Badge className={`text-xs ${statusConfig.color}`}>
+                            {statusConfig.icon}
+                            <span className="ml-1">{statusConfig.label}</span>
+                          </Badge>
+                        </div>
 
-                <Separator />
+                        {/* Signers Status */}
+                        <div>
+                          <div className="text-xs text-medium-gray mb-2">Signers:</div>
+                          <div className="flex items-center gap-1 flex-wrap">
+                            {envelope.signers.map((signer, index) => (
+                              <div key={index} className="relative">
+                                <Avatar className={`w-6 h-6 ${signer.isCurrentUser ? 'ring-2 ring-information-blue' : ''}`}>
+                                  <AvatarImage src={signer.avatar} />
+                                  <AvatarFallback className="text-xs">{signer.name[0]}</AvatarFallback>
+                                </Avatar>
+                                <div className="absolute -top-1 -right-1">
+                                  {getSignerIcon(signer.status)}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
 
-                {/* Submitted By */}
-                <div>
-                  <h4 className="font-semibold text-stackmatch-navy mb-3">Submitted By</h4>
-                  <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg">
-                    <Avatar className="w-12 h-12">
-                      <AvatarImage src={selectedProposalData.submittedBy.avatar} />
-                      <AvatarFallback>{selectedProposalData.submittedBy.name[0]}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div className="font-medium text-stackmatch-navy">
-                        {selectedProposalData.submittedBy.name}
-                      </div>
-                      <div className="text-sm text-medium-gray">
-                        {selectedProposalData.submittedBy.title}
-                      </div>
-                      <div className="text-sm text-medium-gray">
-                        {selectedProposalData.submittedBy.company}
-                      </div>
-                    </div>
-                    <div className="ml-auto flex items-center gap-2">
-                      <Button variant="outline" size="sm">
-                        <MessageSquare className="w-4 h-4 mr-2" />
-                        Message
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Milestones */}
-                <div>
-                  <h4 className="font-semibold text-stackmatch-navy mb-3">Project Milestones</h4>
-                  <div className="space-y-3">
-                    {selectedProposalData.milestones.map((milestone, index) => (
-                      <div key={index} className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          milestone.status === 'completed' 
-                            ? 'bg-trust-green text-white' 
-                            : milestone.status === 'in-progress'
-                            ? 'bg-attention-orange text-white'
-                            : 'bg-slate-300 text-slate-600'
-                        }`}>
-                          {milestone.status === 'completed' ? (
-                            <CheckCircle2 className="w-4 h-4" />
-                          ) : milestone.status === 'in-progress' ? (
-                            <Clock className="w-4 h-4" />
-                          ) : (
-                            <div className="w-2 h-2 bg-current rounded-full" />
+                        {/* Key Dates */}
+                        <div className="text-xs space-y-1">
+                          {envelope.sentDate && (
+                            <div className="flex justify-between text-medium-gray">
+                              <span>Sent:</span>
+                              <span>{envelope.sentDate}</span>
+                            </div>
+                          )}
+                          {envelope.expiryDate && daysUntilExpiry !== null && (
+                            <div className={`flex justify-between ${
+                              daysUntilExpiry <= 3 ? 'text-red-600' : 'text-medium-gray'
+                            }`}>
+                              <span>Expires:</span>
+                              <span>
+                                {daysUntilExpiry <= 0 ? 'Expired' : 
+                                 daysUntilExpiry <= 3 ? `${daysUntilExpiry} days` : 
+                                 envelope.expiryDate}
+                              </span>
+                            </div>
+                          )}
+                          {envelope.completedDate && (
+                            <div className="flex justify-between text-trust-green">
+                              <span>Completed:</span>
+                              <span>{envelope.completedDate}</span>
+                            </div>
                           )}
                         </div>
-                        
-                        <div className="flex-1">
-                          <div className="font-medium text-stackmatch-navy">
-                            {milestone.phase}
+
+                        {/* Progress Bar for In-Progress Documents */}
+                        {envelope.status !== 'completed' && envelope.status !== 'voided' && (
+                          <div>
+                            <div className="flex justify-between text-xs text-medium-gray mb-1">
+                              <span>Progress</span>
+                              <span>{Math.round((envelope.fieldsCompleted / envelope.fieldsRequired) * 100)}%</span>
+                            </div>
+                            <Progress 
+                              value={(envelope.fieldsCompleted / envelope.fieldsRequired) * 100} 
+                              className="h-2"
+                            />
                           </div>
-                          <div className="text-sm text-medium-gray">
-                            {milestone.duration} • ${milestone.payment.toLocaleString()}
-                          </div>
-                        </div>
-                        
-                        <Badge 
-                          variant="outline" 
-                          className={
-                            milestone.status === 'completed' 
-                              ? 'border-trust-green text-trust-green'
-                              : milestone.status === 'in-progress'
-                              ? 'border-attention-orange text-attention-orange'
-                              : 'border-slate-300 text-slate-600'
-                          }
+                        )}
+
+                        {/* Primary Action */}
+                        <Button 
+                          size="sm" 
+                          className={`w-full ${
+                            envelope.status === 'requires-my-signature' 
+                              ? 'bg-information-blue hover:bg-blue-600' 
+                              : envelope.status === 'completed'
+                              ? 'bg-trust-green hover:bg-success-green'
+                              : 'bg-stackmatch-blue hover:bg-stackmatch-navy'
+                          }`}
                         >
-                          {milestone.status.replace('-', ' ')}
-                        </Badge>
+                          {envelope.status === 'requires-my-signature' && <FileSignature className="w-3 h-3 mr-1" />}
+                          {envelope.status === 'completed' && <Eye className="w-3 h-3 mr-1" />}
+                          {envelope.status === 'in-progress' && <Clock className="w-3 h-3 mr-1" />}
+                          {envelope.status === 'draft' && <Edit className="w-3 h-3 mr-1" />}
+                          {statusConfig.actionLabel}
+                        </Button>
                       </div>
-                    ))}
-                  </div>
-                </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+            </div>
 
-                {/* Action Buttons */}
-                {selectedProposalData.status === 'under-review' && (
-                  <div className="flex gap-3 pt-4 border-t border-slate-200">
-                    <Button className="bg-trust-green hover:bg-success-green">
-                      <CheckCircle2 className="w-4 h-4 mr-2" />
-                      Accept Proposal
-                    </Button>
-                    <Button variant="outline" className="text-red-600 border-red-200 hover:bg-red-50">
-                      <XCircle className="w-4 h-4 mr-2" />
-                      Decline
-                    </Button>
-                    <Button variant="outline">
-                      <Edit className="w-4 h-4 mr-2" />
-                      Request Changes
-                    </Button>
-                    <Button variant="outline">
-                      <MessageSquare className="w-4 h-4 mr-2" />
-                      Ask Questions
-                    </Button>
-                  </div>
-                )}
-
-                {selectedProposalData.status === 'accepted' && (
-                  <div className="p-4 bg-trust-green/5 border border-trust-green/20 rounded-lg">
-                    <div className="flex items-center gap-2 text-trust-green mb-2">
-                      <CheckCircle2 className="w-5 h-5" />
-                      <span className="font-semibold">Proposal Accepted</span>
+            {/* Selected Envelope Details */}
+            <div className="lg:col-span-2">
+              {selectedEnvelopeData ? (
+                <Card className="border-slate-200 shadow-sm">
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-2">
+                        <CardTitle className="flex items-center gap-3">
+                          {selectedEnvelopeData.title}
+                          <Badge className={getStatusConfig(selectedEnvelopeData.status).color}>
+                            {getStatusConfig(selectedEnvelopeData.status).icon}
+                            <span className="ml-1">{getStatusConfig(selectedEnvelopeData.status).label}</span>
+                          </Badge>
+                        </CardTitle>
+                        <p className="text-medium-gray">{selectedEnvelopeData.description}</p>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm">
+                          <Download className="w-4 h-4 mr-2" />
+                          Download
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          <Share2 className="w-4 h-4 mr-2" />
+                          Share
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          <History className="w-4 h-4 mr-2" />
+                          History
+                        </Button>
+                      </div>
                     </div>
-                    <p className="text-sm text-medium-gray">
-                      This proposal was accepted on {selectedProposalData.acceptedAt}. 
-                      Project is now in progress.
+                  </CardHeader>
+
+                  <CardContent className="space-y-6">
+                    {/* Document Info */}
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="text-center p-4 bg-stackmatch-blue/5 rounded-lg">
+                        <FileText className="w-6 h-6 text-stackmatch-blue mx-auto mb-2" />
+                        <div className="text-xl font-bold text-stackmatch-blue">
+                          {selectedEnvelopeData.pages}
+                        </div>
+                        <div className="text-sm text-medium-gray">Pages</div>
+                      </div>
+                      
+                      <div className="text-center p-4 bg-attention-orange/5 rounded-lg">
+                        <CheckSquare className="w-6 h-6 text-attention-orange mx-auto mb-2" />
+                        <div className="text-xl font-bold text-attention-orange">
+                          {selectedEnvelopeData.fieldsCompleted}/{selectedEnvelopeData.fieldsRequired}
+                        </div>
+                        <div className="text-sm text-medium-gray">Fields Completed</div>
+                      </div>
+                      
+                      <div className="text-center p-4 bg-trust-green/5 rounded-lg">
+                        <Users className="w-6 h-6 text-trust-green mx-auto mb-2" />
+                        <div className="text-xl font-bold text-trust-green">
+                          {selectedEnvelopeData.signers.length}
+                        </div>
+                        <div className="text-sm text-medium-gray">Signers</div>
+                      </div>
+                    </div>
+
+                    <Separator />
+
+                    {/* Signer Details */}
+                    <div>
+                      <h4 className="font-semibold text-stackmatch-navy mb-3">Signature Progress</h4>
+                      <div className="space-y-3">
+                        {selectedEnvelopeData.signers.map((signer, index) => (
+                          <div key={index} className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg">
+                            <Avatar className={`w-10 h-10 ${signer.isCurrentUser ? 'ring-2 ring-information-blue' : ''}`}>
+                              <AvatarImage src={signer.avatar} />
+                              <AvatarFallback>{signer.name[0]}</AvatarFallback>
+                            </Avatar>
+                            
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium text-stackmatch-navy">{signer.name}</span>
+                                {signer.isCurrentUser && (
+                                  <Badge variant="outline" className="text-xs text-information-blue border-information-blue">
+                                    You
+                                  </Badge>
+                                )}
+                              </div>
+                              <div className="text-sm text-medium-gray">{signer.jobTitle}</div>
+                              <div className="text-xs text-medium-gray">{signer.email}</div>
+                            </div>
+                            
+                            <div className="text-right">
+                              {signer.status === 'signed' ? (
+                                <div className="flex items-center gap-2 text-trust-green">
+                                  <CheckCircle2 className="w-4 h-4" />
+                                  <div>
+                                    <div className="text-sm font-medium">Signed</div>
+                                    <div className="text-xs">{signer.signedAt}</div>
+                                  </div>
+                                </div>
+                              ) : signer.status === 'pending' ? (
+                                <div className="flex items-center gap-2 text-attention-orange">
+                                  <Clock className="w-4 h-4" />
+                                  <div className="text-sm font-medium">Pending</div>
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-2 text-slate-400">
+                                  <Clock3 className="w-4 h-4" />
+                                  <div className="text-sm font-medium">Not Sent</div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    {selectedEnvelopeData.status === 'requires-my-signature' && (
+                      <div className="flex gap-3 pt-4 border-t border-slate-200">
+                        <Button className="bg-information-blue hover:bg-blue-600">
+                          <FileSignature className="w-4 h-4 mr-2" />
+                          Review & Sign Document
+                        </Button>
+                        <Button variant="outline">
+                          <Eye className="w-4 h-4 mr-2" />
+                          Preview Document
+                        </Button>
+                        <Button variant="outline">
+                          <MessageSquare className="w-4 h-4 mr-2" />
+                          Ask Questions
+                        </Button>
+                      </div>
+                    )}
+
+                    {selectedEnvelopeData.status === 'in-progress' && (
+                      <div className="flex gap-3 pt-4 border-t border-slate-200">
+                        <Button variant="outline">
+                          <Eye className="w-4 h-4 mr-2" />
+                          View Document
+                        </Button>
+                        <Button variant="outline">
+                          <Mail className="w-4 h-4 mr-2" />
+                          Send Reminder
+                        </Button>
+                        <Button variant="outline">
+                          <Copy className="w-4 h-4 mr-2" />
+                          Copy Link
+                        </Button>
+                      </div>
+                    )}
+
+                    {selectedEnvelopeData.status === 'completed' && (
+                      <div className="p-4 bg-trust-green/5 border border-trust-green/20 rounded-lg">
+                        <div className="flex items-center gap-2 text-trust-green mb-2">
+                          <CheckCircle2 className="w-5 h-5" />
+                          <span className="font-semibold">Document Completed</span>
+                        </div>
+                        <p className="text-sm text-medium-gray">
+                          All signatures have been collected. Document completed on {selectedEnvelopeData.completedDate}.
+                        </p>
+                        <div className="flex gap-2 mt-3">
+                          <Button size="sm" className="bg-trust-green hover:bg-success-green">
+                            <Download className="w-3 h-3 mr-1" />
+                            Download Signed Copy
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <History className="w-3 h-3 mr-1" />
+                            View Audit Trail
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedEnvelopeData.status === 'draft' && (
+                      <div className="flex gap-3 pt-4 border-t border-slate-200">
+                        <Button className="bg-stackmatch-blue hover:bg-stackmatch-navy">
+                          <Edit className="w-4 h-4 mr-2" />
+                          Continue Setup
+                        </Button>
+                        <Button variant="outline">
+                          <Eye className="w-4 h-4 mr-2" />
+                          Preview
+                        </Button>
+                        <Button variant="outline" className="text-red-600 border-red-200 hover:bg-red-50">
+                          <XCircle className="w-4 h-4 mr-2" />
+                          Delete Draft
+                        </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card className="border-slate-200 shadow-sm">
+                  <CardContent className="pt-12 pb-12 text-center">
+                    <PenTool className="w-12 h-12 text-medium-gray mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-stackmatch-navy mb-2">
+                      Select a Document
+                    </h3>
+                    <p className="text-medium-gray">
+                      Choose a document from the list to view its signing details and status.
                     </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
