@@ -64,7 +64,16 @@ export default function BuyerDashboard() {
   const [proposalsLoading, setProposalsLoading] = useState(true)
   const [profileLoading, setProfileLoading] = useState(true)
   const [calendarView, setCalendarView] = useState<'day' | 'week' | 'month'>('week')
-  const [reminders, setReminders] = useState([
+  interface Reminder {
+    id: number
+    text: string
+    completed: boolean
+    dueDate?: string
+    link?: string
+    isSmartReminder: boolean
+  }
+
+  const [reminders, setReminders] = useState<Reminder[]>([
     { id: 1, text: 'Sign Master Service Agreement', completed: false, dueDate: '2024-02-05', link: '/deal-rooms/DR-001/documents', isSmartReminder: true },
     { id: 2, text: 'Salesforce renewal approaching', completed: false, dueDate: '2024-02-15', link: '#tech-stack', isSmartReminder: true },
     { id: 3, text: 'Review new proposal from CRM Experts', completed: false, dueDate: '2024-02-03', link: '/proposals/PR-003', isSmartReminder: true },
