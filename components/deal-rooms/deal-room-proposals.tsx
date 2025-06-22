@@ -348,24 +348,14 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
       <Card className="border-slate-200 shadow-sm">
         <CardContent className="pt-6">
           <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <PenTool className="w-5 h-5 text-stackmatch-blue" />
-                <h2 className="text-xl font-semibold text-stackmatch-navy">Document Signing Hub</h2>
-              </div>
-              <Badge variant="secondary" className="bg-stackmatch-blue/10 text-stackmatch-blue">
-                {stats.totalDocuments} documents
-              </Badge>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="relative">
+            <div className="flex items-center gap-3 flex-1">
+              <div className="relative flex-1 max-w-2xl">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
                 <Input 
                   placeholder="Search documents..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 w-64" 
+                  className="pl-10 w-full" 
                 />
               </div>
               
@@ -373,12 +363,12 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
-              
-              <Button size="sm" className="bg-trust-green hover:bg-success-green">
-                <Plus className="w-4 h-4 mr-2" />
-                Prepare Document for Signature
-              </Button>
             </div>
+            
+            <Button size="sm" className="bg-trust-green hover:bg-success-green ml-3">
+              <Plus className="w-4 h-4 mr-2" />
+              Prepare Document for Signature
+            </Button>
           </div>
 
           {/* Dashboard KPIs */}
@@ -567,22 +557,14 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
                 <Card className="border-slate-200 shadow-sm">
                   <CardHeader>
                     <div className="flex items-start justify-between">
-                      <div className="space-y-2">
-                        <CardTitle className="flex items-center gap-3">
+                      <div className="space-y-3 flex-1 pr-4">
+                        <CardTitle>
                           {selectedEnvelopeData.title}
-                          <Badge className={getStatusConfig(selectedEnvelopeData.status).color}>
-                            {getStatusConfig(selectedEnvelopeData.status).icon}
-                            <span className="ml-1">{getStatusConfig(selectedEnvelopeData.status).label}</span>
-                          </Badge>
                         </CardTitle>
                         <p className="text-medium-gray">{selectedEnvelopeData.description}</p>
                       </div>
                       
                       <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm">
-                          <Download className="w-4 h-4 mr-2" />
-                          Download
-                        </Button>
                         <Button variant="outline" size="sm">
                           <Share2 className="w-4 h-4 mr-2" />
                           Share
@@ -593,25 +575,24 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
                         </Button>
                       </div>
                     </div>
+                    
+                    <div className="mt-3">
+                      <Badge className={getStatusConfig(selectedEnvelopeData.status).color}>
+                        {getStatusConfig(selectedEnvelopeData.status).icon}
+                        <span className="ml-1">{getStatusConfig(selectedEnvelopeData.status).label}</span>
+                      </Badge>
+                    </div>
                   </CardHeader>
 
                   <CardContent className="space-y-6">
                     {/* Document Info */}
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-2 gap-4">
                       <div className="text-center p-4 bg-stackmatch-blue/5 rounded-lg">
                         <FileText className="w-6 h-6 text-stackmatch-blue mx-auto mb-2" />
                         <div className="text-xl font-bold text-stackmatch-blue">
                           {selectedEnvelopeData.pages}
                         </div>
                         <div className="text-sm text-medium-gray">Pages</div>
-                      </div>
-                      
-                      <div className="text-center p-4 bg-attention-orange/5 rounded-lg">
-                        <CheckSquare className="w-6 h-6 text-attention-orange mx-auto mb-2" />
-                        <div className="text-xl font-bold text-attention-orange">
-                          {selectedEnvelopeData.fieldsCompleted}/{selectedEnvelopeData.fieldsRequired}
-                        </div>
-                        <div className="text-sm text-medium-gray">Fields Completed</div>
                       </div>
                       
                       <div className="text-center p-4 bg-trust-green/5 rounded-lg">
@@ -677,18 +658,13 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
 
                     {/* Action Buttons */}
                     {selectedEnvelopeData.status === 'requires-my-signature' && (
-                      <div className="flex gap-3 pt-4 border-t border-slate-200">
+                      <div className="flex items-center gap-3 pt-4 border-t border-slate-200">
                         <Button className="bg-information-blue hover:bg-blue-600">
                           <FileSignature className="w-4 h-4 mr-2" />
                           Review & Sign Document
                         </Button>
-                        <Button variant="outline">
-                          <Eye className="w-4 h-4 mr-2" />
-                          Preview Document
-                        </Button>
-                        <Button variant="outline">
-                          <MessageSquare className="w-4 h-4 mr-2" />
-                          Ask Questions
+                        <Button variant="outline" size="icon">
+                          <Download className="w-4 h-4" />
                         </Button>
                       </div>
                     )}
