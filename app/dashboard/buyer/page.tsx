@@ -10,7 +10,8 @@ import {
   ArrowRight, TrendingUp, Building2, DollarSign, FileText, 
   CheckCircle2, Clock, AlertCircle, Plus, MessageSquare, 
   Bell, ChevronDown, Moon, Sun, Sparkles, Activity,
-  Briefcase, Target, PiggyBank, ArrowUp, ArrowDown, Calendar, Users
+  Briefcase, Target, PiggyBank, ArrowUp, ArrowDown, Calendar, Users,
+  CalendarDays, CheckSquare, Link2, CalendarPlus, ChevronLeft, ChevronRight
 } from "lucide-react"
 import Link from "next/link"
 import { TickerBanner } from "@/components/ticker/ticker-banner"
@@ -62,6 +63,15 @@ export default function BuyerDashboard() {
   const [listingsLoading, setListingsLoading] = useState(true)
   const [proposalsLoading, setProposalsLoading] = useState(true)
   const [profileLoading, setProfileLoading] = useState(true)
+  const [calendarView, setCalendarView] = useState<'day' | 'week' | 'month'>('week')
+  const [reminders, setReminders] = useState([
+    { id: 1, text: 'Sign Master Service Agreement', completed: false, dueDate: '2024-02-05', link: '/deal-rooms/DR-001/documents', isSmartReminder: true },
+    { id: 2, text: 'Salesforce renewal approaching', completed: false, dueDate: '2024-02-15', link: '#tech-stack', isSmartReminder: true },
+    { id: 3, text: 'Review new proposal from CRM Experts', completed: false, dueDate: '2024-02-03', link: '/proposals/PR-003', isSmartReminder: true },
+    { id: 4, text: 'Schedule quarterly software review', completed: false, dueDate: '2024-02-20', isSmartReminder: false },
+    { id: 5, text: 'Complete security assessment for new vendor', completed: true, dueDate: '2024-01-30', isSmartReminder: false }
+  ])
+  const [newReminder, setNewReminder] = useState('')
   
   const [stats, setStats] = useState<DashboardStats>({
     activeListings: 0,
@@ -168,6 +178,34 @@ export default function BuyerDashboard() {
     if (max) return `Up to $${max.toLocaleString()}`
     return 'Not specified'
   }
+
+  const toggleReminder = (id: number) => {
+    setReminders(reminders.map(reminder => 
+      reminder.id === id ? { ...reminder, completed: !reminder.completed } : reminder
+    ))
+  }
+
+  const addReminder = () => {
+    if (newReminder.trim()) {
+      const newId = Math.max(...reminders.map(r => r.id)) + 1
+      setReminders([...reminders, {
+        id: newId,
+        text: newReminder,
+        completed: false,
+        isSmartReminder: false
+      }])
+      setNewReminder('')
+    }
+  }
+
+  // Mock calendar events
+  const calendarEvents = [
+    { id: 1, title: 'Deal Room Meeting: CRM Implementation', time: '10:00 AM', isStackMatch: true, date: '2024-02-01' },
+    { id: 2, title: 'Team Standup', time: '11:00 AM', isStackMatch: false, date: '2024-02-01' },
+    { id: 3, title: 'Vendor Demo: Analytics Platform', time: '2:00 PM', isStackMatch: true, date: '2024-02-01' },
+    { id: 4, title: 'Quarterly Business Review', time: '3:30 PM', isStackMatch: false, date: '2024-02-02' },
+    { id: 5, title: 'Contract Review: E-commerce Platform', time: '9:00 AM', isStackMatch: true, date: '2024-02-02' }
+  ]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
@@ -302,7 +340,7 @@ export default function BuyerDashboard() {
           </Card>
         </div>
 
-        {/* Row 1: Active Procurement - Two-column layout */}
+        {/* Row 2: Active Procurement - Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Recent Listings */}
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
@@ -466,8 +504,105 @@ export default function BuyerDashboard() {
           </Card>
         </div>
 
-        {/* Row 2: Asset Management - Your Tech Stack (Full-width) */}
+        {/* Row 3: Calendar (Full-width) */}
         <div className="mb-8">
+          <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Calendar</CardTitle>
+              <div className="flex items-center gap-2">
+                <div className="flex bg-[#F9FAFB] rounded-md border border-[#D1D5DB]">
+                  <Button
+                    variant={calendarView === 'day' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setCalendarView('day')}
+                    className={cn(
+                      "rounded-r-none",
+                      calendarView === 'day' && "bg-[#4A73CC] text-white hover:bg-[#1A2B4C]"
+                    )}
+                  >
+                    Day
+                  </Button>
+                  <Button
+                    variant={calendarView === 'week' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setCalendarView('week')}
+                    className={cn(
+                      "rounded-none border-x",
+                      calendarView === 'week' && "bg-[#4A73CC] text-white hover:bg-[#1A2B4C]"
+                    )}
+                  >
+                    Week
+                  </Button>
+                  <Button
+                    variant={calendarView === 'month' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setCalendarView('month')}
+                    className={cn(
+                      "rounded-l-none",
+                      calendarView === 'month' && "bg-[#4A73CC] text-white hover:bg-[#1A2B4C]"
+                    )}
+                  >
+                    Month
+                  </Button>
+                </div>
+                <Button size="sm" className="bg-[#22C55E] hover:bg-[#16A34A] text-white">
+                  <CalendarPlus className="h-4 w-4 mr-2" />
+                  New Event
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {/* Calendar Integration Placeholder */}
+              <div className="bg-[#F9FAFB] rounded-lg p-6 text-center mb-4">
+                <CalendarDays className="h-12 w-12 text-[#4A73CC] mx-auto mb-3" />
+                <p className="text-sm text-[#6B7280] mb-3">
+                  Calendar sync with Google Calendar and Outlook coming soon
+                </p>
+                <Button variant="outline" size="sm">
+                  Connect Calendar
+                </Button>
+              </div>
+              
+              {/* Mock Calendar Events */}
+              <div className="space-y-3">
+                <h4 className="font-semibold text-[#1A2B4C] mb-2">Upcoming Events</h4>
+                {calendarEvents.map((event) => (
+                  <div
+                    key={event.id}
+                    className={cn(
+                      "flex items-center justify-between p-3 rounded-lg border transition-all duration-200 hover:shadow-sm",
+                      event.isStackMatch ? "border-[#4A73CC] bg-[#4A73CC]/5" : "border-[#D1D5DB]"
+                    )}
+                  >
+                    <div className="flex items-center gap-3">
+                      {event.isStackMatch && (
+                        <div className="w-2 h-2 bg-[#4A73CC] rounded-full" />
+                      )}
+                      <div>
+                        <h5 className="font-medium text-[#1A2B4C] flex items-center gap-2">
+                          {event.title}
+                          {event.isStackMatch && (
+                            <Badge className="bg-[#4A73CC]/10 text-[#4A73CC] text-xs">
+                              StackMatch
+                            </Badge>
+                          )}
+                        </h5>
+                        <p className="text-sm text-[#6B7280]">{event.date} • {event.time}</p>
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="sm">
+                      View Details
+                      <ArrowRight className="h-3 w-3 ml-1" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Row 4: Asset Management & Smart Reminders - Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Your Tech Stack</CardTitle>
@@ -551,9 +686,92 @@ export default function BuyerDashboard() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Smart Reminders */}
+          <Card className="border-2 hover:border-[#22C55E] transition-all duration-300">
+            <CardHeader>
+              <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Smart Reminders</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {/* Add Reminder Input */}
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add a reminder..."
+                  value={newReminder}
+                  onChange={(e) => setNewReminder(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && addReminder()}
+                  className="flex-1"
+                />
+                <Button
+                  onClick={addReminder}
+                  size="sm"
+                  className="bg-[#22C55E] hover:bg-[#16A34A] text-white"
+                >
+                  Add
+                </Button>
+              </div>
+
+              {/* Reminders List */}
+              <div className="space-y-2">
+                {reminders.map((reminder) => (
+                  <div
+                    key={reminder.id}
+                    className={cn(
+                      "flex items-start gap-3 p-3 rounded-lg border transition-all duration-200",
+                      reminder.completed ? "bg-[#F9FAFB] opacity-60" : "hover:bg-[#F9FAFB]"
+                    )}
+                  >
+                    <div className="pt-0.5">
+                      <input
+                        type="checkbox"
+                        checked={reminder.completed}
+                        onChange={() => toggleReminder(reminder.id)}
+                        className="w-4 h-4 text-[#22C55E] rounded border-[#D1D5DB] focus:ring-[#22C55E]"
+                      />
+                    </div>
+                    <div className="flex-1 space-y-1">
+                      {reminder.isSmartReminder && reminder.link ? (
+                        <Link
+                          href={reminder.link}
+                          className={cn(
+                            "font-medium hover:text-[#4A73CC] transition-colors flex items-center gap-1",
+                            reminder.completed ? "line-through text-[#6B7280]" : "text-[#1A2B4C]"
+                          )}
+                        >
+                          {reminder.text}
+                          <Link2 className="w-3 h-3" />
+                        </Link>
+                      ) : (
+                        <p
+                          className={cn(
+                            "font-medium",
+                            reminder.completed ? "line-through text-[#6B7280]" : "text-[#1A2B4C]"
+                          )}
+                        >
+                          {reminder.text}
+                        </p>
+                      )}
+                      {reminder.dueDate && (
+                        <p className="text-xs text-[#6B7280] flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          Due: {reminder.dueDate}
+                        </p>
+                      )}
+                      {reminder.isSmartReminder && (
+                        <Badge className="bg-[#4A73CC]/10 text-[#4A73CC] text-xs">
+                          <Sparkles className="w-3 h-3 mr-1" />
+                          Smart Reminder
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Row 3: Navigation & Discovery - Two-column layout */}
+        {/* Row 5: Navigation & Discovery - Two-column layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300 hover:shadow-lg group cursor-pointer">
             <CardContent className="p-6 text-center">
