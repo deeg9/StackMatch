@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { PrepareDocumentModal } from './prepare-document-modal'
 import { 
   FileText, 
   Download, 
@@ -49,6 +50,7 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
   const [activeFilter, setActiveFilter] = useState('all')
   const [selectedEnvelope, setSelectedEnvelope] = useState<number | null>(1)
   const [searchQuery, setSearchQuery] = useState('')
+  const [prepareDocumentOpen, setPrepareDocumentOpen] = useState(false)
 
   // Document signing envelopes data
   const signingEnvelopes = [
@@ -365,7 +367,11 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
               </Button>
             </div>
             
-            <Button size="sm" className="bg-trust-green hover:bg-success-green ml-3">
+            <Button 
+              size="sm" 
+              className="bg-trust-green hover:bg-success-green ml-3"
+              onClick={() => setPrepareDocumentOpen(true)}
+            >
               <Plus className="w-4 h-4 mr-2" />
               Prepare Document for Signature
             </Button>
@@ -756,6 +762,12 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Prepare Document Modal */}
+      <PrepareDocumentModal 
+        open={prepareDocumentOpen}
+        onOpenChange={setPrepareDocumentOpen}
+      />
     </div>
   )
 }
