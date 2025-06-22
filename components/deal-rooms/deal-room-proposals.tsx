@@ -249,7 +249,7 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
           color: 'bg-attention-orange text-white',
           icon: <Clock className="w-4 h-4" />,
           label: 'Awaiting Signatures',
-          actionLabel: 'View Progress'
+          actionLabel: 'View Document'
         }
       case 'completed':
         return {
@@ -679,10 +679,6 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
                           <Mail className="w-4 h-4 mr-2" />
                           Send Reminder
                         </Button>
-                        <Button variant="outline">
-                          <Copy className="w-4 h-4 mr-2" />
-                          Copy Link
-                        </Button>
                       </div>
                     )}
 
@@ -699,10 +695,6 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
                           <Button size="sm" className="bg-trust-green hover:bg-success-green">
                             <Download className="w-3 h-3 mr-1" />
                             Download Signed Copy
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            <History className="w-3 h-3 mr-1" />
-                            View Audit Trail
                           </Button>
                         </div>
                       </div>
