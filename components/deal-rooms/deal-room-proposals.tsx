@@ -485,8 +485,14 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
                           </div>
                         </div>
 
-                        {/* Key Dates */}
+                        {/* Sent From & Key Dates */}
                         <div className="text-xs space-y-1">
+                          <div className="flex justify-between text-medium-gray">
+                            <span>From:</span>
+                            <span className="font-medium text-stackmatch-navy">
+                              {envelope.sentBy.name}, {envelope.sentBy.jobTitle}
+                            </span>
+                          </div>
                           {envelope.sentDate && (
                             <div className="flex justify-between text-medium-gray">
                               <span>Sent:</span>
@@ -585,6 +591,21 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
                   </CardHeader>
 
                   <CardContent className="space-y-6">
+                    {/* Sent From Info */}
+                    <div className="p-4 bg-slate-50 rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-medium-gray">Sent From:</span>
+                        <div className="text-right">
+                          <div className="text-sm font-semibold text-stackmatch-navy">
+                            {selectedEnvelopeData.sentBy.name}
+                          </div>
+                          <div className="text-xs text-medium-gray">
+                            {selectedEnvelopeData.sentBy.jobTitle} • {selectedEnvelopeData.sentBy.company}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Document Info */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="text-center p-4 bg-stackmatch-blue/5 rounded-lg">

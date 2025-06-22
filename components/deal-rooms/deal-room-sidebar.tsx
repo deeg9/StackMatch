@@ -23,7 +23,8 @@ import {
   BarChart3,
   CreditCard,
   Timer,
-  ArrowRight
+  ArrowRight,
+  FileSignature
 } from 'lucide-react'
 
 interface DealRoomSidebarProps {
@@ -143,9 +144,14 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
+          <Button className="w-full justify-start bg-trust-green hover:bg-success-green">
+            <FileSignature className="w-4 h-4 mr-2" />
+            eSignature
+          </Button>
+          
           <Button className="w-full justify-start bg-stackmatch-blue hover:bg-stackmatch-navy">
             <MessageSquare className="w-4 h-4 mr-2" />
-            Send Quick Message
+            Send Message
           </Button>
           
           <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
@@ -155,7 +161,7 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
           
           <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
             <Video className="w-4 h-4 mr-2" />
-            Start Instant Meeting
+            Start Meeting
           </Button>
           
           <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
