@@ -272,11 +272,9 @@ export function DealRoomsGrid({
 
   const categories = [
     { id: 'all', name: 'All Rooms', count: dealRooms.length },
-    { id: 'active', name: 'Active', count: dealRooms.filter(r => r.category !== 'archived').length },
-    { id: 'pending-signature', name: 'Pending Signature', count: dealRooms.filter(r => r.category === 'pending-signature').length },
+    { id: 'in-progress', name: 'In Progress', count: dealRooms.filter(r => r.category !== 'archived' && r.category !== 'completed').length },
     { id: 'agreement-reached', name: 'Agreement Reached', count: dealRooms.filter(r => r.category === 'agreement-reached').length },
     { id: 'implementing', name: 'Implementing', count: dealRooms.filter(r => r.category === 'implementing').length },
-    { id: 'go-live', name: 'Go Live', count: dealRooms.filter(r => r.category === 'go-live').length },
     { id: 'completed', name: 'Completed', count: dealRooms.filter(r => r.category === 'completed').length },
     { id: 'archived', name: 'Archived', count: dealRooms.filter(r => r.category === 'archived').length }
   ]
@@ -284,7 +282,7 @@ export function DealRoomsGrid({
   // Filter logic based on selected tab
   const filteredRooms = dealRooms.filter(room => {
     if (selectedTab === 'all') return true
-    if (selectedTab === 'active') return room.category !== 'archived'
+    if (selectedTab === 'in-progress') return room.category !== 'archived' && room.category !== 'completed'
     return room.category === selectedTab
   })
 

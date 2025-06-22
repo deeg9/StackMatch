@@ -29,14 +29,8 @@ export function DealRoomsFilters({
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 mb-6 animate-slide-up">
       <div className="flex flex-wrap items-center gap-4">
-        {/* Create New Deal Room Button */}
-        <Button className="bg-trust-green hover:bg-success-green transition-all duration-200 shadow-md hover:shadow-lg text-white">
-          <Plus className="w-4 h-4 mr-2" />
-          Create New Deal Room
-        </Button>
-        
         {/* Enhanced Search Input with AI Hints */}
-        <div className="flex-1 min-w-[300px] relative">
+        <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
           <Input
             placeholder="Try: 'show me deals with RetailFlow that are pending contract' or 'CRM deals over $100K'"

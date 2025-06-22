@@ -19,7 +19,8 @@ import {
   CheckCircle2,
   AlertCircle,
   Shield,
-  FileSignature
+  FileSignature,
+  FileSearch
 } from 'lucide-react'
 
 interface DealRoomCardProps {
@@ -192,7 +193,8 @@ export function DealRoomCard({ room, index }: DealRoomCardProps) {
             size="sm"
             className="text-[#4A73CC] hover:text-[#1A2B4C] hover:bg-[#4A73CC]/5 px-3"
           >
-            Message
+            <FileSearch className="w-4 h-4 mr-1" />
+            View Listing
           </Button>
           
           <Button 
