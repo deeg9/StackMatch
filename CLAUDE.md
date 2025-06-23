@@ -180,12 +180,16 @@ SUPABASE_JWT_SECRET=***REMOVED***
 
 ### 11. Enterprise eSignature System - STRATEGIC DIFFERENTIATOR
 - **Complete DocuSign Alternative**: Integrated document signing eliminates external tool dependency
+- **Revolutionary Inbox/Sent Model**: Intuitive 2-tab navigation system replacing complex 5-tab status filters
+- **Advanced Field Editor**: Full-page drag-and-drop interface for placing signature fields with recipient color coding
 - **Signature-Focused Dashboard**: Action Required, In Progress, Completed, and Draft document tracking
 - **Signing Envelope Interface**: Professional document cards with visual progress indicators and signer status
 - **Real-time Signature Tracking**: Live updates on signature collection with job title identification
-- **Smart Status Management**: Color-coded document states (Draft, Awaiting Signatures, Requires My Signature, Completed)
+- **Smart Status Management**: Color-coded document states with dropdown filtering within inbox/sent categories
 - **Enterprise Document Categorization**: Agreements, Services & Features, Implementation, Security & Compliance
 - **Professional Document Cards**: Job titles instead of generic roles, owner identification, streamlined actions
+- **Quick Actions Integration**: Green eSignature button in sidebar for instant access to document preparation
+- **Seamless Workflow**: From document upload to field placement to signature collection in unified interface
 - **Strategic Value**: Eliminates $260B waste by streamlining contract execution and reducing deal friction
 - **Revenue Impact**: Justifies premium pricing through high-value integrated workflow
 - **Competitive Advantage**: Transforms platform from file repository to active signing workspace
@@ -236,7 +240,8 @@ SUPABASE_JWT_SECRET=***REMOVED***
 ├── deal-rooms/
 │   ├── page.tsx (Deal rooms hub with KPI dashboard)
 │   ├── loading.tsx (Professional loading skeleton)
-│   └── [id]/page.tsx (Individual deal room collaboration workspace)
+│   ├── [id]/page.tsx (Individual deal room collaboration workspace)
+│   └── [id]/esignature/add-fields/page.tsx (Full-page eSignature field editor)
 ├── dashboard/
 │   ├── buyer/page.tsx (Live data dashboard)
 │   └── seller/page.tsx (Live data dashboard)
@@ -273,11 +278,19 @@ SUPABASE_JWT_SECRET=***REMOVED***
 │   ├── deal-room-header.tsx (Individual room header with participant modal and dropdown actions)
 │   ├── deal-room-tabs.tsx (Four-tab navigation system with optimized structure)
 │   ├── deal-room-discussion.tsx (Simplified full-width chat interface)
-│   ├── deal-room-proposals.tsx (Enterprise eSignature system with document signing workflows)
+│   ├── deal-room-proposals.tsx (Enterprise eSignature system with inbox/sent model)
 │   ├── deal-room-documents.tsx (Advanced file library with job title integration and professional document management)
 │   ├── deal-room-timeline.tsx (Project milestones with multiple views)
 │   ├── deal-room-meeting-notes.tsx (Meeting recordings and notes)
-│   └── deal-room-sidebar.tsx (Right sidebar with deal summary)
+│   ├── deal-room-sidebar.tsx (Right sidebar with deal summary and eSignature integration)
+│   ├── prepare-document-modal.tsx (Document upload and recipient management modal)
+│   └── esignature/
+│       ├── esignature-add-fields.tsx (Main field editor orchestrator)
+│       ├── esignature-header.tsx (Editor header with Back, Preview, Send actions)
+│       ├── esignature-fields-palette.tsx (Left sidebar with recipient selector and draggable fields)
+│       ├── esignature-document-canvas.tsx (Center PDF viewer with field placement)
+│       ├── esignature-page-navigator.tsx (Right sidebar with page thumbnails)
+│       └── esignature-field-item.tsx (Individual draggable/resizable field components)
 ├── ticker/ticker-banner.tsx
 └── guided-listing/ (Multi-step form components)
     └── step1-understanding-needs.tsx
@@ -323,9 +336,9 @@ SUPABASE_JWT_SECRET=***REMOVED***
 8. **eSignature Backend Integration**: API endpoints for document signing workflow and audit trails
 
 ## Current Development Status
-✅ **COMPLETED**: Authentication, Enhanced Buyer Dashboard Command Center, Seller Dashboard, Database Integration, Create Listing Framework, Browse Sellers Marketplace, Global Navigation, StackTalk Community Forum, Complete Deal Rooms System, Enterprise eSignature System, Advanced Document Management, Calendar & Smart Reminders Integration
+✅ **COMPLETED**: Authentication, Enhanced Buyer Dashboard Command Center, Seller Dashboard, Database Integration, Create Listing Framework, Browse Sellers Marketplace, Global Navigation, StackTalk Community Forum, Complete Deal Rooms System, Advanced eSignature System with Field Editor, Inbox/Sent Document Management, Header Navigation Enhancements, Calendar & Smart Reminders Integration
 🚧 **IN PROGRESS**: Create Listing Form Steps (2-4), Real-time Features Integration, Calendar Sync APIs
-📋 **NEXT**: Deal Room APIs, eSignature Backend Integration, Browse Listings Page, Real-time Messaging, Google Calendar/Outlook Integration
+📋 **NEXT**: eSignature Backend Integration, Deal Room APIs, Browse Listings Page, Real-time Messaging, Google Calendar/Outlook Integration
 
 ## Development Commands
 - **Dev Server**: `npm run dev --turbo`
@@ -454,15 +467,48 @@ SUPABASE_JWT_SECRET=***REMOVED***
 - **Progressive Disclosure**: Important actions prominently displayed, secondary actions consolidated
 - **Visual Hierarchy**: Clear information architecture with logical action groupings
 
+### eSignature System Redesign & Header Enhancements (January 2025)
+- **Revolutionary Inbox/Sent Model**: Complete transformation of eSignature tab navigation from 5-tab status system to intuitive 2-tab inbox/sent model
+  - **Inbox Tab**: Documents received from others with smart filtering by `sentBy.name !== currentUser.name`
+  - **Sent Tab**: Documents sent by user with filtering by `sentBy.name === currentUser.name`
+  - **Status Filter Dropdown**: Moved status filtering (Action Required, In Progress, Completed, Drafts) into dropdown for granular control
+  - **Tab Count Badges**: Dynamic document counts for inbox vs sent categories with real-time updates
+  - **Visual Icons**: Added Inbox and Send icons for clear visual distinction and improved UX
+- **Enhanced Quick Actions Integration**: 
+  - **Sidebar eSignature Button**: Connected green eSignature button in Quick Actions to trigger "Prepare Document for Signature" modal
+  - **Modal State Management**: Added `PrepareDocumentModal` integration with proper useState management
+  - **Consistent Functionality**: Ensures identical behavior between main page and sidebar eSignature buttons
+- **Strategic Header Enhancement**: Added persistent access to foundational documents
+  - **View Listing Button**: Outline button with FileText icon for accessing original project listing
+  - **View Proposal Button**: Outline button with Eye icon for accessing proposal document
+  - **Professional Positioning**: Positioned to left of Invite button with consistent StackMatch styling
+  - **Hover Effects**: Added StackMatch blue hover states for professional interaction feedback
+
+### Advanced eSignature Field Editor Integration (January 2025)
+- **Complete Add Fields Interface**: Built comprehensive full-page editor at `/deal-rooms/[id]/esignature/add-fields`
+  - **Four-Section Layout**: Header with actions, left fields palette, center document canvas, right page navigator
+  - **Drag-and-Drop Functionality**: Professional field placement with recipient color coding and resize capabilities
+  - **Recipient Management**: Dropdown selector with unique colors per recipient for visual field assignment
+  - **Field Types**: Signature, Initial, Date Signed, Name, Text Field, Checkbox with appropriate icons
+  - **Document Canvas**: Mock PDF viewer with zoom controls (50-200%) and field positioning system
+  - **Page Navigation**: Thumbnail-based page navigator with field count badges and click-to-navigate
+- **Workflow Integration**: Seamless connection from "Prepare Document for Signature" modal to field editor
+  - **Modal Navigation**: "Next: Add Fields" button routes to add-fields page with document context
+  - **Parameter Passing**: Document and recipient data passed via URL parameters and component props
+  - **Form Validation**: Disabled state until document upload and recipient information complete
+
 ### Technical Improvements
 - **Next.js 15.3.4**: Updated to latest stable version with compatibility verification
-- **Icon System**: Enhanced with ArrowUp, ArrowDown, Calendar, and Users icons
+- **Next.js 15 Async Params**: Fixed page params to use Promise<> structure for build compatibility
+- **Icon System**: Enhanced with ArrowUp, ArrowDown, Calendar, Users, Inbox, Send, ChevronDown icons
 - **Status Management**: Comprehensive color-coding system across all components
 - **Component Consistency**: Unified design patterns between Deal Rooms and Dashboard pages
 - **Data Integration**: Real data integration with mock data fallbacks for demonstrations
 - **Dialog Integration**: Added shadcn/ui Dialog component for participant modal functionality
-- **DropdownMenu Integration**: Implemented shadcn/ui DropdownMenu for consolidated header actions
+- **DropdownMenu Integration**: Implemented shadcn/ui DropdownMenu for consolidated header actions and filtering
+- **ScrollArea Component**: Added Radix UI scroll-area for enhanced page navigation
 - **Import Optimization**: Cleaned up unused imports and components for better performance
 - **TypeScript Compliance**: All changes pass type checking with zero errors
+- **Build Optimization**: Resolved JSX structure issues and Git merge conflicts for clean deployment
 
 This project represents a **world-class B2B marketplace** with enterprise-grade design, comprehensive collaboration tools, and Steve Jobs-level user experience, positioned to capture significant market share in the $384B software procurement space. The platform now includes a complete deal negotiation and project management system that rivals the best enterprise collaboration platforms, with polished buyer and seller dashboards that provide actionable insights and streamlined workflows. The **revolutionary eSignature system** eliminates external DocuSign dependencies, transforming StackMatch into a complete contract execution platform that directly addresses the $260B annual waste in software procurement. This strategic differentiator, combined with advanced document management and professional job title integration, creates a premium platform experience that justifies higher pricing while delivering exceptional user value through integrated workflows that streamline the entire deal lifecycle from discovery to signature.

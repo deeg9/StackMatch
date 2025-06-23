@@ -1,0 +1,233 @@
+'use client'
+
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { 
+  Sparkles,
+  TrendingUp,
+  AlertCircle,
+  ArrowRight,
+  Calendar,
+  Clock,
+  FileText,
+  Users,
+  MessageSquare,
+  Upload,
+  Video,
+  Bell,
+  CalendarDays,
+  Lightbulb,
+  Target,
+  DollarSign
+} from 'lucide-react'
+
+export function BuyerDashboardSidebar() {
+  // Mock AI Insights data
+  const aiInsights = [
+    {
+      id: 1,
+      icon: TrendingUp,
+      text: 'Your CRM proposals increased 40% this month',
+      link: '/analytics'
+    },
+    {
+      id: 2,
+      icon: DollarSign,
+      text: 'Potential savings of $15K on analytics tools',
+      link: '/browse-sellers?category=analytics'
+    },
+    {
+      id: 3,
+      icon: Lightbulb,
+      text: 'Consider bundling HR and Payroll systems',
+      link: '/create-listing'
+    },
+    {
+      id: 4,
+      icon: Target,
+      text: '3 vendors match your ERP requirements',
+      link: '/listings/TEST3'
+    }
+  ]
+
+  // Mock Upcoming Deadlines data
+  const upcomingDeadlines = [
+    {
+      id: 1,
+      title: 'Proposal review deadline',
+      project: 'CRM Implementation',
+      dueDate: '2024-02-03',
+      dueTime: '5:00 PM',
+      priority: 'high',
+      overdue: false
+    },
+    {
+      id: 2,
+      title: 'Contract signature required',
+      project: 'Analytics Platform',
+      dueDate: '2024-02-05',
+      dueTime: '11:59 PM',
+      priority: 'high',
+      overdue: false
+    },
+    {
+      id: 3,
+      title: 'Salesforce renewal',
+      project: 'Software Licenses',
+      dueDate: '2024-02-15',
+      dueTime: 'EOD',
+      priority: 'medium',
+      overdue: false
+    },
+    {
+      id: 4,
+      title: 'Security assessment due',
+      project: 'New Vendor Onboarding',
+      dueDate: '2024-01-30',
+      dueTime: '3:00 PM',
+      priority: 'high',
+      overdue: true
+    },
+    {
+      id: 5,
+      title: 'Quarterly software review',
+      project: 'Tech Stack Optimization',
+      dueDate: '2024-02-20',
+      dueTime: '2:00 PM',
+      priority: 'low',
+      overdue: false
+    }
+  ]
+
+  const getPriorityColor = (priority: string, overdue: boolean) => {
+    if (overdue) return 'bg-red-500 text-white'
+    switch (priority) {
+      case 'high':
+        return 'bg-attention-orange text-white'
+      case 'medium':
+        return 'bg-stackmatch-blue text-white'
+      case 'low':
+        return 'bg-medium-gray text-white'
+      default:
+        return 'bg-light-gray text-charcoal'
+    }
+  }
+
+  return (
+    <div className="space-y-6 animate-fade-in">
+      {/* AI Insights Card */}
+      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-stackmatch-navy">
+            <Sparkles className="w-5 h-5" />
+            AI Insights
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {aiInsights.map((insight) => {
+            const Icon = insight.icon
+            return (
+              <a
+                key={insight.id}
+                href={insight.link}
+                className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors duration-200 cursor-pointer group"
+              >
+                <div className="p-1.5 rounded-full bg-stackmatch-blue/10 group-hover:bg-stackmatch-blue/20 transition-colors">
+                  <Icon className="w-4 h-4 text-stackmatch-blue" />
+                </div>
+                <p className="text-sm text-charcoal group-hover:text-stackmatch-navy flex-1">
+                  {insight.text}
+                </p>
+              </a>
+            )
+          })}
+          <Button variant="ghost" size="sm" className="w-full text-stackmatch-blue hover:text-stackmatch-navy">
+            View All Insights
+            <ArrowRight className="w-3 h-3 ml-1" />
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* Upcoming Deadlines Card */}
+      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-stackmatch-navy">
+            <Clock className="w-5 h-5" />
+            Upcoming Deadlines
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {upcomingDeadlines.map((deadline) => (
+            <div
+              key={deadline.id}
+              className="p-3 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors duration-200 space-y-2"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex-1">
+                  <h4 className="text-sm font-medium text-stackmatch-navy">
+                    {deadline.title}
+                  </h4>
+                  <p className="text-xs text-medium-gray">
+                    {deadline.project}
+                  </p>
+                </div>
+                <Badge className={getPriorityColor(deadline.priority, deadline.overdue)}>
+                  {deadline.overdue ? 'Overdue' : deadline.priority}
+                </Badge>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-medium-gray">
+                <Calendar className="w-3 h-3" />
+                <span>{deadline.dueDate}</span>
+                <span>•</span>
+                <span>{deadline.dueTime}</span>
+                {deadline.overdue && (
+                  <>
+                    <span>•</span>
+                    <AlertCircle className="w-3 h-3 text-red-500" />
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Quick Actions Card */}
+      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-stackmatch-navy">
+            <Users className="w-5 h-5" />
+            Quick Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <Button className="w-full justify-start bg-stackmatch-blue hover:bg-stackmatch-navy">
+            <MessageSquare className="w-4 h-4 mr-2" />
+            Send Message
+          </Button>
+          
+          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
+            <Upload className="w-4 h-4 mr-2" />
+            Upload Document
+          </Button>
+          
+          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
+            <Video className="w-4 h-4 mr-2" />
+            Start Meeting
+          </Button>
+          
+          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
+            <CalendarDays className="w-4 h-4 mr-2" />
+            Schedule Meeting
+          </Button>
+          
+          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
+            <Bell className="w-4 h-4 mr-2" />
+            Set Reminder
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}

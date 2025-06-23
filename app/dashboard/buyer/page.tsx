@@ -17,6 +17,7 @@ import {
 import Link from "next/link"
 import { TickerBanner } from "@/components/ticker/ticker-banner"
 import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
+import { BuyerDashboardSidebar } from '@/components/dashboard/buyer-dashboard-sidebar'
 import { cn } from "@/lib/utils"
 
 // Type definitions for API responses
@@ -227,7 +228,7 @@ export default function BuyerDashboard() {
 
       {/* Header Section */}
       <div className="bg-gradient-to-r from-[#1A2B4C] to-[#4A73CC] text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <div className="space-y-2 animate-fade-in">
               <h1 className="text-4xl font-bold">
@@ -250,9 +251,12 @@ export default function BuyerDashboard() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Main Content Area */}
+          <div className="lg:col-span-3">
+            {/* KPI Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Active Listings */}
           <Card className={cn(
             "border-2 hover:border-[#4A73CC] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
@@ -802,6 +806,13 @@ export default function BuyerDashboard() {
               <p className="text-sm text-[#6B7280]">View detailed insights and procurement metrics</p>
             </CardContent>
           </Card>
+        </div>
+          </div>
+          
+          {/* Right Sidebar */}
+          <div className="lg:col-span-1">
+            <BuyerDashboardSidebar />
+          </div>
         </div>
       </div>
     </div>
