@@ -370,7 +370,15 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
             <Button 
               size="sm" 
               className="bg-trust-green hover:bg-success-green ml-3"
+<<<<<<< Updated upstream
               onClick={() => setPrepareDocumentOpen(true)}
+=======
+<<<<<<< HEAD
+              onClick={() => window.location.href = `/deal-rooms/1/esignature/add-fields?documentId=test`}
+=======
+              onClick={() => setPrepareDocumentOpen(true)}
+>>>>>>> ad050edfd98fee771611ff9c37f40546152bff46
+>>>>>>> Stashed changes
             >
               <Plus className="w-4 h-4 mr-2" />
               Prepare Document for Signature
@@ -729,7 +737,10 @@ export function DealRoomProposals({ dealRoom }: DealRoomProposalsProps) {
 
                     {selectedEnvelopeData.status === 'draft' && (
                       <div className="flex gap-3 pt-4 border-t border-slate-200">
-                        <Button className="bg-stackmatch-blue hover:bg-stackmatch-navy">
+                        <Button 
+                          className="bg-stackmatch-blue hover:bg-stackmatch-navy"
+                          onClick={() => window.location.href = `/deal-rooms/${selectedEnvelopeData.id}/esignature/add-fields?documentId=${selectedEnvelopeData.id}`}
+                        >
                           <Edit className="w-4 h-4 mr-2" />
                           Continue Setup
                         </Button>

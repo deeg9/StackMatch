@@ -103,12 +103,15 @@ SUPABASE_JWT_SECRET=***REMOVED***
 - **User Profile API** (`/api/user/profile/route.ts`): Dynamic profile data
 - **Password Security**: Real-time strength indicator, confirmation validation
 
-### 3. Buyer Dashboard (`/app/dashboard/buyer/page.tsx`) - LIVE DATA
+### 3. Buyer Dashboard (`/app/dashboard/buyer/page.tsx`) - COMMAND CENTER
 - **Real User Data**: Christopher Fill's actual profile and company info
 - **Live KPI Cards**: Real stats from database (4 active listings, proposals, etc.)
+- **Calendar Integration**: Full-width calendar portlet with Day/Week/Month views and StackMatch event highlighting
+- **Smart Reminders System**: Dynamic to-do list combining manual tasks with AI-generated contextual reminders
 - **Authenticated APIs**: Session-based data fetching with error handling
 - **Dynamic Content**: Real listings (TEST, TEST2, TEST3, TEST4) with CRM category
 - **Professional UI**: Ticker banner, loading states, responsive design
+- **Command Center Layout**: Strategic 5-row layout optimized for daily workflow management
 
 ### 4. Seller Dashboard (`/app/dashboard/seller/page.tsx`) - LIVE DATA
 - **Complete Mirror**: Beautiful seller-focused dashboard with real data
@@ -187,7 +190,27 @@ SUPABASE_JWT_SECRET=***REMOVED***
 - **Revenue Impact**: Justifies premium pricing through high-value integrated workflow
 - **Competitive Advantage**: Transforms platform from file repository to active signing workspace
 
-### 12. UI Component System
+### 12. Enhanced Buyer Dashboard Command Center (January 2025)
+- **Strategic Transformation**: Buyer dashboard evolved from simple overview to comprehensive daily command center
+- **Calendar Portlet**: 
+  - **Full-width Integration**: Day/Week/Month view toggles for schedule management
+  - **StackMatch Event Highlighting**: Platform-created events marked with blue border (#4A73CC)
+  - **Calendar Sync Ready**: Placeholder for Google Calendar/Outlook integration
+  - **Quick Event Creation**: "+ New Event" button for seamless scheduling
+- **Smart Reminders System**:
+  - **Intelligent Task Management**: Combines user-created tasks with AI-generated platform reminders
+  - **Contextual Hyperlinking**: Smart reminders link directly to relevant StackMatch pages
+  - **Visual Task States**: Checkbox completion with strikethrough styling
+  - **Due Date Tracking**: Optional dates with calendar icon indicators
+  - **Smart Reminder Examples**: "Sign Master Service Agreement", "Salesforce renewal approaching"
+- **Optimized Layout Structure**:
+  - **Row 1**: Four main KPIs (Active Listings, Proposals, Licenses, Software Cost)
+  - **Row 2**: Recent Listings + Recent Proposals (2-column)
+  - **Row 3**: Calendar portlet (full-width)
+  - **Row 4**: Your Tech Stack + Smart Reminders (2-column)
+  - **Row 5**: AI Assistant + Analytics cards
+
+### 13. UI Component System
 - **Core Library**: Button, Card, Badge, Input, Label, Checkbox, Radio, Progress, Avatar, Textarea, Separator
 - **Advanced Components**: Select, Dropdown Menu, Tabs (Radix UI powered)
 - **Custom Animations**: fade-in, slide-up, float, ticker scroll, pulse, scale transforms
@@ -300,9 +323,9 @@ SUPABASE_JWT_SECRET=***REMOVED***
 8. **eSignature Backend Integration**: API endpoints for document signing workflow and audit trails
 
 ## Current Development Status
-✅ **COMPLETED**: Authentication, Dashboards, Database Integration, Create Listing Framework, Browse Sellers Marketplace, Global Navigation, StackTalk Community Forum, Complete Deal Rooms System, Enterprise eSignature System, Advanced Document Management
-🚧 **IN PROGRESS**: Create Listing Form Steps (2-4), Real-time Features Integration
-📋 **NEXT**: Deal Room APIs, eSignature Backend Integration, Browse Listings Page, Real-time Messaging
+✅ **COMPLETED**: Authentication, Enhanced Buyer Dashboard Command Center, Seller Dashboard, Database Integration, Create Listing Framework, Browse Sellers Marketplace, Global Navigation, StackTalk Community Forum, Complete Deal Rooms System, Enterprise eSignature System, Advanced Document Management, Calendar & Smart Reminders Integration
+🚧 **IN PROGRESS**: Create Listing Form Steps (2-4), Real-time Features Integration, Calendar Sync APIs
+📋 **NEXT**: Deal Room APIs, eSignature Backend Integration, Browse Listings Page, Real-time Messaging, Google Calendar/Outlook Integration
 
 ## Development Commands
 - **Dev Server**: `npm run dev --turbo`
@@ -347,6 +370,30 @@ SUPABASE_JWT_SECRET=***REMOVED***
 - **Seller**: seller@example.com / [password] (Diego Fill, BiltLocal)
 
 ## Recent Achievements & Bug Fixes
+
+### eSignature UI Final Refinements (January 2025)
+- **Streamlined User Experience**: Removed redundant buttons and improved clarity
+  - **Expanded Card Refinements**: Removed "Copy Link" button from Awaiting Signatures status (consolidated to Share button)
+  - **Completed Status Polish**: Removed "View Audit Trail" from green banner (accessible via History button)
+  - **Summary Card Clarity**: Renamed "View Progress" to "View Document" for better user understanding
+- **Enhanced Sender Context**: Added "Sent From" metadata to all document cards
+  - **Small Cards**: Shows sender name and job title in compact format
+  - **Expanded Cards**: Dedicated "Sent From" section with full sender details
+- **Quick Actions Enhancement**: 
+  - **New eSignature Button**: Added primary green button as global shortcut to document signing
+  - **Label Consistency**: Renamed "Send Quick Message" to "Send Message" and "Start Instant Meeting" to "Start Meeting"
+  - **Button Order**: eSignature (green), Send Message (blue), Upload Document, Start Meeting, Add Meeting, Set Reminder
+
+### Deal Rooms Hub Refinements (January 2025)
+- **Business Logic Alignment**: Removed "+ Create New Deal Room" button (deal rooms auto-created with proposals)
+- **Simplified Status Filters**: 
+  - **Renamed Tab**: "Active" changed to "In Progress" for clarity
+  - **Removed Tabs**: Eliminated "Pending Signature" and "Go Live" tabs
+  - **Final Structure**: All Rooms, In Progress, Agreement Reached, Implementing, Completed, Archived
+- **Card Action Updates**:
+  - **Removed**: "Message" button to encourage entering deal room for context
+  - **Added**: "View Listing" button for quick access to original listing
+  - **Final Layout**: Enter Room (primary), View Listing, View Proposal
 
 ### Enterprise eSignature System & Document Management Revolution (January 2025)
 - **Strategic Platform Transformation**: Complete transformation of "Proposal Management" into comprehensive eSignature system
