@@ -9,41 +9,41 @@ import { Badge } from '@/components/ui/badge'
 
 export function VendorsFiltersSection() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedIndustry, setSelectedIndustry] = useState('')
-  const [selectedLocation, setSelectedLocation] = useState('')
-  const [selectedCompanySize, setSelectedCompanySize] = useState('')
-  const [selectedSpecialization, setSelectedSpecialization] = useState('')
+  const [selectedIndustry, setSelectedIndustry] = useState('all')
+  const [selectedLocation, setSelectedLocation] = useState('all')
+  const [selectedCompanySize, setSelectedCompanySize] = useState('all')
+  const [selectedSpecialization, setSelectedSpecialization] = useState('all')
   const [sortBy, setSortBy] = useState('relevance')
   const [showMobileFilters, setShowMobileFilters] = useState(false)
 
   const activeFilters = [
-    selectedIndustry && { key: 'industry', label: selectedIndustry, value: selectedIndustry },
-    selectedLocation && { key: 'location', label: selectedLocation, value: selectedLocation },
-    selectedCompanySize && { key: 'companySize', label: selectedCompanySize, value: selectedCompanySize },
-    selectedSpecialization && { key: 'specialization', label: selectedSpecialization, value: selectedSpecialization },
+    selectedIndustry && selectedIndustry !== 'all' && { key: 'industry', label: selectedIndustry, value: selectedIndustry },
+    selectedLocation && selectedLocation !== 'all' && { key: 'location', label: selectedLocation, value: selectedLocation },
+    selectedCompanySize && selectedCompanySize !== 'all' && { key: 'companySize', label: selectedCompanySize, value: selectedCompanySize },
+    selectedSpecialization && selectedSpecialization !== 'all' && { key: 'specialization', label: selectedSpecialization, value: selectedSpecialization },
   ].filter((filter): filter is { key: string; label: string; value: string } => Boolean(filter))
 
   const clearAllFilters = () => {
-    setSelectedIndustry('')
-    setSelectedLocation('')
-    setSelectedCompanySize('')
-    setSelectedSpecialization('')
+    setSelectedIndustry('all')
+    setSelectedLocation('all')
+    setSelectedCompanySize('all')
+    setSelectedSpecialization('all')
     setSearchQuery('')
   }
 
   const removeFilter = (filterKey: string) => {
     switch (filterKey) {
       case 'industry':
-        setSelectedIndustry('')
+        setSelectedIndustry('all')
         break
       case 'location':
-        setSelectedLocation('')
+        setSelectedLocation('all')
         break
       case 'companySize':
-        setSelectedCompanySize('')
+        setSelectedCompanySize('all')
         break
       case 'specialization':
-        setSelectedSpecialization('')
+        setSelectedSpecialization('all')
         break
     }
   }
@@ -160,7 +160,7 @@ export function VendorsFiltersSection() {
                 <SelectValue placeholder="All Industries" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Industries</SelectItem>
+                <SelectItem value="all">All Industries</SelectItem>
                 {industries.map((industry) => (
                   <SelectItem key={industry} value={industry}>
                     {industry}
@@ -181,7 +181,7 @@ export function VendorsFiltersSection() {
                 <SelectValue placeholder="All Locations" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Locations</SelectItem>
+                <SelectItem value="all">All Locations</SelectItem>
                 {locations.map((location) => (
                   <SelectItem key={location} value={location}>
                     {location}
@@ -202,7 +202,7 @@ export function VendorsFiltersSection() {
                 <SelectValue placeholder="All Sizes" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Sizes</SelectItem>
+                <SelectItem value="all">All Sizes</SelectItem>
                 {companySizes.map((size) => (
                   <SelectItem key={size} value={size}>
                     {size}
@@ -223,7 +223,7 @@ export function VendorsFiltersSection() {
                 <SelectValue placeholder="All Specializations" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Specializations</SelectItem>
+                <SelectItem value="all">All Specializations</SelectItem>
                 {specializations.map((spec) => (
                   <SelectItem key={spec} value={spec}>
                     {spec}
