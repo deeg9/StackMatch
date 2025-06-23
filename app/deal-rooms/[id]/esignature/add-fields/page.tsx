@@ -3,18 +3,20 @@
 import { ESignatureAddFields } from '@/components/deal-rooms/esignature/esignature-add-fields'
 
 interface AddFieldsPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
-  searchParams: {
+  }>
+  searchParams: Promise<{
     documentId?: string
-  }
+  }>
 }
 
-export default function AddFieldsPage({ params, searchParams }: AddFieldsPageProps) {
+export default async function AddFieldsPage({ params, searchParams }: AddFieldsPageProps) {
+  const resolvedParams = await params
+  const resolvedSearchParams = await searchParams
   // In a real app, you would fetch the document and recipient data based on documentId
   const mockDocument = {
-    id: searchParams.documentId || '1',
+    id: resolvedSearchParams.documentId || '1',
     title: 'Master Service Agreement v3.2',
     pages: 12,
     recipients: [
@@ -45,5 +47,5 @@ export default function AddFieldsPage({ params, searchParams }: AddFieldsPagePro
     ]
   }
 
-  return <ESignatureAddFields dealRoomId={params.id} document={mockDocument} />
+  return <ESignatureAddFields dealRoomId={resolvedParams.id} document={mockDocument} />
 }
