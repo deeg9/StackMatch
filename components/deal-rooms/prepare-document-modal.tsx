@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import {
   Dialog,
   DialogContent,
@@ -44,6 +45,7 @@ interface PrepareDocumentModalProps {
 }
 
 export function PrepareDocumentModal({ open, onOpenChange }: PrepareDocumentModalProps) {
+  const router = useRouter()
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [recipients, setRecipients] = useState<Recipient[]>([
@@ -106,6 +108,21 @@ export function PrepareDocumentModal({ open, onOpenChange }: PrepareDocumentModa
 
   const getActionLabel = (action: string) => {
     return action === 'needs-to-sign' ? 'Needs to Sign' : 'Receives a Copy'
+  }
+
+  const handleNextAddFields = () => {
+    // In a real app, you would save the document and recipients data
+    // For now, we'll navigate to the add fields page with a test document ID
+    const documentId = uploadedFile ? Date.now().toString() : 'test-document'
+    
+    // Navigate to the add fields page
+    // Using window.location.pathname to get the current deal room ID
+    const currentPath = window.location.pathname
+    const dealRoomMatch = currentPath.match(/deal-rooms\/(\d+)/)
+    const dealRoomId = dealRoomMatch ? dealRoomMatch[1] : '1'
+    
+    router.push(`/deal-rooms/${dealRoomId}/esignature/add-fields?documentId=${documentId}`)
+    onOpenChange(false)
   }
 
   return (
@@ -292,7 +309,11 @@ export function PrepareDocumentModal({ open, onOpenChange }: PrepareDocumentModa
           <Button variant="outline">
             Save as Draft
           </Button>
-          <Button className="bg-stackmatch-blue hover:bg-stackmatch-navy">
+          <Button 
+            className="bg-stackmatch-blue hover:bg-stackmatch-navy"
+            onClick={handleNextAddFields}
+            disabled={!uploadedFile || recipients.some(r => !r.name || !r.email)}
+          >
             Next: Add Fields
           </Button>
         </DialogFooter>

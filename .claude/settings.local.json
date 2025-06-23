@@ -23,7 +23,8 @@
       "Bash(npm update:*)",
       "Bash(timeout 30s npm run dev)",
       "Bash(npm run dev:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(npx eslint:*)"
     ],
     "deny": []
   },
