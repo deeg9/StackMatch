@@ -35,25 +35,25 @@ export function BrowseSellersHeader() {
           </div>
         </div>
         <h1 className="text-4xl md:text-5xl font-bold text-stackmatch-navy">
-          Browse Sellers
+          Browse Vendors
         </h1>
       </div>
       
       <p className="text-xl text-charcoal mb-3 max-w-2xl mx-auto font-medium">
-        Find the perfect seller for your project
+        Find the perfect vendor for your business
       </p>
       
       <div className="flex items-center justify-center gap-2 text-stackmatch-blue">
         <div className="w-2 h-2 bg-trust-green rounded-full animate-pulse"></div>
         <span className="text-lg font-semibold">
-          {activeCount.toLocaleString()} active sellers
+          {activeCount.toLocaleString()} verified vendors
         </span>
       </div>
       
       <div className="mt-6 flex justify-center">
         <div className="bg-gradient-to-r from-trust-green/10 to-stackmatch-blue/10 rounded-full px-6 py-2 border border-trust-green/20">
           <span className="text-sm text-stackmatch-navy font-medium">
-            🔥 Top talent • 98% satisfaction rate • Verified profiles
+            🏢 Enterprise-ready • 98% client satisfaction • SOC2 Certified
           </span>
         </div>
       </div>

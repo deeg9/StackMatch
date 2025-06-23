@@ -2,8 +2,8 @@ import { Suspense } from 'react'
 import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 import { TickerBanner } from '@/components/ticker/ticker-banner'
 import { BrowseSellersHeader } from '@/components/browse-sellers/browse-sellers-header'
-import { SellersFiltersSection } from '@/components/browse-sellers/sellers-filters-section'
-import { SellersGrid } from '@/components/browse-sellers/sellers-grid'
+import { VendorsFiltersSection } from '@/components/browse-sellers/vendors-filters-section'
+import { VendorsGrid } from '@/components/browse-sellers/vendors-grid'
 import BrowseSellersLoading from './loading'
 
 export default function BrowseSellersPage() {
@@ -16,12 +16,12 @@ export default function BrowseSellersPage() {
         <BrowseSellersHeader />
         
         <div className="mt-8">
-          <SellersFiltersSection />
+          <VendorsFiltersSection />
         </div>
 
         <div className="mt-8">
           <Suspense fallback={<BrowseSellersLoading />}>
-            <SellersGrid />
+            <VendorsGrid />
           </Suspense>
         </div>
       </div>
