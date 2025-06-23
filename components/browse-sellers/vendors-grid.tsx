@@ -34,7 +34,7 @@ export function VendorsGrid() {
   // Mock enterprise vendor data
   const mockVendors: Vendor[] = [
     {
-      id: '1',
+      id: 'salesforce',
       companyName: 'Salesforce',
       companyLogoUrl: '/api/placeholder/64/64',
       isVerified: true,
@@ -52,7 +52,7 @@ export function VendorsGrid() {
       headquarters: 'San Francisco, CA'
     },
     {
-      id: '2',
+      id: 'microsoft',
       companyName: 'Microsoft',
       companyLogoUrl: '/api/placeholder/64/64',
       isVerified: true,
@@ -70,7 +70,7 @@ export function VendorsGrid() {
       headquarters: 'Redmond, WA'
     },
     {
-      id: '3',
+      id: 'oracle',
       companyName: 'Oracle',
       companyLogoUrl: '/api/placeholder/64/64',
       isVerified: true,
@@ -88,7 +88,7 @@ export function VendorsGrid() {
       headquarters: 'Austin, TX'
     },
     {
-      id: '4',
+      id: 'sap',
       companyName: 'SAP',
       companyLogoUrl: '/api/placeholder/64/64',
       isVerified: true,
@@ -106,7 +106,7 @@ export function VendorsGrid() {
       headquarters: 'Walldorf, Germany'
     },
     {
-      id: '5',
+      id: 'adobe',
       companyName: 'Adobe',
       companyLogoUrl: '/api/placeholder/64/64',
       isVerified: true,
@@ -124,7 +124,7 @@ export function VendorsGrid() {
       headquarters: 'San Jose, CA'
     },
     {
-      id: '6',
+      id: 'workday',
       companyName: 'Workday',
       companyLogoUrl: '/api/placeholder/64/64',
       isVerified: true,
@@ -142,7 +142,7 @@ export function VendorsGrid() {
       headquarters: 'Pleasanton, CA'
     },
     {
-      id: '7',
+      id: 'servicenow',
       companyName: 'ServiceNow',
       companyLogoUrl: '/api/placeholder/64/64',
       isVerified: true,
@@ -160,7 +160,7 @@ export function VendorsGrid() {
       headquarters: 'Santa Clara, CA'
     },
     {
-      id: '8',
+      id: 'shopify',
       companyName: 'Shopify',
       companyLogoUrl: '/api/placeholder/64/64',
       isVerified: true,

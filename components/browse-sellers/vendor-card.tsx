@@ -143,6 +143,7 @@ export function VendorCard({ vendor }: VendorCardProps) {
             variant="outline"
             size="sm"
             className="w-full text-stackmatch-blue border-stackmatch-blue hover:bg-stackmatch-blue hover:text-white transition-all"
+            onClick={() => window.location.href = `/company/${vendor.id}`}
           >
             <ExternalLink className="w-4 h-4 mr-2" />
             View Profile
