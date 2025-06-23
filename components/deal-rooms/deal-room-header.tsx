@@ -27,7 +27,9 @@ import {
   Calendar,
   Clock,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  FileText,
+  Eye
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -149,6 +151,24 @@ export function DealRoomHeader({ dealRoom }: DealRoomHeaderProps) {
           </div>
 
           <div className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="hover:bg-stackmatch-blue/5 hover:text-stackmatch-navy hover:border-stackmatch-blue"
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              View Listing
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="hover:bg-stackmatch-blue/5 hover:text-stackmatch-navy hover:border-stackmatch-blue"
+            >
+              <Eye className="w-4 h-4 mr-2" />
+              View Proposal
+            </Button>
+            
             <Button size="sm" className="bg-stackmatch-blue hover:bg-stackmatch-navy text-white">
               <UserPlus className="w-4 h-4 mr-2" />
               Invite
