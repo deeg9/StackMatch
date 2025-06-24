@@ -289,12 +289,12 @@ export function DealRoomsGrid({
   return (
     <div className="space-y-6">
       <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-        <TabsList className="w-full justify-start bg-white border border-slate-200 p-1 h-auto">
+        <TabsList className="w-full flex bg-white border border-slate-200 p-1 h-auto">
           {categories.map((category) => (
             <TabsTrigger 
               key={category.id} 
               value={category.id}
-              className="flex items-center gap-2 px-4 py-2 data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white"
             >
               {category.name}
               <Badge 

@@ -1,5 +1,7 @@
 # CLAUDE.md - StackMatch Project Memory
 
+> **Important**: This file contains business context and feature documentation. For technical implementation details, API documentation, and development patterns, see [CLAUDE-TECHNICAL.md](./CLAUDE-TECHNICAL.md).
+
 ## Project Overview
 StackMatch is an intelligent, three-sided B2B software procurement marketplace connecting buyers (mid-market companies), sellers (software vendors), and consultants (procurement experts). The platform transforms the broken $260B annual software procurement process through structured workflows, AI-powered matching, and expert guidance.
 
@@ -11,24 +13,13 @@ StackMatch is an intelligent, three-sided B2B software procurement marketplace c
 
 ## Tech Stack & Architecture
 
-### Frontend Framework
-- **Next.js 15.3.4** with App Router (Latest Stable)
-- **React 18.3.1** with TypeScript for type safety
-- **Tailwind CSS** with custom StackMatch brand colors
-- **shadcn/ui** components for professional B2B interface
-- **Lucide React** icons throughout
+> **Note**: For detailed technical documentation including API endpoints, database schema, and development patterns, see [CLAUDE-TECHNICAL.md](./CLAUDE-TECHNICAL.md).
 
-### Backend & Database
-- **Supabase** (PostgreSQL) as backend-as-a-service
-- **Real-time capabilities** for live messaging and updates
-- **Row Level Security (RLS)** for data protection
-- **Comprehensive database schema** with 25+ tables
-
-### State Management
-- **React hooks** (useState, useEffect) for component state
-- **Session-based authentication** with Supabase Auth
-- **Real-time data fetching** from authenticated API endpoints
-- **TypeScript interfaces** for type safety and data structure
+### Quick Overview
+- **Frontend**: Next.js 15.3.4 + React 18.3.1 + TypeScript + Tailwind CSS + shadcn/ui
+- **Backend**: Supabase (PostgreSQL) with real-time capabilities and RLS
+- **Authentication**: Session-based with Supabase Auth
+- **State Management**: React hooks with TypeScript interfaces
 
 ### Styling & Design Philosophy
 - **Design Excellence**: Steve Jobs-level attention to detail with pixel-perfect execution
@@ -39,51 +30,19 @@ StackMatch is an intelligent, three-sided B2B software procurement marketplace c
 - **Animation System**: Custom CSS animations (fade-in, slide-up, float, pulse)
 - **Visual Consistency**: Every component follows established design patterns
 
-## Supabase Database Configuration
+## Sample User Data for Testing
 
-### Environment Variables (.env.local)
-```
-SUPABASE_URL=https://lnxceojnwkrmxxsulorp.supabase.co
-NEXT_PUBLIC_SUPABASE_URL=https://lnxceojnwkrmxxsulorp.supabase.co
-SUPABASE_ANON_KEY=***REMOVED***
-NEXT_PUBLIC_SUPABASE_ANON_KEY=[same as above]
-SUPABASE_SERVICE_ROLE_KEY=***REMOVED***
-SUPABASE_JWT_SECRET=***REMOVED***
-```
-
-### Database Schema & Enums (Critical for Development)
-
-#### Core Tables
-- **profiles**: User profiles with user_type enum (`buyer` | `seller`)
-- **buyer_profiles**: Extended buyer information and company details
-- **listings**: Project listings with category relationships
-- **proposals**: Seller proposals with budget and status tracking
-- **deal_rooms**: Collaboration spaces with participant management
-- **project_categories**: Software categories (CRM, ERP, E-commerce, etc.)
-- **deal_room_messages**: Real-time messaging system
-
-#### Critical Enum Values (Must Use Exact Values)
-- **Listing Status**: `"DRAFT" | "ACTIVE" | "CLOSED" | "AWARDED" | "CANCELLED"`
-- **Proposal Status**: `"DRAFT" | "SUBMITTED" | "UNDER_REVIEW" | "ACCEPTED" | "REJECTED" | "WITHDRAWN"`
-- **Deal Room Status**: `"ACTIVE" | "COMPLETED" | "CLOSED" | "CANCELLED" | "PENDING_CLOSURE"`
-- **User Types**: `"buyer" | "seller"`
-
-#### Sample Data (Christopher Fill - Buyer)
+### Christopher Fill - Buyer
 - **User ID**: `1cae22cb-1311-48ca-9caa-47d474c0a20e`
 - **Company**: StackMatch
 - **Active Listings**: 4 listings (TEST, TEST2, TEST3, TEST4)
 - **Category**: All CRM Software
 - **Budget Ranges**: $50-$100
 
-#### Sample Data (Diego Fill - Seller) 
+### Diego Fill - Seller
 - **User ID**: `bc6d4653-f0e5-4f10-ba4e-10c81aed0b9e`
 - **Company**: BiltLocal
 - **Email**: seller@example.com
-
-### Supabase Client Setup
-- **Client-side**: `/lib/supabase/client.ts` for React components
-- **Server-side**: `/lib/supabase/server.ts` for API routes with cookies
-- **TypeScript Types**: `/types/supabase.ts` with comprehensive database schema
 
 ## Completed Features
 
@@ -128,11 +87,10 @@ SUPABASE_JWT_SECRET=***REMOVED***
 
 ### 6. API Architecture - Production Ready
 - **Authenticated Endpoints**: All APIs require valid user sessions
-- **Buyer APIs**: `/api/dashboard/buyer/` (stats, listings, proposals)
-- **Seller APIs**: `/api/dashboard/seller/` (stats, proposals, recommendations)
-- **Profile API**: `/api/user/profile` for dynamic user information
-- **Error Handling**: Comprehensive error states and validation
-- **Type Safety**: TypeScript interfaces throughout
+- **Comprehensive API System**: Buyer, seller, and user profile endpoints
+- **Real-time Integration**: Ready for Supabase subscriptions
+- **Type Safety**: Full TypeScript coverage
+- **See [CLAUDE-TECHNICAL.md](./CLAUDE-TECHNICAL.md) for complete API documentation**
 
 ### 7. Browse Vendors Page (`/app/browse-sellers/page.tsx`) - B2B ENTERPRISE MARKETPLACE
 - **Strategic Transformation**: Complete redesign from freelancer marketplace to enterprise vendor directory
@@ -217,7 +175,40 @@ SUPABASE_JWT_SECRET=***REMOVED***
   - **Row 4**: Your Tech Stack + Smart Reminders (2-column)
   - **Row 5**: AI Assistant + Analytics cards
 
-### 13. UI Component System
+### 13. Enterprise Company Profile System (`/app/company/[id]/`) - COMPREHENSIVE BUYER ENABLEMENT
+- **Strategic Purpose**: Revolutionary company profile pages that transform StackMatch from a simple marketplace into a comprehensive buyer enablement platform
+- **Buyer Enablement Tool**: Provides all information procurement teams need to make informed software purchasing decisions
+- **Professional Header Banner**: 
+  - **Cover Image Integration**: Large professional banner with company logo overlay and gradient effects
+  - **Company Identity Section**: Company name, verification badges, tagline, and tier indicators (Fortune 100/500)
+  - **Key B2B Statistics**: Industry focus, ideal customer size, founding year, headquarters, website
+  - **Primary Action Buttons**: Request Quote (green) and Schedule Demo (blue) prominently positioned
+- **5-Tab Navigation System**: Comprehensive information architecture with professional tab design
+  - **Overview Tab (Default)**: Company snapshot, at-a-glance metrics, featured case studies, featured products
+  - **Products & Services Tab**: Searchable product catalog with filtering and detailed product cards
+  - **Case Studies & Reviews Tab**: Sub-tabbed section with customer success stories and verified reviews
+  - **Company Info Tab**: Detailed company information, contact details, global offices, certifications, awards, financials
+  - **Resources Tab**: Downloadable resources library with documentation, whitepapers, training materials
+- **Intelligent Right Sidebar**: 
+  - **Key Contacts Portlet**: Sales representatives with photos, titles, contact actions (Message, Schedule)
+  - **Deal Room History Portlet**: User's collaboration history with the vendor including active and completed deal rooms
+  - **Similar Vendors Portlet**: "Users also viewed" discovery with match percentages and ratings
+- **Enterprise Data Architecture**: Comprehensive mock data for Fortune 500 companies (Salesforce, Microsoft, Oracle)
+  - **Company Snapshots**: Detailed about sections with key strengths, certifications, global presence
+  - **Metrics Cards**: Contract values, implementation times, customer satisfaction, ROI data
+  - **Case Studies**: Industry-specific success stories with quantified results and improvements
+  - **Product Catalogs**: Detailed product information with features, pricing, ratings, user counts
+  - **Review Systems**: Verified customer reviews with rating distributions and testimonials
+  - **Resource Libraries**: Categorized documents, training materials, and downloadable assets
+- **Advanced Filtering & Search**: 
+  - **Product Search**: Real-time search across products, features, and descriptions
+  - **Case Study Filtering**: Filter by industry, search content, and company size
+  - **Resource Categorization**: Filter by type (documentation, whitepapers, videos) and category
+- **Integration with Browse Vendors**: Seamless navigation from vendor cards to detailed company profiles
+- **Professional Loading States**: Skeleton components matching StackMatch design for optimal user experience
+- **Mobile-First Responsive Design**: Comprehensive responsive behavior across all tabs and components
+
+### 14. UI Component System
 - **Core Library**: Button, Card, Badge, Input, Label, Checkbox, Radio, Progress, Avatar, Textarea, Separator
 - **Advanced Components**: Select, Dropdown Menu, Tabs (Radix UI powered)
 - **Custom Animations**: fade-in, slide-up, float, ticker scroll, pulse, scale transforms
@@ -225,92 +216,15 @@ SUPABASE_JWT_SECRET=***REMOVED***
 - **Professional Patterns**: Consistent spacing, typography, and interaction design
 - **Navigation Components**: useRouter integration for seamless page transitions
 
-## Current File Structure
-```
-/app/
-├── page.tsx (Landing page)
-├── layout.tsx (Root layout with fonts)
-├── globals.css (Brand styles & animations)
-├── login/page.tsx (Authentication with real Supabase)
-├── signup/page.tsx 
-├── create-listing/page.tsx (Multi-step wizard)
-├── browse-sellers/
-│   ├── page.tsx (Seller marketplace with advanced filtering)
-│   └── loading.tsx (Professional loading skeleton)
-├── stacktalk/
-│   ├── page.tsx (Community forum with discussion threads)
-│   └── loading.tsx (Forum loading skeleton)
-├── deal-rooms/
-│   ├── page.tsx (Deal rooms hub with KPI dashboard)
-│   ├── loading.tsx (Professional loading skeleton)
-│   ├── [id]/page.tsx (Individual deal room collaboration workspace)
-│   └── [id]/esignature/add-fields/page.tsx (Full-page eSignature field editor)
-├── dashboard/
-│   ├── buyer/page.tsx (Live data dashboard)
-│   └── seller/page.tsx (Live data dashboard)
-└── api/
-    ├── auth/login/route.ts (Session management)
-    ├── user/profile/route.ts (Dynamic profile data)
-    ├── sellers/route.ts (Seller data for browse page)
-    ├── dashboard/buyer/
-    │   ├── stats/route.ts (Real KPI data)
-    │   ├── listings/route.ts (Live listings)
-    │   └── proposals/route.ts (Live proposals)
-    └── dashboard/seller/
-        ├── stats/route.ts (Seller KPIs)
-        ├── proposals/route.ts (Seller proposals)
-        └── recommendations/route.ts (AI suggestions)
+## File Structure Overview
 
-/components/
-├── ui/ (Complete shadcn/ui library with Select, Tabs, DropdownMenu, Dialog)
-├── navigation/
-│   ├── global-navigation.tsx (Authenticated user navigation)
-│   └── navigation-wrapper.tsx (Auth-aware navigation wrapper)
-├── browse-sellers/
-│   ├── browse-sellers-header.tsx (Page header with vendor stats)
-│   ├── sellers-filters-section.tsx (Legacy individual seller filtering)
-│   ├── vendors-filters-section.tsx (Enterprise B2B vendor filtering with industry/size/specialization)
-│   ├── seller-card.tsx (Legacy individual seller profile cards)
-│   ├── vendor-card.tsx (Enterprise vendor cards with company focus)
-│   ├── sellers-grid.tsx (Legacy responsive seller grid layout)
-│   └── vendors-grid.tsx (Enterprise vendor grid with Fortune 500 companies)
-├── dashboard/
-│   └── buyer-dashboard-sidebar.tsx (Right sidebar with AI insights, deadlines, and quick actions)
-├── deal-rooms/
-│   ├── deal-rooms-header.tsx (Page header with statistics)
-│   ├── deal-rooms-filters.tsx (Advanced search and filtering)
-│   ├── deal-rooms-stats.tsx (KPI dashboard cards)
-│   ├── deal-rooms-grid.tsx (Tabbed deal room grid)
-│   ├── deal-room-card.tsx (Individual deal room cards with navigation)
-│   ├── deal-rooms-sidebar.tsx (Activity feed and quick actions)
-│   ├── deal-room-header.tsx (Individual room header with participant modal and dropdown actions)
-│   ├── deal-room-tabs.tsx (Four-tab navigation system with optimized structure)
-│   ├── deal-room-discussion.tsx (Simplified full-width chat interface)
-│   ├── deal-room-proposals.tsx (Enterprise eSignature system with inbox/sent model)
-│   ├── deal-room-documents.tsx (Advanced file library with job title integration and professional document management)
-│   ├── deal-room-timeline.tsx (Project milestones with multiple views)
-│   ├── deal-room-meeting-notes.tsx (Meeting recordings and notes)
-│   ├── deal-room-sidebar.tsx (Right sidebar with deal summary and eSignature integration)
-│   ├── prepare-document-modal.tsx (Document upload and recipient management modal)
-│   └── esignature/
-│       ├── esignature-add-fields.tsx (Main field editor orchestrator)
-│       ├── esignature-header.tsx (Editor header with Back, Preview, Send actions)
-│       ├── esignature-fields-palette.tsx (Left sidebar with recipient selector and draggable fields)
-│       ├── esignature-document-canvas.tsx (Center PDF viewer with field placement)
-│       ├── esignature-page-navigator.tsx (Right sidebar with page thumbnails)
-│       └── esignature-field-item.tsx (Individual draggable/resizable field components)
-├── ticker/ticker-banner.tsx
-└── guided-listing/ (Multi-step form components)
-    └── step1-understanding-needs.tsx
+> **Note**: For complete file structure with technical details, see [CLAUDE-TECHNICAL.md](./CLAUDE-TECHNICAL.md).
 
-/lib/
-└── supabase/
-    ├── client.ts (Browser client)
-    └── server.ts (Async server client with cookies)
-
-/types/
-└── supabase.ts (Complete database schema types)
-```
+### Key Directories
+- `/app/` - Next.js pages and API routes
+- `/components/` - Reusable UI components organized by feature
+- `/lib/` - Utility functions and Supabase clients
+- `/types/` - TypeScript type definitions
 
 ## Brand Identity Guidelines
 
@@ -344,51 +258,33 @@ SUPABASE_JWT_SECRET=***REMOVED***
 8. **eSignature Backend Integration**: API endpoints for document signing workflow and audit trails
 
 ## Current Development Status
-✅ **COMPLETED**: Authentication, Enhanced Buyer Dashboard Command Center with Right Sidebar, Seller Dashboard, Database Integration, Create Listing Framework, Browse Vendors B2B Enterprise Marketplace, Global Navigation, StackTalk Community Forum, Complete Deal Rooms System, Advanced eSignature System with Field Editor, Inbox/Sent Document Management, Header Navigation Enhancements, Calendar & Smart Reminders Integration, Strategic B2B Marketplace Transformation
+✅ **COMPLETED**: Authentication, Enhanced Buyer Dashboard Command Center with Right Sidebar, Seller Dashboard, Database Integration, Create Listing Framework, Browse Vendors B2B Enterprise Marketplace, Global Navigation, StackTalk Community Forum, Complete Deal Rooms System, Advanced eSignature System with Field Editor, Inbox/Sent Document Management, Header Navigation Enhancements, Calendar & Smart Reminders Integration, Strategic B2B Marketplace Transformation, **Enterprise Company Profile System with 5-Tab Architecture**
 🚧 **IN PROGRESS**: Create Listing Form Steps (2-4), Real-time Features Integration, Calendar Sync APIs
-📋 **NEXT**: eSignature Backend Integration, Deal Room APIs, Browse Listings Page, Real-time Messaging, Google Calendar/Outlook Integration, Vendor API Integration
+📋 **NEXT**: eSignature Backend Integration, Deal Room APIs, Browse Listings Page, Real-time Messaging, Google Calendar/Outlook Integration, Vendor API Integration, Company Profile Backend APIs
 
-## Development Commands
+## Quick Start
+
+### Development Commands
 - **Dev Server**: `npm run dev --turbo`
 - **Build**: `npm run build`
 - **Type Check**: `npm run type-check`
 - **Lint**: `npm run lint`
 
-## Security & Authentication
-- **Production Auth**: Real Supabase authentication with session management
-- **Session-based APIs**: All endpoints require valid user authentication
-- **RLS Policies**: Row Level Security enabled on all database tables
-- **Environment Security**: All keys in .env.local (never committed)
-- **Type Safety**: TypeScript throughout prevents data structure errors
-
-## Development Patterns Established
-- **API Structure**: `/api/dashboard/{user_type}/{endpoint}` pattern
-- **Authentication Guard**: `const { data: { user }, error } = await supabase.auth.getUser()`
-- **Navigation Wrapper**: Authentication-aware navigation that only renders for logged-in users
-- **Loading States**: Professional skeleton components with branded animations
-- **Dynamic Routing**: `/deal-rooms/[id]` pattern for individual resource pages
-- **Tabbed Interfaces**: Consistent tab navigation with badge counts and state management
-- **Modal Data Architecture**: Rich component data structures with comprehensive mock data
-- **Error Handling**: Comprehensive try-catch with user-friendly messages
-- **Component Architecture**: Modular, reusable components with TypeScript interfaces
-- **Mock Data Integration**: Comprehensive sample data for demonstration and testing
-- **Animation System**: Consistent CSS classes (animate-fade-in, animate-slide-up, etc.)
-- **Responsive Design**: Mobile-first approach with desktop enhancement
-- **Status Management**: Consistent status indicators with color coding and icons
-- **Progress Tracking**: Visual progress bars and milestone tracking throughout
-- **Accessibility**: Radix UI components ensure WCAG compliance
-- **Design System**: Steve Jobs-level attention to detail with perfect brand consistency
-
-## Performance & Build
-- **Next.js 15.3.4**: Latest stable with App Router for optimal performance
-- **Turbopack**: Fast development builds (`npm run dev --turbo`)
-- **Static Generation**: Landing pages pre-rendered for speed
-- **Real-time Data**: Efficient database queries with proper indexing
-- **Component Optimization**: Lazy loading and code splitting ready
-
-## Testing Credentials
+### Testing Credentials
 - **Buyer**: buyer@example.com / 123456 (Christopher Fill, StackMatch)
 - **Seller**: seller@example.com / [password] (Diego Fill, BiltLocal)
+
+## Technical Documentation
+
+For comprehensive technical documentation including:
+- Complete API endpoint documentation
+- Database schema and enum values
+- Development patterns and best practices
+- Security implementation details
+- Performance optimization strategies
+- Component development guidelines
+
+**See [CLAUDE-TECHNICAL.md](./CLAUDE-TECHNICAL.md)**
 
 ## Recent Achievements & Bug Fixes
 
@@ -567,4 +463,29 @@ SUPABASE_JWT_SECRET=***REMOVED***
 - **Import Optimization**: Cleaned up unused imports and components for better performance
 - **Build Optimization**: Resolved JSX structure issues and Git merge conflicts for clean deployment
 
-This project represents a **world-class B2B marketplace** with enterprise-grade design, comprehensive collaboration tools, and Steve Jobs-level user experience, positioned to capture significant market share in the $384B software procurement space. The platform now includes a complete deal negotiation and project management system that rivals the best enterprise collaboration platforms, with polished buyer and seller dashboards that provide actionable insights and streamlined workflows. The **revolutionary eSignature system** eliminates external DocuSign dependencies, transforming StackMatch into a complete contract execution platform that directly addresses the $260B annual waste in software procurement. This strategic differentiator, combined with advanced document management and professional job title integration, creates a premium platform experience that justifies higher pricing while delivering exceptional user value through integrated workflows that streamline the entire deal lifecycle from discovery to signature.
+### Enterprise Company Profile System Implementation (January 2025)
+- **Strategic Platform Enhancement**: Revolutionary company profile pages transform StackMatch from basic marketplace to comprehensive buyer enablement platform
+- **Comprehensive 5-Tab Architecture**: Professional information architecture providing all procurement decision-making information
+  - **Overview Tab**: Company snapshot with key strengths, at-a-glance metrics, featured case studies, and flagship products
+  - **Products & Services Tab**: Searchable product catalog with advanced filtering and detailed product cards
+  - **Case Studies & Reviews Tab**: Sub-tabbed success stories and verified customer reviews with rating distributions
+  - **Company Info Tab**: Detailed company information, global offices, certifications, awards, and financial data
+  - **Resources Tab**: Downloadable documentation, whitepapers, training materials, and API resources
+- **Professional Header Banner**: Large cover image with company logo overlay, verification badges, tier indicators, and primary action buttons
+- **Intelligent Right Sidebar**: Key contacts with action buttons, deal room history, and similar vendor discovery
+- **Enterprise Data Integration**: Comprehensive Fortune 500 company data (Salesforce, Microsoft, Oracle) with realistic business metrics
+- **Advanced Search & Filtering**: Real-time search across products, case studies by industry, and resources by type/category
+- **Seamless Navigation Integration**: "View Profile" buttons in Browse Vendors route to individual company profiles
+- **Professional Loading States**: Skeleton components matching StackMatch design for optimal user experience
+- **Mobile-First Responsive Design**: Complete responsive behavior across all tabs, components, and data visualizations
+
+### Technical Excellence & Integration Points
+- **Dynamic Routing Pattern**: `/company/[id]` with Next.js 15 async params for optimal performance
+- **Component Architecture**: Modular tab-based system with 20+ specialized components for different data types
+- **Mock Data Fallbacks**: Comprehensive error handling with graceful degradation to realistic enterprise data
+- **TypeScript Compliance**: Full type safety with interfaces for all company data structures
+- **API-Ready Architecture**: Built for backend integration with fallback patterns for demonstration
+- **Consistent Design Language**: Perfect adherence to StackMatch brand colors, typography, and animation system
+- **Performance Optimization**: Lazy loading, efficient data fetching, and optimized component rendering
+
+This project now represents a **world-class B2B marketplace** with enterprise-grade design, comprehensive collaboration tools, and Steve Jobs-level user experience, positioned to capture significant market share in the $384B software procurement space. The platform includes a complete deal negotiation and project management system that rivals the best enterprise collaboration platforms, with polished buyer and seller dashboards that provide actionable insights and streamlined workflows. The **revolutionary eSignature system** eliminates external DocuSign dependencies, transforming StackMatch into a complete contract execution platform that directly addresses the $260B annual waste in software procurement. Combined with the new **Enterprise Company Profile System**, StackMatch now provides a complete buyer enablement platform that transforms how procurement teams research, evaluate, and engage with software vendors, justifying premium pricing through high-value integrated workflows that streamline the entire deal lifecycle from discovery to signature.

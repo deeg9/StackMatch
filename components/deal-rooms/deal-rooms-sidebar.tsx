@@ -166,27 +166,6 @@ export function DealRoomsSidebar() {
 
   return (
     <div className="space-y-6 animate-slide-up">
-      {/* AI Tips Section */}
-      <Card className="border-information-blue/20 bg-gradient-to-br from-information-blue/5 to-stackmatch-blue/5">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-information-blue" />
-            AI Insights
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="p-3 bg-white/50 rounded-lg border border-information-blue/10">
-            <p className="text-sm text-stackmatch-navy font-medium">💡 Smart Tip</p>
-            <p className="text-sm text-medium-gray mt-1">
-              You have 3 deals idle for over a week. Consider sending follow-up messages to maintain momentum.
-            </p>
-          </div>
-          <Button variant="ghost" className="w-full text-information-blue hover:bg-information-blue/10">
-            View All Insights
-          </Button>
-        </CardContent>
-      </Card>
-
       {/* Recent Activity */}
       <Card>
         <CardHeader>
