@@ -82,6 +82,9 @@ if (error || !user) {
 - **My Listings APIs**:
   - `/api/my-listings/route.ts` - Comprehensive listings management with search, filter, sort
   - `/api/my-listings/stats/route.ts` - KPI statistics with trend calculations
+- **Received Proposals APIs**:
+  - `/api/received-proposals/route.ts` - Advanced proposal management with filtering, search, and status mapping
+  - `/api/received-proposals/stats/route.ts` - Real-time KPI calculations with trend analysis
 - **Seller APIs**:
   - `/api/dashboard/seller/stats/route.ts` - Seller KPIs
   - `/api/dashboard/seller/proposals/route.ts` - Seller proposals
@@ -115,7 +118,7 @@ if (error || !user) {
 │   ├── buyer/page.tsx (Live data dashboard with fixed routing)
 │   └── seller/page.tsx (Live data dashboard)
 ├── my-listings/page.tsx (Core listing management center)
-├── proposals/page.tsx (Vendor response hub)
+├── proposals/page.tsx (Comprehensive received proposals management center)
 └── api/
     ├── auth/login/route.ts (Session management)
     ├── user/profile/route.ts (Dynamic profile data)
@@ -127,6 +130,9 @@ if (error || !user) {
     ├── my-listings/
     │   ├── route.ts (Comprehensive listings management)
     │   └── stats/route.ts (KPI statistics with trends)
+    ├── received-proposals/
+    │   ├── route.ts (Advanced proposal management with filtering)
+    │   └── stats/route.ts (Real-time KPI calculations)
     └── dashboard/seller/
         ├── stats/route.ts (Seller KPIs)
         ├── proposals/route.ts (Seller proposals)
@@ -140,6 +146,7 @@ if (error || !user) {
 ├── dashboard/
 ├── deal-rooms/
 ├── my-listings/ (Complete listing management components)
+├── received-proposals/ (Comprehensive proposal management components)
 ├── ticker/
 └── guided-listing/
 
@@ -212,12 +219,18 @@ if (error || !user) {
 
 ## Recent Technical Improvements
 
-### My Listings & Proposals System (January 2025)
+### My Listings & Received Proposals System (January 2025)
 - **Core Listing Management Architecture**: Complete implementation of centralized listing management
   - **Component Modularity**: 7 specialized components (Header, Stats, Filters, Grid, Card, Sidebar)
   - **API Integration**: 2 dedicated endpoints with comprehensive error handling and mock data fallbacks
   - **Database Enum Handling**: Proper mapping between frontend status values and database constraints
   - **TypeScript Excellence**: All components pass strict type checking with proper interfaces
+- **Comprehensive Received Proposals Management Center**: Revolutionary proposal review and comparison system
+  - **Modular Architecture**: 7 specialized components following established StackMatch patterns
+  - **Advanced Filtering System**: Multi-dimensional search with status tabs, listing filters, and real-time updates
+  - **Professional ProposalCard Design**: Rich vendor comparison cards with key metrics and action buttons
+  - **KPI Dashboard**: 4 animated metric cards tracking proposals, review status, and value metrics
+  - **API Excellence**: 2 production-ready endpoints with comprehensive error handling and mock data fallbacks
 
 ### Critical Navigation Routing Fixes
 - **Buyer Dashboard Links**: Fixed "View All" routing from `/listings` to `/my-listings`

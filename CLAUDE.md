@@ -236,13 +236,34 @@ StackMatch is an intelligent, three-sided B2B software procurement marketplace c
   - `/api/my-listings/stats/route.ts` - KPI statistics with trend calculations
   - Graceful error handling with realistic mock data when database unavailable
 
-### 15. Proposals Management Page (`/app/proposals/`) - VENDOR RESPONSE HUB
-- **Strategic Purpose**: Dedicated page for reviewing and managing vendor proposals
-- **Professional Interface**: Clean dashboard with proposal cards and stats
-- **Smart Fallback System**: Uses API data when available, mock data when database unavailable
-- **Advanced Filtering**: Search by seller name, listing title, and status filtering
-- **Engagement Statistics**: Total proposals, under review, accepted, and average budget calculations
-- **Action-Oriented Design**: Clear view and review buttons for streamlined workflow
+### 15. Received Proposals Page (`/app/proposals/`) - COMPREHENSIVE PROPOSAL MANAGEMENT CENTER
+- **Strategic Purpose**: Complete "decision-making hub" for reviewing, comparing, and managing all vendor proposals received in response to listings
+- **Modular Component Architecture**: 7 specialized components following established StackMatch design patterns (Header, Stats, Filters, Grid, Card, Sidebar)
+- **Professional Header**: "Received Proposals" title with descriptive subtitle, no create button (proposals are received, not created)
+- **Advanced KPI Dashboard**: 4 animated metric cards with real-time data
+  - **Total Proposals Received**: 18 proposals with trend indicators and growth metrics
+  - **New Proposals (Last 7 Days)**: 7 new submissions with strong response rate tracking
+  - **Pending Review**: 5 proposals requiring immediate attention with urgency indicators
+  - **Average Proposal Value**: $67.5K above market average with percentage comparisons
+- **Comprehensive Filtering System**: Multi-dimensional search and categorization capabilities
+  - **Search Bar**: Full-text search across vendor names, company names, and listing titles
+  - **Filter by Listing Dropdown**: Critical dropdown showing all user's listings with proposal counts per listing
+  - **Status Filter Tabs**: All, New, In Discussion, Accepted, Archived with real-time counts and visual badges
+  - **Active Filter Display**: Visual filter chips with clear removal options and current filter state
+- **Professional ProposalCard Design**: Rich vendor cards optimized for quick comparison and decision-making
+  - **Vendor Information Section**: Avatar, name, company with verification badges and professional context
+  - **Listing Context Display**: Clear "For: [Listing Title]" section showing which listing the proposal addresses
+  - **Key Comparison Metrics**: Grid layout with Proposed Value ($85K), Timeline (10-12 weeks), Vendor Rating (4.9★)
+  - **Action Buttons**: "View Proposal" (outline) and "Open Deal Room" (primary) with "More Actions" archive menu
+  - **NEW Badge System**: Visual indicators for recent proposals with animated pulse effects
+- **Comprehensive Right Sidebar**: Productivity tools matching Deal Rooms design pattern
+  - **Quick Actions Portlet**: 5 essential buyer actions (Send Message, Upload Document, Start Meeting, Schedule Meeting, Set Reminder)
+  - **Pending Actions Portlet**: Priority-coded task list with colored bars, due dates, and urgency indicators
+  - **Upcoming Deadlines Portlet**: Time-sensitive items with priority badges and overdue status tracking
+- **API Integration Excellence**: Production-ready backend with comprehensive error handling
+  - `/api/received-proposals/route.ts` - Main data endpoint with advanced filtering, search, and status mapping
+  - `/api/received-proposals/stats/route.ts` - Real-time KPI calculations with trend analysis and growth metrics
+  - **Mock Data Fallbacks**: Realistic enterprise-grade mock data when database unavailable for seamless demonstration
 
 ### 16. UI Component System
 - **Core Library**: Button, Card, Badge, Input, Label, Checkbox, Radio, Progress, Avatar, Textarea, Separator
@@ -294,7 +315,7 @@ StackMatch is an intelligent, three-sided B2B software procurement marketplace c
 8. **eSignature Backend Integration**: API endpoints for document signing workflow and audit trails
 
 ## Current Development Status
-✅ **COMPLETED**: Authentication, Enhanced Buyer Dashboard Command Center with Right Sidebar, Seller Dashboard, Database Integration, Create Listing Framework, Browse Vendors B2B Enterprise Marketplace, Global Navigation, StackTalk Community Forum, Complete Deal Rooms System, Advanced eSignature System with Field Editor, Inbox/Sent Document Management, Header Navigation Enhancements, Calendar & Smart Reminders Integration, Strategic B2B Marketplace Transformation, Enterprise Company Profile System with 5-Tab Architecture, **My Listings Core Management Page**, **Proposals Management Page**, **Complete Navigation Routing**
+✅ **COMPLETED**: Authentication, Enhanced Buyer Dashboard Command Center with Right Sidebar, Seller Dashboard, Database Integration, Create Listing Framework, Browse Vendors B2B Enterprise Marketplace, Global Navigation, StackTalk Community Forum, Complete Deal Rooms System, Advanced eSignature System with Field Editor, Inbox/Sent Document Management, Header Navigation Enhancements, Calendar & Smart Reminders Integration, Strategic B2B Marketplace Transformation, Enterprise Company Profile System with 5-Tab Architecture, **My Listings Core Management Page**, **Comprehensive Received Proposals Management Center**, **Complete Navigation Routing**
 🚧 **IN PROGRESS**: Create Listing Form Steps (2-4), Real-time Features Integration, Calendar Sync APIs
 📋 **NEXT**: eSignature Backend Integration, Deal Room APIs, Browse Listings Page, Real-time Messaging, Google Calendar/Outlook Integration, Vendor API Integration, Company Profile Backend APIs
 
