@@ -23,6 +23,63 @@ import {
 } from 'lucide-react'
 
 export function BuyerDashboardSidebar() {
+  // Mock Pending Actions data
+  const pendingActions = [
+    {
+      id: 1,
+      title: 'Sign NDA for RetailFlow project',
+      project: 'CRM Implementation',
+      dueDate: '2024-02-03',
+      priority: 'high',
+      link: '/deal-rooms/DR-001/documents'
+    },
+    {
+      id: 2,
+      title: 'Review proposal from DataCorp',
+      project: 'Analytics Platform',
+      dueDate: '2024-02-05',
+      priority: 'high',
+      link: '/proposals/PR-003'
+    },
+    {
+      id: 3,
+      title: 'Complete vendor security assessment',
+      project: 'New Vendor Onboarding',
+      dueDate: '2024-02-07',
+      priority: 'medium',
+      link: '/vendors/assessment'
+    },
+    {
+      id: 4,
+      title: 'Schedule demo with SaaS vendor',
+      project: 'HR Management',
+      dueDate: '2024-02-10',
+      priority: 'low',
+      link: '/calendar/schedule'
+    },
+    {
+      id: 5,
+      title: 'Approve budget for Q2 licenses',
+      project: 'Software Licenses',
+      dueDate: '2024-02-12',
+      priority: 'medium',
+      link: '/budget/approval'
+    }
+  ]
+
+  const getPendingActionPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high':
+        return 'bg-red-500'
+      case 'medium':
+        return 'bg-orange-500'
+      case 'low':
+        return 'bg-green-500'
+      default:
+        return 'bg-gray-500'
+    }
+  }
+
   // Mock AI Insights data
   const aiInsights = [
     {
@@ -149,6 +206,79 @@ export function BuyerDashboardSidebar() {
         </CardContent>
       </Card>
 
+      {/* Quick Actions Card */}
+      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-stackmatch-navy">
+            <Users className="w-5 h-5" />
+            Quick Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <Button className="w-full justify-start bg-stackmatch-blue hover:bg-stackmatch-navy">
+            <MessageSquare className="w-4 h-4 mr-2" />
+            Send Message
+          </Button>
+          
+          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
+            <Upload className="w-4 h-4 mr-2" />
+            Upload Document
+          </Button>
+          
+          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
+            <Video className="w-4 h-4 mr-2" />
+            Start Meeting
+          </Button>
+          
+          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
+            <CalendarDays className="w-4 h-4 mr-2" />
+            Schedule Meeting
+          </Button>
+          
+          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
+            <Bell className="w-4 h-4 mr-2" />
+            Set Reminder
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* Pending Actions Card */}
+      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-stackmatch-navy">
+            <AlertCircle className="w-5 h-5" />
+            Pending Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {pendingActions.map((action) => (
+            <a
+              key={action.id}
+              href={action.link}
+              className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors duration-200 cursor-pointer group"
+            >
+              <div className={`w-1 h-12 ${getPendingActionPriorityColor(action.priority)} rounded-full flex-shrink-0`}></div>
+              <div className="flex-1 space-y-1">
+                <h4 className="text-sm font-medium text-stackmatch-navy group-hover:text-stackmatch-blue">
+                  {action.title}
+                </h4>
+                <p className="text-xs text-medium-gray">
+                  {action.project}
+                </p>
+                <div className="flex items-center gap-2 text-xs text-medium-gray">
+                  <Calendar className="w-3 h-3" />
+                  <span>Due: {action.dueDate}</span>
+                </div>
+              </div>
+            </a>
+          ))}
+          <Button variant="ghost" size="sm" className="w-full text-stackmatch-blue hover:text-stackmatch-navy">
+            View All Actions
+            <ArrowRight className="w-3 h-3 ml-1" />
+          </Button>
+        </CardContent>
+      </Card>
+
       {/* Upcoming Deadlines Card */}
       <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
         <CardHeader className="pb-4">
@@ -190,42 +320,6 @@ export function BuyerDashboardSidebar() {
               </div>
             </div>
           ))}
-        </CardContent>
-      </Card>
-
-      {/* Quick Actions Card */}
-      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2 text-stackmatch-navy">
-            <Users className="w-5 h-5" />
-            Quick Actions
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <Button className="w-full justify-start bg-stackmatch-blue hover:bg-stackmatch-navy">
-            <MessageSquare className="w-4 h-4 mr-2" />
-            Send Message
-          </Button>
-          
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Upload className="w-4 h-4 mr-2" />
-            Upload Document
-          </Button>
-          
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Video className="w-4 h-4 mr-2" />
-            Start Meeting
-          </Button>
-          
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <CalendarDays className="w-4 h-4 mr-2" />
-            Schedule Meeting
-          </Button>
-          
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Bell className="w-4 h-4 mr-2" />
-            Set Reminder
-          </Button>
         </CardContent>
       </Card>
     </div>

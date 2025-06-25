@@ -252,11 +252,8 @@ export default function BuyerDashboard() {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Main Content Area */}
-          <div className="lg:col-span-3">
-            {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Row 1: Full-width KPI Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Active Listings */}
           <Card className={cn(
             "border-2 hover:border-[#4A73CC] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
@@ -354,8 +351,12 @@ export default function BuyerDashboard() {
           </Card>
         </div>
 
-        {/* Row 2: Active Procurement - Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        {/* Main Layout: Content + Sidebar Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Main Content Area */}
+          <div className="lg:col-span-3">
+            {/* Row 2: Active Procurement - Two-column layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Recent Listings */}
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between">
@@ -516,10 +517,10 @@ export default function BuyerDashboard() {
               )}
             </CardContent>
           </Card>
-        </div>
+            </div>
 
-        {/* Row 3: Calendar (Full-width) */}
-        <div className="mb-8">
+            {/* Row 3: Calendar (Full-width) */}
+            <div className="mb-8">
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Calendar</CardTitle>
@@ -613,10 +614,10 @@ export default function BuyerDashboard() {
               </div>
             </CardContent>
           </Card>
-        </div>
+            </div>
 
-        {/* Row 4: Asset Management & Smart Reminders - Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            {/* Row 4: Asset Management & Smart Reminders - Two-column layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Your Tech Stack</CardTitle>
@@ -783,30 +784,7 @@ export default function BuyerDashboard() {
               </div>
             </CardContent>
           </Card>
-        </div>
-
-        {/* Row 5: Navigation & Discovery - Two-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300 hover:shadow-lg group cursor-pointer">
-            <CardContent className="p-6 text-center">
-              <div className="w-16 h-16 bg-[#4A73CC]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Sparkles className="h-8 w-8 text-[#4A73CC]" />
-              </div>
-              <h3 className="font-semibold text-[#1A2B4C] mb-2">AI Assistant</h3>
-              <p className="text-sm text-[#6B7280]">Get help creating listings with AI guidance</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-2 hover:border-[#22C55E] transition-all duration-300 hover:shadow-lg group cursor-pointer">
-            <CardContent className="p-6 text-center">
-              <div className="w-16 h-16 bg-[#22C55E]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <TrendingUp className="h-8 w-8 text-[#22C55E]" />
-              </div>
-              <h3 className="font-semibold text-[#1A2B4C] mb-2">Analytics</h3>
-              <p className="text-sm text-[#6B7280]">View detailed insights and procurement metrics</p>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
           </div>
           
           {/* Right Sidebar */}
