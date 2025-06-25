@@ -361,7 +361,7 @@ export default function BuyerDashboard() {
           <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Recent Listings</CardTitle>
-              <Link href="/listings">
+              <Link href="/my-listings">
                 <Button variant="ghost" size="sm" className="text-[#4A73CC] hover:text-[#1A2B4C]">
                   View All
                   <ArrowRight className="h-4 w-4 ml-1" />
