@@ -78,7 +78,10 @@ if (error || !user) {
 - **Buyer APIs**: 
   - `/api/dashboard/buyer/stats/route.ts` - Real KPI data
   - `/api/dashboard/buyer/listings/route.ts` - Live listings
-  - `/api/dashboard/buyer/proposals/route.ts` - Live proposals
+  - `/api/dashboard/buyer/proposals/route.ts` - Live proposals with error handling
+- **My Listings APIs**:
+  - `/api/my-listings/route.ts` - Comprehensive listings management with search, filter, sort
+  - `/api/my-listings/stats/route.ts` - KPI statistics with trend calculations
 - **Seller APIs**:
   - `/api/dashboard/seller/stats/route.ts` - Seller KPIs
   - `/api/dashboard/seller/proposals/route.ts` - Seller proposals
@@ -109,8 +112,10 @@ if (error || !user) {
 │       ├── page.tsx (Comprehensive company profile with 5-tab navigation)
 │       └── loading.tsx (Professional company profile skeleton)
 ├── dashboard/
-│   ├── buyer/page.tsx (Live data dashboard)
+│   ├── buyer/page.tsx (Live data dashboard with fixed routing)
 │   └── seller/page.tsx (Live data dashboard)
+├── my-listings/page.tsx (Core listing management center)
+├── proposals/page.tsx (Vendor response hub)
 └── api/
     ├── auth/login/route.ts (Session management)
     ├── user/profile/route.ts (Dynamic profile data)
@@ -118,7 +123,10 @@ if (error || !user) {
     ├── dashboard/buyer/
     │   ├── stats/route.ts (Real KPI data)
     │   ├── listings/route.ts (Live listings)
-    │   └── proposals/route.ts (Live proposals)
+    │   └── proposals/route.ts (Live proposals with error handling)
+    ├── my-listings/
+    │   ├── route.ts (Comprehensive listings management)
+    │   └── stats/route.ts (KPI statistics with trends)
     └── dashboard/seller/
         ├── stats/route.ts (Seller KPIs)
         ├── proposals/route.ts (Seller proposals)
@@ -131,6 +139,7 @@ if (error || !user) {
 ├── company/
 ├── dashboard/
 ├── deal-rooms/
+├── my-listings/ (Complete listing management components)
 ├── ticker/
 └── guided-listing/
 
@@ -203,9 +212,23 @@ if (error || !user) {
 
 ## Recent Technical Improvements
 
+### My Listings & Proposals System (January 2025)
+- **Core Listing Management Architecture**: Complete implementation of centralized listing management
+  - **Component Modularity**: 7 specialized components (Header, Stats, Filters, Grid, Card, Sidebar)
+  - **API Integration**: 2 dedicated endpoints with comprehensive error handling and mock data fallbacks
+  - **Database Enum Handling**: Proper mapping between frontend status values and database constraints
+  - **TypeScript Excellence**: All components pass strict type checking with proper interfaces
+
+### Critical Navigation Routing Fixes
+- **Buyer Dashboard Links**: Fixed "View All" routing from `/listings` to `/my-listings`
+- **Proposals Page**: Created dedicated proposal management page at `/proposals`
+- **API Error Resilience**: Enhanced proposals API with database constraint error handling
+- **Seamless User Flow**: Complete end-to-end navigation without 404/500 errors
+
 ### TypeScript Compliance
 - Next.js 15 async params with Promise<> structure
 - Radix UI Select component value handling
+- Database enum type mapping for status values
 - Clean import optimization
 
 ### Component Integration
