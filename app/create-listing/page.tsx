@@ -24,6 +24,10 @@ import {
 import Link from "next/link"
 import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 import { TickerBanner } from '@/components/ticker/ticker-banner'
+import IntelligentIngestion from '@/components/ai-listing/intelligent-ingestion'
+import AIWorkingScreen from '@/components/ai-listing/ai-working-screen'
+import AIAssistedReview from '@/components/ai-listing/ai-assisted-review'
+import FinalApproval from '@/components/ai-listing/final-approval'
 
 // Types
 interface Category {
@@ -59,6 +63,44 @@ interface FormData {
     files: File[]
   }
 }
+
+interface IngestionData {
+  companyWebsite: string
+  linkedinPage: string
+  uploadedFiles: File[]
+}
+
+interface AIGeneratedRFQ {
+  coreRequirements: {
+    employeeCount: string
+    features: string[]
+    integrations: string[]
+    complianceNeeds: string[]
+  }
+  technicalSpecs: {
+    deployment: string
+    scalability: string
+    security: string[]
+    dataRequirements: string
+  }
+  projectDetails: {
+    timeline: string
+    budget: {
+      min: number
+      max: number
+    }
+    priority: string
+    successMetrics: string[]
+  }
+  businessContext: {
+    industry: string
+    currentPain: string
+    expectedOutcomes: string
+    stakeholders: string[]
+  }
+}
+
+type AIWorkflowStep = 'category' | 'ingestion' | 'processing' | 'review' | 'approval' | 'submitted'
 
 const categories: Category[] = [
   {
@@ -142,9 +184,17 @@ const steps = [
 ]
 
 export default function CreateListingPage() {
+  // AI Workflow State
+  const [currentWorkflowStep, setCurrentWorkflowStep] = useState<AIWorkflowStep>('category')
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
+  const [ingestionData, setIngestionData] = useState<IngestionData | null>(null)
+  const [aiGeneratedRFQ, setAiGeneratedRFQ] = useState<AIGeneratedRFQ | null>(null)
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  
+  // Legacy form state (kept for compatibility)
   const [currentView, setCurrentView] = useState<'category' | 'form'>('category')
   const [currentStep, setCurrentStep] = useState(1)
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<FormData>({
@@ -173,7 +223,119 @@ export default function CreateListingPage() {
   const handleCategorySelect = (category: Category) => {
     setSelectedCategory(category)
     setFormData(prev => ({ ...prev, category }))
-    setCurrentView('form')
+    // Start AI workflow instead of traditional form
+    setCurrentWorkflowStep('ingestion')
+  }
+
+  const handleIngestionAnalyze = async (data: IngestionData) => {
+    setIngestionData(data)
+    setIsProcessing(true)
+    setCurrentWorkflowStep('processing')
+    
+    try {
+      const response = await fetch('/api/ai-listing/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...data,
+          categoryName: selectedCategory?.name || ''
+        })
+      })
+      
+      const result = await response.json()
+      
+      if (result.success) {
+        setAiGeneratedRFQ(result.data)
+        setCurrentWorkflowStep('review')
+      } else {
+        throw new Error(result.error || 'Analysis failed')
+      }
+    } catch (error) {
+      console.error('Analysis error:', error)
+      // For now, fall back to a default RFQ
+      setAiGeneratedRFQ(getDefaultRFQ())
+      setCurrentWorkflowStep('review')
+    } finally {
+      setIsProcessing(false)
+    }
+  }
+
+  const handleAIProcessingComplete = () => {
+    setCurrentWorkflowStep('review')
+  }
+
+  const handleReviewComplete = (finalData: AIGeneratedRFQ) => {
+    setAiGeneratedRFQ(finalData)
+    setCurrentWorkflowStep('approval')
+  }
+
+  const handleFinalSubmit = async () => {
+    setIsSubmitting(true)
+    
+    try {
+      const response = await fetch('/api/ai-listing/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          categoryName: selectedCategory?.name || '',
+          rfqData: aiGeneratedRFQ
+        })
+      })
+      
+      const result = await response.json()
+      
+      if (result.success) {
+        setCurrentWorkflowStep('submitted')
+        // Redirect to dashboard after a delay
+        setTimeout(() => {
+          window.location.href = '/dashboard/buyer'
+        }, 3000)
+      } else {
+        throw new Error(result.error || 'Submission failed')
+      }
+    } catch (error) {
+      console.error('Submission error:', error)
+      alert('Failed to submit listing. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleBackToReview = () => {
+    setCurrentWorkflowStep('review')
+  }
+
+  const getDefaultRFQ = (): AIGeneratedRFQ => {
+    return {
+      coreRequirements: {
+        employeeCount: '51-200',
+        features: ['Employee Records Management', 'Payroll Processing', 'Time & Attendance'],
+        integrations: ['Email/Calendar (Outlook/Gmail)', 'Accounting Software'],
+        complianceNeeds: ['GDPR Compliance', 'SOC 2 Compliance']
+      },
+      technicalSpecs: {
+        deployment: 'cloud',
+        scalability: 'Support growth to 300+ employees over next 2 years',
+        security: ['Two-Factor Authentication', 'Data Encryption', 'Role-based Access Control'],
+        dataRequirements: 'Secure data migration with backup and recovery'
+      },
+      projectDetails: {
+        timeline: 'standard',
+        budget: { min: 25000, max: 75000 },
+        priority: 'high',
+        successMetrics: ['Reduce manual tasks by 50%+', 'Improve compliance', 'Better reporting']
+      },
+      businessContext: {
+        industry: 'Technology',
+        currentPain: 'Manual processes causing inefficiencies',
+        expectedOutcomes: 'Streamlined operations and better compliance',
+        stakeholders: ['HR Director/Manager', 'IT Director', 'CEO/Executive Team']
+      }
+    }
   }
 
   const handleNextStep = () => {
@@ -196,7 +358,94 @@ export default function CreateListingPage() {
     setCompletedSteps([])
   }
 
-  if (currentView === 'category') {
+  // Render AI Workflow Steps
+  if (currentWorkflowStep === 'ingestion') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
+        <TickerBanner />
+        <NavigationWrapper />
+        
+        <div className="py-16">
+          <IntelligentIngestion 
+            categoryName={selectedCategory?.name || ''}
+            onAnalyze={handleIngestionAnalyze}
+            isLoading={isProcessing}
+          />
+        </div>
+      </div>
+    )
+  }
+
+  if (currentWorkflowStep === 'processing') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
+        <TickerBanner />
+        <NavigationWrapper />
+        
+        <div className="py-16">
+          <AIWorkingScreen onComplete={handleAIProcessingComplete} />
+        </div>
+      </div>
+    )
+  }
+
+  if (currentWorkflowStep === 'review' && aiGeneratedRFQ) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
+        <TickerBanner />
+        <NavigationWrapper />
+        
+        <AIAssistedReview 
+          categoryName={selectedCategory?.name || ''}
+          aiGeneratedData={aiGeneratedRFQ}
+          onComplete={handleReviewComplete}
+        />
+      </div>
+    )
+  }
+
+  if (currentWorkflowStep === 'approval' && aiGeneratedRFQ) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
+        <TickerBanner />
+        <NavigationWrapper />
+        
+        <div className="py-16">
+          <FinalApproval 
+            rfqData={aiGeneratedRFQ}
+            categoryName={selectedCategory?.name || ''}
+            onSubmit={handleFinalSubmit}
+            onBack={handleBackToReview}
+            isSubmitting={isSubmitting}
+          />
+        </div>
+      </div>
+    )
+  }
+
+  if (currentWorkflowStep === 'submitted') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB] flex items-center justify-center">
+        <div className="max-w-2xl mx-auto text-center space-y-8">
+          <div className="w-24 h-24 bg-gradient-to-r from-[#22C55E] to-[#16A34A] rounded-full flex items-center justify-center mx-auto animate-pulse">
+            <CheckCircle className="h-12 w-12 text-white" />
+          </div>
+          <div className="space-y-4">
+            <h1 className="text-4xl font-bold text-[#1A2B4C]">Listing Submitted Successfully!</h1>
+            <p className="text-xl text-[#6B7280]">
+              Your RFQ has been published to the StackMatch marketplace. You'll start receiving proposals within 48-72 hours.
+            </p>
+            <p className="text-sm text-[#6B7280]">
+              Redirecting to your dashboard...
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Category Selection (unchanged)
+  if (currentWorkflowStep === 'category') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
         {/* Global Navigation */}
@@ -214,7 +463,7 @@ export default function CreateListingPage() {
                 <h1 className="text-5xl font-bold">Create a New Listing</h1>
               </div>
               <p className="text-xl text-blue-200 max-w-3xl mx-auto">
-                Choose a category to get started with our guided listing process. Our AI-powered forms will help you create the perfect project description.
+                Choose a category to get started with our revolutionary AI-powered RFQ creation. Our intelligent system will analyze your business and create a comprehensive listing in minutes.
               </p>
             </div>
           </div>
