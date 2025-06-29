@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
-import { PrepareDocumentModal } from './prepare-document-modal'
 import { 
   DollarSign, 
   Calendar, 
@@ -25,8 +24,7 @@ import {
   BarChart3,
   CreditCard,
   Timer,
-  ArrowRight,
-  FileSignature
+  ArrowRight
 } from 'lucide-react'
 
 interface DealRoomSidebarProps {
@@ -34,7 +32,6 @@ interface DealRoomSidebarProps {
 }
 
 export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
-  const [prepareDocumentOpen, setPrepareDocumentOpen] = useState(false)
 
   const getActivityIcon = (type: string) => {
     switch (type) {
@@ -148,13 +145,6 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <Button 
-            className="w-full justify-start bg-trust-green hover:bg-success-green"
-            onClick={() => setPrepareDocumentOpen(true)}
-          >
-            <FileSignature className="w-4 h-4 mr-2" />
-            eSignature
-          </Button>
           
           <Button className="w-full justify-start bg-stackmatch-blue hover:bg-stackmatch-navy">
             <MessageSquare className="w-4 h-4 mr-2" />
@@ -227,11 +217,6 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
         </CardContent>
       </Card>
 
-      {/* Prepare Document Modal */}
-      <PrepareDocumentModal 
-        open={prepareDocumentOpen}
-        onOpenChange={setPrepareDocumentOpen}
-      />
     </div>
   )
 }

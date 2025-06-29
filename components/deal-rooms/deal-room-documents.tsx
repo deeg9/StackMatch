@@ -10,7 +10,6 @@ import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { DealRoomProposals } from './deal-room-proposals'
 import { 
   FileText, 
   Download, 
@@ -70,7 +69,6 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
   const [activeTab, setActiveTab] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDocuments, setSelectedDocuments] = useState<number[]>([])
-  const [documentSection, setDocumentSection] = useState<'files' | 'proposals'>('files')
 
   // Enhanced documents data
   const documents = [
@@ -387,20 +385,8 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Documents Section Tabs */}
-      <Tabs value={documentSection} onValueChange={(value) => setDocumentSection(value as 'files' | 'proposals')} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-white border border-slate-200 p-1">
-          <TabsTrigger value="files" className="data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white">
-            <FolderOpen className="w-4 h-4 mr-2" />
-            All Files
-          </TabsTrigger>
-          <TabsTrigger value="proposals" className="data-[state=active]:bg-stackmatch-blue data-[state=active]:text-white">
-            <PenTool className="w-4 h-4 mr-2" />
-            eSignature
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="files" className="mt-6">
+      {/* Documents Section */}
+      <div className="w-full">
           {/* Streamlined Documents Header */}
           <div className="flex items-center justify-between mb-6">
             {/* Left Side - Search and Filter */}
@@ -444,7 +430,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
               
               <Button size="sm" className="bg-stackmatch-blue hover:bg-stackmatch-navy">
                 <Plus className="w-4 h-4 mr-2" />
-                Upload
+                Upload Document
               </Button>
             </div>
           </div>
@@ -536,71 +522,21 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
                     </div>
 
                     {/* File Metadata */}
-                    <div className="grid grid-cols-2 gap-4 text-xs text-medium-gray">
-                      <div className="flex items-center gap-1">
-                        <Archive className="w-3 h-3" />
-                        <span>{doc.size}</span>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-medium-gray">
+                        <User className="w-4 h-4" />
+                        <span>Uploaded by: {doc.uploadedBy.name}</span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        <span>{doc.uploadedAt}</span>
+                      <div className="flex items-center gap-2 text-sm text-medium-gray">
+                        <Calendar className="w-4 h-4" />
+                        <span>Date Uploaded: {doc.uploadedAt}</span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Download className="w-3 h-3" />
-                        <span>{doc.downloadCount} downloads</span>
+                      <div className="flex items-center gap-2 text-sm text-medium-gray">
+                        <Archive className="w-4 h-4" />
+                        <span>File Size: {doc.size}</span>
                       </div>
                     </div>
 
-                    {/* Document Owner */}
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-stackmatch-navy">Owner:</span>
-                      <Avatar className="w-6 h-6">
-                        <AvatarImage src={doc.uploadedBy.avatar} />
-                        <AvatarFallback className="text-xs">{doc.uploadedBy.name[0]}</AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm text-medium-gray">
-                        {doc.uploadedBy.name}
-                      </span>
-                      <Badge 
-                        variant="outline" 
-                        className="text-xs ml-auto text-stackmatch-blue border-stackmatch-blue"
-                      >
-                        {doc.uploadedBy.jobTitle}
-                      </Badge>
-                    </div>
-
-                    {/* Signature Status */}
-                    {doc.signers && (
-                      <div>
-                        <div className="text-sm font-medium text-stackmatch-navy mb-2">Signatures:</div>
-                        <div className="space-y-2">
-                          {doc.signers.map((signer, index) => (
-                            <div key={index} className="flex items-center justify-between p-2 bg-slate-50 rounded-lg">
-                              <div className="flex items-center gap-2">
-                                <Avatar className="w-5 h-5">
-                                  <AvatarFallback className="text-xs">{signer.name[0]}</AvatarFallback>
-                                </Avatar>
-                                <div className="flex flex-col">
-                                  <span className="text-xs text-medium-gray">{signer.name}</span>
-                                  <span className="text-xs text-stackmatch-blue font-medium">{signer.jobTitle}</span>
-                                </div>
-                              </div>
-                              {signer.signed ? (
-                                <div className="flex items-center gap-1">
-                                  <CheckCircle2 className="w-3 h-3 text-trust-green" />
-                                  <span className="text-xs text-trust-green">Signed</span>
-                                </div>
-                              ) : (
-                                <div className="flex items-center gap-1">
-                                  <Clock className="w-3 h-3 text-attention-orange" />
-                                  <span className="text-xs text-attention-orange">Pending</span>
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
 
                     {/* Expiry Warning */}
                     {doc.expiryDate && new Date(doc.expiryDate) < new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) && (
@@ -630,13 +566,6 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
                         Download
                       </Button>
                       
-                      {doc.status === 'pending-signature' && (
-                        <Button size="sm" className="bg-attention-orange hover:bg-orange-600">
-                          <FileSignature className="w-3 h-3 mr-1" />
-                          Sign
-                        </Button>
-                      )}
-                      
                       {doc.status === 'under-review' && (
                         <Button size="sm" className="bg-information-blue hover:bg-blue-600">
                           <CheckSquare className="w-3 h-3 mr-1" />
@@ -648,6 +577,24 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
                         <Share2 className="w-3 h-3 mr-1" />
                         Share
                       </Button>
+                      
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" size="sm" className="hover:bg-slate-100">
+                            <MoreVertical className="w-3 h-3" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>
+                            <Edit className="w-4 h-4 mr-2" />
+                            Rename
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-red-600">
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                   </div>
                 </CardContent>
@@ -671,7 +618,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
                 <div className="flex items-center justify-center gap-3">
                   <Button className="bg-stackmatch-blue hover:bg-stackmatch-navy">
                     <Upload className="w-4 h-4 mr-2" />
-                    Choose Files
+                    Upload Document
                   </Button>
                   <Button variant="outline">
                     <Link className="w-4 h-4 mr-2" />
@@ -684,13 +631,7 @@ export function DealRoomDocuments({ dealRoom }: DealRoomDocumentsProps) {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="proposals" className="mt-6">
-          {/* Proposals Section */}
-          <DealRoomProposals dealRoom={dealRoom} />
-        </TabsContent>
-      </Tabs>
+      </div>
     </div>
   )
 }
