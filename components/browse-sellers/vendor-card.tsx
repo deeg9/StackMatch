@@ -5,6 +5,9 @@ import { Star, MapPin, Users, Calendar, CheckCircle, Award, Building2, ExternalL
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
+import { RequestQuoteModal } from './request-quote-modal'
+import { QuoteRequestToast } from './quote-request-success'
+import { Vendor, QuoteRequestData } from '@/types/quote-request'
 
 interface VendorCardProps {
   vendor: {
@@ -29,6 +32,37 @@ interface VendorCardProps {
 
 export function VendorCard({ vendor }: VendorCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false)
+  const [showSuccessToast, setShowSuccessToast] = useState(false)
+
+  // Convert vendor data to match Vendor type for the modal
+  const vendorForModal: Vendor = {
+    id: vendor.id,
+    name: vendor.companyName,
+    logo: vendor.companyLogoUrl,
+    description: vendor.companyBio,
+    categories: vendor.featuredProducts || [],
+    location: vendor.location,
+    founded: vendor.foundedYear,
+    employeeCount: vendor.employeeCount,
+    pricing: {
+      tier: 'Contact for pricing',
+      startingPrice: 'Custom'
+    }
+  }
+
+  const handleQuoteSubmit = (quoteData: QuoteRequestData) => {
+    // Handle quote submission - this would typically send to an API
+    console.log('Quote request submitted:', quoteData)
+    
+    // Show success toast
+    setShowSuccessToast(true)
+    
+    // Auto-hide toast after 5 seconds
+    setTimeout(() => {
+      setShowSuccessToast(false)
+    }, 5000)
+  }
 
   return (
     <Card 
@@ -152,6 +186,7 @@ export function VendorCard({ vendor }: VendorCardProps) {
           <Button
             size="sm"
             className="w-full bg-stackmatch-blue hover:bg-stackmatch-navy text-white transition-all"
+            onClick={() => setIsQuoteModalOpen(true)}
           >
             Request Quote
           </Button>
@@ -175,6 +210,21 @@ export function VendorCard({ vendor }: VendorCardProps) {
           </div>
         </div>
       </CardContent>
+      
+      {/* Request Quote Modal */}
+      <RequestQuoteModal
+        isOpen={isQuoteModalOpen}
+        onClose={() => setIsQuoteModalOpen(false)}
+        vendor={vendorForModal}
+        onSubmit={handleQuoteSubmit}
+      />
+      
+      {/* Success Toast */}
+      <QuoteRequestToast
+        vendorName={vendor.companyName}
+        isVisible={showSuccessToast}
+        onClose={() => setShowSuccessToast(false)}
+      />
     </Card>
   )
 }
