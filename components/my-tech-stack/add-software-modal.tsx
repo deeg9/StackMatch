@@ -103,7 +103,7 @@ export function AddSoftwareModal({ isOpen, onClose }: AddSoftwareModalProps) {
             Add Software to Your Tech Stack
           </DialogTitle>
           <p className="text-gray-600 mt-2">
-            Choose how you'd like to import your software subscriptions
+            Choose how you&apos;d like to import your software subscriptions
           </p>
         </DialogHeader>
 
@@ -224,7 +224,7 @@ export function AddSoftwareModal({ isOpen, onClose }: AddSoftwareModalProps) {
                                 </p>
                                 <Button className="w-full bg-trust-green hover:bg-trust-green/90">
                                   <Receipt className="h-4 w-4 mr-2" />
-                                  I've Copied the Email Address
+                                  I&apos;ve Copied the Email Address
                                 </Button>
                               </div>
                             )}
