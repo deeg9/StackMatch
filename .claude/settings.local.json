@@ -28,7 +28,8 @@
       "Bash(find:*)",
       "Bash(pkill:*)",
       "Bash(timeout 60 npm run build)",
-      "Bash(timeout 30 npm run build)"
+      "Bash(timeout 30 npm run build)",
+      "Bash(npm run lint:*)"
     ],
     "deny": []
   },
