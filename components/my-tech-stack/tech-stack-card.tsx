@@ -95,13 +95,19 @@ export function TechStackCard({ item, viewType, onViewDetails, onExploreAlternat
           <div className="flex items-center justify-between gap-4">
             {/* Left Section - Logo, Name, Category */}
             <div className="flex items-center gap-4 flex-1">
-              <div className="relative h-12 w-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
-                <Image
-                  src={item.logo}
-                  alt={item.name}
-                  fill
-                  className="object-contain p-2"
-                />
+              <div className="relative h-12 w-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 flex items-center justify-center">
+                {item.logo ? (
+                  <Image
+                    src={item.logo}
+                    alt={item.name}
+                    fill
+                    className="object-contain p-2"
+                  />
+                ) : (
+                  <span className="text-lg font-semibold text-gray-400">
+                    {item.name.charAt(0).toUpperCase()}
+                  </span>
+                )}
               </div>
               <div>
                 <h3 className="font-semibold text-stackmatch-navy">{item.name}</h3>
@@ -200,13 +206,19 @@ export function TechStackCard({ item, viewType, onViewDetails, onExploreAlternat
         {/* Card Header */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-start gap-3">
-            <div className="relative h-12 w-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
-              <Image
-                src={item.logo}
-                alt={item.name}
-                fill
-                className="object-contain p-2"
-              />
+            <div className="relative h-12 w-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 flex items-center justify-center">
+              {item.logo ? (
+                <Image
+                  src={item.logo}
+                  alt={item.name}
+                  fill
+                  className="object-contain p-2"
+                />
+              ) : (
+                <span className="text-lg font-semibold text-gray-400">
+                  {item.name.charAt(0).toUpperCase()}
+                </span>
+              )}
             </div>
             <div>
               <h3 className="font-semibold text-lg text-stackmatch-navy">{item.name}</h3>

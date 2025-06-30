@@ -1,7 +1,7 @@
 'use client';
 
-import { TickerBanner } from '@/components/ui/ticker-banner';
-import { NavigationWrapper } from '@/components/navigation-wrapper';
+import { TickerBanner } from '@/components/ticker/ticker-banner';
+import { NavigationWrapper } from '@/components/navigation/navigation-wrapper';
 import { MyTechStackHeader } from '@/components/my-tech-stack/my-tech-stack-header';
 import { MyTechStackStats } from '@/components/my-tech-stack/my-tech-stack-stats';
 import { MyTechStackFilters } from '@/components/my-tech-stack/my-tech-stack-filters';
@@ -23,8 +23,9 @@ export default function MyTechStackPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <TickerBanner />
-      <NavigationWrapper>
-        <div className="container mx-auto px-6 py-8 max-w-7xl">
+      <NavigationWrapper />
+      
+      <div className="container mx-auto px-6 py-8 max-w-7xl">
           {/* Page Header with Add Button */}
           <div className="mb-8 flex items-start justify-between">
             <MyTechStackHeader />
@@ -75,8 +76,7 @@ export default function MyTechStackPage() {
               <MyTechStackSidebar />
             </div>
           </div>
-        </div>
-      </NavigationWrapper>
+      </div>
 
       {/* Add Software Modal */}
       <AddSoftwareModal

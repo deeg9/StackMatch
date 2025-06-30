@@ -11,7 +11,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '1',
     name: 'Salesforce',
-    logo: '/logos/salesforce.png',
+    logo: 'https://logo.clearbit.com/salesforce.com',
     category: 'CRM',
     annualCost: 156000,
     monthlyCost: 13000,
@@ -28,7 +28,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '2',
     name: 'Microsoft 365',
-    logo: '/logos/microsoft.png',
+    logo: 'https://logo.clearbit.com/microsoft.com',
     category: 'Productivity',
     annualCost: 84000,
     monthlyCost: 7000,
@@ -45,7 +45,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '3',
     name: 'Slack',
-    logo: '/logos/slack.png',
+    logo: 'https://logo.clearbit.com/slack.com',
     category: 'Communication',
     annualCost: 28800,
     monthlyCost: 2400,
@@ -62,7 +62,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '4',
     name: 'HubSpot',
-    logo: '/logos/hubspot.png',
+    logo: 'https://logo.clearbit.com/hubspot.com',
     category: 'Marketing',
     annualCost: 45600,
     monthlyCost: 3800,
@@ -79,7 +79,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '5',
     name: 'Zoom',
-    logo: '/logos/zoom.png',
+    logo: 'https://logo.clearbit.com/zoom.us',
     category: 'Communication',
     annualCost: 19200,
     monthlyCost: 1600,
@@ -96,7 +96,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '6',
     name: 'Jira',
-    logo: '/logos/atlassian.png',
+    logo: 'https://logo.clearbit.com/atlassian.com',
     category: 'Project Management',
     annualCost: 24000,
     monthlyCost: 2000,
@@ -113,7 +113,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '7',
     name: 'DocuSign',
-    logo: '/logos/docusign.png',
+    logo: 'https://logo.clearbit.com/docusign.com',
     category: 'Legal',
     annualCost: 14400,
     monthlyCost: 1200,
@@ -130,7 +130,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '8',
     name: 'Tableau',
-    logo: '/logos/tableau.png',
+    logo: 'https://logo.clearbit.com/tableau.com',
     category: 'Analytics',
     annualCost: 42000,
     monthlyCost: 3500,
@@ -147,7 +147,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '9',
     name: 'Adobe Creative Cloud',
-    logo: '/logos/adobe.png',
+    logo: 'https://logo.clearbit.com/adobe.com',
     category: 'Design',
     annualCost: 31200,
     monthlyCost: 2600,
@@ -164,7 +164,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '10',
     name: 'Workday',
-    logo: '/logos/workday.png',
+    logo: 'https://logo.clearbit.com/workday.com',
     category: 'HR',
     annualCost: 96000,
     monthlyCost: 8000,
@@ -181,7 +181,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '11',
     name: 'GitHub Enterprise',
-    logo: '/logos/github.png',
+    logo: 'https://logo.clearbit.com/github.com',
     category: 'Development',
     annualCost: 21000,
     monthlyCost: 1750,
@@ -198,7 +198,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '12',
     name: 'Zendesk',
-    logo: '/logos/zendesk.png',
+    logo: 'https://logo.clearbit.com/zendesk.com',
     category: 'Customer Service',
     annualCost: 36000,
     monthlyCost: 3000,
@@ -215,7 +215,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '13',
     name: 'QuickBooks',
-    logo: '/logos/quickbooks.png',
+    logo: 'https://logo.clearbit.com/quickbooks.com',
     category: 'Accounting',
     annualCost: 1800,
     monthlyCost: 150,
@@ -232,7 +232,7 @@ const sampleTechStack: TechStackItem[] = [
   {
     id: '14',
     name: 'Okta',
-    logo: '/logos/okta.png',
+    logo: 'https://logo.clearbit.com/okta.com',
     category: 'Security',
     annualCost: 48000,
     monthlyCost: 4000,
