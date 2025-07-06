@@ -40,7 +40,9 @@ import {
   ArrowUp,
   ArrowDown,
   Plus,
-  Bookmark
+  Bookmark,
+  Mail,
+  Send
 } from "lucide-react"
 import Link from "next/link"
 import { TickerBanner } from "@/components/ticker/ticker-banner"
@@ -56,17 +58,17 @@ interface SellerStats {
   profileViews: number
 }
 
-interface SavedListing {
+interface QuoteRequest {
   id: string
   title: string
-  company: string
+  buyerCompany: string
   category: string
   budgetMin: number | null
   budgetMax: number | null
-  dueDate: string
-  savedAt: string
-  proposalCount: number
-  isConfidential: boolean
+  deadline: string
+  receivedDate: string
+  status: 'new' | 'viewed' | 'responded'
+  requestType: 'direct' | 'public'
 }
 
 interface Proposal {
@@ -91,7 +93,7 @@ interface Client {
 
 export default function SellerDashboard() {
   const [statsLoading, setStatsLoading] = useState(true)
-  const [savedListingsLoading, setSavedListingsLoading] = useState(true)
+  const [quoteRequestsLoading, setQuoteRequestsLoading] = useState(true)
   const [proposalsLoading, setProposalsLoading] = useState(true)
   const [clientsLoading, setClientsLoading] = useState(true)
   const [profileLoading, setProfileLoading] = useState(true)
@@ -122,7 +124,7 @@ export default function SellerDashboard() {
     profileRating: 0,
     profileViews: 0
   })
-  const [savedListings, setSavedListings] = useState<SavedListing[]>([])
+  const [quoteRequests, setQuoteRequests] = useState<QuoteRequest[]>([])
   const [proposals, setProposals] = useState<Proposal[]>([])
   const [clients, setClients] = useState<Client[]>([])
   const [profile, setProfile] = useState<{
@@ -150,52 +152,52 @@ export default function SellerDashboard() {
       }
     }
 
-    // Fetch saved listings
-    const fetchSavedListings = async () => {
+    // Fetch quote requests
+    const fetchQuoteRequests = async () => {
       try {
         // Mock data for now
-        setSavedListings([
+        setQuoteRequests([
           {
             id: '1',
             title: 'Enterprise CRM Implementation',
-            company: 'TechCorp Industries',
+            buyerCompany: 'TechCorp Industries',
             category: 'CRM Software',
             budgetMin: 100000,
             budgetMax: 250000,
-            dueDate: '2024-02-15',
-            savedAt: '2024-01-25',
-            proposalCount: 12,
-            isConfidential: false
+            deadline: '2024-02-15',
+            receivedDate: '2024-01-28',
+            status: 'new',
+            requestType: 'direct'
           },
           {
             id: '2',
             title: 'Data Analytics Platform',
-            company: 'Confidential',
+            buyerCompany: 'FinanceFlow Corp',
             category: 'Analytics',
             budgetMin: 50000,
             budgetMax: 100000,
-            dueDate: '2024-02-20',
-            savedAt: '2024-01-26',
-            proposalCount: 8,
-            isConfidential: true
+            deadline: '2024-02-20',
+            receivedDate: '2024-01-27',
+            status: 'viewed',
+            requestType: 'direct'
           },
           {
             id: '3',
             title: 'HR Management System Upgrade',
-            company: 'Global Manufacturing Inc',
+            buyerCompany: 'Global Manufacturing Inc',
             category: 'HR Software',
             budgetMin: 75000,
             budgetMax: 150000,
-            dueDate: '2024-02-18',
-            savedAt: '2024-01-27',
-            proposalCount: 15,
-            isConfidential: false
+            deadline: '2024-02-18',
+            receivedDate: '2024-01-26',
+            status: 'new',
+            requestType: 'public'
           }
         ])
       } catch (error) {
-        console.error('Error fetching saved listings:', error)
+        console.error('Error fetching quote requests:', error)
       } finally {
-        setSavedListingsLoading(false)
+        setQuoteRequestsLoading(false)
       }
     }
 
@@ -270,7 +272,7 @@ export default function SellerDashboard() {
     }
 
     fetchStats()
-    fetchSavedListings()
+    fetchQuoteRequests()
     fetchProposals()
     fetchClients()
     fetchProfile()
@@ -345,7 +347,7 @@ export default function SellerDashboard() {
     { id: 5, title: 'Contract Negotiation: E-commerce Platform', time: '9:00 AM', isStackMatch: true, date: '2024-02-02' }
   ]
 
-  const isLoading = statsLoading || savedListingsLoading || proposalsLoading || clientsLoading
+  const isLoading = statsLoading || quoteRequestsLoading || proposalsLoading || clientsLoading
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
@@ -483,13 +485,13 @@ export default function SellerDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Main Content Area */}
           <div className="lg:col-span-3">
-            {/* Row 2: Saved Listings & Recent Proposals - Two-column layout */}
+            {/* Row 2: Recent Quote Requests & Recent Proposals - Two-column layout */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-              {/* Saved Listings */}
+              {/* Recent Quote Requests */}
               <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
                 <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Saved Listings</CardTitle>
-                  <Link href="/saved-listings">
+                  <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Recent Quote Requests</CardTitle>
+                  <Link href="/quote-requests">
                     <Button variant="ghost" size="sm" className="text-[#4A73CC] hover:text-[#1A2B4C]">
                       View All
                       <ArrowRight className="h-4 w-4 ml-1" />
@@ -497,7 +499,7 @@ export default function SellerDashboard() {
                   </Link>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {savedListingsLoading ? (
+                  {quoteRequestsLoading ? (
                     <div className="space-y-4">
                       {[1, 2, 3].map((i) => (
                         <div key={i} className="p-4 border rounded-lg animate-pulse">
@@ -507,49 +509,55 @@ export default function SellerDashboard() {
                         </div>
                       ))}
                     </div>
-                  ) : savedListings.length === 0 ? (
+                  ) : quoteRequests.length === 0 ? (
                     <div className="text-center py-12">
-                      <Bookmark className="h-12 w-12 text-[#D1D5DB] mx-auto mb-4" />
-                      <p className="text-[#6B7280] mb-4">No saved listings yet</p>
+                      <Mail className="h-12 w-12 text-[#D1D5DB] mx-auto mb-4" />
+                      <p className="text-[#6B7280] mb-4">No quote requests yet</p>
                       <Link href="/browse-listings">
                         <Button className="bg-[#22C55E] hover:bg-[#16A34A] text-white">
-                          Browse Listings
+                          Browse Opportunities
                         </Button>
                       </Link>
                     </div>
                   ) : (
-                    savedListings.map((listing, index) => (
+                    quoteRequests.map((request, index) => (
                       <div
-                        key={listing.id}
+                        key={request.id}
                         className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
                         <div className="space-y-3">
                           <div className="flex items-start justify-between">
-                            <h3 className="font-bold text-[#1A2B4C] group-hover:text-[#4A73CC] transition-colors">
-                              {listing.title}
-                            </h3>
-                            <button className="text-[#6B7280] hover:text-[#22C55E] transition-colors">
-                              <BookmarkPlus className="h-5 w-5" />
-                            </button>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-[#6B7280] flex items-center">
-                              <Building2 className="h-4 w-4 mr-1" />
-                              {listing.isConfidential ? 'Confidential' : listing.company}
-                            </span>
-                            <span className="text-sm font-medium text-[#1A2B4C]">
-                              {formatBudget(listing.budgetMin, listing.budgetMax)}
-                            </span>
+                            <div className="flex-1">
+                              <h3 className="font-bold text-[#1A2B4C] group-hover:text-[#4A73CC] transition-colors">
+                                {request.title}
+                              </h3>
+                              <div className="flex items-center mt-1">
+                                <Building2 className="h-4 w-4 mr-1 text-[#6B7280]" />
+                                <span className="text-sm text-[#6B7280]">
+                                  {request.buyerCompany}
+                                </span>
+                              </div>
+                            </div>
+                            {request.status === 'new' && (
+                              <Badge className="bg-[#4A73CC] text-white">
+                                New
+                              </Badge>
+                            )}
                           </div>
                           <div className="flex items-center justify-between text-sm text-[#6B7280]">
                             <span className="flex items-center">
-                              <FileText className="h-3 w-3 mr-1" />
-                              {listing.proposalCount} Proposals
+                              <Mail className="h-3 w-3 mr-1" />
+                              Received {request.receivedDate}
                             </span>
-                            <span className="flex items-center">
-                              <Calendar className="h-3 w-3 mr-1" />
-                              Due {listing.dueDate}
+                            <span className="flex items-center font-medium text-[#1A2B4C]">
+                              {request.requestType === 'direct' ? (
+                                <Badge variant="outline" className="text-xs mr-2">
+                                  <Send className="h-3 w-3 mr-1" />
+                                  Direct Request
+                                </Badge>
+                              ) : null}
+                              {formatBudget(request.budgetMin, request.budgetMax)}
                             </span>
                           </div>
                         </div>
