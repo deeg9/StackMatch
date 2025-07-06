@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
+import { Input } from "@/components/ui/input"
 import { 
   User, 
   Search, 
@@ -26,16 +27,46 @@ import {
   XCircle,
   Hourglass,
   Target,
-  Briefcase
+  Briefcase,
+  CalendarDays,
+  CheckSquare,
+  Link2,
+  CalendarPlus,
+  ChevronLeft,
+  ChevronRight,
+  Users,
+  MessageSquare,
+  Sparkles,
+  ArrowUp,
+  ArrowDown,
+  Plus,
+  Bookmark
 } from "lucide-react"
+import Link from "next/link"
+import { TickerBanner } from "@/components/ticker/ticker-banner"
+import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
+import { SellerDashboardSidebar } from '@/components/dashboard/seller-dashboard-sidebar'
+import { cn } from "@/lib/utils"
 
 interface SellerStats {
-  activeProposals: number
   wonListings: number
   successRate: number
-  totalEarned: number
+  totalWon: number
   profileRating: number
   profileViews: number
+}
+
+interface SavedListing {
+  id: string
+  title: string
+  company: string
+  category: string
+  budgetMin: number | null
+  budgetMax: number | null
+  dueDate: string
+  savedAt: string
+  proposalCount: number
+  isConfidential: boolean
 }
 
 interface Proposal {
@@ -48,31 +79,52 @@ interface Proposal {
   submittedAt: string
 }
 
-interface Deadline {
+interface Client {
   id: string
-  title: string
-  dueDate: string
-  type: 'proposal' | 'milestone'
-}
-
-interface RecommendedListing {
-  id: string
-  title: string
-  company: string
-  description: string
-  budgetMin: number
-  budgetMax: number
-  tags: string[]
-  isConfidential: boolean
+  companyName: string
+  industry: string
+  totalProjects: number
+  totalRevenue: number
+  lastProject: string
+  status: 'active' | 'inactive'
 }
 
 export default function SellerDashboard() {
-  const [stats, setStats] = useState<SellerStats | null>(null)
-  const [proposals, setProposals] = useState<Proposal[]>([])
-  const [deadlines, setDeadlines] = useState<Deadline[]>([])
-  const [recommendedListings, setRecommendedListings] = useState<RecommendedListing[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [statsLoading, setStatsLoading] = useState(true)
+  const [savedListingsLoading, setSavedListingsLoading] = useState(true)
+  const [proposalsLoading, setProposalsLoading] = useState(true)
+  const [clientsLoading, setClientsLoading] = useState(true)
+  const [profileLoading, setProfileLoading] = useState(true)
+  const [calendarView, setCalendarView] = useState<'day' | 'week' | 'month'>('week')
+  
+  interface Reminder {
+    id: number
+    text: string
+    completed: boolean
+    dueDate?: string
+    link?: string
+    isSmartReminder: boolean
+  }
 
+  const [reminders, setReminders] = useState<Reminder[]>([
+    { id: 1, text: 'Submit proposal for ERP project', completed: false, dueDate: '2024-02-05', link: '/listings/TEST', isSmartReminder: true },
+    { id: 2, text: 'Follow up with DataCorp on contract', completed: false, dueDate: '2024-02-15', link: '/deal-rooms/DR-002', isSmartReminder: true },
+    { id: 3, text: 'Update portfolio with recent case studies', completed: false, dueDate: '2024-02-03', link: '/profile/portfolio', isSmartReminder: true },
+    { id: 4, text: 'Renew ISO certification', completed: false, dueDate: '2024-02-20', isSmartReminder: false },
+    { id: 5, text: 'Complete Q1 sales forecast', completed: true, dueDate: '2024-01-30', isSmartReminder: false }
+  ])
+  const [newReminder, setNewReminder] = useState('')
+  
+  const [stats, setStats] = useState<SellerStats>({
+    wonListings: 0,
+    successRate: 0,
+    totalWon: 0,
+    profileRating: 0,
+    profileViews: 0
+  })
+  const [savedListings, setSavedListings] = useState<SavedListing[]>([])
+  const [proposals, setProposals] = useState<Proposal[]>([])
+  const [clients, setClients] = useState<Client[]>([])
   const [profile, setProfile] = useState<{
     id: string
     email: string
@@ -81,70 +133,147 @@ export default function SellerDashboard() {
     user_type: string
     avatar_url?: string
   } | null>(null)
-  const [profileLoading, setProfileLoading] = useState(true)
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
+    // Fetch seller stats
+    const fetchStats = async () => {
       try {
-        // Fetch all data in parallel
-        const [statsRes, proposalsRes, recommendationsRes, profileRes] = await Promise.all([
-          fetch('/api/dashboard/seller/stats'),
-          fetch('/api/dashboard/seller/proposals'),
-          fetch('/api/dashboard/seller/recommendations'),
-          fetch('/api/user/profile')
-        ])
-
-        if (statsRes.ok) {
-          const statsData = await statsRes.json()
-          setStats(statsData)
+        const response = await fetch('/api/dashboard/seller/stats')
+        if (response.ok) {
+          const data = await response.json()
+          setStats(data)
         }
+      } catch (error) {
+        console.error('Error fetching stats:', error)
+      } finally {
+        setStatsLoading(false)
+      }
+    }
 
-        if (proposalsRes.ok) {
-          const proposalsData = await proposalsRes.json()
-          setProposals(proposalsData)
-        }
-
-        if (recommendationsRes.ok) {
-          const recommendationsData = await recommendationsRes.json()
-          setRecommendedListings(recommendationsData)
-        }
-
-        if (profileRes.ok) {
-          const profileData = await profileRes.json()
-          setProfile(profileData)
-        }
-
-        // Mock deadlines for now (in production, this would come from contracts/milestones)
-        setDeadlines([
+    // Fetch saved listings
+    const fetchSavedListings = async () => {
+      try {
+        // Mock data for now
+        setSavedListings([
           {
             id: '1',
-            title: 'Project Proposal Review',
-            dueDate: '2025-06-20',
-            type: 'proposal'
+            title: 'Enterprise CRM Implementation',
+            company: 'TechCorp Industries',
+            category: 'CRM Software',
+            budgetMin: 100000,
+            budgetMax: 250000,
+            dueDate: '2024-02-15',
+            savedAt: '2024-01-25',
+            proposalCount: 12,
+            isConfidential: false
           },
           {
             id: '2',
-            title: 'Development Milestone 1',
-            dueDate: '2025-06-23',
-            type: 'milestone'
+            title: 'Data Analytics Platform',
+            company: 'Confidential',
+            category: 'Analytics',
+            budgetMin: 50000,
+            budgetMax: 100000,
+            dueDate: '2024-02-20',
+            savedAt: '2024-01-26',
+            proposalCount: 8,
+            isConfidential: true
           },
           {
             id: '3',
-            title: 'Client Demo Presentation',
-            dueDate: '2025-06-28',
-            type: 'milestone'
+            title: 'HR Management System Upgrade',
+            company: 'Global Manufacturing Inc',
+            category: 'HR Software',
+            budgetMin: 75000,
+            budgetMax: 150000,
+            dueDate: '2024-02-18',
+            savedAt: '2024-01-27',
+            proposalCount: 15,
+            isConfidential: false
           }
         ])
-
       } catch (error) {
-        console.error('Error fetching dashboard data:', error)
+        console.error('Error fetching saved listings:', error)
       } finally {
-        setIsLoading(false)
+        setSavedListingsLoading(false)
+      }
+    }
+
+    // Fetch proposals
+    const fetchProposals = async () => {
+      try {
+        const response = await fetch('/api/dashboard/seller/proposals')
+        if (response.ok) {
+          const data = await response.json()
+          setProposals(data)
+        }
+      } catch (error) {
+        console.error('Error fetching proposals:', error)
+      } finally {
+        setProposalsLoading(false)
+      }
+    }
+
+    // Fetch clients
+    const fetchClients = async () => {
+      try {
+        // Mock data for now
+        setClients([
+          {
+            id: '1',
+            companyName: 'StackMatch',
+            industry: 'Software/Technology',
+            totalProjects: 3,
+            totalRevenue: 450000,
+            lastProject: 'CRM Implementation',
+            status: 'active'
+          },
+          {
+            id: '2',
+            companyName: 'DataCorp Analytics',
+            industry: 'Data & Analytics',
+            totalProjects: 2,
+            totalRevenue: 280000,
+            lastProject: 'BI Dashboard',
+            status: 'active'
+          },
+          {
+            id: '3',
+            companyName: 'RetailFlow Systems',
+            industry: 'Retail',
+            totalProjects: 1,
+            totalRevenue: 125000,
+            lastProject: 'E-commerce Platform',
+            status: 'inactive'
+          }
+        ])
+      } catch (error) {
+        console.error('Error fetching clients:', error)
+      } finally {
+        setClientsLoading(false)
+      }
+    }
+
+    // Fetch user profile
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch('/api/user/profile')
+        if (response.ok) {
+          const data = await response.json()
+          setProfile(data)
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error)
+      } finally {
         setProfileLoading(false)
       }
     }
 
-    fetchDashboardData()
+    fetchStats()
+    fetchSavedListings()
+    fetchProposals()
+    fetchClients()
+    fetchProfile()
   }, [])
 
   const getStatusBadgeVariant = (status: Proposal['status']) => {
@@ -180,294 +309,553 @@ export default function SellerDashboard() {
     }).format(amount)
   }
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB] p-8">
-        <div className="max-w-7xl mx-auto space-y-8 animate-pulse">
-          <div className="h-32 bg-gray-200 rounded-xl"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-32 bg-gray-200 rounded-xl"></div>
-            ))}
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-96 bg-gray-200 rounded-xl"></div>
-            ))}
+  const formatBudget = (min: number | null, max: number | null) => {
+    if (!min && !max) return 'Not specified'
+    if (min && max) return `${formatCurrency(min)} - ${formatCurrency(max)}`
+    if (min) return `From ${formatCurrency(min)}`
+    if (max) return `Up to ${formatCurrency(max)}`
+    return 'Not specified'
+  }
+
+  const toggleReminder = (id: number) => {
+    setReminders(reminders.map(reminder => 
+      reminder.id === id ? { ...reminder, completed: !reminder.completed } : reminder
+    ))
+  }
+
+  const addReminder = () => {
+    if (newReminder.trim()) {
+      const newId = Math.max(...reminders.map(r => r.id)) + 1
+      setReminders([...reminders, {
+        id: newId,
+        text: newReminder,
+        completed: false,
+        isSmartReminder: false
+      }])
+      setNewReminder('')
+    }
+  }
+
+  // Mock calendar events for sellers
+  const calendarEvents = [
+    { id: 1, title: 'Proposal Deadline: CRM Implementation', time: '5:00 PM', isStackMatch: true, date: '2024-02-01' },
+    { id: 2, title: 'Sales Team Meeting', time: '11:00 AM', isStackMatch: false, date: '2024-02-01' },
+    { id: 3, title: 'Client Demo: Analytics Platform', time: '2:00 PM', isStackMatch: true, date: '2024-02-01' },
+    { id: 4, title: 'Quarterly Performance Review', time: '3:30 PM', isStackMatch: false, date: '2024-02-02' },
+    { id: 5, title: 'Contract Negotiation: E-commerce Platform', time: '9:00 AM', isStackMatch: true, date: '2024-02-02' }
+  ]
+
+  const isLoading = statsLoading || savedListingsLoading || proposalsLoading || clientsLoading
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB]">
+      {/* Ticker Banner */}
+      <TickerBanner />
+
+      {/* Global Navigation */}
+      <NavigationWrapper />
+
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-[#1A2B4C] to-[#4A73CC] text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center">
+            <div className="space-y-2 animate-fade-in">
+              <h1 className="text-4xl font-bold">
+                Welcome back, {profileLoading ? '...' : profile?.full_name || 'User'}!
+              </h1>
+              <p className="text-blue-200">
+                {profileLoading ? 'Loading...' : `${profile?.company_name || 'Your Company'}`}
+              </p>
+            </div>
+            <div className="flex space-x-4 animate-slide-up">
+              <Link href="/browse-listings">
+                <Button size="lg" className="bg-[#22C55E] hover:bg-[#16A34A] text-white transform hover:scale-105 transition-all duration-200">
+                  <Search className="h-5 w-5 mr-2" />
+                  Browse Listings
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    )
-  }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB] p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header Section */}
-        <Card className="border-2 border-[#D1D5DB] hover:border-[#4A73CC] transition-all duration-300 shadow-lg animate-fade-in">
-          <CardContent className="p-8">
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-4 lg:space-y-0">
-              <div className="flex items-center space-x-4">
-                <Avatar className="h-16 w-16 border-4 border-[#22C55E] shadow-lg">
-                  <AvatarImage src={profile?.avatar_url || "/api/placeholder/40/40"} alt={profile?.full_name || 'User'} />
-                  <AvatarFallback className="bg-[#22C55E] text-white text-xl font-bold">
-                    {profile?.full_name?.split(' ').map(n => n[0]).join('') || 'U'}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-3">
-                    <h1 className="text-3xl font-bold text-[#1A2B4C]">
-                      Welcome back, {profileLoading ? '...' : profile?.full_name || 'User'}
-                    </h1>
-                    <Badge className="bg-[#22C55E] hover:bg-[#16A34A] text-white px-3 py-1">
-                      <User className="h-4 w-4 mr-1" />
-                      Seller
-                    </Badge>
-                  </div>
-                  <p className="text-[#6B7280] text-lg">
-                    {profileLoading ? 'Loading...' : profile?.company_name || 'Your Company'}
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        {/* Row 1: Full-width KPI Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {/* Won Listings */}
+          <Card className={cn(
+            "border-2 hover:border-[#4A73CC] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
+            statsLoading && "animate-pulse"
+          )}>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-[#6B7280] font-medium">Won Listings</p>
+                  <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
+                    {statsLoading ? '...' : stats.wonListings}
+                  </p>
+                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
+                    <ArrowUp className="w-3 h-3 mr-1" />
+                    +2 more than last month
                   </p>
                 </div>
-              </div>
-              <div className="flex space-x-4">
-                <Button 
-                  variant="outline" 
-                  className="border-[#4A73CC] text-[#4A73CC] hover:bg-[#4A73CC] hover:text-white transition-all duration-300 transform hover:scale-105"
-                >
-                  <User className="h-4 w-4 mr-2" />
-                  My Profile
-                </Button>
-                <Button className="bg-[#22C55E] hover:bg-[#16A34A] text-white transition-all duration-300 transform hover:scale-105 shadow-lg">
-                  <Search className="h-4 w-4 mr-2" />
-                  Find Listings
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* KPI Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          <Card className="border-2 border-[#D1D5DB] hover:border-[#22C55E] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 animate-slide-up">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-[#6B7280] text-sm font-medium">Active Proposals</p>
-                  <p className="text-3xl font-bold text-[#1A2B4C]">{stats?.activeProposals}</p>
-                </div>
-                <div className="w-12 h-12 bg-[#22C55E] rounded-full flex items-center justify-center">
-                  <FileText className="h-6 w-6 text-white" />
+                <div className="w-12 h-12 bg-[#4A73CC]/10 rounded-full flex items-center justify-center">
+                  <Trophy className="h-6 w-6 text-[#4A73CC]" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-[#D1D5DB] hover:border-[#F59E0B] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 animate-slide-up" style={{animationDelay: '0.1s'}}>
+          {/* Success Rate */}
+          <Card className={cn(
+            "border-2 hover:border-[#22C55E] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
+            statsLoading && "animate-pulse"
+          )}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-[#6B7280] text-sm font-medium">Won Listings</p>
-                  <p className="text-3xl font-bold text-[#1A2B4C]">{stats?.wonListings}</p>
+                  <p className="text-sm text-[#6B7280] font-medium">Success Rate</p>
+                  <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
+                    {statsLoading ? '...' : `${stats.successRate}%`}
+                  </p>
+                  <Progress value={stats.successRate} className="mt-2 h-2" />
                 </div>
-                <div className="w-12 h-12 bg-[#F59E0B] rounded-full flex items-center justify-center">
-                  <Trophy className="h-6 w-6 text-white" />
+                <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
+                  <TrendingUp className="h-6 w-6 text-[#22C55E]" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-[#D1D5DB] hover:border-[#3B82F6] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 animate-slide-up" style={{animationDelay: '0.2s'}}>
+          {/* Total Won */}
+          <Card className={cn(
+            "border-2 hover:border-[#F59E0B] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
+            statsLoading && "animate-pulse"
+          )}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-[#6B7280] text-sm font-medium">Success Rate</p>
-                  <p className="text-3xl font-bold text-[#1A2B4C]">{stats?.successRate}%</p>
-                  <Progress value={stats?.successRate} className="mt-2 h-2" />
+                  <p className="text-sm text-[#6B7280] font-medium">Total Won</p>
+                  <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
+                    {statsLoading ? '...' : formatCurrency(stats.totalWon)}
+                  </p>
+                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
+                    <ArrowUp className="w-3 h-3 mr-1" />
+                    up 15% from last quarter
+                  </p>
                 </div>
-                <div className="w-12 h-12 bg-[#3B82F6] rounded-full flex items-center justify-center">
-                  <TrendingUp className="h-6 w-6 text-white" />
+                <div className="w-12 h-12 bg-[#F59E0B]/10 rounded-full flex items-center justify-center">
+                  <DollarSign className="h-6 w-6 text-[#F59E0B]" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-[#D1D5DB] hover:border-[#16A34A] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 animate-slide-up" style={{animationDelay: '0.3s'}}>
+          {/* Profile Rating */}
+          <Card className={cn(
+            "border-2 hover:border-[#22C55E] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
+            statsLoading && "animate-pulse"
+          )}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-[#6B7280] text-sm font-medium">Total Earned</p>
-                  <p className="text-3xl font-bold text-[#1A2B4C]">{formatCurrency(stats?.totalEarned || 0)}</p>
-                </div>
-                <div className="w-12 h-12 bg-[#16A34A] rounded-full flex items-center justify-center">
-                  <DollarSign className="h-6 w-6 text-white" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-2 border-[#D1D5DB] hover:border-[#F59E0B] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 animate-slide-up" style={{animationDelay: '0.4s'}}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-[#6B7280] text-sm font-medium">Profile Rating</p>
-                  <div className="flex items-center space-x-2">
-                    <p className="text-3xl font-bold text-[#1A2B4C]">{stats?.profileRating}</p>
+                  <p className="text-sm text-[#6B7280] font-medium">Profile Rating</p>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <p className="text-3xl font-bold text-[#1A2B4C]">
+                      {statsLoading ? '...' : stats.profileRating}
+                    </p>
                     <Star className="h-5 w-5 text-[#F59E0B] fill-current" />
                   </div>
-                  <p className="text-sm text-[#6B7280]">{stats?.profileViews} views</p>
+                  <p className="text-sm text-[#6B7280] mt-1">
+                    {statsLoading ? '...' : `${stats.profileViews} profile views`}
+                  </p>
                 </div>
-                <div className="w-12 h-12 bg-[#F59E0B] rounded-full flex items-center justify-center">
-                  <Eye className="h-6 w-6 text-white" />
+                <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
+                  <Eye className="h-6 w-6 text-[#22C55E]" />
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Recent Proposals Section */}
-          <Card className="lg:col-span-1 border-2 border-[#D1D5DB] hover:border-[#4A73CC] transition-all duration-300 shadow-lg animate-fade-in">
-            <CardHeader className="pb-4">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-xl font-bold text-[#1A2B4C]">My Recent Proposals</CardTitle>
-                <Button variant="ghost" size="sm" className="text-[#4A73CC] hover:text-[#1A2B4C]">
-                  View All
-                  <ArrowRight className="h-4 w-4 ml-1" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {proposals.map((proposal) => (
-                <div key={proposal.id} className="p-4 border border-[#E5E7EB] rounded-lg hover:border-[#4A73CC] transition-all duration-300 hover:shadow-md">
-                  <div className="space-y-3">
-                    <div className="flex items-start justify-between">
-                      <h4 className="font-semibold text-[#1A2B4C] leading-tight">{proposal.title}</h4>
-                      <Badge variant={getStatusBadgeVariant(proposal.status)} className="flex items-center space-x-1">
-                        {getStatusIcon(proposal.status)}
-                        <span className="capitalize">{proposal.status}</span>
-                      </Badge>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2 text-sm text-[#6B7280]">
-                        <Building2 className="h-4 w-4" />
-                        <span>{proposal.clientCompany}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <div className="flex items-center space-x-2 text-[#6B7280]">
-                          <DollarSign className="h-4 w-4" />
-                          <span>{formatCurrency(proposal.proposalAmount)}</span>
+        {/* Main Layout: Content + Sidebar Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Main Content Area */}
+          <div className="lg:col-span-3">
+            {/* Row 2: Saved Listings & Recent Proposals - Two-column layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+              {/* Saved Listings */}
+              <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Saved Listings</CardTitle>
+                  <Link href="/saved-listings">
+                    <Button variant="ghost" size="sm" className="text-[#4A73CC] hover:text-[#1A2B4C]">
+                      View All
+                      <ArrowRight className="h-4 w-4 ml-1" />
+                    </Button>
+                  </Link>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {savedListingsLoading ? (
+                    <div className="space-y-4">
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className="p-4 border rounded-lg animate-pulse">
+                          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                          <div className="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
+                          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
                         </div>
-                        <div className="flex items-center space-x-2 text-[#6B7280]">
-                          <Clock className="h-4 w-4" />
-                          <span>Due {proposal.dueDate}</span>
+                      ))}
+                    </div>
+                  ) : savedListings.length === 0 ? (
+                    <div className="text-center py-12">
+                      <Bookmark className="h-12 w-12 text-[#D1D5DB] mx-auto mb-4" />
+                      <p className="text-[#6B7280] mb-4">No saved listings yet</p>
+                      <Link href="/browse-listings">
+                        <Button className="bg-[#22C55E] hover:bg-[#16A34A] text-white">
+                          Browse Listings
+                        </Button>
+                      </Link>
+                    </div>
+                  ) : (
+                    savedListings.map((listing, index) => (
+                      <div
+                        key={listing.id}
+                        className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
+                        style={{ animationDelay: `${index * 100}ms` }}
+                      >
+                        <div className="space-y-3">
+                          <div className="flex items-start justify-between">
+                            <h3 className="font-bold text-[#1A2B4C] group-hover:text-[#4A73CC] transition-colors">
+                              {listing.title}
+                            </h3>
+                            <button className="text-[#6B7280] hover:text-[#22C55E] transition-colors">
+                              <BookmarkPlus className="h-5 w-5" />
+                            </button>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-[#6B7280] flex items-center">
+                              <Building2 className="h-4 w-4 mr-1" />
+                              {listing.isConfidential ? 'Confidential' : listing.company}
+                            </span>
+                            <span className="text-sm font-medium text-[#1A2B4C]">
+                              {formatBudget(listing.budgetMin, listing.budgetMax)}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-sm text-[#6B7280]">
+                            <span className="flex items-center">
+                              <FileText className="h-3 w-3 mr-1" />
+                              {listing.proposalCount} Proposals
+                            </span>
+                            <span className="flex items-center">
+                              <Calendar className="h-3 w-3 mr-1" />
+                              Due {listing.dueDate}
+                            </span>
+                          </div>
                         </div>
                       </div>
+                    ))
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Recent Proposals */}
+              <Card className="border-2 hover:border-[#22C55E] transition-all duration-300">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Recent Proposals</CardTitle>
+                  <Link href="/my-proposals">
+                    <Button variant="ghost" size="sm" className="text-[#22C55E] hover:text-[#16A34A]">
+                      View All
+                      <ArrowRight className="h-4 w-4 ml-1" />
+                    </Button>
+                  </Link>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {proposalsLoading ? (
+                    <div className="space-y-4">
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className="p-4 border rounded-lg animate-pulse">
+                          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                          <div className="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
+                          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+                        </div>
+                      ))}
                     </div>
-                    <Button size="sm" variant="outline" className="w-full border-[#4A73CC] text-[#4A73CC] hover:bg-[#4A73CC] hover:text-white">
-                      View Proposal
+                  ) : proposals.length === 0 ? (
+                    <div className="text-center py-12">
+                      <FileText className="h-12 w-12 text-[#D1D5DB] mx-auto mb-4" />
+                      <p className="text-[#6B7280] mb-4">No proposals submitted yet</p>
+                      <p className="text-sm text-[#6B7280]">
+                        Browse listings to submit your first proposal
+                      </p>
+                    </div>
+                  ) : (
+                    proposals.map((proposal, index) => (
+                      <div
+                        key={proposal.id}
+                        className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
+                        style={{ animationDelay: `${index * 100}ms` }}
+                      >
+                        <div className="space-y-3">
+                          <div className="flex items-start justify-between">
+                            <h4 className="font-semibold text-[#1A2B4C] leading-tight group-hover:text-[#22C55E] transition-colors">
+                              {proposal.title}
+                            </h4>
+                            <Badge variant={getStatusBadgeVariant(proposal.status)} className="flex items-center space-x-1">
+                              {getStatusIcon(proposal.status)}
+                              <span className="capitalize">{proposal.status.replace('_', ' ')}</span>
+                            </Badge>
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center space-x-2 text-sm text-[#6B7280]">
+                              <Building2 className="h-4 w-4" />
+                              <span>{proposal.clientCompany}</span>
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="font-semibold text-[#22C55E]">
+                                {formatCurrency(proposal.proposalAmount)}
+                              </span>
+                              <span className="text-[#6B7280]">Due {proposal.dueDate}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Row 3: Calendar (Full-width) */}
+            <div className="mb-8">
+              <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Calendar</CardTitle>
+                  <div className="flex items-center gap-2">
+                    <div className="flex bg-[#F9FAFB] rounded-md border border-[#D1D5DB]">
+                      <Button
+                        variant={calendarView === 'day' ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setCalendarView('day')}
+                        className={cn(
+                          "rounded-r-none",
+                          calendarView === 'day' && "bg-[#4A73CC] text-white hover:bg-[#1A2B4C]"
+                        )}
+                      >
+                        Day
+                      </Button>
+                      <Button
+                        variant={calendarView === 'week' ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setCalendarView('week')}
+                        className={cn(
+                          "rounded-none border-x",
+                          calendarView === 'week' && "bg-[#4A73CC] text-white hover:bg-[#1A2B4C]"
+                        )}
+                      >
+                        Week
+                      </Button>
+                      <Button
+                        variant={calendarView === 'month' ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setCalendarView('month')}
+                        className={cn(
+                          "rounded-l-none",
+                          calendarView === 'month' && "bg-[#4A73CC] text-white hover:bg-[#1A2B4C]"
+                        )}
+                      >
+                        Month
+                      </Button>
+                    </div>
+                    <Button size="sm" className="bg-[#22C55E] hover:bg-[#16A34A] text-white">
+                      <CalendarPlus className="h-4 w-4 mr-2" />
+                      New Event
                     </Button>
                   </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* Upcoming Deadlines Section */}
-          <Card className="lg:col-span-1 border-2 border-[#D1D5DB] hover:border-[#F59E0B] transition-all duration-300 shadow-lg animate-fade-in">
-            <CardHeader className="pb-4">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-xl font-bold text-[#1A2B4C]">Upcoming Deadlines</CardTitle>
-                <Button variant="ghost" size="sm" className="text-[#F59E0B] hover:text-[#D97706]">
-                  View Calendar
-                  <Calendar className="h-4 w-4 ml-1" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {deadlines.map((deadline) => (
-                <div key={deadline.id} className="p-4 border border-[#E5E7EB] rounded-lg hover:border-[#F59E0B] transition-all duration-300 hover:shadow-md">
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      deadline.type === 'proposal' ? 'bg-[#3B82F6]' : 'bg-[#F59E0B]'
-                    }`}>
-                      {deadline.type === 'proposal' ? 
-                        <FileText className="h-5 w-5 text-white" /> : 
-                        <Briefcase className="h-5 w-5 text-white" />
-                      }
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-[#1A2B4C]">{deadline.title}</h4>
-                      <div className="flex items-center space-x-4 text-sm text-[#6B7280] mt-1">
-                        <div className="flex items-center space-x-1">
-                          <Clock className="h-4 w-4" />
-                          <span>{deadline.dueDate}</span>
-                        </div>
-                        <Badge variant="outline" className="capitalize">
-                          {deadline.type}
-                        </Badge>
-                      </div>
-                    </div>
+                </CardHeader>
+                <CardContent>
+                  {/* Calendar Integration Placeholder */}
+                  <div className="bg-[#F9FAFB] rounded-lg p-6 text-center mb-4">
+                    <CalendarDays className="h-12 w-12 text-[#4A73CC] mx-auto mb-3" />
+                    <p className="text-sm text-[#6B7280] mb-3">
+                      Calendar sync with Google Calendar and Outlook coming soon
+                    </p>
+                    <Button variant="outline" size="sm">
+                      Connect Calendar
+                    </Button>
                   </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* Recommended Listings Section */}
-          <Card className="lg:col-span-1 border-2 border-[#D1D5DB] hover:border-[#22C55E] transition-all duration-300 shadow-lg animate-fade-in">
-            <CardHeader className="pb-4">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-xl font-bold text-[#1A2B4C]">Recommended for You</CardTitle>
-                <Button variant="ghost" size="sm" className="text-[#22C55E] hover:text-[#16A34A]">
-                  Browse All
-                  <ExternalLink className="h-4 w-4 ml-1" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {recommendedListings.map((listing) => (
-                <div key={listing.id} className="p-4 border border-[#E5E7EB] rounded-lg hover:border-[#22C55E] transition-all duration-300 hover:shadow-md">
+                  
+                  {/* Mock Calendar Events */}
                   <div className="space-y-3">
-                    <div className="flex items-start justify-between">
-                      <h4 className="font-semibold text-[#1A2B4C] leading-tight">{listing.title}</h4>
-                      <button className="text-[#6B7280] hover:text-[#22C55E] transition-colors">
-                        <BookmarkPlus className="h-5 w-5" />
-                      </button>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2 text-sm text-[#6B7280]">
-                        <Building2 className="h-4 w-4" />
-                        <span>{listing.isConfidential ? 'Confidential' : listing.company}</span>
+                    <h4 className="font-semibold text-[#1A2B4C] mb-2">Upcoming Events</h4>
+                    {calendarEvents.map((event) => (
+                      <div
+                        key={event.id}
+                        className={cn(
+                          "flex items-center justify-between p-3 rounded-lg border transition-all duration-200 hover:shadow-sm",
+                          event.isStackMatch ? "border-[#4A73CC] bg-[#4A73CC]/5" : "border-[#D1D5DB]"
+                        )}
+                      >
+                        <div className="flex items-center gap-3">
+                          {event.isStackMatch && (
+                            <div className="w-2 h-2 bg-[#4A73CC] rounded-full" />
+                          )}
+                          <div>
+                            <h5 className="font-medium text-[#1A2B4C] flex items-center gap-2">
+                              {event.title}
+                              {event.isStackMatch && (
+                                <Badge className="bg-[#4A73CC]/10 text-[#4A73CC] text-xs">
+                                  StackMatch
+                                </Badge>
+                              )}
+                            </h5>
+                            <p className="text-sm text-[#6B7280]">{event.date} • {event.time}</p>
+                          </div>
+                        </div>
+                        <Button variant="ghost" size="sm">
+                          View Details
+                          <ArrowRight className="h-3 w-3 ml-1" />
+                        </Button>
                       </div>
-                      <p className="text-sm text-[#6B7280] line-clamp-2">{listing.description}</p>
-                      <div className="flex items-center space-x-2 text-sm">
-                        <DollarSign className="h-4 w-4 text-[#22C55E]" />
-                        <span className="font-semibold text-[#1A2B4C]">
-                          {formatCurrency(listing.budgetMin)} - {formatCurrency(listing.budgetMax)}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {listing.tags.slice(0, 3).map((tag) => (
-                          <Badge key={tag} variant="secondary" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button size="sm" className="flex-1 bg-[#22C55E] hover:bg-[#16A34A] text-white">
-                        View Details
-                      </Button>
-                      <Button size="sm" variant="outline" className="border-[#4A73CC] text-[#4A73CC] hover:bg-[#4A73CC] hover:text-white">
-                        Find Similar
-                      </Button>
-                    </div>
+                    ))}
                   </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Row 4: Your Clients & Smart Reminders - Two-column layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+              {/* Your Clients */}
+              <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Your Clients</CardTitle>
+                  <Link href="/clients">
+                    <Button variant="ghost" size="sm" className="text-[#4A73CC] hover:text-[#1A2B4C]">
+                      View All
+                      <ArrowRight className="h-4 w-4 ml-1" />
+                    </Button>
+                  </Link>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {clientsLoading ? (
+                    <div className="space-y-4">
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className="p-4 border rounded-lg animate-pulse">
+                          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                          <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {clients.map((client) => (
+                        <div key={client.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200">
+                          <div>
+                            <h3 className="font-bold text-[#1A2B4C]">{client.companyName}</h3>
+                            <p className="text-sm text-[#6B7280]">{client.industry}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-medium text-[#1A2B4C]">{formatCurrency(client.totalRevenue)}</p>
+                            <Badge className={client.status === 'active' ? 'bg-[#16A34A] text-white' : 'bg-[#6B7280] text-white'}>
+                              {client.status}
+                            </Badge>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Smart Reminders */}
+              <Card className="border-2 hover:border-[#22C55E] transition-all duration-300">
+                <CardHeader>
+                  <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Smart Reminders</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Add Reminder Input */}
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Add a reminder..."
+                      value={newReminder}
+                      onChange={(e) => setNewReminder(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && addReminder()}
+                      className="flex-1"
+                    />
+                    <Button
+                      onClick={addReminder}
+                      size="sm"
+                      className="bg-[#22C55E] hover:bg-[#16A34A] text-white"
+                    >
+                      Add
+                    </Button>
+                  </div>
+
+                  {/* Reminders List */}
+                  <div className="space-y-2">
+                    {reminders.map((reminder) => (
+                      <div
+                        key={reminder.id}
+                        className={cn(
+                          "flex items-start gap-3 p-3 rounded-lg border transition-all duration-200",
+                          reminder.completed ? "bg-[#F9FAFB] opacity-60" : "hover:bg-[#F9FAFB]"
+                        )}
+                      >
+                        <div className="pt-0.5">
+                          <input
+                            type="checkbox"
+                            checked={reminder.completed}
+                            onChange={() => toggleReminder(reminder.id)}
+                            className="w-4 h-4 text-[#22C55E] rounded border-[#D1D5DB] focus:ring-[#22C55E]"
+                          />
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          {reminder.isSmartReminder && reminder.link ? (
+                            <Link
+                              href={reminder.link}
+                              className={cn(
+                                "font-medium hover:text-[#4A73CC] transition-colors flex items-center gap-1",
+                                reminder.completed ? "line-through text-[#6B7280]" : "text-[#1A2B4C]"
+                              )}
+                            >
+                              {reminder.text}
+                              <Link2 className="w-3 h-3" />
+                            </Link>
+                          ) : (
+                            <p
+                              className={cn(
+                                "font-medium",
+                                reminder.completed ? "line-through text-[#6B7280]" : "text-[#1A2B4C]"
+                              )}
+                            >
+                              {reminder.text}
+                            </p>
+                          )}
+                          {reminder.dueDate && (
+                            <p className="text-xs text-[#6B7280] flex items-center gap-1">
+                              <Calendar className="w-3 h-3" />
+                              Due: {reminder.dueDate}
+                            </p>
+                          )}
+                          {reminder.isSmartReminder && (
+                            <Badge className="bg-[#4A73CC]/10 text-[#4A73CC] text-xs">
+                              <Sparkles className="w-3 h-3 mr-1" />
+                              Smart Reminder
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+          
+          {/* Right Sidebar */}
+          <div className="lg:col-span-1">
+            <SellerDashboardSidebar />
+          </div>
         </div>
       </div>
     </div>
