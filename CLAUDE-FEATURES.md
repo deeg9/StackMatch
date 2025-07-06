@@ -8,7 +8,7 @@ This document contains detailed documentation of all completed features in the S
 1. [Landing Page](#1-landing-page)
 2. [Authentication System](#2-complete-authentication-system)
 3. [Buyer Dashboard](#3-buyer-dashboard---command-center)
-4. [Seller Dashboard](#4-seller-dashboard---live-data)
+4. [Seller Dashboard](#4-seller-dashboard---command-center-for-vendors)
 5. [Create Listing Wizard](#5-create-listing---multi-step-wizard)
 6. [API Architecture](#6-api-architecture---production-ready)
 7. [Browse Vendors](#7-browse-vendors-page---b2b-enterprise-marketplace)
@@ -22,7 +22,8 @@ This document contains detailed documentation of all completed features in the S
 15. [Received Proposals](#15-received-proposals-page---comprehensive-proposal-management-center)
 16. [My Tech Stack](#16-my-tech-stack---software-asset-management-platform)
 17. [Request Quote Workflow](#17-request-quote-workflow---vendor-engagement-system)
-18. [UI Components](#18-ui-component-system)
+18. [Quote Requests](#18-quote-requests--leads-page---opportunity-management)
+19. [UI Components](#19-ui-component-system)
 
 ---
 
@@ -57,13 +58,33 @@ This document contains detailed documentation of all completed features in the S
 - **Professional UI**: Ticker banner, loading states, responsive design
 - **Command Center Layout**: Strategic 5-row layout optimized for daily workflow management
 
-## 4. Seller Dashboard - LIVE DATA
+## 4. Seller Dashboard - COMMAND CENTER FOR VENDORS
 **Location**: `/app/dashboard/seller/page.tsx`
 
-- **Complete Mirror**: Beautiful seller-focused dashboard with real data
-- **Seller KPIs**: Active proposals, won listings, success rate, total earned, profile rating
-- **Real Recommendations**: AI-powered listing suggestions based on seller profile
-- **Diego's Data**: Ready for seller testing with BiltLocal company info
+- **Complete Buyer Dashboard Mirror**: Revolutionary seller command center with visual and structural consistency
+- **Global Elements**: Ticker banner, navigation wrapper, blue welcome header with seller identity
+- **Seller-Specific KPI Cards**: 
+  - Won Listings (with growth indicators)
+  - Success Rate (with progress bar visualization)
+  - Total Won (revenue tracking - not "Total Earned")
+  - Profile Rating (with star rating and profile views)
+- **Main Content Layout (3 Rows)**:
+  - **Row 1**: Recent Quote Requests (left) + Recent Proposals (right)
+  - **Row 2**: Calendar with seller events (full-width)
+  - **Row 3**: Your Clients (left) + Smart Reminders (right)
+- **Recent Quote Requests Portlet**: Proactive inbound leads replacing passive saved listings
+  - Buyer company name, listing title, received date
+  - Status badges (New/Viewed/Responded)
+  - Direct Request indicators for personalized opportunities
+- **Your Clients Management**: Revolutionary client relationship tracking
+  - Client cards with company, industry, total revenue
+  - Active/Inactive status indicators
+  - Mock data: StackMatch ($450K), DataCorp ($280K), RetailFlow ($125K)
+- **Right Sidebar Integration**: Seller-specific productivity tools
+  - AI Insights: Win rate improvements, new RFP matches, pricing insights
+  - Quick Actions: Submit Proposal, Save Listing, Schedule Demo, etc.
+  - Pending Actions: Proposal deadlines, security questionnaires
+  - Upcoming Deadlines: Time-sensitive seller tasks
 
 ## 5. AI-Powered Create Listing - Revolutionary TurboTax-Style Workflow
 **Location**: `/app/create-listing/page.tsx`
@@ -386,7 +407,43 @@ This document contains detailed documentation of all completed features in the S
   - **State Management**: Professional React hooks managing modal state, form data, and multi-step workflow transitions
   - **API Integration Ready**: Prepared for backend integration with quote request submission, tracking, and vendor notification systems
 
-## 18. UI Component System
+## 18. Quote Requests & Leads Page - OPPORTUNITY MANAGEMENT
+**Location**: `/app/quote-requests/page.tsx`
+
+- **Strategic Purpose**: Central hub for sellers to discover and respond to all inbound opportunities from buyers
+- **Professional Header**: "Quote Requests & Leads" title with descriptive subtitle about direct requests and public listings
+- **No Create Button**: Intentionally omitted as sellers respond to existing opportunities (not create new ones)
+- **Advanced Filtering System**: Multi-dimensional search and categorization
+  - **Search Bar**: Full-text search across buyer company names and listing titles
+  - **Industry Filter**: All Industries, Technology, Finance, Manufacturing, Retail, Marketing, Healthcare
+  - **Budget Range Filter**: Under $50K, $50K-$100K, $100K-$250K, Over $250K
+  - **View Toggle**: List/Grid view options matching Browse Vendors page patterns
+- **Professional Request Cards**: Rich opportunity cards optimized for quick evaluation
+  - **Header Section**: Listing title, buyer company, industry badge, status badge (New/Viewed/Responded)
+  - **Request Type Indicator**: Direct Request badges for personalized opportunities vs public listings
+  - **Description Preview**: 2-line preview of project requirements with line-clamp
+  - **Key Details Grid**: Budget range and proposal deadline in styled sections
+  - **Requirements Tags**: Top 3 key requirements displayed as badges (e.g., Salesforce, API integration)
+  - **Footer Actions**: Received date timestamp and prominent "Review & Create Proposal" button
+- **Comprehensive Mock Data**: 6 realistic enterprise quote requests
+  - **CRM Implementation**: TechCorp Industries, $100K-$250K, Direct Request
+  - **Data Analytics Platform**: FinanceFlow Corp, $50K-$100K, Direct Request
+  - **HR System Upgrade**: Global Manufacturing, $75K-$150K, Public Listing
+  - **E-commerce Platform**: RetailFlow Systems, $150K-$300K, Public Listing
+  - **Cybersecurity Assessment**: SecureNet Solutions, $80K-$120K, Direct Request
+  - **Marketing Automation**: GrowthMetrics Ltd, $40K-$80K, Public Listing
+- **Status Management System**: Color-coded badges for request lifecycle
+  - **New**: Blue badge (#4A73CC) for unread opportunities
+  - **Viewed**: Orange badge (#F59E0B) for reviewed requests
+  - **Responded**: Green badge (#22C55E) for submitted proposals
+- **Professional UI Implementation**:
+  - **Results Counter**: Shows filtered count vs total with new request highlight
+  - **Empty States**: Professional messaging when no requests match criteria
+  - **Loading Skeletons**: 4 skeleton cards during data fetch
+  - **Responsive Grid**: Single column on mobile, 2 columns on desktop in grid view
+  - **Animation System**: Fade-in animations with staggered delays
+
+## 19. UI Component System
 
 - **Core Library**: Button, Card, Badge, Input, Label, Checkbox, Radio, Progress, Avatar, Textarea, Separator
 - **Advanced Components**: Select, Dropdown Menu, Tabs (Radix UI powered)
