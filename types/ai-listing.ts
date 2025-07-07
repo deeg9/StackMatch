@@ -17,6 +17,29 @@ export interface IngestionData {
 }
 
 export interface AIGeneratedRFQ {
+  // NEW: Project Overview & Business Context
+  projectOverview: {
+    projectTitle: string
+    primaryChallenges: string
+    desiredOutcomes: string
+    timelineExpectation: string // '3-6 months' | '6-9 months' | '9-12 months' | '12+ months'
+  }
+  // NEW: Organizational & Operational Details
+  organizationalDetails: {
+    subsidiaries: string // '1' | '2-5' | '6-10' | '10+'
+    locations: string // '1' | '2-5' | '6-10' | '10+'
+    geographicScope: string[] // ['Domestic', 'North America', 'EMEA', 'APAC', 'Global']
+    departments: string // '1-5' | '6-15' | '15+'
+    currentSystems: string
+    businessProcesses: string[] // Context-dependent based on software category
+  }
+  // NEW: Budget & Timeline Expectations
+  budgetTimeline: {
+    budgetRange: string // '< $25K' | '$25K-$100K' | '$100K-$250K' | '$250K-$500K' | '$500K-$1M' | '$1M+' | 'Undisclosed'
+    targetGoLive: string // Date string or 'Within 3 months' | 'Within 6 months' | 'Within 12 months' | 'Flexible'
+    internalResources: string[] // ['Dedicated Project Manager', 'IT Support', 'SMEs', 'Change Management Lead']
+  }
+  // Existing sections
   coreRequirements: {
     employeeCount: string
     features: string[]
@@ -29,6 +52,12 @@ export interface AIGeneratedRFQ {
     security: string[]
     dataRequirements: string
   }
+  // NEW: Additional Questions & Evaluation Criteria
+  additionalQuestions: {
+    openEndedQuestions: string
+    evaluationCriteria: string[] // ['Overall Cost', 'Feature Set', 'Scalability', 'Vendor Reputation', etc.]
+  }
+  // Modified existing sections
   projectDetails: {
     timeline: string
     budget: {
@@ -169,6 +198,14 @@ export type TimelineType = 'urgent' | 'standard' | 'flexible' | 'strategic'
 export type PriorityType = 'critical' | 'high' | 'medium' | 'low'
 export type EmployeeCountRange = '1-10' | '11-50' | '51-200' | '201-1000' | '1000+'
 
+// New utility types for the expanded sections
+export type TimelineExpectationType = '3-6 months' | '6-9 months' | '9-12 months' | '12+ months'
+export type SubsidiaryCountType = '1' | '2-5' | '6-10' | '10+'
+export type LocationCountType = '1' | '2-5' | '6-10' | '10+'
+export type DepartmentCountType = '1-5' | '6-15' | '15+'
+export type BudgetRangeType = '< $25K' | '$25K-$100K' | '$100K-$250K' | '$250K-$500K' | '$500K-$1M' | '$1M+' | 'Undisclosed'
+export type TargetGoLiveType = 'Within 3 months' | 'Within 6 months' | 'Within 12 months' | 'Flexible'
+
 // Category-specific feature lists
 export interface CategoryFeatures {
   [categoryId: string]: {
@@ -177,6 +214,7 @@ export interface CategoryFeatures {
     securityRequirements: string[]
     successMetrics: string[]
     stakeholders: string[]
+    businessProcesses?: string[]
   }
 }
 
@@ -232,6 +270,16 @@ export const CATEGORY_FEATURES: CategoryFeatures = {
       'Department Managers',
       'Employees (End Users)',
       'External Consultants'
+    ],
+    businessProcesses: [
+      'Employee Onboarding Automation',
+      'Benefit Enrollment Streamlining',
+      'Time-off Request & Approval',
+      'Performance Review Tracking',
+      'Expense Report Processing',
+      'Training Program Management',
+      'Compliance Reporting',
+      'Offboarding Workflow'
     ]
   },
   'web-development': {
@@ -284,6 +332,16 @@ export const CATEGORY_FEATURES: CategoryFeatures = {
       'Web Content Managers',
       'Digital Marketing Team',
       'UX/UI Designers'
+    ],
+    businessProcesses: [
+      'Lead Generation & Capture',
+      'Customer Journey Mapping',
+      'Content Publishing Workflow',
+      'E-commerce Transaction Processing',
+      'Customer Support Integration',
+      'Analytics & Reporting',
+      'SEO Optimization',
+      'Multi-channel Marketing'
     ]
   }
 }

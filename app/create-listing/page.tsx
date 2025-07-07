@@ -71,6 +71,29 @@ interface IngestionData {
 }
 
 interface AIGeneratedRFQ {
+  // NEW: Project Overview & Business Context
+  projectOverview: {
+    projectTitle: string
+    primaryChallenges: string
+    desiredOutcomes: string
+    timelineExpectation: string
+  }
+  // NEW: Organizational & Operational Details
+  organizationalDetails: {
+    subsidiaries: string
+    locations: string
+    geographicScope: string[]
+    departments: string
+    currentSystems: string
+    businessProcesses: string[]
+  }
+  // NEW: Budget & Timeline Expectations
+  budgetTimeline: {
+    budgetRange: string
+    targetGoLive: string
+    internalResources: string[]
+  }
+  // Existing sections
   coreRequirements: {
     employeeCount: string
     features: string[]
@@ -83,6 +106,12 @@ interface AIGeneratedRFQ {
     security: string[]
     dataRequirements: string
   }
+  // NEW: Additional Questions & Evaluation Criteria
+  additionalQuestions: {
+    openEndedQuestions: string
+    evaluationCriteria: string[]
+  }
+  // Modified existing sections
   projectDetails: {
     timeline: string
     budget: {
@@ -311,6 +340,29 @@ export default function CreateListingPage() {
 
   const getDefaultRFQ = (): AIGeneratedRFQ => {
     return {
+      // NEW sections
+      projectOverview: {
+        projectTitle: `New ${selectedCategory?.name || 'Software'} Implementation`,
+        primaryChallenges: 'Manual processes are causing inefficiencies and errors. Limited visibility into operations. Compliance tracking is time-consuming and prone to mistakes.',
+        desiredOutcomes: 'Automate key business processes. Improve data accuracy and reporting. Ensure compliance with industry regulations. Reduce operational costs by 30%.',
+        timelineExpectation: '6-9 months'
+      },
+      organizationalDetails: {
+        subsidiaries: '2-5',
+        locations: '2-5',
+        geographicScope: ['North America'],
+        departments: '6-15',
+        currentSystems: 'Excel spreadsheets, QuickBooks for accounting, manual paper-based processes',
+        businessProcesses: selectedCategory?.id === 'hr-payroll' 
+          ? ['Employee Onboarding Automation', 'Time-off Request & Approval', 'Performance Review Tracking']
+          : ['Lead Generation & Capture', 'Customer Journey Mapping', 'Analytics & Reporting']
+      },
+      budgetTimeline: {
+        budgetRange: '$100K-$250K',
+        targetGoLive: 'Within 6 months',
+        internalResources: ['Dedicated Project Manager', 'Subject Matter Experts (SMEs) from each relevant department']
+      },
+      // Existing sections
       coreRequirements: {
         employeeCount: '51-200',
         features: ['Employee Records Management', 'Payroll Processing', 'Time & Attendance'],
@@ -323,9 +375,15 @@ export default function CreateListingPage() {
         security: ['Two-Factor Authentication', 'Data Encryption', 'Role-based Access Control'],
         dataRequirements: 'Secure data migration with backup and recovery'
       },
+      // NEW section
+      additionalQuestions: {
+        openEndedQuestions: 'What is your approach to post-implementation support? How do you handle change management and user adoption? What makes your solution different from competitors?',
+        evaluationCriteria: ['Feature Set & Functionality Match', 'Vendor Reputation & Experience', 'Implementation Methodology & Support', 'Overall Cost (Licensing + Implementation)']
+      },
+      // Modified existing sections
       projectDetails: {
         timeline: 'standard',
-        budget: { min: 25000, max: 75000 },
+        budget: { min: 100000, max: 250000 },
         priority: 'high',
         successMetrics: ['Reduce manual tasks by 50%+', 'Improve compliance', 'Better reporting']
       },

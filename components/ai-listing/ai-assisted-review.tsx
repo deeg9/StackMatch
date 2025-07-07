@@ -19,7 +19,10 @@ import {
   Calendar,
   Building2,
   Shield,
-  Zap
+  Zap,
+  FileText,
+  Globe,
+  MapPin
 } from "lucide-react"
 
 interface AIAssistedReviewProps {
@@ -29,6 +32,29 @@ interface AIAssistedReviewProps {
 }
 
 interface AIGeneratedRFQ {
+  // NEW: Project Overview & Business Context
+  projectOverview: {
+    projectTitle: string
+    primaryChallenges: string
+    desiredOutcomes: string
+    timelineExpectation: string
+  }
+  // NEW: Organizational & Operational Details
+  organizationalDetails: {
+    subsidiaries: string
+    locations: string
+    geographicScope: string[]
+    departments: string
+    currentSystems: string
+    businessProcesses: string[]
+  }
+  // NEW: Budget & Timeline Expectations
+  budgetTimeline: {
+    budgetRange: string
+    targetGoLive: string
+    internalResources: string[]
+  }
+  // Existing sections
   coreRequirements: {
     employeeCount: string
     features: string[]
@@ -41,6 +67,12 @@ interface AIGeneratedRFQ {
     security: string[]
     dataRequirements: string
   }
+  // NEW: Additional Questions & Evaluation Criteria
+  additionalQuestions: {
+    openEndedQuestions: string
+    evaluationCriteria: string[]
+  }
+  // Modified existing sections
   projectDetails: {
     timeline: string
     budget: {
@@ -77,9 +109,27 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
 
   const sections = [
     {
+      id: 'projectOverview',
+      title: 'Project Overview & Business Context',
+      icon: <FileText className="h-5 w-5" />,
+      description: 'Project goals and challenges'
+    },
+    {
+      id: 'organizational',
+      title: 'Organizational & Operational Details',
+      icon: <Building2 className="h-5 w-5" />,
+      description: 'Business structure & operational scope'
+    },
+    {
+      id: 'budgetTimeline',
+      title: 'Budget & Timeline',
+      icon: <DollarSign className="h-5 w-5" />,
+      description: 'Project financials and deadlines'
+    },
+    {
       id: 'core',
       title: 'Core Requirements',
-      icon: <Building2 className="h-5 w-5" />,
+      icon: <CheckCircle className="h-5 w-5" />,
       description: 'Essential features and capabilities needed'
     },
     {
@@ -87,6 +137,12 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
       title: 'Technical Specifications',
       icon: <Zap className="h-5 w-5" />,
       description: 'Technical requirements and constraints'
+    },
+    {
+      id: 'additionalQuestions',
+      title: 'Additional Requirements & Evaluation',
+      icon: <MessageCircle className="h-5 w-5" />,
+      description: 'Specific questions for sellers & evaluation criteria'
     },
     {
       id: 'project',
@@ -105,18 +161,34 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
   const aiMessages = [
     {
       section: 0,
-      content: "Perfect! I've created a comprehensive draft based on your information. Let's review it together to make sure everything is accurate. First, let's look at the core requirements. Based on your company context, I've pre-selected these features. Does this look right to you?",
+      content: "Perfect! Based on your company's profile and initial document upload, I've drafted a summary of your project's goals. Please review and refine. Clearly defining your goals helps sellers understand how their solution can best address your needs.",
     },
     {
       section: 1,
-      content: "Great! Now for the technical specifications. I've analyzed your current setup and suggested deployment preferences and security requirements. Please review these technical details and let me know if anything needs adjustment.",
+      content: "Great! We need some more details about your organization to help sellers scope their proposals accurately. I've pre-filled some common configurations based on your company size. These details help sellers understand the complexity of your implementation and potential customization needs.",
     },
     {
       section: 2,
-      content: "Excellent! Let's review the project details including timeline and budget. I've estimated these based on industry standards for companies your size. Feel free to adjust any of these parameters.",
+      content: "Almost there! Providing a budget range and target timeline helps sellers tailor their proposals to your specific constraints. I've suggested a range based on industry averages. Being transparent about your budget can significantly increase the quality and relevance of proposals you receive.",
     },
     {
       section: 3,
+      content: "Excellent! Now let's review the core requirements. Based on your company context, I've pre-selected these features. Does this look right to you?",
+    },
+    {
+      section: 4,
+      content: "Great! Now for the technical specifications. I've analyzed your current setup and suggested deployment preferences and security requirements. Please review these technical details and let me know if anything needs adjustment.",
+    },
+    {
+      section: 5,
+      content: "This is your chance to ask specific questions directly to sellers or highlight what's most important to you in a solution. I've provided some common examples. Specific questions help sellers provide tailored answers, and clear evaluation criteria guide their proposal content.",
+    },
+    {
+      section: 6,
+      content: "Let's review the project details including timeline and budget. I've estimated these based on industry standards for companies your size. Feel free to adjust any of these parameters.",
+    },
+    {
+      section: 7,
       content: "Almost done! Finally, let's confirm the business context and stakeholder information. This helps vendors understand your organizational structure and decision-making process.",
     }
   ]
@@ -222,6 +294,250 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
     const section = sections[currentSection]
     
     switch (section.id) {
+      case 'projectOverview':
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Project Title</Label>
+              <Input
+                value={formData.projectOverview.projectTitle}
+                onChange={(e) => updateFormData('projectOverview', 'projectTitle', e.target.value)}
+                placeholder={`New ${categoryName} Implementation at ${formData.businessContext.industry || 'Your Company'}`}
+                className="border-[#D1D5DB] focus:border-[#4A73CC]"
+              />
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Primary Business Challenges</Label>
+              <Textarea
+                value={formData.projectOverview.primaryChallenges}
+                onChange={(e) => updateFormData('projectOverview', 'primaryChallenges', e.target.value)}
+                placeholder="What problems are you trying to solve? (e.g., manual processes, compliance issues, lack of visibility...)"
+                className="border-[#D1D5DB] focus:border-[#4A73CC] min-h-[120px]"
+              />
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Desired Outcomes / Goals</Label>
+              <Textarea
+                value={formData.projectOverview.desiredOutcomes}
+                onChange={(e) => updateFormData('projectOverview', 'desiredOutcomes', e.target.value)}
+                placeholder="What do you hope to achieve with the new software? (e.g., automation, cost savings, better reporting...)"
+                className="border-[#D1D5DB] focus:border-[#4A73CC] min-h-[120px]"
+              />
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Overall Project Timeline Expectation</Label>
+              <Select 
+                value={formData.projectOverview.timelineExpectation} 
+                onValueChange={(value) => updateFormData('projectOverview', 'timelineExpectation', value)}
+              >
+                <SelectTrigger className="border-[#D1D5DB] focus:border-[#4A73CC]">
+                  <SelectValue placeholder="Select timeline expectation" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="3-6 months">3-6 Months</SelectItem>
+                  <SelectItem value="6-9 months">6-9 Months</SelectItem>
+                  <SelectItem value="9-12 months">9-12 Months</SelectItem>
+                  <SelectItem value="12+ months">12+ Months</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        )
+
+      case 'organizational':
+        return (
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Number of Subsidiaries/Legal Entities</Label>
+                <Select 
+                  value={formData.organizationalDetails.subsidiaries} 
+                  onValueChange={(value) => updateFormData('organizationalDetails', 'subsidiaries', value)}
+                >
+                  <SelectTrigger className="border-[#D1D5DB] focus:border-[#4A73CC]">
+                    <SelectValue placeholder="Select number" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">1</SelectItem>
+                    <SelectItem value="2-5">2-5</SelectItem>
+                    <SelectItem value="6-10">6-10</SelectItem>
+                    <SelectItem value="10+">10+</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Number of Locations/Branches</Label>
+                <Select 
+                  value={formData.organizationalDetails.locations} 
+                  onValueChange={(value) => updateFormData('organizationalDetails', 'locations', value)}
+                >
+                  <SelectTrigger className="border-[#D1D5DB] focus:border-[#4A73CC]">
+                    <SelectValue placeholder="Select number" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">1</SelectItem>
+                    <SelectItem value="2-5">2-5</SelectItem>
+                    <SelectItem value="6-10">6-10</SelectItem>
+                    <SelectItem value="10+">10+</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Geographic Scope of Operations</Label>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  'Domestic (single country)',
+                  'North America',
+                  'EMEA',
+                  'APAC',
+                  'Global'
+                ].map((scope) => (
+                  <div key={scope} className="flex items-center space-x-2 p-3 border border-[#E5E7EB] rounded-lg hover:border-[#4A73CC] transition-colors">
+                    <Checkbox
+                      id={scope}
+                      checked={formData.organizationalDetails.geographicScope.includes(scope)}
+                      onCheckedChange={() => toggleArrayItem('organizationalDetails', 'geographicScope', scope)}
+                    />
+                    <Label htmlFor={scope} className="text-sm font-medium cursor-pointer">{scope}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Number of Departments/Cost Centers</Label>
+              <Select 
+                value={formData.organizationalDetails.departments} 
+                onValueChange={(value) => updateFormData('organizationalDetails', 'departments', value)}
+              >
+                <SelectTrigger className="border-[#D1D5DB] focus:border-[#4A73CC]">
+                  <SelectValue placeholder="Select number" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1-5">1-5</SelectItem>
+                  <SelectItem value="6-15">6-15</SelectItem>
+                  <SelectItem value="15+">15+</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Current Systems Being Replaced/Integrated With</Label>
+              <Textarea
+                value={formData.organizationalDetails.currentSystems}
+                onChange={(e) => updateFormData('organizationalDetails', 'currentSystems', e.target.value)}
+                placeholder="Name existing software for HR, Payroll, Accounting, CRM, etc..."
+                className="border-[#D1D5DB] focus:border-[#4A73CC] min-h-[100px]"
+              />
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Specific Business Processes to be Automated/Improved</Label>
+              <div className="grid grid-cols-2 gap-3">
+                {(categoryName === 'HR & Payroll' ? [
+                  'Employee Onboarding Automation',
+                  'Benefit Enrollment Streamlining',
+                  'Time-off Request & Approval',
+                  'Performance Review Tracking',
+                  'Expense Report Processing',
+                  'Training Program Management',
+                  'Compliance Reporting',
+                  'Offboarding Workflow'
+                ] : [
+                  'Lead Generation & Capture',
+                  'Customer Journey Mapping',
+                  'Content Publishing Workflow',
+                  'E-commerce Transaction Processing',
+                  'Customer Support Integration',
+                  'Analytics & Reporting',
+                  'SEO Optimization',
+                  'Multi-channel Marketing'
+                ]).map((process) => (
+                  <div key={process} className="flex items-center space-x-2 p-3 border border-[#E5E7EB] rounded-lg hover:border-[#4A73CC] transition-colors">
+                    <Checkbox
+                      id={process}
+                      checked={formData.organizationalDetails.businessProcesses.includes(process)}
+                      onCheckedChange={() => toggleArrayItem('organizationalDetails', 'businessProcesses', process)}
+                    />
+                    <Label htmlFor={process} className="text-sm font-medium cursor-pointer">{process}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'budgetTimeline':
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Estimated Budget Range</Label>
+              <Select 
+                value={formData.budgetTimeline.budgetRange} 
+                onValueChange={(value) => updateFormData('budgetTimeline', 'budgetRange', value)}
+              >
+                <SelectTrigger className="border-[#D1D5DB] focus:border-[#4A73CC]">
+                  <SelectValue placeholder="Select budget range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="< $25K">Less than $25K</SelectItem>
+                  <SelectItem value="$25K-$100K">$25K - $100K</SelectItem>
+                  <SelectItem value="$100K-$250K">$100K - $250K</SelectItem>
+                  <SelectItem value="$250K-$500K">$250K - $500K</SelectItem>
+                  <SelectItem value="$500K-$1M">$500K - $1M</SelectItem>
+                  <SelectItem value="$1M+">$1M+</SelectItem>
+                  <SelectItem value="Undisclosed">Undisclosed</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Target Go-Live Date/Window</Label>
+              <Select 
+                value={formData.budgetTimeline.targetGoLive} 
+                onValueChange={(value) => updateFormData('budgetTimeline', 'targetGoLive', value)}
+              >
+                <SelectTrigger className="border-[#D1D5DB] focus:border-[#4A73CC]">
+                  <SelectValue placeholder="Select timeframe" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Within 3 months">Within 3 months</SelectItem>
+                  <SelectItem value="Within 6 months">Within 6 months</SelectItem>
+                  <SelectItem value="Within 12 months">Within 12 months</SelectItem>
+                  <SelectItem value="Flexible">Flexible</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Internal Resources Allocated for Project</Label>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  'Dedicated Project Manager',
+                  'Dedicated IT Support',
+                  'Subject Matter Experts (SMEs) from each relevant department',
+                  'Change Management Lead'
+                ].map((resource) => (
+                  <div key={resource} className="flex items-center space-x-2 p-3 border border-[#E5E7EB] rounded-lg hover:border-[#4A73CC] transition-colors">
+                    <Checkbox
+                      id={resource}
+                      checked={formData.budgetTimeline.internalResources.includes(resource)}
+                      onCheckedChange={() => toggleArrayItem('budgetTimeline', 'internalResources', resource)}
+                    />
+                    <Label htmlFor={resource} className="text-sm font-medium cursor-pointer">{resource}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+
       case 'core':
         return (
           <div className="space-y-6">
@@ -521,6 +837,47 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
                       onCheckedChange={() => toggleArrayItem('businessContext', 'stakeholders', stakeholder)}
                     />
                     <Label htmlFor={stakeholder} className="text-sm font-medium cursor-pointer">{stakeholder}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'additionalQuestions':
+        return (
+          <div className="space-y-6">
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Open-ended Questions for Sellers</Label>
+              <Textarea
+                value={formData.additionalQuestions.openEndedQuestions}
+                onChange={(e) => updateFormData('additionalQuestions', 'openEndedQuestions', e.target.value)}
+                placeholder="What specific questions do you want sellers to answer? (e.g., 'What is your approach to post-implementation support?', 'How do you handle data migration?', 'What training options do you provide?')"
+                className="border-[#D1D5DB] focus:border-[#4A73CC] min-h-[150px]"
+              />
+            </div>
+
+            <div>
+              <Label className="text-lg font-semibold text-[#1A2B4C] mb-4 block">Key Evaluation Criteria</Label>
+              <p className="text-sm text-[#6B7280] mb-4">How will you primarily evaluate proposals? (Select all that apply)</p>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  'Overall Cost (Licensing + Implementation)',
+                  'Feature Set & Functionality Match',
+                  'Scalability & Future-Proofing',
+                  'Vendor Reputation & Experience',
+                  'Implementation Methodology & Support',
+                  'Customer Support & Training Offerings',
+                  'Technical Architecture & Security',
+                  'User Experience (UX)'
+                ].map((criteria) => (
+                  <div key={criteria} className="flex items-center space-x-2 p-3 border border-[#E5E7EB] rounded-lg hover:border-[#4A73CC] transition-colors">
+                    <Checkbox
+                      id={criteria}
+                      checked={formData.additionalQuestions.evaluationCriteria.includes(criteria)}
+                      onCheckedChange={() => toggleArrayItem('additionalQuestions', 'evaluationCriteria', criteria)}
+                    />
+                    <Label htmlFor={criteria} className="text-sm font-medium cursor-pointer">{criteria}</Label>
                   </div>
                 ))}
               </div>

@@ -25,7 +25,8 @@ This document contains detailed documentation of all completed features in the S
 18. [Quote Requests](#18-quote-requests--leads-page---opportunity-management)
 19. [Your Clients CRM](#19-your-clients-crm-hub---lightweight-client-management)
 20. [Client Record Pages](#20-client-record-pages---single-source-of-truth)
-21. [UI Components](#21-ui-component-system)
+21. [Browse Project Listings](#21-browse-project-listings---seller-opportunity-discovery)
+22. [UI Components](#22-ui-component-system)
 
 ---
 
@@ -527,7 +528,59 @@ This document contains detailed documentation of all completed features in the S
   - **Log Activity Modal**: Activity type selection with date/time input and descriptions
   - **Add Contact Modal**: Full contact creation with department selection and primary designation
 
-## 21. UI Component System
+## 21. Browse Project Listings - SELLER OPPORTUNITY DISCOVERY
+**Location**: `/app/browse-listings/page.tsx`
+
+- **Strategic Purpose**: Central hub for sellers to discover and bid on active software procurement listings posted by buyers
+- **Professional Page Architecture**: Header with animated opportunity count, KPI stats, advanced filtering, and intelligent sidebar
+- **Enterprise-Grade KPI Dashboard**: 4 animated metric cards tracking seller-relevant opportunities
+  - **Matched to You**: 89 opportunities with AI-powered matching (92%+ match score)
+  - **High Budget**: 34 projects over $100K with enterprise buyers
+  - **Closing Soon**: 15 opportunities ending within 7 days requiring urgent action
+  - **Premium Buyers**: 67 verified enterprise companies with established budgets
+- **Comprehensive Filtering System**: Multi-dimensional search and categorization for opportunity discovery
+  - **Global Search Bar**: Full-text search across software categories, industries, and company names
+  - **Primary Filter Row**: Software Category, Budget Range, Proposal Deadline, Sort By (Recent/Ending Soon/Highest Budget/Most Relevant)
+  - **Expandable Advanced Filters**: Industry, Company Size, Project Scope/Type, Location with "More Filters" toggle
+  - **Active Filter Management**: Visual filter badges with individual clear options and "Clear All" functionality
+  - **Filter State Persistence**: Maintains selections across page navigation
+- **Professional ListingOpportunityCard Design**: Rich opportunity cards optimized for seller evaluation
+  - **Buyer Identity Section**: Company logo/avatar, name with hover effects, verification badges, premium indicators
+  - **Clean Status Hierarchy**: Status badges (New/Closing Soon/Active/Under Review) positioned below company name
+  - **Project Overview**: Clear title, description preview (2 lines), software category display
+  - **Key Requirements Display**: Top 3 requirements as badges with "+X more" indicator for additional items
+  - **Company Context**: Industry, size (employees), location with icon indicators
+  - **Financial Details**: Budget range display ($25K-$1M+) or "Budget Undisclosed" with prominent formatting
+  - **Timeline Management**: Proposal deadline with countdown ("X days left") and project start date
+  - **Engagement Metrics**: View count, proposal count, AI match score (80%+ highlighted in green)
+  - **Action Buttons**: "View Details" (primary blue) and "Submit Proposal" (outline) with hover states
+  - **Save Functionality**: Heart icon toggle for bookmarking opportunities
+- **2-Column Responsive Grid**: Strategic layout change from 3 to 2 columns for improved readability
+  - **Increased Card Width**: More horizontal space for content display
+  - **Enhanced Spacing**: gap-8 between cards (increased from gap-6)
+  - **Responsive Behavior**: Single column on mobile, 2 columns on desktop
+  - **Animation System**: Staggered fade-in with 100ms delays
+- **Mock Opportunity Data**: 6 realistic enterprise procurement listings
+  - **Acme Solutions CRM**: $100K-$250K, Financial Services, Salesforce integration required
+  - **Global Manufacturing ERP**: $500K-$1M migration project, SAP experience needed
+  - **HealthTech Portal**: $150K-$300K custom development, HIPAA compliance required
+  - **Retail E-commerce**: $75K-$150K Shopify implementation, multi-currency support
+  - **TechStart Marketing**: $25K-$50K HubSpot setup, lead scoring required
+  - **Education LMS**: $80K-$120K (undisclosed), Canvas/Moodle experience preferred
+- **Intelligent Sidebar Components**: Contextual tools and insights for sellers
+  - **Saved Searches Management**: Alert configuration with active/inactive toggles, notification settings
+  - **AI-Matched Opportunities**: Top 3 opportunities with 90%+ match scores, direct navigation links
+  - **Market Insights Dashboard**: Competition levels, average budgets, win rates, response times
+  - **Winning Proposal Tips**: 4 key strategies with link to complete guide
+  - **Smart Proposals CTA**: Green gradient card promoting AI-powered proposal creation
+- **Professional UI/UX Implementation**:
+  - **Loading States**: Skeleton loader during data fetch
+  - **Empty States**: Professional messaging when no listings match filters
+  - **Results Counter**: Shows filtered vs total with new opportunity highlights
+  - **Pagination**: "Load More" button for additional results
+  - **Animation Excellence**: Smooth transitions and hover effects throughout
+
+## 22. UI Component System
 
 - **Core Library**: Button, Card, Badge, Input, Label, Checkbox, Radio, Progress, Avatar, Textarea, Separator
 - **Advanced Components**: Select, Dropdown Menu, Tabs (Radix UI powered)
