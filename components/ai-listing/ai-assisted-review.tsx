@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -106,6 +106,7 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
   const [formData, setFormData] = useState<AIGeneratedRFQ>(aiGeneratedData)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isTyping, setIsTyping] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   const sections = [
     {
@@ -193,26 +194,13 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
     }
   ]
 
-  useEffect(() => {
-    // Initialize with first AI message
-    const firstMessage: ChatMessage = {
-      id: '1',
-      type: 'ai',
-      content: aiMessages[0].content,
-      timestamp: new Date(),
-      actionButton: {
-        text: 'Looks Good, Next →',
-        onClick: handleNextSection
-      }
-    }
+  const handleNextSection = useCallback(() => {
+    console.log('handleNextSection called. Current section:', currentSection)
     
-    setMessages([firstMessage])
-  }, [])
-
-  const handleNextSection = () => {
-    if (currentSection < sections.length - 1) {
+    if (currentSection < sections.length - 1 && !isTransitioning) {
+      setIsTransitioning(true)
       const nextSection = currentSection + 1
-      setCurrentSection(nextSection)
+      console.log('Moving to section:', nextSection, sections[nextSection].title)
       
       // Add user response
       const userMessage: ChatMessage = {
@@ -227,6 +215,17 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
       // Show typing indicator
       setIsTyping(true)
       
+      // Transition with slight delay for smooth animation
+      setTimeout(() => {
+        setCurrentSection(nextSection)
+        
+        // Scroll to top of form
+        const formContainer = document.querySelector('.overflow-y-auto')
+        if (formContainer) {
+          formContainer.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+      }, 300)
+      
       // Add AI response after delay
       setTimeout(() => {
         setIsTyping(false)
@@ -237,31 +236,93 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
           timestamp: new Date(),
           actionButton: nextSection < sections.length - 1 ? {
             text: 'Looks Good, Next →',
-            onClick: handleNextSection
+            onClick: () => handleNextSection()
           } : {
             text: 'Perfect, Let\'s Finalize →',
-            onClick: handleComplete
+            onClick: () => handleComplete()
           }
         }
         setMessages(prev => [...prev, aiMessage])
+        
+        // Scroll chat to bottom to show new message
+        setTimeout(() => {
+          const chatContainer = document.querySelector('.flex-1.p-6.space-y-4.overflow-y-auto')
+          if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight
+          }
+          setIsTransitioning(false)
+        }, 100)
       }, 1500)
     }
-  }
+  }, [currentSection, isTransitioning])
 
-  const handleComplete = () => {
-    const userMessage: ChatMessage = {
-      id: `user-final-${Date.now()}`,
-      type: 'user',
-      content: 'Perfect! I\'m ready to submit this RFQ.',
-      timestamp: new Date()
+  const handleComplete = useCallback(() => {
+    console.log('handleComplete called. Finalizing RFQ...')
+    
+    if (!isTransitioning) {
+      setIsTransitioning(true)
+      
+      const userMessage: ChatMessage = {
+        id: `user-final-${Date.now()}`,
+        type: 'user',
+        content: 'Perfect! I\'m ready to submit this RFQ.',
+        timestamp: new Date()
+      }
+      
+      setMessages(prev => [...prev, userMessage])
+      
+      // Show typing indicator before completing
+      setIsTyping(true)
+      
+      setTimeout(() => {
+        setIsTyping(false)
+        const finalAiMessage: ChatMessage = {
+          id: `ai-final-${Date.now()}`,
+          type: 'ai',
+          content: 'Excellent! I\'ve compiled all your requirements into a comprehensive RFQ. Let\'s move to the final review and submission step.',
+          timestamp: new Date()
+        }
+        setMessages(prev => [...prev, finalAiMessage])
+        
+        // Complete after showing the message
+        setTimeout(() => {
+          console.log('Calling onComplete with formData')
+          onComplete(formData)
+        }, 1500)
+      }, 1000)
     }
+  }, [formData, onComplete, isTransitioning])
+
+  // Initialize first message after component mount
+  useEffect(() => {
+    console.log('AIAssistedReview mounted. Initializing first message...')
     
-    setMessages(prev => [...prev, userMessage])
+    // Small delay to ensure component is fully mounted
+    const timer = setTimeout(() => {
+      const firstMessage: ChatMessage = {
+        id: '1',
+        type: 'ai',
+        content: aiMessages[0].content,
+        timestamp: new Date(),
+        actionButton: {
+          text: 'Looks Good, Next →',
+          onClick: () => handleNextSection()
+        }
+      }
+      
+      setMessages([firstMessage])
+      
+      // Ensure chat scrolls to show the button
+      setTimeout(() => {
+        const chatContainer = document.querySelector('.flex-1.p-6.space-y-4.overflow-y-auto')
+        if (chatContainer) {
+          chatContainer.scrollTop = chatContainer.scrollHeight
+        }
+      }, 100)
+    }, 500)
     
-    setTimeout(() => {
-      onComplete(formData)
-    }, 1000)
-  }
+    return () => clearTimeout(timer)
+  }, [handleNextSection])
 
   const updateFormData = (section: keyof AIGeneratedRFQ, field: string, value: any) => {
     setFormData(prev => ({
@@ -907,23 +968,29 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
           </div>
 
           {/* Progress Indicator */}
-          <div className="flex items-center space-x-2 mb-6">
-            {sections.map((section, index) => (
-              <div key={section.id} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors ${
-                  index === currentSection 
-                    ? 'bg-[#4A73CC] text-white' 
-                    : index < currentSection
-                      ? 'bg-[#22C55E] text-white'
-                      : 'bg-gray-200 text-gray-500'
-                }`}>
-                  {index < currentSection ? <CheckCircle className="h-4 w-4" /> : index + 1}
+          <div className="bg-[#F9FAFB] p-4 rounded-lg mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-[#1A2B4C]">Section Progress</span>
+              <span className="text-sm text-[#6B7280]">{currentSection + 1} of {sections.length}</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              {sections.map((section, index) => (
+                <div key={section.id} className="flex items-center">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
+                    index === currentSection 
+                      ? 'bg-[#4A73CC] text-white ring-4 ring-[#4A73CC] ring-opacity-20' 
+                      : index < currentSection
+                        ? 'bg-[#22C55E] text-white'
+                        : 'bg-gray-200 text-gray-500'
+                  }`}>
+                    {index < currentSection ? <CheckCircle className="h-4 w-4" /> : index + 1}
+                  </div>
+                  {index < sections.length - 1 && (
+                    <div className={`w-8 h-0.5 mx-2 transition-colors duration-300 ${index < currentSection ? 'bg-[#22C55E]' : 'bg-gray-200'}`} />
+                  )}
                 </div>
-                {index < sections.length - 1 && (
-                  <div className={`w-8 h-0.5 mx-2 ${index < currentSection ? 'bg-[#22C55E]' : 'bg-gray-200'}`} />
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
@@ -941,7 +1008,9 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
             </div>
           </CardHeader>
           <CardContent className="pt-0">
-            {renderCurrentSection()}
+            <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
+              {renderCurrentSection()}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -973,9 +1042,12 @@ export default function AIAssistedReview({ categoryName, aiGeneratedData, onComp
                 <p className="text-sm">{message.content}</p>
                 {message.actionButton && (
                   <Button
-                    onClick={message.actionButton.onClick}
+                    onClick={() => {
+                      console.log('Button clicked:', message.actionButton?.text)
+                      message.actionButton?.onClick()
+                    }}
                     size="sm"
-                    className="mt-3 bg-[#22C55E] hover:bg-[#16A34A] text-white w-full"
+                    className="mt-3 bg-[#22C55E] hover:bg-[#16A34A] text-white w-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     {message.actionButton.text}
                     <ArrowRight className="h-4 w-4 ml-2" />

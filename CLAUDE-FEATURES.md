@@ -91,11 +91,12 @@ This document contains detailed documentation of all completed features in the S
 
 ## 5. AI-Powered Create Listing - Revolutionary TurboTax-Style Workflow
 **Location**: `/app/create-listing/page.tsx`
+**Enhanced**: January 2025 - Expanded from 4 to 8 comprehensive sections
 
 ### AI-First Intelligent RFQ Creation System
 - **Strategic Innovation**: Revolutionary shift from complex forms to conversational AI experience
 - **TurboTax-Inspired UX**: Burden of expertise moved from user to platform through intelligent automation
-- **Four-Step AI Workflow**: Category selection → Intelligent ingestion → AI processing → Collaborative review → Final approval
+- **Expanded 8-Section Workflow**: Category selection → Intelligent ingestion → AI processing → Comprehensive 8-section review → Final approval
 
 ### Component Architecture
 - **Intelligent Ingestion** (`/components/ai-listing/intelligent-ingestion.tsx`): 
@@ -108,8 +109,18 @@ This document contains detailed documentation of all completed features in the S
   - Smooth transitions between analysis phases
 - **AI-Assisted Review** (`/components/ai-listing/ai-assisted-review.tsx`):
   - Split-screen collaborative interface with AI co-pilot
+  - Expanded 8-section comprehensive review process:
+    1. Project Overview & Business Context (NEW)
+    2. Organizational & Operational Details (NEW)
+    3. Budget & Timeline Expectations (NEW)
+    4. Core Requirements
+    5. Technical Specifications
+    6. Additional Questions & Evaluation Criteria (NEW)
+    7. Project Details
+    8. Business Context
   - Real-time chat with intelligent suggestions and form assistance
-  - Section-by-section review with typing indicators and contextual help
+  - "Review and Edit" heading pattern maintained across all sections
+  - "Looks Good, Next" progression with contextual AI guidance
 - **Final Approval** (`/components/ai-listing/final-approval.tsx`):
   - Comprehensive RFQ summary with completion statistics
   - Vendor matching predictions and expected response metrics
@@ -118,7 +129,9 @@ This document contains detailed documentation of all completed features in the S
 ### AI Backend Integration
 - **Analysis API** (`/api/ai-listing/analyze/route.ts`): 
   - Category-specific RFQ generation with 2.5-second processing simulation
+  - Enhanced to generate all 8 sections with comprehensive business data
   - Intelligent form pre-population based on business analysis
+  - Category-specific business processes (HR & Payroll vs Web Development)
   - Comprehensive error handling with fallback data
 - **Submission API** (`/api/ai-listing/submit/route.ts`):
   - Vendor matching calculations and response time predictions
@@ -126,9 +139,14 @@ This document contains detailed documentation of all completed features in the S
   - Success metrics and next steps guidance
 
 ### TypeScript Excellence
-- **Complete Type System** (`/types/ai-listing.ts`): 303 lines of comprehensive interfaces
-- **AI Workflow Types**: Category, IngestionData, AIGeneratedRFQ, ChatMessage interfaces
-- **API Types**: Request/response patterns with validation and error handling
+- **Complete Type System** (`/types/ai-listing.ts`): Expanded to support 8-section workflow
+- **Enhanced AIGeneratedRFQ Interface**: 
+  - projectOverview: Title, challenges, outcomes, timeline expectations
+  - organizationalDetails: Subsidiaries, locations, geographic scope, departments, systems, processes
+  - budgetTimeline: Budget range, go-live date, internal resources
+  - additionalQuestions: Open-ended questions, evaluation criteria
+- **New Utility Types**: TimelineExpectationType, BudgetRangeType, TargetGoLiveType
+- **Category Features**: Dynamic business processes based on software category
 - **Component Props**: Full type safety for all AI workflow components
 
 ### Legacy Compatibility
