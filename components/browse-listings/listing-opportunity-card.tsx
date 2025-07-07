@@ -50,7 +50,6 @@ interface ListingOpportunityCardProps {
 
 export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps) {
   const [isSaved, setIsSaved] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
 
   const getStatusBadge = () => {
     switch (listing.status) {
@@ -88,12 +87,10 @@ export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps)
   return (
     <Card 
       className="border-2 hover:border-stackmatch-blue transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 animate-fade-in"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      <CardContent className="p-6">
+      <CardContent className="p-8">
         {/* Card Header */}
-        <div className="flex items-start justify-between mb-4">
+        <div className="flex items-start justify-between mb-6">
           <div className="flex items-start gap-3 flex-1">
             {/* Company Logo */}
             <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -115,14 +112,18 @@ export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps)
                     Premium
                   </Badge>
                 )}
-                {getStatusBadge()}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mb-2">
                 <p className="text-sm text-charcoal font-medium">{listing.buyerCompany}</p>
                 {listing.isVerified && (
                   <Shield className="h-4 w-4 text-trust-green" />
                 )}
               </div>
+              {getStatusBadge() && (
+                <div className="mb-2">
+                  {getStatusBadge()}
+                </div>
+              )}
             </div>
           </div>
 
@@ -138,7 +139,7 @@ export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps)
         </div>
 
         {/* Company Details */}
-        <div className="flex flex-wrap gap-4 mb-4 text-sm">
+        <div className="flex flex-wrap gap-6 mb-6 text-sm">
           <div className="flex items-center gap-1">
             <Briefcase className="h-4 w-4 text-medium-gray" />
             <span className="text-charcoal">{listing.industry}</span>
@@ -154,14 +155,14 @@ export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps)
         </div>
 
         {/* Description */}
-        <p className="text-sm text-charcoal mb-4 line-clamp-2">
+        <p className="text-sm text-charcoal mb-6 line-clamp-2 leading-relaxed">
           {listing.description}
         </p>
 
         {/* Key Requirements */}
-        <div className="mb-4">
-          <p className="text-sm font-medium text-charcoal mb-2">Key Requirements:</p>
-          <div className="flex flex-wrap gap-2">
+        <div className="mb-6">
+          <p className="text-sm font-medium text-charcoal mb-3">Key Requirements:</p>
+          <div className="flex flex-wrap gap-3">
             {listing.keyRequirements.slice(0, 3).map((req, index) => (
               <Badge key={index} variant="secondary" className="text-xs">
                 {req}
@@ -176,7 +177,7 @@ export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps)
         </div>
 
         {/* Budget and Timeline */}
-        <div className="grid grid-cols-2 gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
+        <div className="grid grid-cols-2 gap-6 mb-6 p-4 bg-slate-50 rounded-lg">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <DollarSign className="h-4 w-4 text-trust-green" />
@@ -196,7 +197,7 @@ export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps)
         </div>
 
         {/* Project Details */}
-        <div className="flex items-center gap-4 mb-4 text-sm">
+        <div className="flex items-center gap-6 mb-6 text-sm">
           <Badge variant="outline" className="gap-1">
             <FileText className="h-3 w-3" />
             {listing.projectScope}
@@ -210,7 +211,7 @@ export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps)
         </div>
 
         {/* Engagement Metrics */}
-        <div className="flex items-center gap-4 mb-4 text-sm text-medium-gray">
+        <div className="flex items-center gap-6 mb-6 text-sm text-medium-gray">
           <div className="flex items-center gap-1">
             <Eye className="h-4 w-4" />
             <span>{listing.viewCount} views</span>
@@ -228,28 +229,20 @@ export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps)
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <Link href={`/listings/${listing.id}`} className="flex-1">
-            <Button className="w-full bg-stackmatch-blue hover:bg-stackmatch-navy text-white">
+            <Button className="w-full h-12 bg-stackmatch-blue hover:bg-stackmatch-navy text-white font-medium">
               <ExternalLink className="h-4 w-4 mr-2" />
               View Details
             </Button>
           </Link>
           <Link href={`/listings/${listing.id}/submit-proposal`}>
-            <Button variant="outline" className="hover:bg-trust-green hover:text-white hover:border-trust-green">
+            <Button variant="outline" className="h-12 px-6 hover:bg-trust-green hover:text-white hover:border-trust-green font-medium">
               Submit Proposal
             </Button>
           </Link>
         </div>
 
-        {/* Hover Effect - Category Tag */}
-        {isHovered && (
-          <div className="mt-4 p-2 bg-stackmatch-blue/5 rounded-lg border border-stackmatch-blue/20 animate-fade-in">
-            <p className="text-xs text-stackmatch-blue font-medium">
-              Category: {listing.category}
-            </p>
-          </div>
-        )}
       </CardContent>
     </Card>
   )
