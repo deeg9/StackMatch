@@ -124,6 +124,9 @@ if (error || !user) {
 ├── my-tech-stack/page.tsx (Software asset management platform)
 ├── proposals/page.tsx (Comprehensive received proposals management center)
 ├── quote-requests/page.tsx (Seller opportunity management hub)
+├── your-clients/page.tsx (Lightweight CRM hub for sellers)
+├── clients/
+│   └── [id]/page.tsx (Individual client record pages)
 └── api/
     ├── auth/login/route.ts (Session management)
     ├── user/profile/route.ts (Dynamic profile data)
@@ -158,6 +161,32 @@ if (error || !user) {
 ├── my-listings/ (Complete listing management components)
 ├── my-tech-stack/ (Software asset management components)
 ├── received-proposals/ (Comprehensive proposal management components)
+├── quote-requests/ (Quote request management components)
+├── your-clients/ (CRM hub components)
+│   ├── your-clients-header.tsx
+│   ├── your-clients-stats.tsx
+│   ├── your-clients-filters.tsx
+│   ├── your-clients-grid.tsx
+│   ├── client-card.tsx
+│   └── your-clients-sidebar.tsx
+├── clients/ (Client record components)
+│   ├── client-record-header.tsx
+│   ├── client-record-tabs.tsx
+│   ├── client-record-sidebar.tsx
+│   ├── overview/client-overview.tsx
+│   ├── agreements/
+│   │   ├── client-agreements.tsx
+│   │   └── agreement-card.tsx
+│   ├── contacts/
+│   │   ├── client-contacts.tsx
+│   │   └── contact-card.tsx
+│   ├── activity/
+│   │   ├── client-activity.tsx
+│   │   └── activity-item.tsx
+│   └── modals/
+│       ├── new-proposal-modal.tsx
+│       ├── log-activity-modal.tsx
+│       └── add-contact-modal.tsx
 ├── ai-listing/ (AI-powered RFQ creation components)
 │   ├── intelligent-ingestion.tsx (Document analysis intake)
 │   ├── ai-working-screen.tsx (Processing animations)
@@ -236,6 +265,23 @@ if (error || !user) {
 - **Seller**: seller@example.com / [password] (Diego Fill, BiltLocal)
 
 ## Recent Technical Improvements
+
+### Your Clients & Client Record Pages Implementation (January 2025)
+- **Your Clients CRM Hub Architecture**: Lightweight client relationship management system
+  - **Component Structure**: 7 specialized components following established patterns
+  - **Data Interface**: ClientRecord interface with comprehensive business metrics
+  - **State Management**: Filter states for service/product, status, sort, and view modes
+  - **Mock Client Data**: 8 enterprise clients with realistic revenue and agreement data
+- **Client Record Page Implementation**: 360-degree view of individual client relationships
+  - **Dynamic Routing**: `/clients/[id]` with Next.js 15 async params
+  - **Tabbed Interface**: 4 comprehensive tabs (Overview, Agreements, Contacts, Activity)
+  - **Extended ClientRecord Interface**: Complete profile with financial metrics and contact info
+  - **Modal Workflows**: New Proposal, Log Activity, Add Contact with TypeScript safety
+  - **Activity Tracking System**: 7 activity types with rich metadata and timeline display
+- **TypeScript Excellence**: Complete type safety across all components
+  - **Client Interfaces**: ClientRecord, Agreement, Contact, Activity types
+  - **Component Props**: Full typing for all components and modals
+  - **Mock Data**: Comprehensive client portfolio with varied industries and metrics
 
 ### Seller Dashboard & Quote Requests Implementation (January 2025)
 - **Complete Seller Dashboard Architecture**: Mirror of buyer dashboard with seller-specific features
