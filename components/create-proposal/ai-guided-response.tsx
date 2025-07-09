@@ -171,13 +171,16 @@ export function AIGuidedResponse({
   }
 
   const updateSectionData = (sectionId: ProposalSectionId, data: any) => {
-    setLocalData(prev => ({
-      ...prev,
-      [sectionId]: {
-        ...prev[sectionId as keyof typeof prev],
-        ...data
+    setLocalData(prev => {
+      const existingData = prev[sectionId as keyof typeof prev]
+      return {
+        ...prev,
+        [sectionId]: {
+          ...(typeof existingData === 'object' && existingData !== null ? existingData : {}),
+          ...data
+        }
       }
-    }))
+    })
   }
 
   const renderSection = () => {
