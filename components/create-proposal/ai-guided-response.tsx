@@ -51,6 +51,18 @@ const sectionConfigs = [
   { id: 'supporting-documents' as ProposalSectionId, title: 'Supporting Documents', icon: Paperclip },
 ]
 
+// Map section IDs to property names in the data structure
+const sectionToPropertyMap: Record<ProposalSectionId, keyof Partial<AIGeneratedProposal>> = {
+  'basic-details': 'basicDetails',
+  'corporate-overview': 'corporateOverview',
+  'executive-summary': 'executiveSummary',
+  'solution-alignment': 'solutionAlignment',
+  'pricing-scoping': 'pricingScoping',
+  'technical-security': 'technicalSecurity',
+  'custom-responses': 'customResponses',
+  'supporting-documents': 'supportingDocuments',
+}
+
 // Mock data for buyer requirements
 const mockBuyerRequirements = {
   coreFeatures: [
@@ -171,11 +183,12 @@ export function AIGuidedResponse({
   }
 
   const updateSectionData = (sectionId: ProposalSectionId, data: any) => {
+    const propertyName = sectionToPropertyMap[sectionId]
     setLocalData(prev => {
-      const existingData = prev[sectionId as keyof typeof prev]
+      const existingData = prev[propertyName as keyof typeof prev]
       return {
         ...prev,
-        [sectionId]: {
+        [propertyName]: {
           ...(typeof existingData === 'object' && existingData !== null ? existingData : {}),
           ...data
         }
@@ -186,21 +199,21 @@ export function AIGuidedResponse({
   const renderSection = () => {
     switch (currentSection) {
       case 'basic-details':
-        return <BasicDetailsSection data={localData.basicDetails} onChange={(data) => updateSectionData('basicDetails', data)} />
+        return <BasicDetailsSection data={localData.basicDetails} onChange={(data) => updateSectionData('basic-details', data)} />
       case 'corporate-overview':
-        return <CorporateOverviewSection data={localData.corporateOverview} onChange={(data) => updateSectionData('corporateOverview', data)} />
+        return <CorporateOverviewSection data={localData.corporateOverview} onChange={(data) => updateSectionData('corporate-overview', data)} />
       case 'executive-summary':
-        return <ExecutiveSummarySection data={localData.executiveSummary} onChange={(data) => updateSectionData('executiveSummary', data)} />
+        return <ExecutiveSummarySection data={localData.executiveSummary} onChange={(data) => updateSectionData('executive-summary', data)} />
       case 'solution-alignment':
-        return <SolutionAlignmentSection data={localData.solutionAlignment} onChange={(data) => updateSectionData('solutionAlignment', data)} />
+        return <SolutionAlignmentSection data={localData.solutionAlignment} onChange={(data) => updateSectionData('solution-alignment', data)} />
       case 'pricing-scoping':
-        return <PricingScopingSection data={localData.pricingScoping} onChange={(data) => updateSectionData('pricingScoping', data)} />
+        return <PricingScopingSection data={localData.pricingScoping} onChange={(data) => updateSectionData('pricing-scoping', data)} />
       case 'technical-security':
-        return <TechnicalSecuritySection data={localData.technicalSecurity} onChange={(data) => updateSectionData('technicalSecurity', data)} />
+        return <TechnicalSecuritySection data={localData.technicalSecurity} onChange={(data) => updateSectionData('technical-security', data)} />
       case 'custom-responses':
-        return <CustomResponsesSection data={localData.customResponses} onChange={(data) => updateSectionData('customResponses', data)} />
+        return <CustomResponsesSection data={localData.customResponses} onChange={(data) => updateSectionData('custom-responses', data)} />
       case 'supporting-documents':
-        return <SupportingDocumentsSection data={localData.supportingDocuments} onChange={(data) => updateSectionData('supportingDocuments', data)} />
+        return <SupportingDocumentsSection data={localData.supportingDocuments} onChange={(data) => updateSectionData('supporting-documents', data)} />
       default:
         return null
     }
