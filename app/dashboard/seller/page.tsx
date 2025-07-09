@@ -373,7 +373,13 @@ export default function SellerDashboard() {
               <Link href="/browse-listings">
                 <Button size="lg" className="bg-[#22C55E] hover:bg-[#16A34A] text-white transform hover:scale-105 transition-all duration-200">
                   <Search className="h-5 w-5 mr-2" />
-                  Browse Listings
+                  Find Opportunities
+                </Button>
+              </Link>
+              <Link href="/quote-requests">
+                <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-[#1A2B4C] transform hover:scale-105 transition-all duration-200">
+                  <FileText className="h-5 w-5 mr-2" />
+                  Active Requests
                 </Button>
               </Link>
             </div>

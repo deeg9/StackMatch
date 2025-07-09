@@ -236,7 +236,7 @@ export function ListingOpportunityCard({ listing }: ListingOpportunityCardProps)
               View Details
             </Button>
           </Link>
-          <Link href={`/listings/${listing.id}/submit-proposal`}>
+          <Link href={`/create-proposal/${listing.id}`}>
             <Button variant="outline" className="h-12 px-6 hover:bg-trust-green hover:text-white hover:border-trust-green font-medium">
               Submit Proposal
             </Button>
