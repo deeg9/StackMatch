@@ -20,7 +20,8 @@ import {
   AlertCircle,
   Clock,
   Users,
-  Sparkles
+  Sparkles,
+  ChevronDown
 } from 'lucide-react'
 import type { AIGeneratedProposal, ListingContext } from '@/types/ai-proposal'
 
