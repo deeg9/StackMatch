@@ -4,20 +4,18 @@ import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { 
-  ArrowRight, TrendingUp, Building2, DollarSign, FileText, 
-  CheckCircle2, Clock, AlertCircle, Plus, MessageSquare, 
-  Bell, ChevronDown, Moon, Sun, Sparkles, Activity,
-  Briefcase, Target, PiggyBank, ArrowUp, ArrowDown, Calendar, Users,
-  CalendarDays, CheckSquare, Link2, CalendarPlus, ChevronLeft, ChevronRight
+  TrendingUp, Building2, DollarSign, FileText, 
+  Plus, Activity, ArrowRight,
+  ArrowUp, ArrowDown, Calendar, Users,
+  CalendarDays, CheckSquare, Link2, CalendarPlus, Sparkles
 } from "lucide-react"
 import Link from "next/link"
 import { TickerBanner } from "@/components/ticker/ticker-banner"
 import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 import { BuyerDashboardSidebar } from '@/components/dashboard/buyer-dashboard-sidebar'
+import { RecentListingsPortlet, RecentProposalsPortlet } from '@/components/dashboard/portlets'
 import { cn } from "@/lib/utils"
 
 // Type definitions for API responses
@@ -111,34 +109,34 @@ export default function BuyerDashboard() {
       }
     }
 
-    // Fetch recent listings
+    // Fetch recent listings - COMMENTED OUT FOR UI/UX DESIGN
     const fetchListings = async () => {
-      try {
-        const response = await fetch('/api/dashboard/buyer/listings')
-        if (response.ok) {
-          const data = await response.json()
-          setListings(data)
-        }
-      } catch (error) {
-        console.error('Error fetching listings:', error)
-      } finally {
+      // try {
+      //   const response = await fetch('/api/dashboard/buyer/listings')
+      //   if (response.ok) {
+      //     const data = await response.json()
+      //     setListings(data)
+      //   }
+      // } catch (error) {
+      //   console.error('Error fetching listings:', error)
+      // } finally {
         setListingsLoading(false)
-      }
+      // }
     }
 
-    // Fetch recent proposals
+    // Fetch recent proposals - COMMENTED OUT FOR UI/UX DESIGN
     const fetchProposals = async () => {
-      try {
-        const response = await fetch('/api/dashboard/buyer/proposals')
-        if (response.ok) {
-          const data = await response.json()
-          setProposals(data)
-        }
-      } catch (error) {
-        console.error('Error fetching proposals:', error)
-      } finally {
+      // try {
+      //   const response = await fetch('/api/dashboard/buyer/proposals')
+      //   if (response.ok) {
+      //     const data = await response.json()
+      //     setProposals(data)
+      //   }
+      // } catch (error) {
+      //   console.error('Error fetching proposals:', error)
+      // } finally {
         setProposalsLoading(false)
-      }
+      // }
     }
 
     // Fetch user profile
@@ -162,33 +160,6 @@ export default function BuyerDashboard() {
     fetchProfile()
   }, [])
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active': return 'bg-[#22C55E] text-white'
-      case 'draft': return 'bg-[#6B7280] text-white'
-      case 'closed': return 'bg-[#F59E0B] text-white'
-      case 'archived': return 'bg-[#374151] text-white'
-      default: return 'bg-[#D1D5DB] text-[#374151]'
-    }
-  }
-
-  const getProposalStatusColor = (status: string) => {
-    switch (status) {
-      case 'submitted': return 'bg-[#3B82F6] text-white'
-      case 'under_review': return 'bg-[#F59E0B] text-white'
-      case 'accepted': return 'bg-[#22C55E] text-white'
-      case 'rejected': return 'bg-red-500 text-white'
-      default: return 'bg-[#D1D5DB] text-[#374151]'
-    }
-  }
-
-  const formatBudget = (min: number | null, max: number | null) => {
-    if (!min && !max) return 'Not specified'
-    if (min && max) return `$${min.toLocaleString()} - $${max.toLocaleString()}`
-    if (min) return `From $${min.toLocaleString()}`
-    if (max) return `Up to $${max.toLocaleString()}`
-    return 'Not specified'
-  }
 
   const toggleReminder = (id: number) => {
     setReminders(reminders.map(reminder => 
@@ -358,165 +329,22 @@ export default function BuyerDashboard() {
             {/* Row 2: Active Procurement - Two-column layout */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Recent Listings */}
-          <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Recent Listings</CardTitle>
-              <Link href="/my-listings">
-                <Button variant="ghost" size="sm" className="text-[#4A73CC] hover:text-[#1A2B4C]">
-                  View All
-                  <ArrowRight className="h-4 w-4 ml-1" />
-                </Button>
-              </Link>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {listingsLoading ? (
-                <div className="space-y-4">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="p-4 border rounded-lg animate-pulse">
-                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                      <div className="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
-                      <div className="h-3 bg-gray-200 rounded w-1/4"></div>
-                    </div>
-                  ))}
-                </div>
-              ) : listings.length === 0 ? (
-                <div className="text-center py-12">
-                  <FileText className="h-12 w-12 text-[#D1D5DB] mx-auto mb-4" />
-                  <p className="text-[#6B7280] mb-4">No listings yet</p>
-                  <Link href="/create-listing">
-                    <Button className="bg-[#22C55E] hover:bg-[#16A34A] text-white">
-                      Create Your First Listing
-                    </Button>
-                  </Link>
-                </div>
-              ) : (
-                listings.map((listing, index) => (
-                  <div
-                    key={listing.id}
-                    className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <div className="space-y-3">
-                      {/* Line 1: Primary Information & Key Constraints */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <h3 className="font-bold text-[#1A2B4C] group-hover:text-[#4A73CC] transition-colors">
-                            {listing.title}
-                          </h3>
-                          <Badge className={getStatusColor(listing.status)}>
-                            {listing.status}
-                          </Badge>
-                        </div>
-                        <div className="flex items-center space-x-4 text-sm text-[#1A2B4C]">
-                          <span className="flex items-center font-medium">
-                            <DollarSign className="h-3 w-3 mr-1" />
-                            {formatBudget(listing.budgetMin, listing.budgetMax)}
-                          </span>
-                          <span className="flex items-center font-medium">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            Due: Jul 15
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Line 2: Context & Engagement Metrics */}
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-[#6B7280] flex items-center">
-                          <Building2 className="h-4 w-4 mr-1" />
-                          {listing.category}
-                        </span>
-                        <div className="flex items-center space-x-4 text-sm text-[#6B7280]">
-                          <span className="flex items-center">
-                            <FileText className="h-3 w-3 mr-1" />
-                            {listing.proposalCount} Proposals
-                          </span>
-                          <span className="flex items-center">
-                            <Users className="h-3 w-3 mr-1" />
-                            2 Deal Rooms
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
+          <RecentListingsPortlet
+            listings={listings}
+            loading={listingsLoading}
+            viewAllLink="/my-listings"
+            showCreateButton={true}
+            createLink="/create-listing"
+          />
 
           {/* Recent Proposals */}
-          <Card className="border-2 hover:border-[#22C55E] transition-all duration-300">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Recent Proposals</CardTitle>
-              <Link href="/proposals">
-                <Button variant="ghost" size="sm" className="text-[#22C55E] hover:text-[#16A34A]">
-                  View All
-                  <ArrowRight className="h-4 w-4 ml-1" />
-                </Button>
-              </Link>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {proposalsLoading ? (
-                <div className="space-y-4">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="p-4 border rounded-lg animate-pulse">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
-                        <div className="flex-1">
-                          <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
-                          <div className="h-3 bg-gray-200 rounded w-3/4 mb-2"></div>
-                          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : proposals.length === 0 ? (
-                <div className="text-center py-12">
-                  <Activity className="h-12 w-12 text-[#D1D5DB] mx-auto mb-4" />
-                  <p className="text-[#6B7280] mb-4">No proposals received yet</p>
-                  <p className="text-sm text-[#6B7280]">
-                    Create listings to start receiving proposals from sellers
-                  </p>
-                </div>
-              ) : (
-                proposals.map((proposal, index) => (
-                  <div
-                    key={proposal.id}
-                    className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <div className="flex items-start space-x-3">
-                      <Avatar className="h-10 w-10">
-                        <AvatarImage src={proposal.sellerAvatar || ''} />
-                        <AvatarFallback className="bg-[#4A73CC] text-white">
-                          {proposal.sellerName.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 space-y-2">
-                        <div className="flex items-center justify-between">
-                          <h4 className="font-semibold text-[#1A2B4C] group-hover:text-[#22C55E] transition-colors">
-                            {proposal.sellerName}
-                          </h4>
-                          <Badge className={getProposalStatusColor(proposal.status)}>
-                            {proposal.status.replace('_', ' ')}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-[#6B7280]">
-                          {proposal.listingTitle}
-                        </p>
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="font-semibold text-[#22C55E]">
-                            ${proposal.proposedBudget.toLocaleString()}
-                          </span>
-                          <span className="text-[#6B7280]">{proposal.submittedAt}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
+          <RecentProposalsPortlet
+            proposals={proposals}
+            loading={proposalsLoading}
+            viewAllLink="/proposals"
+            emptyMessage="No proposals received yet"
+            emptySubMessage="Create listings to start receiving proposals from sellers"
+          />
             </div>
 
             {/* Row 3: Calendar (Full-width) */}
