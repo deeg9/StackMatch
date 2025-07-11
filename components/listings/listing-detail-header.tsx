@@ -78,7 +78,7 @@ export function ListingDetailHeader({ listing, isOwner, userType }: ListingDetai
               {listing.title}
             </h1>
             <div className="flex items-center gap-4">
-              <Badge className={getStatusColor(listing.status)} size="lg">
+              <Badge className={`${getStatusColor(listing.status)} text-base px-3 py-1`}>
                 {listing.status}
               </Badge>
               <span className="text-lg text-charcoal font-medium">
@@ -127,6 +127,7 @@ export function ListingDetailHeader({ listing, isOwner, userType }: ListingDetai
               </div>
             </div>
           </div>
+        </div>
 
         {/* Context-Aware Action Bar */}
         <div className="flex flex-col gap-3 min-w-[200px]">
