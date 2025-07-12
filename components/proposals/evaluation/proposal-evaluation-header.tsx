@@ -1,10 +1,11 @@
 'use client'
 
-import { Building2, Calendar, CheckCircle2, AlertCircle } from 'lucide-react'
+import { Building2, Calendar, CheckCircle2, AlertCircle, ArrowLeft, DollarSign, Target, FileText, Clock } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { AIGeneratedProposal } from '@/types/ai-proposal'
 import { ProposalEvaluation } from '@/lib/mock-data/proposal-evaluation-data'
+import { useRouter } from 'next/navigation'
 
 interface ProposalEvaluationHeaderProps {
   proposal: AIGeneratedProposal
@@ -15,99 +16,120 @@ export function ProposalEvaluationHeader({
   proposal, 
   evaluation 
 }: ProposalEvaluationHeaderProps) {
+  const router = useRouter()
+  
   const getStatusColor = (status: ProposalEvaluation['status']) => {
     const colors = {
-      'new': 'bg-blue-100 text-blue-700',
-      'under-review': 'bg-yellow-100 text-yellow-700',
-      'shortlisted': 'bg-green-100 text-green-700',
-      'awaiting-clarification': 'bg-orange-100 text-orange-700',
-      'rejected': 'bg-red-100 text-red-700',
-      'accepted': 'bg-emerald-100 text-emerald-700'
+      'new': 'bg-information-blue text-white',
+      'under-review': 'bg-attention-orange text-white',
+      'shortlisted': 'bg-trust-green text-white',
+      'awaiting-clarification': 'bg-attention-orange text-white',
+      'rejected': 'bg-error-red text-white',
+      'accepted': 'bg-success-green text-white'
     }
-    return colors[status] || 'bg-gray-100 text-gray-700'
+    return colors[status] || 'bg-medium-gray text-white'
   }
 
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat('en-US', {
-      month: 'long',
+      month: 'short',
       day: 'numeric',
       year: 'numeric'
     }).format(date)
   }
 
+  // Extract vendor name from proposal title (e.g., "BambooHR - Complete HR Platform Proposal" -> "BambooHR")
+  const vendorName = proposal.basicDetails.proposalTitle.split(' - ')[0] || 'Unknown Vendor'
+
   return (
-    <div className="bg-white border-b">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="py-6">
-          {/* Top Section - Title and Status */}
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <h1 className="text-2xl font-semibold text-gray-900 mb-2">
-                Proposal Evaluation Command Center
-              </h1>
-              <p className="text-gray-600">
-                Review and evaluate vendor proposals for your RFQ
-              </p>
-            </div>
-            <Badge className={getStatusColor(evaluation.status)}>
-              {evaluation.status.charAt(0).toUpperCase() + 
-               evaluation.status.slice(1).replace('-', ' ')}
-            </Badge>
-          </div>
+    <div className="bg-white rounded-lg shadow-sm border-2 border-light-gray p-6 mb-6">
+      {/* Navigation */}
+      <div className="flex items-center gap-4 mb-6">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => router.back()}
+          className="gap-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </Button>
+        <div className="text-sm text-medium-gray">
+          Received Proposals / {vendorName}
+        </div>
+      </div>
 
-          {/* Vendor Info Section */}
-          <div className="bg-gray-50 rounded-lg p-4 flex items-center justify-between">
+      {/* Main Header Content - RFQ Command Center Style */}
+      <div className="flex items-start justify-between gap-6">
+        <div className="flex-1">
+          {/* Title and Status - More Prominent */}
+          <div className="mb-4">
+            <h1 className="text-4xl font-bold text-stackmatch-navy mb-2">
+              {proposal.basicDetails.proposalTitle}
+            </h1>
             <div className="flex items-center gap-4">
-              {/* Vendor Logo Placeholder */}
-              <div className="w-16 h-16 bg-white rounded-lg border flex items-center justify-center">
-                <Building2 className="w-8 h-8 text-gray-400" />
-              </div>
-              
-              {/* Vendor Details */}
+              <Badge className={`${getStatusColor(evaluation.status)} text-base px-3 py-1`}>
+                {evaluation.status.charAt(0).toUpperCase() + 
+                 evaluation.status.slice(1).replace('-', ' ')}
+              </Badge>
+              <span className="text-lg text-charcoal font-medium">
+                For: {/* Add listing title here */}HR Management System Upgrade
+              </span>
+            </div>
+          </div>
+
+          {/* Key Information Bar */}
+          <div className="flex items-center gap-8 p-4 bg-light-gray/30 rounded-lg mb-4">
+            <div className="flex items-center gap-2">
+              <Target className="h-5 w-5 text-trust-green" />
               <div>
-                <h2 className="text-lg font-semibold text-gray-900">
-                  {proposal.basicDetails.proposalTitle}
-                </h2>
-                <div className="flex items-center gap-4 mt-1 text-sm text-gray-600">
-                  <span className="flex items-center gap-1">
-                    <Building2 className="w-4 h-4" />
-                    {/* Extract company name from proposal title */}
-                    BambooHR
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    Submitted {formatDate(proposal.createdAt)}
-                  </span>
-                </div>
+                <p className="text-xs text-medium-gray">Match Score</p>
+                <p className="font-semibold text-charcoal text-lg">{proposal.overallMatchScore}%</p>
               </div>
             </div>
-
-            {/* Match Score */}
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600">
-                {proposal.overallMatchScore}%
+            <div className="border-l border-medium-gray/20 h-10"></div>
+            <div className="flex items-center gap-2">
+              <DollarSign className="h-5 w-5 text-stackmatch-blue" />
+              <div>
+                <p className="text-xs text-medium-gray">Proposed Cost</p>
+                <p className="font-semibold text-charcoal">${proposal.pricingScoping.annualLicenseFee.toLocaleString()} / Year</p>
               </div>
-              <div className="text-sm text-gray-600">Match Score</div>
+            </div>
+            <div className="border-l border-medium-gray/20 h-10"></div>
+            <div className="flex items-center gap-2">
+              <Building2 className="h-5 w-5 text-stackmatch-blue" />
+              <div>
+                <p className="text-xs text-medium-gray">From</p>
+                <p className="font-semibold text-charcoal">{vendorName}</p>
+              </div>
+            </div>
+            <div className="border-l border-medium-gray/20 h-10"></div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-attention-orange" />
+              <div>
+                <p className="text-xs text-medium-gray">Submitted</p>
+                <p className="font-semibold text-charcoal">{formatDate(proposal.createdAt)}</p>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Quick Actions */}
-          <div className="flex items-center gap-3 mt-4">
-            <Button variant="default" className="bg-green-600 hover:bg-green-700">
-              <CheckCircle2 className="w-4 h-4 mr-2" />
-              Accept Proposal
-            </Button>
-            <Button variant="outline">
-              Start Negotiation
-            </Button>
-            <Button variant="outline">
-              Schedule Meeting
-            </Button>
-            <Button variant="outline" className="text-red-600 hover:text-red-700">
-              <AlertCircle className="w-4 h-4 mr-2" />
-              Reject Proposal
-            </Button>
-          </div>
+        {/* Context-Aware Action Bar */}
+        <div className="flex flex-col gap-3 min-w-[200px]">
+          <Button className="w-full bg-trust-green hover:bg-success-green text-white" size="lg">
+            <CheckCircle2 className="h-4 w-4 mr-2" />
+            Accept Proposal
+          </Button>
+          <Button variant="outline" className="w-full" size="lg">
+            Start Negotiation
+          </Button>
+          <Button variant="outline" className="w-full" size="lg">
+            Schedule Meeting
+          </Button>
+          <Button variant="outline" className="w-full text-error-red hover:bg-red-50" size="lg">
+            <AlertCircle className="h-4 w-4 mr-2" />
+            Reject Proposal
+          </Button>
         </div>
       </div>
     </div>

@@ -31,7 +31,8 @@
       "Bash(timeout 30 npm run build)",
       "Bash(npm run lint:*)",
       "Bash(rm:*)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(timeout 10s npm run dev --turbo)"
     ],
     "deny": []
   },

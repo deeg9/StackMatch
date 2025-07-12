@@ -19,18 +19,19 @@ export default function ProposalEvaluationPage() {
   console.log('Viewing proposal:', proposalId)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-light-gray/20 via-white to-light-gray/20">
       <TickerBanner />
       <NavigationWrapper />
       
-      {/* Static Header */}
-      <ProposalEvaluationHeader 
-        proposal={mockProposalData}
-        evaluation={evaluationData}
-      />
-
-      {/* Main Content Area with Sidebar */}
+      {/* Main Content Container */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+        {/* Static Header */}
+        <ProposalEvaluationHeader 
+          proposal={mockProposalData}
+          evaluation={evaluationData}
+        />
+
+        {/* Main Content Area with Sidebar */}
         <div className="flex gap-8">
           {/* Tab Container - Main Content */}
           <div className="flex-1">

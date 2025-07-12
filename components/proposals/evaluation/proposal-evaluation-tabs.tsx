@@ -1,6 +1,7 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { FileText, Target, DollarSign, ShieldCheck, PaperclipIcon } from 'lucide-react'
 import { AIGeneratedProposal } from '@/types/ai-proposal'
 import { AIGeneratedRFQ } from '@/types/ai-listing'
 import { ProposalOverviewTab } from './tabs/proposal-overview-tab'
@@ -16,14 +17,6 @@ interface ProposalEvaluationTabsProps {
   onTabChange: (tab: string) => void
 }
 
-const tabs = [
-  { id: 'overview', label: 'Proposal Overview' },
-  { id: 'alignment', label: 'Solution Alignment' },
-  { id: 'pricing', label: 'Pricing & Scope' },
-  { id: 'technical', label: 'Technical & Security' },
-  { id: 'documents', label: 'Supporting Documents' }
-]
-
 export function ProposalEvaluationTabs({
   proposal,
   buyerRequirements,
@@ -31,48 +24,57 @@ export function ProposalEvaluationTabs({
   onTabChange
 }: ProposalEvaluationTabsProps) {
   return (
-    <div className="bg-white rounded-lg shadow-sm">
-      {/* Tab Navigation */}
-      <div className="border-b">
-        <nav className="flex -mb-px">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => onTabChange(tab.id)}
-              className={cn(
-                'px-6 py-3 text-sm font-medium border-b-2 transition-colors',
-                activeTab === tab.id
-                  ? 'border-blue-500 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              )}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </nav>
-      </div>
+    <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
+      <TabsList className="grid grid-cols-5 w-full mb-6 h-auto p-1">
+        <TabsTrigger value="overview" className="flex items-center gap-2 py-3">
+          <FileText className="h-4 w-4" />
+          <span className="hidden sm:inline">Proposal Overview</span>
+          <span className="sm:hidden">Overview</span>
+        </TabsTrigger>
+        <TabsTrigger value="alignment" className="flex items-center gap-2 py-3">
+          <Target className="h-4 w-4" />
+          <span className="hidden sm:inline">Solution Alignment</span>
+          <span className="sm:hidden">Alignment</span>
+        </TabsTrigger>
+        <TabsTrigger value="pricing" className="flex items-center gap-2 py-3">
+          <DollarSign className="h-4 w-4" />
+          <span className="hidden sm:inline">Pricing & Scope</span>
+          <span className="sm:hidden">Pricing</span>
+        </TabsTrigger>
+        <TabsTrigger value="technical" className="flex items-center gap-2 py-3">
+          <ShieldCheck className="h-4 w-4" />
+          <span className="hidden sm:inline">Technical & Security</span>
+          <span className="sm:hidden">Technical</span>
+        </TabsTrigger>
+        <TabsTrigger value="documents" className="flex items-center gap-2 py-3">
+          <PaperclipIcon className="h-4 w-4" />
+          <span className="hidden sm:inline">Supporting Documents</span>
+          <span className="sm:hidden">Documents</span>
+        </TabsTrigger>
+      </TabsList>
 
-      {/* Tab Content */}
-      <div className="p-6">
-        {activeTab === 'overview' && (
-          <ProposalOverviewTab proposal={proposal} />
-        )}
-        {activeTab === 'alignment' && (
-          <SolutionAlignmentTab 
-            proposal={proposal} 
-            buyerRequirements={buyerRequirements}
-          />
-        )}
-        {activeTab === 'pricing' && (
-          <PricingScopeTab proposal={proposal} />
-        )}
-        {activeTab === 'technical' && (
-          <TechnicalSecurityTab proposal={proposal} />
-        )}
-        {activeTab === 'documents' && (
-          <SupportingDocumentsTab proposal={proposal} />
-        )}
-      </div>
-    </div>
+      <TabsContent value="overview" className="mt-0">
+        <ProposalOverviewTab proposal={proposal} />
+      </TabsContent>
+
+      <TabsContent value="alignment" className="mt-0">
+        <SolutionAlignmentTab 
+          proposal={proposal} 
+          buyerRequirements={buyerRequirements}
+        />
+      </TabsContent>
+
+      <TabsContent value="pricing" className="mt-0">
+        <PricingScopeTab proposal={proposal} />
+      </TabsContent>
+
+      <TabsContent value="technical" className="mt-0">
+        <TechnicalSecurityTab proposal={proposal} />
+      </TabsContent>
+
+      <TabsContent value="documents" className="mt-0">
+        <SupportingDocumentsTab proposal={proposal} />
+      </TabsContent>
+    </Tabs>
   )
 }

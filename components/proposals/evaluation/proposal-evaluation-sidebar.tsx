@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/select'
 import { AIGeneratedProposal } from '@/types/ai-proposal'
 import { ProposalEvaluation } from '@/lib/mock-data/proposal-evaluation-data'
+import { cn } from '@/lib/utils'
 
 interface ProposalEvaluationSidebarProps {
   proposal: AIGeneratedProposal
@@ -135,8 +136,8 @@ export function ProposalEvaluationSidebar({
               className={cn(
                 'w-5 h-5 transition-colors',
                 star <= score
-                  ? 'fill-yellow-400 text-yellow-400'
-                  : 'text-gray-300'
+                  ? 'fill-attention-orange text-attention-orange'
+                  : 'text-medium-gray/40'
               )}
             />
           </button>
@@ -148,20 +149,20 @@ export function ProposalEvaluationSidebar({
   return (
     <div className="space-y-6">
       {/* Status & Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Status & Actions</CardTitle>
+      <Card className="border-2 border-light-gray shadow-sm">
+        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
+          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Status & Actions</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 pt-6">
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-2 block">
+            <label className="text-sm font-medium text-charcoal mb-2 block">
               Proposal Status
             </label>
             <Select
               value={evaluation.status}
               onValueChange={handleStatusChange}
             >
-              <SelectTrigger>
+              <SelectTrigger className="border-medium-gray/30 focus:border-stackmatch-blue">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -176,15 +177,15 @@ export function ProposalEvaluationSidebar({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Button variant="outline" size="sm" className="w-full">
+            <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
               <MessageSquare className="w-4 h-4 mr-2" />
               Request Clarification
             </Button>
-            <Button variant="outline" size="sm" className="w-full">
+            <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
               <Star className="w-4 h-4 mr-2" />
               Shortlist this Proposal
             </Button>
-            <Button variant="outline" size="sm" className="w-full">
+            <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
               <FileText className="w-4 h-4 mr-2" />
               Archive
             </Button>
@@ -193,23 +194,23 @@ export function ProposalEvaluationSidebar({
       </Card>
 
       {/* Internal Scorecard */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center justify-between">
+      <Card className="border-2 border-light-gray shadow-sm">
+        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
+          <CardTitle className="text-lg font-semibold text-stackmatch-navy flex items-center justify-between">
             <span>Internal Scorecard</span>
-            <Badge className="bg-blue-100 text-blue-700">
+            <Badge className="bg-stackmatch-blue text-white px-3 py-1">
               {evaluation.internalScores.overallScore}/5
             </Badge>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 pt-6">
           {scoreCriteria.map((criteria) => (
             <div key={criteria.id} className="space-y-1">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-charcoal">
                   {criteria.label}
                 </label>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-medium-gray">
                   {evaluation.internalScores[criteria.id]}/5
                 </span>
               </div>
@@ -217,24 +218,24 @@ export function ProposalEvaluationSidebar({
                 score={evaluation.internalScores[criteria.id] as number}
                 onChange={(score) => handleScoreChange(criteria.id, score)}
               />
-              <p className="text-xs text-gray-500">{criteria.description}</p>
+              <p className="text-xs text-medium-gray">{criteria.description}</p>
             </div>
           ))}
         </CardContent>
       </Card>
 
       {/* Internal Team Notes */}
-      <Card>
-        <CardHeader>
+      <Card className="border-2 border-light-gray shadow-sm">
+        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
           <button
             onClick={() => setIsNotesExpanded(!isNotesExpanded)}
             className="w-full"
           >
-            <CardTitle className="text-lg flex items-center justify-between">
+            <CardTitle className="text-lg font-semibold text-stackmatch-navy flex items-center justify-between">
               <span>Internal Team Notes</span>
               <ChevronDown 
                 className={cn(
-                  'w-4 h-4 transition-transform',
+                  'w-4 h-4 transition-transform text-medium-gray',
                   isNotesExpanded ? 'rotate-180' : ''
                 )}
               />
@@ -242,17 +243,17 @@ export function ProposalEvaluationSidebar({
           </button>
         </CardHeader>
         {isNotesExpanded && (
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 pt-6">
             <div className="space-y-3 max-h-60 overflow-y-auto">
               {evaluation.teamNotes.map((note) => (
-                <div key={note.id} className="bg-gray-50 rounded-lg p-3 text-sm">
+                <div key={note.id} className="bg-light-gray/30 rounded-lg p-3 text-sm border border-light-gray">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-medium text-gray-900">{note.author}</span>
-                    <span className="text-xs text-gray-500">
+                    <span className="font-medium text-stackmatch-navy">{note.author}</span>
+                    <span className="text-xs text-medium-gray">
                       {note.timestamp.toLocaleTimeString()}
                     </span>
                   </div>
-                  <p className="text-gray-700">{note.content}</p>
+                  <p className="text-charcoal">{note.content}</p>
                 </div>
               ))}
             </div>
@@ -262,13 +263,13 @@ export function ProposalEvaluationSidebar({
                 placeholder="Add a private note for your team..."
                 value={newNote}
                 onChange={(e) => setNewNote(e.target.value)}
-                className="resize-none"
+                className="resize-none border-medium-gray/30 focus:border-stackmatch-blue"
                 rows={3}
               />
               <Button 
                 onClick={handleAddNote}
                 size="sm" 
-                className="w-full"
+                className="w-full bg-stackmatch-blue hover:bg-stackmatch-navy text-white"
                 disabled={!newNote.trim()}
               >
                 Add Note
@@ -279,28 +280,28 @@ export function ProposalEvaluationSidebar({
       </Card>
 
       {/* Seller Contact */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Seller Contact</CardTitle>
+      <Card className="border-2 border-light-gray shadow-sm">
+        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
+          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Seller Contact</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="space-y-3">
             <div>
-              <p className="font-medium text-gray-900">
+              <p className="font-medium text-stackmatch-navy">
                 {proposal.basicDetails.contactPerson.name}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-charcoal">
                 {proposal.basicDetails.contactPerson.role}
               </p>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
+            <div className="flex items-center gap-2 text-sm text-medium-gray">
               <Mail className="w-4 h-4" />
               {proposal.basicDetails.contactPerson.email}
             </div>
             <Button 
               variant="outline" 
               size="sm" 
-              className="w-full"
+              className="w-full border-medium-gray/30 hover:bg-light-gray/50"
             >
               <Building2 className="w-4 h-4 mr-2" />
               View Company Profile
@@ -310,16 +311,16 @@ export function ProposalEvaluationSidebar({
       </Card>
 
       {/* Export Options */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Export & Share</CardTitle>
+      <Card className="border-2 border-light-gray shadow-sm">
+        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
+          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Export & Share</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
-          <Button variant="outline" size="sm" className="w-full">
+        <CardContent className="space-y-2 pt-6">
+          <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
             <Download className="w-4 h-4 mr-2" />
             Download PDF Report
           </Button>
-          <Button variant="outline" size="sm" className="w-full">
+          <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
             <Share2 className="w-4 h-4 mr-2" />
             Share with Team
           </Button>
@@ -327,9 +328,4 @@ export function ProposalEvaluationSidebar({
       </Card>
     </div>
   )
-}
-
-// Helper function - add this to your utils
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ')
 }
