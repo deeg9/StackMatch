@@ -152,7 +152,7 @@ export function SellerProposalsPortlet() {
 
             {/* Action Button */}
             <div className="flex justify-end">
-              <Link href={`/my-proposals/${proposal.id}`}>
+              <Link href={`/proposals/evaluate/${proposal.id}`}>
                 <Button 
                   variant="outline" 
                   size="sm"
