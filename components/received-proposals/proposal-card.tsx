@@ -185,7 +185,7 @@ export function ProposalCard({ proposal, onArchive }: ProposalCardProps) {
           </div>
           
           <div className="flex gap-2">
-            <Link href={`/proposals/${proposal.id}`}>
+            <Link href={`/proposals/evaluate/${proposal.id.toLowerCase()}`}>
               <Button variant="outline" size="sm" className="text-stackmatch-blue border-stackmatch-blue hover:bg-stackmatch-blue hover:text-white">
                 <Eye className="h-4 w-4 mr-1" />
                 View Proposal
