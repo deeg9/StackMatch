@@ -30,7 +30,8 @@
       "Bash(timeout 60 npm run build)",
       "Bash(timeout 30 npm run build)",
       "Bash(npm run lint:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": []
   },
