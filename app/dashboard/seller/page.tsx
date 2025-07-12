@@ -48,6 +48,7 @@ import Link from "next/link"
 import { TickerBanner } from "@/components/ticker/ticker-banner"
 import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 import { SellerDashboardSidebar } from '@/components/dashboard/seller-dashboard-sidebar'
+import { SellerProposalsPortlet } from '@/components/dashboard/portlets/seller-proposals-portlet'
 import { cn } from "@/lib/utils"
 
 interface SellerStats {
@@ -574,70 +575,7 @@ export default function SellerDashboard() {
               </Card>
 
               {/* Recent Proposals */}
-              <Card className="border-2 hover:border-[#22C55E] transition-all duration-300">
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Recent Proposals</CardTitle>
-                  <Link href="/my-proposals">
-                    <Button variant="ghost" size="sm" className="text-[#22C55E] hover:text-[#16A34A]">
-                      View All
-                      <ArrowRight className="h-4 w-4 ml-1" />
-                    </Button>
-                  </Link>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {proposalsLoading ? (
-                    <div className="space-y-4">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="p-4 border rounded-lg animate-pulse">
-                          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                          <div className="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
-                          <div className="h-3 bg-gray-200 rounded w-1/4"></div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : proposals.length === 0 ? (
-                    <div className="text-center py-12">
-                      <FileText className="h-12 w-12 text-[#D1D5DB] mx-auto mb-4" />
-                      <p className="text-[#6B7280] mb-4">No proposals submitted yet</p>
-                      <p className="text-sm text-[#6B7280]">
-                        Browse listings to submit your first proposal
-                      </p>
-                    </div>
-                  ) : (
-                    proposals.map((proposal, index) => (
-                      <div
-                        key={proposal.id}
-                        className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className="space-y-3">
-                          <div className="flex items-start justify-between">
-                            <h4 className="font-semibold text-[#1A2B4C] leading-tight group-hover:text-[#22C55E] transition-colors">
-                              {proposal.title}
-                            </h4>
-                            <Badge variant={getStatusBadgeVariant(proposal.status)} className="flex items-center space-x-1">
-                              {getStatusIcon(proposal.status)}
-                              <span className="capitalize">{proposal.status.replace('_', ' ')}</span>
-                            </Badge>
-                          </div>
-                          <div className="space-y-2">
-                            <div className="flex items-center space-x-2 text-sm text-[#6B7280]">
-                              <Building2 className="h-4 w-4" />
-                              <span>{proposal.clientCompany}</span>
-                            </div>
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="font-semibold text-[#22C55E]">
-                                {formatCurrency(proposal.proposalAmount)}
-                              </span>
-                              <span className="text-[#6B7280]">Due {proposal.dueDate}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </CardContent>
-              </Card>
+              <SellerProposalsPortlet />
             </div>
 
             {/* Row 3: Calendar (Full-width) */}
