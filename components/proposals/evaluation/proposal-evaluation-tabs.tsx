@@ -43,7 +43,7 @@ export function ProposalEvaluationTabs({
         </TabsTrigger>
         <TabsTrigger value="technical" className="flex items-center gap-2 py-3">
           <ShieldCheck className="h-4 w-4" />
-          <span className="hidden sm:inline">Technical & Security</span>
+          <span className="hidden sm:inline">Technical</span>
           <span className="sm:hidden">Technical</span>
         </TabsTrigger>
         <TabsTrigger value="documents" className="flex items-center gap-2 py-3">

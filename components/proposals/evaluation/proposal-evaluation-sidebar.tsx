@@ -134,6 +134,37 @@ export function ProposalEvaluationSidebar({
 
   return (
     <div className="space-y-6">
+      {/* Seller Contact */}
+      <Card className="border-2 border-light-gray shadow-sm">
+        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
+          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Seller Contact</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <div className="space-y-3">
+            <div>
+              <p className="font-medium text-stackmatch-navy">
+                {proposal.basicDetails.contactPerson.name}
+              </p>
+              <p className="text-sm text-charcoal">
+                {proposal.basicDetails.contactPerson.role}
+              </p>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-medium-gray">
+              <Mail className="w-4 h-4" />
+              {proposal.basicDetails.contactPerson.email}
+            </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full border-medium-gray/30 hover:bg-light-gray/50"
+            >
+              <Building2 className="w-4 h-4 mr-2" />
+              View Company Profile
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Export & Share */}
       <Card className="border-2 border-light-gray shadow-sm">
         <CardHeader className="bg-light-gray/20 border-b border-light-gray">
@@ -235,37 +266,6 @@ export function ProposalEvaluationSidebar({
             </div>
           </CardContent>
         )}
-      </Card>
-
-      {/* Seller Contact */}
-      <Card className="border-2 border-light-gray shadow-sm">
-        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
-          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Seller Contact</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <div className="space-y-3">
-            <div>
-              <p className="font-medium text-stackmatch-navy">
-                {proposal.basicDetails.contactPerson.name}
-              </p>
-              <p className="text-sm text-charcoal">
-                {proposal.basicDetails.contactPerson.role}
-              </p>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-medium-gray">
-              <Mail className="w-4 h-4" />
-              {proposal.basicDetails.contactPerson.email}
-            </div>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="w-full border-medium-gray/30 hover:bg-light-gray/50"
-            >
-              <Building2 className="w-4 h-4 mr-2" />
-              View Company Profile
-            </Button>
-          </div>
-        </CardContent>
       </Card>
 
     </div>
