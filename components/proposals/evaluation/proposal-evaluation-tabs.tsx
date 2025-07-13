@@ -28,17 +28,17 @@ export function ProposalEvaluationTabs({
       <TabsList className="grid grid-cols-5 w-full mb-6 h-auto p-1">
         <TabsTrigger value="overview" className="flex items-center gap-2 py-3">
           <FileText className="h-4 w-4" />
-          <span className="hidden sm:inline">Proposal Overview</span>
+          <span className="hidden sm:inline">Overview</span>
           <span className="sm:hidden">Overview</span>
         </TabsTrigger>
         <TabsTrigger value="alignment" className="flex items-center gap-2 py-3">
           <Target className="h-4 w-4" />
-          <span className="hidden sm:inline">Solution Alignment</span>
-          <span className="sm:hidden">Alignment</span>
+          <span className="hidden sm:inline">Solution</span>
+          <span className="sm:hidden">Solution</span>
         </TabsTrigger>
         <TabsTrigger value="pricing" className="flex items-center gap-2 py-3">
           <DollarSign className="h-4 w-4" />
-          <span className="hidden sm:inline">Pricing & Scope</span>
+          <span className="hidden sm:inline">Pricing</span>
           <span className="sm:hidden">Pricing</span>
         </TabsTrigger>
         <TabsTrigger value="technical" className="flex items-center gap-2 py-3">
@@ -48,7 +48,7 @@ export function ProposalEvaluationTabs({
         </TabsTrigger>
         <TabsTrigger value="documents" className="flex items-center gap-2 py-3">
           <PaperclipIcon className="h-4 w-4" />
-          <span className="hidden sm:inline">Supporting Documents</span>
+          <span className="hidden sm:inline">Documents</span>
           <span className="sm:hidden">Documents</span>
         </TabsTrigger>
       </TabsList>

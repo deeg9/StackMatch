@@ -8,20 +8,13 @@ import {
   Mail, 
   Building2,
   Download,
-  Share2,
+  FileDown,
   FileText
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { AIGeneratedProposal } from '@/types/ai-proposal'
 import { ProposalEvaluation } from '@/lib/mock-data/proposal-evaluation-data'
 import { cn } from '@/lib/utils'
@@ -73,13 +66,6 @@ export function ProposalEvaluationSidebar({
 }: ProposalEvaluationSidebarProps) {
   const [newNote, setNewNote] = useState('')
   const [isNotesExpanded, setIsNotesExpanded] = useState(true)
-
-  const handleStatusChange = (newStatus: ProposalEvaluation['status']) => {
-    onEvaluationUpdate({
-      ...evaluation,
-      status: newStatus
-    })
-  }
 
   const handleScoreChange = (criteria: keyof ProposalEvaluation['internalScores'], score: number) => {
     const newScores = {
@@ -148,48 +134,20 @@ export function ProposalEvaluationSidebar({
 
   return (
     <div className="space-y-6">
-      {/* Status & Actions */}
+      {/* Export & Share */}
       <Card className="border-2 border-light-gray shadow-sm">
         <CardHeader className="bg-light-gray/20 border-b border-light-gray">
-          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Status & Actions</CardTitle>
+          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Export & Share</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 pt-6">
-          <div>
-            <label className="text-sm font-medium text-charcoal mb-2 block">
-              Proposal Status
-            </label>
-            <Select
-              value={evaluation.status}
-              onValueChange={handleStatusChange}
-            >
-              <SelectTrigger className="border-medium-gray/30 focus:border-stackmatch-blue">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="new">New</SelectItem>
-                <SelectItem value="under-review">Under Review</SelectItem>
-                <SelectItem value="shortlisted">Shortlisted</SelectItem>
-                <SelectItem value="awaiting-clarification">Awaiting Clarification</SelectItem>
-                <SelectItem value="rejected">Rejected</SelectItem>
-                <SelectItem value="accepted">Accepted</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Request Clarification
-            </Button>
-            <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
-              <Star className="w-4 h-4 mr-2" />
-              Shortlist this Proposal
-            </Button>
-            <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
-              <FileText className="w-4 h-4 mr-2" />
-              Archive
-            </Button>
-          </div>
+        <CardContent className="space-y-2 pt-6">
+          <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
+            <Download className="w-4 h-4 mr-2" />
+            Download as PDF
+          </Button>
+          <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
+            <FileDown className="w-4 h-4 mr-2" />
+            Export Data (CSV)
+          </Button>
         </CardContent>
       </Card>
 
@@ -310,22 +268,6 @@ export function ProposalEvaluationSidebar({
         </CardContent>
       </Card>
 
-      {/* Export Options */}
-      <Card className="border-2 border-light-gray shadow-sm">
-        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
-          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Export & Share</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2 pt-6">
-          <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
-            <Download className="w-4 h-4 mr-2" />
-            Download PDF Report
-          </Button>
-          <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
-            <Share2 className="w-4 h-4 mr-2" />
-            Share with Team
-          </Button>
-        </CardContent>
-      </Card>
     </div>
   )
 }

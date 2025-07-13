@@ -1,6 +1,6 @@
 'use client'
 
-import { Building2, Calendar, CheckCircle2, AlertCircle, ArrowLeft, DollarSign, Target, FileText, Clock } from 'lucide-react'
+import { Building2, Calendar, CheckCircle2, AlertCircle, ArrowLeft, DollarSign, Target, FileText, Clock, Plus, MessageSquare } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { AIGeneratedProposal } from '@/types/ai-proposal'
@@ -116,19 +116,16 @@ export function ProposalEvaluationHeader({
 
         {/* Context-Aware Action Bar */}
         <div className="flex flex-col gap-3 min-w-[200px]">
-          <Button className="w-full bg-trust-green hover:bg-success-green text-white" size="lg">
-            <CheckCircle2 className="h-4 w-4 mr-2" />
-            Accept Proposal
-          </Button>
-          <Button variant="outline" className="w-full" size="lg">
-            Start Negotiation
-          </Button>
-          <Button variant="outline" className="w-full" size="lg">
-            Schedule Meeting
+          <Button className="w-full bg-stackmatch-blue hover:bg-stackmatch-navy text-white" size="lg">
+            <Plus className="h-4 w-4 mr-2" />
+            Create StackSpace
           </Button>
           <Button variant="outline" className="w-full text-error-red hover:bg-red-50" size="lg">
-            <AlertCircle className="h-4 w-4 mr-2" />
             Reject Proposal
+          </Button>
+          <Button variant="outline" className="w-full" size="lg">
+            <MessageSquare className="h-4 w-4 mr-2" />
+            Request Clarification
           </Button>
         </div>
       </div>
