@@ -8,7 +8,7 @@ import {
   Mail, 
   Building2,
   Download,
-  FileDown,
+  Share2,
   FileText
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -134,6 +134,23 @@ export function ProposalEvaluationSidebar({
 
   return (
     <div className="space-y-6">
+      {/* Export & Share - Now at the top */}
+      <Card className="border-2 border-light-gray shadow-sm">
+        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
+          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Export & Share</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3 pt-6">
+          <Button variant="outline" className="w-full">
+            <Share2 className="w-4 h-4 mr-2" />
+            Share to Socials
+          </Button>
+          <Button variant="outline" className="w-full">
+            <Download className="w-4 h-4 mr-2" />
+            Download
+          </Button>
+        </CardContent>
+      </Card>
+
       {/* Seller Contact */}
       <Card className="border-2 border-light-gray shadow-sm">
         <CardHeader className="bg-light-gray/20 border-b border-light-gray">
@@ -162,23 +179,6 @@ export function ProposalEvaluationSidebar({
               View Company Profile
             </Button>
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Export & Share */}
-      <Card className="border-2 border-light-gray shadow-sm">
-        <CardHeader className="bg-light-gray/20 border-b border-light-gray">
-          <CardTitle className="text-lg font-semibold text-stackmatch-navy">Export & Share</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2 pt-6">
-          <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
-            <Download className="w-4 h-4 mr-2" />
-            Download as PDF
-          </Button>
-          <Button variant="outline" size="sm" className="w-full border-medium-gray/30 hover:bg-light-gray/50">
-            <FileDown className="w-4 h-4 mr-2" />
-            Export Data (CSV)
-          </Button>
         </CardContent>
       </Card>
 

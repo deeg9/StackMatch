@@ -177,37 +177,6 @@ export function ListingFullRequirementsTab({ listing }: ListingFullRequirementsT
         </CardContent>
       </Card>
 
-      {/* Requirements Summary Stats */}
-      <Card className="border-2 border-light-gray bg-gradient-to-r from-stackmatch-blue/5 to-trust-green/5">
-        <CardContent className="py-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <p className="text-3xl font-bold text-stackmatch-blue">
-                {listing.coreRequirements?.features?.length || 0}
-              </p>
-              <p className="text-sm text-medium-gray">Core Features</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-trust-green">
-                {listing.coreRequirements?.integrations?.length || 0}
-              </p>
-              <p className="text-sm text-medium-gray">Integrations</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-attention-orange">
-                {listing.coreRequirements?.complianceNeeds?.length || 0}
-              </p>
-              <p className="text-sm text-medium-gray">Compliance Needs</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-charcoal">
-                {listing.technicalSpecs?.security?.length || 0}
-              </p>
-              <p className="text-sm text-medium-gray">Security Requirements</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }

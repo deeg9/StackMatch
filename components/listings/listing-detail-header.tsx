@@ -118,14 +118,6 @@ export function ListingDetailHeader({ listing, isOwner, userType }: ListingDetai
                 </p>
               </div>
             </div>
-            <div className="border-l border-medium-gray/20 h-10"></div>
-            <div className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-stackmatch-blue" />
-              <div>
-                <p className="text-xs text-medium-gray">Proposals</p>
-                <p className="font-semibold text-charcoal">{listing.proposals_count} Received</p>
-              </div>
-            </div>
           </div>
         </div>
 

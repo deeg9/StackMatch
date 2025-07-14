@@ -39,6 +39,25 @@ export function ListingDetailSidebar({ listing, isOwner, userType }: ListingDeta
 
   return (
     <div className="space-y-6">
+      {/* Export & Share - Now at the top for all users */}
+      <Card className="border-2">
+        <CardHeader>
+          <CardTitle className="text-lg font-bold text-stackmatch-navy">
+            Export & Share
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <Button variant="outline" className="w-full">
+            <Share2 className="h-4 w-4 mr-2" />
+            Share to Socials
+          </Button>
+          <Button variant="outline" className="w-full">
+            <Download className="h-4 w-4 mr-2" />
+            Download
+          </Button>
+        </CardContent>
+      </Card>
+
       {/* Quick Actions */}
       {!isOwner && userType === 'seller' && listing.status === 'ACTIVE' && (
         <Card className="border-2">
@@ -58,44 +77,6 @@ export function ListingDetailSidebar({ listing, isOwner, userType }: ListingDeta
               <Bookmark className="h-4 w-4 mr-2" />
               Save Listing
             </Button>
-            <Button variant="outline" className="w-full">
-              <Share2 className="h-4 w-4 mr-2" />
-              Share
-            </Button>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Deadline Urgency */}
-      {listing.status === 'ACTIVE' && (
-        <Card className={`border-2 ${
-          urgencyLevel === 'high' ? 'border-red-500' : 
-          urgencyLevel === 'medium' ? 'border-attention-orange' : 
-          'border-trust-green'
-        }`}>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between mb-3">
-              <AlertCircle className={`h-5 w-5 ${
-                urgencyLevel === 'high' ? 'text-red-500' : 
-                urgencyLevel === 'medium' ? 'text-attention-orange' : 
-                'text-trust-green'
-              }`} />
-              <Badge className={
-                urgencyLevel === 'high' ? 'bg-red-500 text-white' : 
-                urgencyLevel === 'medium' ? 'bg-attention-orange text-white' : 
-                'bg-trust-green text-white'
-              }>
-                {urgencyLevel === 'high' ? 'Urgent' : 
-                 urgencyLevel === 'medium' ? 'Soon' : 
-                 'Open'}
-              </Badge>
-            </div>
-            <h3 className="text-3xl font-bold text-charcoal mb-1">
-              {daysRemaining}
-            </h3>
-            <p className="text-sm text-medium-gray">
-              Days until deadline
-            </p>
           </CardContent>
         </Card>
       )}
@@ -204,26 +185,6 @@ export function ListingDetailSidebar({ listing, isOwner, userType }: ListingDeta
         </Card>
       )}
 
-      {/* Download Options */}
-      {isOwner && (
-        <Card className="border-2">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold text-stackmatch-navy">
-              Export Options
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <Button variant="outline" className="w-full justify-start">
-              <Download className="h-4 w-4 mr-2" />
-              Download as PDF
-            </Button>
-            <Button variant="outline" className="w-full justify-start">
-              <Download className="h-4 w-4 mr-2" />
-              Export Proposals (CSV)
-            </Button>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Related Listings */}
       {!isOwner && (

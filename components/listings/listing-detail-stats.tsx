@@ -1,7 +1,7 @@
 'use client'
 
 import { Card, CardContent } from '@/components/ui/card'
-import { Eye, MessageCircle, Users, Clock, TrendingUp, Calendar } from 'lucide-react'
+import { Eye, MessageCircle, Users, Clock } from 'lucide-react'
 
 interface ListingDetailStatsProps {
   listing: any
@@ -18,12 +18,6 @@ export function ListingDetailStats({ listing }: ListingDetailStatsProps) {
     return diffDays > 0 ? diffDays : 0
   }
 
-  // Calculate engagement rate
-  const calculateEngagementRate = () => {
-    if (!listing.view_count || listing.view_count === 0) return 0
-    const rate = (listing.proposals_count / listing.view_count) * 100
-    return rate.toFixed(1)
-  }
 
   const stats = [
     {
@@ -61,29 +55,11 @@ export function ListingDetailStats({ listing }: ListingDetailStatsProps) {
       bgColor: 'bg-attention-orange/10',
       trend: listing.status === 'ACTIVE' ? 'Active' : 'Closed',
       trendUp: false
-    },
-    {
-      title: 'Engagement Rate',
-      value: `${calculateEngagementRate()}%`,
-      icon: TrendingUp,
-      color: 'text-success-green',
-      bgColor: 'bg-success-green/10',
-      trend: 'Good',
-      trendUp: true
-    },
-    {
-      title: 'Project Duration',
-      value: listing.project_duration || 'Not specified',
-      icon: Calendar,
-      color: 'text-stackmatch-navy',
-      bgColor: 'bg-stackmatch-navy/10',
-      trend: 'Timeline',
-      trendUp: false
     }
   ]
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       {stats.map((stat, index) => (
         <Card key={index} className="border-2 hover:border-stackmatch-blue transition-all duration-300 hover:shadow-md">
           <CardContent className="p-4">

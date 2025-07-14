@@ -5,8 +5,7 @@ import { ListingProjectSummaryTab } from './listing-project-summary-tab'
 import { ListingFullRequirementsTab } from './listing-full-requirements-tab'
 import { ListingBusinessContextTab } from './listing-business-context-tab'
 import { ListingBudgetEvaluationTab } from './listing-budget-evaluation-tab'
-import { ListingActivityQATab } from './listing-activity-qa-tab'
-import { FileText, ClipboardList, Building2, DollarSign, MessageSquare } from 'lucide-react'
+import { FileText, ClipboardList, Building2, DollarSign } from 'lucide-react'
 
 interface ListingDetailTabsProps {
   listing: any
@@ -25,31 +24,22 @@ export function ListingDetailTabs({
 }: ListingDetailTabsProps) {
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-      <TabsList className="grid grid-cols-5 w-full mb-6 h-auto p-1">
+      <TabsList className="grid grid-cols-4 w-full mb-6 h-auto p-1">
         <TabsTrigger value="summary" className="flex items-center gap-2 py-3">
           <FileText className="h-4 w-4" />
-          <span className="hidden sm:inline">Project Summary</span>
-          <span className="sm:hidden">Summary</span>
+          <span>Overview</span>
         </TabsTrigger>
         <TabsTrigger value="requirements" className="flex items-center gap-2 py-3">
           <ClipboardList className="h-4 w-4" />
-          <span className="hidden sm:inline">Full Requirements</span>
-          <span className="sm:hidden">Requirements</span>
+          <span>Requirements</span>
         </TabsTrigger>
         <TabsTrigger value="business" className="flex items-center gap-2 py-3">
           <Building2 className="h-4 w-4" />
-          <span className="hidden sm:inline">Business & Company</span>
-          <span className="sm:hidden">Business</span>
+          <span>Business</span>
         </TabsTrigger>
         <TabsTrigger value="budget" className="flex items-center gap-2 py-3">
           <DollarSign className="h-4 w-4" />
-          <span className="hidden sm:inline">Budget & Evaluation</span>
-          <span className="sm:hidden">Budget</span>
-        </TabsTrigger>
-        <TabsTrigger value="activity" className="flex items-center gap-2 py-3">
-          <MessageSquare className="h-4 w-4" />
-          <span className="hidden sm:inline">Activity & Q&A</span>
-          <span className="sm:hidden">Q&A</span>
+          <span>Budget</span>
         </TabsTrigger>
       </TabsList>
 
@@ -67,10 +57,6 @@ export function ListingDetailTabs({
 
       <TabsContent value="budget" className="mt-0">
         <ListingBudgetEvaluationTab listing={listing} isOwner={isOwner} />
-      </TabsContent>
-
-      <TabsContent value="activity" className="mt-0">
-        <ListingActivityQATab listing={listing} userType={userType} />
       </TabsContent>
     </Tabs>
   )
