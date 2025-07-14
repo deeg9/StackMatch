@@ -39,7 +39,7 @@ export default function ReceivedProposalsPage() {
         />
       )}
       sidebar={<ReceivedProposalsSidebar />}
-      contentClassName="grid grid-cols-1 lg:grid-cols-4 gap-8"
+      contentClassName="grid grid-cols-1 lg:grid-cols-[1fr,320px] gap-8"
     />
   )
 }

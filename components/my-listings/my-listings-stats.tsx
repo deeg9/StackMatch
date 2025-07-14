@@ -34,33 +34,11 @@ export function MyListingsStats() {
       color: 'text-trust-green',
       bgColor: 'bg-trust-green/10',
       borderColor: 'hover:border-trust-green'
-    },
-    {
-      title: 'Average Responses/Listing',
-      value: '3.2',
-      subtitle: '15% above platform avg',
-      trend: '+15%',
-      trendUp: true,
-      icon: TrendingUp,
-      color: 'text-attention-orange',
-      bgColor: 'bg-attention-orange/10',
-      borderColor: 'hover:border-attention-orange'
-    },
-    {
-      title: 'Proposals to Review',
-      value: '5',
-      subtitle: '2 require urgent action',
-      trend: '+2',
-      trendUp: true,
-      icon: CheckCircle2,
-      color: 'text-information-blue',
-      bgColor: 'bg-information-blue/10',
-      borderColor: 'hover:border-information-blue'
     }
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       {stats.map((stat, index) => {
         const Icon = stat.icon
         const TrendIcon = stat.trendUp ? ArrowUp : ArrowDown

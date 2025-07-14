@@ -76,7 +76,7 @@ export function ReceivedProposalsFilters({
 
   const statusTabs = [
     { key: 'all', label: 'All', count: 18 },
-    { key: 'new', label: 'New', count: 7 },
+    { key: 'pending_review', label: 'Pending Review', count: 7 },
     { key: 'in_discussion', label: 'In Discussion', count: 6 },
     { key: 'accepted', label: 'Accepted', count: 3 },
     { key: 'archived', label: 'Archived', count: 2 }
