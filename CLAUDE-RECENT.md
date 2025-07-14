@@ -6,6 +6,24 @@ This document tracks recent achievements, enhancements, and bug fixes in the Sta
 
 ## January 2025 Updates
 
+### UI Consistency Refinements - My Listings & Received Proposals Pages
+- **My Listings Page Improvements**: Simplified KPI dashboard for better user focus
+  - **KPI Card Reduction**: Removed "Average Responses/Listing" and "Proposals to Review" cards to reduce cognitive load
+  - **Grid Layout Update**: Changed from 4-column to 2-column grid (md:grid-cols-2) for cleaner visual hierarchy
+  - **Better Visual Balance**: Two primary KPIs (Active Listings, Total Proposals) now have more prominence
+- **Received Proposals Layout Fix**: Critical bug resolution for proper sidebar display
+  - **Grid Column Correction**: Fixed contentClassName from `grid-cols-4` to `grid-cols-[1fr,320px]` for proper sidebar width
+  - **Layout Consistency**: Now matches other pages with main content area and 320px sidebar
+  - **Responsive Behavior**: Sidebar properly collapses on mobile while maintaining desktop layout
+- **Status Filter Updates**: Improved proposal workflow clarity
+  - **Removed "New" Status**: Eliminated ambiguous "New" status from filter tabs
+  - **Added "Pending Review"**: Introduced more descriptive "Pending Review" status for unreviewed proposals
+  - **Better Workflow Alignment**: Status options now match actual proposal review workflow stages
+- **Build Error Resolutions**: Fixed TypeScript compilation issues
+  - **Import Path Corrections**: Fixed ticker-banner and navigation-wrapper import paths in unified-page-layout.tsx
+  - **Type Safety Fixes**: Resolved stats trend type mismatches and FiltersBar prop interface issues
+  - **Component Prop Alignment**: Updated example-usage.tsx to match current component interfaces
+
 ### Proposal Evaluation Command Center - Enterprise-Grade Proposal Analysis System
 - **Revolutionary Implementation**: Complete proposal evaluation interface following the established "Command Center" pattern with comprehensive analysis tools
   - **Main Page Architecture**: `/app/proposals/evaluate/[id]/page.tsx` with header, tabs, and right sidebar layout matching listing detail pattern
