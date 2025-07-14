@@ -47,29 +47,31 @@ export default function SoftwareContractsPage() {
       label: 'Total Contracts',
       value: 24,
       icon: FileText,
-      trend: { value: 8, isPositive: true }
+      trend: '+8',
+      trendUp: true
     },
     {
       label: 'Annual Value',
       value: '$2.4M',
       icon: DollarSign,
-      iconColor: 'text-green-600',
+      color: 'text-green-600',
       bgColor: 'bg-green-100'
     },
     {
       label: 'Expiring Soon',
       value: 3,
       icon: Calendar,
-      iconColor: 'text-orange-600',
+      color: 'text-orange-600',
       bgColor: 'bg-orange-100'
     },
     {
       label: 'Savings YTD',
       value: '$145K',
       icon: TrendingUp,
-      iconColor: 'text-blue-600',
+      color: 'text-blue-600',
       bgColor: 'bg-blue-100',
-      trend: { value: 23, isPositive: true }
+      trend: '+23%',
+      trendUp: true
     }
   ]
 
@@ -129,32 +131,35 @@ export default function SoftwareContractsPage() {
       stats={<StatsDashboard stats={stats} columns={4} />}
       filters={
         <FiltersBar
-          searchQuery={state.searchQuery}
+          searchValue={state.searchQuery}
           onSearchChange={state.setSearchQuery}
           searchPlaceholder="Search contracts..."
-          filters={filterConfig}
-          filterValues={state.filters}
-          onFilterChange={state.setFilter}
+          filters={[
+            { value: 'all', label: 'All', count: 24 },
+            { value: 'active', label: 'Active', count: 20 },
+            { value: 'expiring', label: 'Expiring Soon', count: 3 },
+            { value: 'expired', label: 'Expired', count: 1 }
+          ]}
+          activeFilter={state.filters.status}
+          onFilterChange={(value) => state.setFilter('status', value)}
           sortOptions={sortOptions}
-          sortBy={state.sortBy}
+          sortValue={state.sortBy}
           onSortChange={state.setSortBy}
-          onReset={state.resetFilters}
         />
       }
       grid={(props) => (
         <ContentGrid
           items={contracts}
-          CardComponent={ContractCard}
+          renderItem={(item, index) => <ContractCard item={item} index={index} />}
           columns={3}
-          emptyState={{
-            icon: <FileText className="h-12 w-12 text-gray-400 mx-auto" />,
-            title: 'No contracts found',
-            description: 'Start by adding your first software contract',
-            action: {
-              label: 'Add Contract',
-              onClick: () => console.log('Add contract')
-            }
-          }}
+          emptyState={
+            <div className="text-center py-12">
+              <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No contracts found</h3>
+              <p className="text-gray-600 mb-6">Start by adding your first software contract</p>
+              <Button onClick={() => console.log('Add contract')}>Add Contract</Button>
+            </div>
+          }
         />
       )}
       sidebar={
