@@ -6,4 +6,4 @@ export { PageSidebar } from './page-sidebar'
 
 // Re-export types
 export type { StatItem } from './stats-dashboard'
-export type { FilterOption, FilterConfig } from './filters-bar'
+export type { FilterOption } from './filters-bar'

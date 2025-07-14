@@ -1,8 +1,8 @@
 'use client'
 
 import { ReactNode } from 'react'
-import { TickerBanner } from '@/components/ticker-banner'
-import { NavigationWrapper } from '@/components/navigation-wrapper'
+import { TickerBanner } from '@/components/ticker/ticker-banner'
+import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 import { cn } from '@/lib/utils'
 
 interface UnifiedPageLayoutProps {
