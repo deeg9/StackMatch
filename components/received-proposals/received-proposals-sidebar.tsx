@@ -170,21 +170,32 @@ export function ReceivedProposalsSidebar() {
         <CardContent className="space-y-3">
           {quickActions.map((action, index) => {
             const Icon = action.icon
+            const isPrimary = index === 0
+            
+            if (isPrimary) {
+              return (
+                <Button
+                  key={action.label}
+                  className="w-full bg-stackmatch-blue hover:bg-stackmatch-navy text-white justify-start gap-3 h-auto py-3 px-4 animate-fade-in"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <Icon className="w-4 h-4 flex-shrink-0" />
+                  <div className="flex-1 text-left">
+                    <div className="font-medium">{action.label}</div>
+                  </div>
+                </Button>
+              )
+            }
+            
             return (
-              <Button
+              <button
                 key={action.label}
-                variant="outline"
-                className={`w-full justify-start gap-3 h-auto py-3 px-4 border-2 hover:border-transparent ${action.color} hover:text-white transition-all duration-200 group animate-fade-in`}
+                className="w-full flex items-center gap-3 px-4 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors animate-fade-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <Icon className="w-4 h-4 flex-shrink-0" />
-                <div className="flex-1 text-left">
-                  <div className="font-medium">{action.label}</div>
-                  <div className="text-xs opacity-75 group-hover:opacity-100">
-                    {action.description}
-                  </div>
-                </div>
-              </Button>
+                <span>{action.label}</span>
+              </button>
             )
           })}
         </CardContent>

@@ -40,8 +40,8 @@ interface ProposalCardProps {
 export function ProposalCard({ proposal, onArchive }: ProposalCardProps) {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
-      case 'new':
-      case 'submitted':
+      case 'pending_review':
+      case 'pending review':
         return 'bg-information-blue text-white'
       case 'in_discussion':
       case 'under review':
@@ -77,13 +77,6 @@ export function ProposalCard({ proposal, onArchive }: ProposalCardProps) {
 
   return (
     <Card className="border-2 hover:border-stackmatch-blue transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 group relative">
-      {proposal.isNew && (
-        <div className="absolute -top-2 -right-2 z-10">
-          <Badge className="bg-trust-green text-white animate-pulse">
-            NEW
-          </Badge>
-        </div>
-      )}
       
       <CardContent className="p-6">
         {/* Header Section - Vendor Info */}

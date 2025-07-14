@@ -37,69 +37,64 @@ export function MyListingsFilters({
     { id: 'closed', label: 'Closed', count: 0 }
   ]
 
-  const getTabClass = (tabId: string) => {
-    const baseClass = "px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2"
-    if (statusFilter === tabId) {
-      return `${baseClass} bg-stackmatch-blue text-white shadow-md`
-    }
-    return `${baseClass} text-medium-gray hover:text-stackmatch-navy hover:bg-slate-100`
-  }
 
   return (
     <div className="space-y-6 mb-8">
       {/* Search and Sort Controls */}
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="flex flex-col sm:flex-row gap-4">
+        {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-medium-gray w-4 h-4" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-medium-gray" />
           <Input
+            type="text"
             placeholder="Search listings by name or keyword..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 pr-4 py-2 w-full border-slate-300 focus:border-stackmatch-blue focus:ring-stackmatch-blue"
+            className="pl-10 pr-4 h-10 bg-white border-medium-gray/30 focus:border-stackmatch-blue"
           />
         </div>
-        
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <SlidersHorizontal className="w-4 h-4 text-medium-gray" />
-            <span className="text-sm text-medium-gray">Sort by:</span>
-          </div>
-          
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort by..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="recent">Most Recent</SelectItem>
-              <SelectItem value="oldest">Oldest First</SelectItem>
-              <SelectItem value="name">Name A-Z</SelectItem>
-              <SelectItem value="proposals">Most Proposals</SelectItem>
-              <SelectItem value="deadline">Deadline Soon</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+
+        {/* Sort Dropdown */}
+        <Select value={sortBy} onValueChange={setSortBy}>
+          <SelectTrigger className="w-[180px] bg-white border-medium-gray/30">
+            <SelectValue placeholder="Sort by..." />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="recent">Most Recent</SelectItem>
+            <SelectItem value="oldest">Oldest First</SelectItem>
+            <SelectItem value="name">Name A-Z</SelectItem>
+            <SelectItem value="proposals">Most Proposals</SelectItem>
+            <SelectItem value="deadline">Deadline Soon</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
-      {/* Status Filter Tabs */}
+      {/* Status Filter Pills */}
       <div className="flex flex-wrap gap-2">
         {statusTabs.map((tab) => (
-          <button
+          <Button
             key={tab.id}
+            variant={statusFilter === tab.id ? "default" : "outline"}
+            size="sm"
             onClick={() => setStatusFilter(tab.id)}
-            className={getTabClass(tab.id)}
+            className={`rounded-full px-4 py-1 h-8 transition-all ${
+              statusFilter === tab.id
+                ? "bg-stackmatch-blue hover:bg-stackmatch-navy text-white"
+                : "bg-white hover:bg-light-gray/50 text-charcoal border-medium-gray/30"
+            }`}
           >
-            <span>{tab.label}</span>
+            {tab.label}
             <Badge 
               variant="secondary" 
-              className={`ml-1 ${
-                statusFilter === tab.id 
-                  ? 'bg-white/20 text-white' 
-                  : 'bg-slate-200 text-charcoal'
+              className={`ml-2 h-5 px-1.5 min-w-[20px] rounded-full ${
+                statusFilter === tab.id
+                  ? "bg-white/20 text-white"
+                  : "bg-light-gray text-charcoal"
               }`}
             >
               {tab.count}
             </Badge>
-          </button>
+          </Button>
         ))}
       </div>
 

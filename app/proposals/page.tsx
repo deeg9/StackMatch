@@ -1,8 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
-import { TickerBanner } from '@/components/ticker/ticker-banner'
+import { GridPageLayout, useGridPageState } from '@/components/layouts/grid-page-layout'
 import { ReceivedProposalsHeader } from '@/components/received-proposals/received-proposals-header'
 import { ReceivedProposalsStats } from '@/components/received-proposals/received-proposals-stats'
 import { ReceivedProposalsFilters } from '@/components/received-proposals/received-proposals-filters'
@@ -10,49 +8,38 @@ import { ReceivedProposalsGrid } from '@/components/received-proposals/received-
 import { ReceivedProposalsSidebar } from '@/components/received-proposals/received-proposals-sidebar'
 
 export default function ReceivedProposalsPage() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [statusFilter, setStatusFilter] = useState('all')
-  const [listingFilter, setListingFilter] = useState('all')
+  const {
+    searchQuery,
+    setSearchQuery,
+    filters,
+    setFilter
+  } = useGridPageState({
+    filters: { status: 'all', listing: 'all' }
+  })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      <TickerBanner />
-      <NavigationWrapper />
-      
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <ReceivedProposalsHeader />
-        
-        {/* Stats Dashboard */}
-        <ReceivedProposalsStats />
-        
-        {/* Filters */}
+    <GridPageLayout
+      header={<ReceivedProposalsHeader />}
+      stats={<ReceivedProposalsStats />}
+      filters={
         <ReceivedProposalsFilters
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          statusFilter={statusFilter}
-          setStatusFilter={setStatusFilter}
-          listingFilter={listingFilter}
-          setListingFilter={setListingFilter}
+          statusFilter={filters.status}
+          setStatusFilter={(value) => setFilter('status', value)}
+          listingFilter={filters.listing}
+          setListingFilter={(value) => setFilter('listing', value)}
         />
-        
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Proposals Grid */}
-          <div className="lg:col-span-3">
-            <ReceivedProposalsGrid
-              searchQuery={searchQuery}
-              statusFilter={statusFilter}
-              listingFilter={listingFilter}
-            />
-          </div>
-          
-          {/* Sidebar */}
-          <div className="lg:col-span-1 hidden lg:block">
-            <ReceivedProposalsSidebar />
-          </div>
-        </div>
-      </div>
-    </div>
+      }
+      grid={(props) => (
+        <ReceivedProposalsGrid
+          searchQuery={searchQuery}
+          statusFilter={filters.status}
+          listingFilter={filters.listing}
+        />
+      )}
+      sidebar={<ReceivedProposalsSidebar />}
+      contentClassName="grid grid-cols-1 lg:grid-cols-4 gap-8"
+    />
   )
 }

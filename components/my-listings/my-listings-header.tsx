@@ -6,21 +6,18 @@ import Link from 'next/link'
 
 export function MyListingsHeader() {
   return (
-    <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
-      <div className="flex items-center gap-4 mb-4 md:mb-0">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-stackmatch-blue to-stackmatch-navy rounded-2xl animate-float">
-          <FileText className="w-8 h-8 text-white" />
-        </div>
-        
-        <div>
-          <h1 className="text-4xl font-bold text-stackmatch-navy animate-fade-in">
-            My Listings
-          </h1>
-          <p className="text-xl text-charcoal animate-fade-in">
-            Create, manage, and track all your software and service listings
-          </p>
-        </div>
+    <div className="text-center">
+      <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-stackmatch-blue to-stackmatch-navy rounded-2xl mb-4 animate-float">
+        <FileText className="w-8 h-8 text-white" />
       </div>
+      
+      <h1 className="text-4xl sm:text-5xl font-bold text-stackmatch-navy mb-2 animate-fade-in">
+        My Listings
+      </h1>
+      
+      <p className="text-lg text-medium-gray max-w-2xl mx-auto mb-6 animate-fade-in">
+        Create, manage, and track all your software and service listings
+      </p>
       
       <Link href="/create-listing">
         <Button 

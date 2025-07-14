@@ -176,7 +176,7 @@ export function ListingCard({ listing }: ListingCardProps) {
           <Link href={`/listings/${listing.id}`} className="flex-1">
             <Button className="w-full bg-stackmatch-blue hover:bg-stackmatch-navy text-white">
               <ExternalLink className="h-4 w-4 mr-2" />
-              View Details
+              View Listing
             </Button>
           </Link>
           <Link href={`/listings/${listing.id}/edit`}>
