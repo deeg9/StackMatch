@@ -4,7 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Activity, ArrowRight, DollarSign, TrendingUp, FileText } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Activity, ArrowRight, DollarSign, TrendingUp, Clock, MoreVertical } from "lucide-react"
 import Link from "next/link"
 import { getProposalStatusColor, formatCompactBudget } from "./utils"
 
@@ -27,8 +33,9 @@ const mockRecentProposals = [
     proposedBudget: 125000,
     proposed_cost: 95000,
     match_score: 92,
+    timeline: '6 Months',
     listingTitle: 'For: New Enterprise CRM Platform',
-    status: 'Under Review',
+    status: 'In Review',
     submittedAt: '2025-01-09'
   },
   {
@@ -38,8 +45,9 @@ const mockRecentProposals = [
     proposedBudget: 32000,
     proposed_cost: 28500,
     match_score: 88,
+    timeline: '3 Months',
     listingTitle: 'For: Identity Management Solution',
-    status: 'Under Review',
+    status: 'In Review',
     submittedAt: '2025-01-08'
   },
   {
@@ -49,8 +57,9 @@ const mockRecentProposals = [
     proposedBudget: 82500,
     proposed_cost: 78000,
     match_score: 95,
+    timeline: '12 Months',
     listingTitle: 'For: Upgrade HR & Payroll System',
-    status: 'Under Review',
+    status: 'In Review',
     submittedAt: '2025-01-10'
   },
 ]
@@ -112,10 +121,51 @@ export function RecentProposalsPortlet({
           displayProposals.map((proposal: any, index) => (
             <div
               key={proposal.id}
-              className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
+              className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in relative"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="flex items-start space-x-3">
+              {/* Actions dropdown menu */}
+              <div className="absolute top-3 right-3">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0 hover:bg-[#F3F4F6] transition-colors"
+                    >
+                      <MoreVertical className="h-4 w-4 text-[#6B7280]" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-40">
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        href={`/proposals/${proposal.id}`}
+                        className="cursor-pointer"
+                      >
+                        View
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        href={`/deal-rooms/create?proposal=${proposal.id}`}
+                        className="cursor-pointer"
+                      >
+                        Make StackSpace
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        href={`/proposals/${proposal.id}/reject`}
+                        className="cursor-pointer"
+                      >
+                        Reject
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              <div className="flex items-start space-x-3 pr-8">
                 <Avatar className="h-10 w-10">
                   <AvatarImage src={proposal.sellerAvatar || ''} />
                   <AvatarFallback className="bg-[#4A73CC] text-white">
@@ -124,12 +174,14 @@ export function RecentProposalsPortlet({
                 </Avatar>
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-[#1A2B4C] group-hover:text-[#22C55E] transition-colors">
-                      {proposal.sellerName}
-                    </h4>
-                    <Badge className={getProposalStatusColor(proposal.status)}>
-                      {proposal.status.replace('_', ' ')}
-                    </Badge>
+                    <div className="flex items-center gap-3">
+                      <h4 className="font-semibold text-[#1A2B4C] group-hover:text-[#22C55E] transition-colors">
+                        {proposal.sellerName}
+                      </h4>
+                      <Badge className={getProposalStatusColor(proposal.status)}>
+                        {proposal.status}
+                      </Badge>
+                    </div>
                   </div>
                   <p className="text-sm text-[#6B7280]">
                     {proposal.listingTitle}
@@ -159,14 +211,14 @@ export function RecentProposalsPortlet({
                       </p>
                     </div>
                     
-                    {/* Status */}
+                    {/* Timeline */}
                     <div className="text-center">
                       <div className="flex items-center justify-center gap-1 text-xs text-[#6B7280]">
-                        <FileText className="h-3 w-3" />
-                        <span>Status</span>
+                        <Clock className="h-3 w-3" />
+                        <span>Timeline</span>
                       </div>
                       <p className="text-base font-semibold text-[#1A2B4C] mt-1">
-                        {proposal.status}
+                        {proposal.timeline}
                       </p>
                     </div>
                   </div>

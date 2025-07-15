@@ -10,9 +10,10 @@ export function getStatusColor(status: string) {
 }
 
 export function getProposalStatusColor(status: string) {
-  switch (status) {
+  switch (status.toLowerCase().replace(' ', '_')) {
     case 'submitted': return 'bg-[#3B82F6] text-white'
     case 'under_review': return 'bg-[#F59E0B] text-white'
+    case 'in_review': return 'bg-[#F59E0B] text-white'
     case 'accepted': return 'bg-[#22C55E] text-white'
     case 'rejected': return 'bg-red-500 text-white'
     default: return 'bg-[#D1D5DB] text-[#374151]'
