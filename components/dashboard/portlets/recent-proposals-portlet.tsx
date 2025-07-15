@@ -34,7 +34,7 @@ const mockRecentProposals = [
     proposed_cost: 95000,
     match_score: 92,
     timeline: '6 Months',
-    listingTitle: 'For: New Enterprise CRM Platform',
+    listingTitle: 'Listing: New Enterprise CRM Platform',
     status: 'In Review',
     submittedAt: '2025-01-09'
   },
@@ -46,7 +46,7 @@ const mockRecentProposals = [
     proposed_cost: 28500,
     match_score: 88,
     timeline: '3 Months',
-    listingTitle: 'For: Identity Management Solution',
+    listingTitle: 'Listing: Identity Management Solution',
     status: 'In Review',
     submittedAt: '2025-01-08'
   },
@@ -58,7 +58,7 @@ const mockRecentProposals = [
     proposed_cost: 78000,
     match_score: 95,
     timeline: '12 Months',
-    listingTitle: 'For: Upgrade HR & Payroll System',
+    listingTitle: 'Listing: Upgrade HR & Payroll System',
     status: 'In Review',
     submittedAt: '2025-01-10'
   },
@@ -193,7 +193,7 @@ export function RecentProposalsPortlet({
                     <div className="text-center">
                       <div className="flex items-center justify-center gap-1 text-xs text-[#6B7280]">
                         <DollarSign className="h-3 w-3" />
-                        <span>Proposed Cost</span>
+                        <span>Cost</span>
                       </div>
                       <p className="text-base font-semibold text-[#1A2B4C] mt-1">
                         {formatCompactBudget(proposal.proposed_cost)}
