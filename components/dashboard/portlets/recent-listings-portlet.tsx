@@ -3,7 +3,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { FileText, Building2, DollarSign, Calendar, Users, ArrowRight } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { FileText, Building2, DollarSign, Calendar, Users, ArrowRight, MoreVertical } from "lucide-react"
 import Link from "next/link"
 import { getStatusColor, formatBudget, getListingStatusDotColor, formatCompactBudget, formatDate } from "./utils"
 
@@ -122,19 +128,51 @@ export function RecentListingsPortlet({
           displayListings.map((listing: any, index) => (
             <div
               key={listing.id}
-              className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
+              className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in relative"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="space-y-3">
-                {/* Title with status dot */}
-                <div className="flex items-center gap-2">
-                  <span 
-                    className="w-2 h-2 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: getListingStatusDotColor(listing.status) }}
-                  />
+              {/* Actions dropdown menu */}
+              <div className="absolute top-3 right-3">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0 hover:bg-[#F3F4F6] transition-colors"
+                    >
+                      <MoreVertical className="h-4 w-4 text-[#6B7280]" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-40">
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        href={`/my-listings/${listing.id}`}
+                        className="cursor-pointer"
+                      >
+                        View Listing
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        href={`/my-listings/${listing.id}/edit`}
+                        className="cursor-pointer"
+                      >
+                        Edit Listing
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              <div className="space-y-3 pr-8">
+                {/* Title with status badge */}
+                <div className="flex items-center gap-3">
                   <h3 className="font-bold text-[#1A2B4C] group-hover:text-[#4A73CC] transition-colors">
                     {listing.title}
                   </h3>
+                  <Badge className={getStatusColor(listing.status)}>
+                    {listing.status}
+                  </Badge>
                 </div>
 
                 {/* Date information */}

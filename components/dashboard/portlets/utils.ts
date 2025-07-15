@@ -1,8 +1,9 @@
 export function getStatusColor(status: string) {
-  switch (status) {
+  switch (status.toLowerCase()) {
     case 'active': return 'bg-[#22C55E] text-white'
+    case 'in review': return 'bg-[#F59E0B] text-white'
     case 'draft': return 'bg-[#6B7280] text-white'
-    case 'closed': return 'bg-[#F59E0B] text-white'
+    case 'closed': return 'bg-[#6B7280] text-white'
     case 'archived': return 'bg-[#374151] text-white'
     default: return 'bg-[#D1D5DB] text-[#374151]'
   }
