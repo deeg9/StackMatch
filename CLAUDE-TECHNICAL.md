@@ -178,7 +178,11 @@ if (error || !user) {
 ├── company/
 ├── dashboard/
 │   ├── buyer-dashboard-sidebar.tsx (Buyer-specific sidebar)
-│   └── seller-dashboard-sidebar.tsx (Seller-specific sidebar)
+│   ├── seller-dashboard-sidebar.tsx (Seller-specific sidebar)
+│   └── portlets/
+│       ├── recent-listings-portlet.tsx (Enhanced listings portlet with stacked stats)
+│       ├── recent-proposals-portlet.tsx (Enhanced proposals portlet with Timeline metric)
+│       └── utils.ts (Formatting utilities: formatCompactBudget, formatDate, getStatusColor)
 ├── deal-rooms/
 ├── my-listings/ (Complete listing management components)
 ├── my-tech-stack/ (Software asset management components)

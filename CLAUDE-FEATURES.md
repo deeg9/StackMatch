@@ -62,6 +62,11 @@ This document contains detailed documentation of all completed features in the S
 - **Dynamic Content**: Real listings (TEST, TEST2, TEST3, TEST4) with CRM category
 - **Professional UI**: Ticker banner, loading states, responsive design
 - **Command Center Layout**: Strategic 5-row layout optimized for daily workflow management
+- **Enhanced Portlet Design** (January 2025 Updates):
+  - **Simplified Titles**: "Recent Listings" → "Listings", "Recent Proposals" → "Proposals"
+  - **Listings Cards**: Status badges, actions menu (⋮), absolute dates, stacked stats (Budget/Proposals/StackSpaces)
+  - **Proposals Cards**: Inline status badges, 3-option actions menu, Timeline metric, stacked stats layout
+  - **Professional Information Hierarchy**: Clear visual organization with improved scannability
 
 ## 4. Seller Dashboard - COMMAND CENTER FOR VENDORS
 **Location**: `/app/dashboard/seller/page.tsx`

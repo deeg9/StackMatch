@@ -6,6 +6,31 @@ This document tracks recent achievements, enhancements, and bug fixes in the Sta
 
 ## January 2025 Updates
 
+### Buyer Dashboard Portlet Refinements - Professional UI/UX Enhancement
+- **Dashboard Portlet Title Updates**: Improved clarity and consistency
+  - **"Recent Listings" → "Listings"**: Simplified title for better clarity
+  - **"Recent Proposals" → "Proposals"**: Consistent naming convention
+- **Listings Portlet Card Redesign**: Complete information hierarchy overhaul
+  - **Status Indicator Enhancement**: Replaced colored dot with text-based pill badge positioned right of title
+  - **Actions Menu Integration**: Added kebab menu (⋮) in top-right corner with View/Edit dropdown options
+  - **Date Display Transformation**: Changed from relative dates to absolute dates (Created/Due format)
+  - **Statistics Row Refactor**: Implemented stacked layout with icon+label on top, value below for Budget/Proposals/StackSpaces
+- **Proposals Portlet Card Refinements**: Consistent design language with enhanced functionality
+  - **Status Badge Repositioning**: Moved status badge inline with seller name for cleaner hierarchy
+  - **Actions Menu Addition**: Three-option dropdown (View, Make StackSpace, Reject) in top-right corner
+  - **Timeline Metric Addition**: Replaced redundant Status stat with Timeline (6/3/12 Months) in bottom stats
+  - **Statistics Row Update**: Matching stacked layout for Cost/Match/Timeline metrics
+  - **Copy Refinements**: "Proposed Cost" → "Cost", "For:" → "Listing:" for improved clarity
+- **Utility Functions Enhancement**: New formatting helpers in portlets/utils.ts
+  - **getListingStatusDotColor()**: Returns hex colors for status indicators
+  - **formatCompactBudget()**: Converts numbers to compact format ($105k, $1.2M)
+  - **formatDate()**: Formats dates to readable format (July 1, 2025)
+  - **getStatusColor()**: Updated to handle case-insensitive status values including "In Review"
+- **Mock Data Updates**: Enhanced sample data for realistic UI demonstration
+  - **Listings**: Added status, createdDate, dueDate, budget_value, proposalCount, stackspaceCount fields
+  - **Proposals**: Added timeline field, updated status values from "Under Review" to "In Review"
+  - **Comprehensive Sample Data**: 3 listings (Active/In Review/Closed) and 3 proposals with varied timelines
+
 ### UI Consistency Refinements - My Listings & Received Proposals Pages
 - **My Listings Page Improvements**: Simplified KPI dashboard for better user focus
   - **KPI Card Reduction**: Removed "Average Responses/Listing" and "Proposals to Review" cards to reduce cognitive load
