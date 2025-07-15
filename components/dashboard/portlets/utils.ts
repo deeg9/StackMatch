@@ -51,3 +51,28 @@ export function calculateTimeAgo(dateString: string): string {
     return months === 1 ? '1 month ago' : `${months} months ago`
   }
 }
+
+export function getListingStatusDotColor(status: string): string {
+  switch (status.toLowerCase()) {
+    case 'active': return '#22C55E' // green
+    case 'in review': return '#F59E0B' // orange
+    case 'closed': return '#6B7280' // gray
+    default: return '#6B7280' // gray
+  }
+}
+
+export function formatCompactBudget(value: number): string {
+  if (value >= 1000000) {
+    return `$${(value / 1000000).toFixed(1)}M`
+  } else if (value >= 1000) {
+    return `$${Math.round(value / 1000)}k`
+  }
+  return `$${value}`
+}
+
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString)
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                  'July', 'August', 'September', 'October', 'November', 'December']
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+}

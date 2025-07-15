@@ -4,9 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Activity, ArrowRight } from "lucide-react"
+import { Activity, ArrowRight, DollarSign, TrendingUp, FileText } from "lucide-react"
 import Link from "next/link"
-import { getProposalStatusColor } from "./utils"
+import { getProposalStatusColor, formatCompactBudget } from "./utils"
 
 interface Proposal {
   id: string
@@ -18,15 +18,17 @@ interface Proposal {
   submittedAt: string
 }
 
-// Mock data for UI/UX design
+// Mock data for UI/UX design with new fields
 const mockRecentProposals = [
   {
     id: 'proposal-1',
     sellerName: 'Salesforce Inc.',
     sellerAvatar: '/logos/salesforce.png',
     proposedBudget: 125000,
+    proposed_cost: 95000,
+    match_score: 92,
     listingTitle: 'For: New Enterprise CRM Platform',
-    status: 'New',
+    status: 'Under Review',
     submittedAt: '2025-01-09'
   },
   {
@@ -34,6 +36,8 @@ const mockRecentProposals = [
     sellerName: 'Okta',
     sellerAvatar: '/logos/okta.png',
     proposedBudget: 32000,
+    proposed_cost: 28500,
+    match_score: 88,
     listingTitle: 'For: Identity Management Solution',
     status: 'Under Review',
     submittedAt: '2025-01-08'
@@ -43,8 +47,10 @@ const mockRecentProposals = [
     sellerName: 'Workday',
     sellerAvatar: '/logos/workday.png',
     proposedBudget: 82500,
+    proposed_cost: 78000,
+    match_score: 95,
     listingTitle: 'For: Upgrade HR & Payroll System',
-    status: 'New',
+    status: 'Under Review',
     submittedAt: '2025-01-10'
   },
 ]
@@ -72,7 +78,7 @@ export function RecentProposalsPortlet({
   return (
     <Card className="border-2 hover:border-[#22C55E] transition-all duration-300">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Recent Proposals</CardTitle>
+        <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Proposals</CardTitle>
         <Link href={viewAllLink}>
           <Button variant="ghost" size="sm" className="text-[#22C55E] hover:text-[#16A34A]">
             View All
@@ -103,7 +109,7 @@ export function RecentProposalsPortlet({
             <p className="text-sm text-[#6B7280]">{emptySubMessage}</p>
           </div>
         ) : (
-          displayProposals.map((proposal, index) => (
+          displayProposals.map((proposal: any, index) => (
             <div
               key={proposal.id}
               className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
@@ -128,11 +134,27 @@ export function RecentProposalsPortlet({
                   <p className="text-sm text-[#6B7280]">
                     {proposal.listingTitle}
                   </p>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-semibold text-[#22C55E]">
-                      ${proposal.proposedBudget.toLocaleString()}
-                    </span>
-                    <span className="text-[#6B7280]">Submitted {proposal.submittedAt}</span>
+                  
+                  {/* New bottom stats row */}
+                  <div className="flex items-center gap-6 text-sm pt-1">
+                    <div className="flex items-center gap-1">
+                      <DollarSign className="h-4 w-4 text-[#6B7280]" />
+                      <span className="font-medium text-[#1A2B4C]">
+                        Proposed Cost: {formatCompactBudget(proposal.proposed_cost)}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <TrendingUp className="h-4 w-4 text-[#6B7280]" />
+                      <span className="font-medium text-[#1A2B4C]">
+                        Match: {proposal.match_score}%
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <FileText className="h-4 w-4 text-[#6B7280]" />
+                      <span className="font-medium text-[#1A2B4C]">
+                        Status: {proposal.status}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

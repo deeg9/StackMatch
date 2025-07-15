@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { FileText, Building2, DollarSign, Calendar, Users, ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { getStatusColor, formatBudget } from "./utils"
+import { getStatusColor, formatBudget, getListingStatusDotColor, formatCompactBudget, formatDate } from "./utils"
 
 interface Listing {
   id: string
@@ -18,37 +18,49 @@ interface Listing {
   proposalCount: number
 }
 
-// Mock data for UI/UX design
+// Mock data for UI/UX design with new fields
 const mockRecentListings = [
   {
     id: 'listing-1',
     title: 'New Enterprise CRM Platform',
-    status: 'Due: In 15 Days',
+    status: 'Active',
     category: 'CRM Software',
     budgetMin: 100000,
     budgetMax: 150000,
+    budget_value: 105000,
+    createdDate: '2025-07-01',
+    dueDate: '2025-08-02',
     createdAt: '2025-01-10',
-    proposalCount: 3
+    proposalCount: 5,
+    stackspaceCount: 2
   },
   {
     id: 'listing-2',
     title: 'Upgrade HR & Payroll System',
-    status: 'Due: In 2 Days',
+    status: 'In Review',
     category: 'HRIS',
     budgetMin: 75000,
     budgetMax: 90000,
+    budget_value: 82500,
+    createdDate: '2025-06-15',
+    dueDate: '2025-07-20',
     createdAt: '2025-01-09',
-    proposalCount: 5
+    proposalCount: 3,
+    stackspaceCount: 1
   },
   {
     id: 'listing-3',
     title: 'Cybersecurity Compliance Audit',
-    status: '5 Proposals Received',
+    status: 'Closed',
     category: 'Security Services',
     budgetMin: 25000,
     budgetMax: 40000,
+    budget_value: 32500,
+    createdDate: '2025-05-10',
+    dueDate: '2025-06-15',
     createdAt: '2025-01-08',
-    proposalCount: 5
+    proposalCount: 8,
+    stackspaceCount: 3
   },
 ]
 
@@ -75,7 +87,7 @@ export function RecentListingsPortlet({
   return (
     <Card className="border-2 hover:border-[#4A73CC] transition-all duration-300">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Recent Listings</CardTitle>
+        <CardTitle className="text-xl font-semibold text-[#1A2B4C]">Listings</CardTitle>
         <Link href={viewAllLink}>
           <Button variant="ghost" size="sm" className="text-[#4A73CC] hover:text-[#1A2B4C]">
             View All
@@ -107,49 +119,48 @@ export function RecentListingsPortlet({
             )}
           </div>
         ) : (
-          displayListings.map((listing, index) => (
+          displayListings.map((listing: any, index) => (
             <div
               key={listing.id}
               className="p-4 border rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 cursor-pointer group animate-fade-in"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="space-y-3">
-                {/* Line 1: Primary Information & Key Constraints */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <h3 className="font-bold text-[#1A2B4C] group-hover:text-[#4A73CC] transition-colors">
-                      {listing.title}
-                    </h3>
-                    <Badge className={listing.status.includes('Due') ? (listing.status.includes('2 Days') ? 'bg-[#F59E0B] text-white' : 'bg-[#22C55E] text-white') : 'bg-[#22C55E] text-white'}>
-                      {listing.status}
-                    </Badge>
-                  </div>
-                  <div className="flex items-center space-x-4 text-sm text-[#1A2B4C]">
-                    <span className="flex items-center font-medium">
-                      <DollarSign className="h-3 w-3 mr-1" />
-                      {formatBudget(listing.budgetMin, listing.budgetMax)}
-                    </span>
-                    <span className="flex items-center font-medium">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      {listing.status.includes('Due') ? listing.status.replace('Due: ', '') : 'In 15 Days'}
-                    </span>
-                  </div>
+                {/* Title with status dot */}
+                <div className="flex items-center gap-2">
+                  <span 
+                    className="w-2 h-2 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: getListingStatusDotColor(listing.status) }}
+                  />
+                  <h3 className="font-bold text-[#1A2B4C] group-hover:text-[#4A73CC] transition-colors">
+                    {listing.title}
+                  </h3>
                 </div>
 
-                {/* Line 2: Context & Engagement Metrics */}
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-[#6B7280] flex items-center">
-                    <Building2 className="h-4 w-4 mr-1" />
-                    {listing.category}
-                  </span>
-                  <div className="flex items-center space-x-4 text-sm text-[#6B7280]">
-                    <span className="flex items-center">
-                      <FileText className="h-3 w-3 mr-1" />
+                {/* Date information */}
+                <div className="space-y-1 text-sm text-[#6B7280]">
+                  <p>Created: {formatDate(listing.createdDate)}</p>
+                  <p>Due: {formatDate(listing.dueDate)}</p>
+                </div>
+
+                {/* Bottom stats row */}
+                <div className="flex items-center gap-6 text-sm">
+                  <div className="flex items-center gap-1">
+                    <DollarSign className="h-4 w-4 text-[#6B7280]" />
+                    <span className="font-medium text-[#1A2B4C]">
+                      Budget: {formatCompactBudget(listing.budget_value)}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <FileText className="h-4 w-4 text-[#6B7280]" />
+                    <span className="font-medium text-[#1A2B4C]">
                       {listing.proposalCount} Proposals
                     </span>
-                    <span className="flex items-center">
-                      <Users className="h-3 w-3 mr-1" />
-                      2 Deal Rooms
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Users className="h-4 w-4 text-[#6B7280]" />
+                    <span className="font-medium text-[#1A2B4C]">
+                      {listing.stackspaceCount} StackSpaces
                     </span>
                   </div>
                 </div>
