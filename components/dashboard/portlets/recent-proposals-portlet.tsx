@@ -135,25 +135,39 @@ export function RecentProposalsPortlet({
                     {proposal.listingTitle}
                   </p>
                   
-                  {/* New bottom stats row */}
-                  <div className="flex items-center gap-6 text-sm pt-1">
-                    <div className="flex items-center gap-1">
-                      <DollarSign className="h-4 w-4 text-[#6B7280]" />
-                      <span className="font-medium text-[#1A2B4C]">
-                        Proposed Cost: {formatCompactBudget(proposal.proposed_cost)}
-                      </span>
+                  {/* Bottom stats row - stacked layout */}
+                  <div className="grid grid-cols-3 gap-4 pt-3 mt-2 border-t">
+                    {/* Proposed Cost */}
+                    <div className="text-center">
+                      <div className="flex items-center justify-center gap-1 text-xs text-[#6B7280]">
+                        <DollarSign className="h-3 w-3" />
+                        <span>Proposed Cost</span>
+                      </div>
+                      <p className="text-base font-semibold text-[#1A2B4C] mt-1">
+                        {formatCompactBudget(proposal.proposed_cost)}
+                      </p>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <TrendingUp className="h-4 w-4 text-[#6B7280]" />
-                      <span className="font-medium text-[#1A2B4C]">
-                        Match: {proposal.match_score}%
-                      </span>
+                    
+                    {/* Match */}
+                    <div className="text-center">
+                      <div className="flex items-center justify-center gap-1 text-xs text-[#6B7280]">
+                        <TrendingUp className="h-3 w-3" />
+                        <span>Match</span>
+                      </div>
+                      <p className="text-base font-semibold text-[#1A2B4C] mt-1">
+                        {proposal.match_score}%
+                      </p>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <FileText className="h-4 w-4 text-[#6B7280]" />
-                      <span className="font-medium text-[#1A2B4C]">
-                        Status: {proposal.status}
-                      </span>
+                    
+                    {/* Status */}
+                    <div className="text-center">
+                      <div className="flex items-center justify-center gap-1 text-xs text-[#6B7280]">
+                        <FileText className="h-3 w-3" />
+                        <span>Status</span>
+                      </div>
+                      <p className="text-base font-semibold text-[#1A2B4C] mt-1">
+                        {proposal.status}
+                      </p>
                     </div>
                   </div>
                 </div>

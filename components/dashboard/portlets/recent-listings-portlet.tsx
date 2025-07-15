@@ -181,25 +181,39 @@ export function RecentListingsPortlet({
                   <p>Due: {formatDate(listing.dueDate)}</p>
                 </div>
 
-                {/* Bottom stats row */}
-                <div className="flex items-center gap-6 text-sm">
-                  <div className="flex items-center gap-1">
-                    <DollarSign className="h-4 w-4 text-[#6B7280]" />
-                    <span className="font-medium text-[#1A2B4C]">
-                      Budget: {formatCompactBudget(listing.budget_value)}
-                    </span>
+                {/* Bottom stats row - stacked layout */}
+                <div className="grid grid-cols-3 gap-4 pt-2 border-t">
+                  {/* Budget */}
+                  <div className="text-center">
+                    <div className="flex items-center justify-center gap-1 text-xs text-[#6B7280]">
+                      <DollarSign className="h-3 w-3" />
+                      <span>Budget</span>
+                    </div>
+                    <p className="text-base font-semibold text-[#1A2B4C] mt-1">
+                      {formatCompactBudget(listing.budget_value)}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <FileText className="h-4 w-4 text-[#6B7280]" />
-                    <span className="font-medium text-[#1A2B4C]">
-                      {listing.proposalCount} Proposals
-                    </span>
+                  
+                  {/* Proposals */}
+                  <div className="text-center">
+                    <div className="flex items-center justify-center gap-1 text-xs text-[#6B7280]">
+                      <FileText className="h-3 w-3" />
+                      <span>Proposals</span>
+                    </div>
+                    <p className="text-base font-semibold text-[#1A2B4C] mt-1">
+                      {listing.proposalCount}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="h-4 w-4 text-[#6B7280]" />
-                    <span className="font-medium text-[#1A2B4C]">
-                      {listing.stackspaceCount} StackSpaces
-                    </span>
+                  
+                  {/* StackSpaces */}
+                  <div className="text-center">
+                    <div className="flex items-center justify-center gap-1 text-xs text-[#6B7280]">
+                      <Users className="h-3 w-3" />
+                      <span>StackSpaces</span>
+                    </div>
+                    <p className="text-base font-semibold text-[#1A2B4C] mt-1">
+                      {listing.stackspaceCount}
+                    </p>
                   </div>
                 </div>
               </div>
