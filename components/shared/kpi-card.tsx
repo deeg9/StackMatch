@@ -17,6 +17,7 @@ interface KPICardProps {
   color: string
   bgColor: string
   borderColor: string
+  barColor?: string // New prop for explicit bar color
   sparklineData?: number[]
   showSparkline?: boolean
   animationDelay?: number
@@ -33,6 +34,7 @@ export function KPICard({
   color,
   bgColor,
   borderColor,
+  barColor,
   sparklineData,
   showSparkline = true,
   animationDelay = 0,
@@ -42,47 +44,51 @@ export function KPICard({
   const TrendIcon = trend?.direction === 'up' ? ArrowUp : ArrowDown
   const isPositiveTrend = trend?.direction === 'up'
   
+  // Extract the color for the vertical bar
+  const getBarColor = () => {
+    if (barColor) return barColor
+    // Map common Tailwind color classes to their hex values
+    const colorMap: Record<string, string> = {
+      'bg-stackmatch-blue/10': '#4A73CC',
+      'bg-trust-green/10': '#22C55E',
+      'bg-attention-orange/10': '#F59E0B',
+      'bg-information-blue/10': '#3B82F6',
+      'bg-charcoal/10': '#374151',
+      'bg-[#3B82F6]/10': '#3B82F6',
+      'bg-[#16A34A]/10': '#16A34A',
+      'bg-purple-100': '#9333EA',
+      'bg-orange-100': '#F97316',
+      'bg-yellow-500/10': '#EAB308'
+    }
+    return colorMap[bgColor] || '#4A73CC'
+  }
+  
   return (
     <Card 
       className={cn(
-        "border-2 transition-all duration-300 hover:shadow-lg animate-slide-up group cursor-pointer",
-        borderColor,
+        "relative border transition-all duration-300 hover:shadow-lg animate-slide-up group cursor-pointer overflow-hidden",
         className
       )}
       style={{ animationDelay: `${animationDelay}ms` }}
       onClick={onClick}
     >
+      {/* Vertical colored bar on the left edge */}
+      <div 
+        className="absolute left-0 top-0 bottom-0 w-1"
+        style={{ backgroundColor: getBarColor() }}
+      />
+      
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
-          <div className="space-y-2">
+          <div className="space-y-2 flex-1">
+            <p className="text-2xl font-bold text-stackmatch-navy">
+              {value}
+            </p>
             <p className="text-sm font-medium text-medium-gray">
               {title}
             </p>
-            <div className="flex items-center gap-3">
-              <p className={cn("text-3xl font-bold group-hover:scale-105 transition-transform", color)}>
-                {value}
-              </p>
-              {/* Mini Sparkline */}
-              {showSparkline && sparklineData && (
-                <div className="flex items-end gap-px h-8">
-                  {sparklineData.map((point, idx) => (
-                    <div
-                      key={idx}
-                      className={cn(
-                        "w-1 rounded-sm transition-all duration-300 group-hover:opacity-80",
-                        bgColor.replace('/10', '/30')
-                      )}
-                      style={{
-                        height: `${(point / Math.max(...sparklineData)) * 100}%`,
-                        animationDelay: `${idx * 50}ms`
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
             {(subtitle || trend) && (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mt-2">
                 {subtitle && (
                   <p className="text-xs text-medium-gray">
                     {subtitle}
@@ -107,15 +113,10 @@ export function KPICard({
           </div>
           
           <div className={cn(
-            "p-3 rounded-xl group-hover:scale-110 transition-transform relative overflow-hidden",
+            "p-3 rounded-lg ml-4",
             bgColor
           )}>
-            <Icon className={cn("w-6 h-6 relative z-10", color)} />
-            {/* Subtle background pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-current" />
-              <div className="absolute bottom-1 left-1 w-1 h-1 rounded-full bg-current" />
-            </div>
+            <Icon className="w-6 h-6 text-white" />
           </div>
         </div>
       </CardContent>

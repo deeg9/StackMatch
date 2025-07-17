@@ -77,34 +77,29 @@ export function DealRoomsStats() {
         return (
           <Card 
             key={stat.title} 
-            className={`border-2 ${stat.borderColor} transition-all duration-300 hover:shadow-lg animate-slide-up group cursor-pointer`}
+            className={`relative border-2 ${stat.borderColor} transition-all duration-300 hover:shadow-lg animate-slide-up group cursor-pointer overflow-hidden`}
             style={{ animationDelay: `${index * 100}ms` }}
           >
+            {/* Vertical colored bar on the left edge */}
+            <div 
+              className="absolute left-0 top-0 bottom-0 w-1"
+              style={{ 
+                backgroundColor: stat.color === 'text-charcoal' ? '#374151' :
+                                stat.color === 'text-[#3B82F6]' ? '#3B82F6' :
+                                stat.color === 'text-[#16A34A]' ? '#16A34A' :
+                                '#374151'
+              }}
+            />
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div className="space-y-2">
+                <div className="space-y-2 flex-1">
+                  <p className="text-2xl font-bold text-stackmatch-navy">
+                    {stat.value}
+                  </p>
                   <p className="text-sm font-medium text-medium-gray">
                     {stat.title}
                   </p>
-                  <div className="flex items-center gap-3">
-                    <p className={`text-3xl font-bold group-hover:scale-105 transition-transform ${stat.color}`}>
-                      {stat.value}
-                    </p>
-                    {/* Mini Sparkline */}
-                    <div className="flex items-end gap-px h-8">
-                      {stat.sparklineData.map((point, idx) => (
-                        <div
-                          key={idx}
-                          className={`w-1 rounded-sm transition-all duration-300 group-hover:opacity-80 ${stat.bgColor.replace('/10', '/30')}`}
-                          style={{
-                            height: `${(point / Math.max(...stat.sparklineData)) * 100}%`,
-                            animationDelay: `${idx * 50}ms`
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mt-2">
                     <p className="text-xs text-medium-gray">
                       {stat.subtitle}
                     </p>
@@ -118,13 +113,8 @@ export function DealRoomsStats() {
                   </div>
                 </div>
                 
-                <div className={`${stat.bgColor} p-3 rounded-xl group-hover:scale-110 transition-transform relative overflow-hidden`}>
-                  <Icon className={`w-6 h-6 ${stat.color} relative z-10`} />
-                  {/* Subtle background pattern */}
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-current" />
-                    <div className="absolute bottom-1 left-1 w-1 h-1 rounded-full bg-current" />
-                  </div>
+                <div className={`${stat.bgColor} p-3 rounded-lg ml-4`}>
+                  <Icon className="w-6 h-6 text-white" />
                 </div>
               </div>
             </CardContent>

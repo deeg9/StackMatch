@@ -16,6 +16,7 @@ import { TickerBanner } from "@/components/ticker/ticker-banner"
 import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 import { BuyerDashboardSidebar } from '@/components/dashboard/buyer-dashboard-sidebar'
 import { RecentListingsPortlet, RecentProposalsPortlet } from '@/components/dashboard/portlets'
+import { KPICard } from '@/components/shared/kpi-card'
 import { cn } from "@/lib/utils"
 
 // Type definitions for API responses
@@ -224,102 +225,54 @@ export default function BuyerDashboard() {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         {/* Row 1: Full-width KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {/* Active Listings */}
-          <Card className={cn(
-            "border-2 hover:border-[#4A73CC] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
-            statsLoading && "animate-pulse"
-          )}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-[#6B7280] font-medium">Active Listings</p>
-                  <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : '4'}
-                  </p>
-                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
-                    <ArrowUp className="w-3 h-3 mr-1" />
-                    +3 more than last year
-                  </p>
-                </div>
-                <div className="w-12 h-12 bg-[#4A73CC]/10 rounded-full flex items-center justify-center">
-                  <FileText className="h-6 w-6 text-[#4A73CC]" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <KPICard
+            title="Active Listings"
+            value={statsLoading ? '...' : '4'}
+            subtitle="+3 more than last year"
+            trend={{ value: '+300%', direction: 'up' }}
+            icon={FileText}
+            color="text-stackmatch-blue"
+            bgColor="bg-stackmatch-blue/10"
+            borderColor="hover:border-stackmatch-blue"
+            animationDelay={0}
+          />
 
-          {/* Total Proposals Received */}
-          <Card className={cn(
-            "border-2 hover:border-[#22C55E] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
-            statsLoading && "animate-pulse"
-          )}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-[#6B7280] font-medium">Total Proposals Received</p>
-                  <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : '3'}
-                  </p>
-                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
-                    <ArrowUp className="w-3 h-3 mr-1" />
-                    +1 more than last week
-                  </p>
-                </div>
-                <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
-                  <Activity className="h-6 w-6 text-[#22C55E]" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <KPICard
+            title="Total Proposals Received"
+            value={statsLoading ? '...' : '3'}
+            subtitle="+1 more than last week"
+            trend={{ value: '+33%', direction: 'up' }}
+            icon={Activity}
+            color="text-trust-green"
+            bgColor="bg-trust-green/10"
+            borderColor="hover:border-trust-green"
+            animationDelay={100}
+          />
 
-          {/* Active Software Licenses */}
-          <Card className={cn(
-            "border-2 hover:border-[#F59E0B] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
-            statsLoading && "animate-pulse"
-          )}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-[#6B7280] font-medium">Active Software Licenses</p>
-                  <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : '5'}
-                  </p>
-                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
-                    <ArrowUp className="w-3 h-3 mr-1" />
-                    +2 more than last year
-                  </p>
-                </div>
-                <div className="w-12 h-12 bg-[#F59E0B]/10 rounded-full flex items-center justify-center">
-                  <Building2 className="h-6 w-6 text-[#F59E0B]" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <KPICard
+            title="Active Software Licenses"
+            value={statsLoading ? '...' : '5'}
+            subtitle="+2 more than last year"
+            trend={{ value: '+40%', direction: 'up' }}
+            icon={Building2}
+            color="text-attention-orange"
+            bgColor="bg-attention-orange/10"
+            borderColor="hover:border-attention-orange"
+            animationDelay={200}
+          />
 
-          {/* Current Software Cost */}
-          <Card className={cn(
-            "border-2 hover:border-[#22C55E] transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1",
-            statsLoading && "animate-pulse"
-          )}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-[#6B7280] font-medium">Current Software Cost</p>
-                  <p className="text-3xl font-bold text-[#1A2B4C] mt-1">
-                    {statsLoading ? '...' : '$12,500/yr'}
-                  </p>
-                  <p className="text-sm text-[#16A34A] mt-1 flex items-center">
-                    <ArrowDown className="w-3 h-3 mr-1" />
-                    down 5% from last year
-                  </p>
-                </div>
-                <div className="w-12 h-12 bg-[#22C55E]/10 rounded-full flex items-center justify-center">
-                  <DollarSign className="h-6 w-6 text-[#22C55E]" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <KPICard
+            title="Current Software Cost"
+            value={statsLoading ? '...' : '$12,500/yr'}
+            subtitle="down 5% from last year"
+            trend={{ value: '-5%', direction: 'down' }}
+            icon={DollarSign}
+            color="text-trust-green"
+            bgColor="bg-trust-green/10"
+            borderColor="hover:border-trust-green"
+            animationDelay={300}
+          />
         </div>
 
         {/* Main Layout: Content + Sidebar Grid */}
