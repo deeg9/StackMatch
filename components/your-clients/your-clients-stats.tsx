@@ -1,8 +1,7 @@
 'use client';
 
-import { Card, CardContent } from '@/components/ui/card';
+import { KPICard } from '@/components/shared/kpi-card';
 import { Users, DollarSign, TrendingUp, Calendar } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 interface StatsData {
   totalActiveClients: number;
@@ -31,94 +30,69 @@ export function YourClientsStats() {
   const kpiCards = [
     {
       title: 'Total Active Clients',
-      value: stats.totalActiveClients,
+      value: stats.totalActiveClients.toString(),
+      subtitle: 'Active accounts',
+      trend: { value: `+${stats.clientGrowth}%`, direction: 'up' as const },
       icon: Users,
       color: 'text-stackmatch-blue',
       bgColor: 'bg-stackmatch-blue/10',
-      growth: stats.clientGrowth,
-      format: 'number'
+      borderColor: 'hover:border-stackmatch-blue',
+      sparklineData: [18, 19, 20, 21, 22, 23, 23, 24]
     },
     {
       title: 'Total Contract Value',
-      value: stats.totalContractValue,
-      icon: DollarSign,
-      color: 'text-trust-green',
-      bgColor: 'bg-trust-green/10',
-      growth: stats.revenueGrowth,
-      format: 'currency'
-    },
-    {
-      title: 'Avg. Revenue Per Client',
-      value: stats.avgRevenuePerClient,
-      icon: TrendingUp,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100',
-      growth: stats.avgClientGrowth,
-      format: 'currency'
-    },
-    {
-      title: 'Upcoming Renewals (Next 90 Days)',
-      value: stats.upcomingRenewals,
-      icon: Calendar,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-100',
-      growth: stats.renewalGrowth,
-      format: 'number',
-      suffix: ' clients'
-    }
-  ];
-
-  const formatValue = (value: number, format: string, suffix?: string) => {
-    if (format === 'currency') {
-      return new Intl.NumberFormat('en-US', {
+      value: new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
-      }).format(value);
+      }).format(stats.totalContractValue),
+      subtitle: 'Annual recurring revenue',
+      trend: { value: `+${stats.revenueGrowth}%`, direction: 'up' as const },
+      icon: DollarSign,
+      color: 'text-trust-green',
+      bgColor: 'bg-trust-green/10',
+      borderColor: 'hover:border-trust-green',
+      sparklineData: [2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.85]
+    },
+    {
+      title: 'Avg. Revenue Per Client',
+      value: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(stats.avgRevenuePerClient),
+      subtitle: 'Per client value',
+      trend: { value: `+${stats.avgClientGrowth}%`, direction: 'up' as const },
+      icon: TrendingUp,
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-100',
+      borderColor: 'hover:border-purple-500',
+      sparklineData: [95, 100, 105, 110, 112, 115, 117, 118.75]
+    },
+    {
+      title: 'Upcoming Renewals',
+      value: `${stats.upcomingRenewals}`,
+      subtitle: 'Next 90 days',
+      trend: { value: `+${stats.renewalGrowth}%`, direction: 'up' as const },
+      icon: Calendar,
+      color: 'text-orange-600',
+      bgColor: 'bg-orange-100',
+      borderColor: 'hover:border-orange-500',
+      sparklineData: [6, 5, 6, 7, 6, 8, 7, 8]
     }
-    return value.toLocaleString() + (suffix || '');
-  };
+  ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {kpiCards.map((card, index) => {
-        const Icon = card.icon;
-        return (
-          <Card
-            key={index}
-            className={cn(
-              "relative overflow-hidden border-2 hover:border-stackmatch-blue/50 transition-all duration-300 hover:shadow-lg",
-              "transform hover:-translate-y-1"
-            )}
-          >
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div className={cn("p-3 rounded-lg", card.bgColor)}>
-                  <Icon className={cn("h-6 w-6", card.color)} />
-                </div>
-                {card.growth > 0 && (
-                  <div className="flex items-center text-trust-green text-sm font-medium">
-                    <TrendingUp className="h-4 w-4 mr-1" />
-                    <span>+{card.growth}%</span>
-                  </div>
-                )}
-              </div>
-              
-              <h3 className="text-sm font-medium text-medium-gray mb-2">
-                {card.title}
-              </h3>
-              
-              <p className="text-2xl font-bold text-stackmatch-navy">
-                {formatValue(card.value, card.format, card.suffix)}
-              </p>
-
-              {/* Decorative gradient */}
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-stackmatch-blue/20 to-transparent" />
-            </CardContent>
-          </Card>
-        );
-      })}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      {kpiCards.map((card, index) => (
+        <KPICard
+          key={card.title}
+          {...card}
+          animationDelay={index * 100}
+        />
+      ))}
     </div>
   );
 }

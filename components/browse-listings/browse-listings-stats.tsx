@@ -1,65 +1,60 @@
 'use client'
 
-import { Card, CardContent } from '@/components/ui/card'
+import { KPICard } from '@/components/shared/kpi-card'
 import { Target, TrendingUp, Clock, Award } from 'lucide-react'
 
 export function BrowseListingsStats() {
   const stats = [
     {
-      icon: <Target className="h-5 w-5 text-stackmatch-blue" />,
-      label: 'Matched to You',
+      title: 'Matched to You',
       value: '89',
-      change: '+12 this week',
+      subtitle: '+12 this week',
+      icon: Target,
+      color: 'text-stackmatch-blue',
       bgColor: 'bg-stackmatch-blue/10',
-      textColor: 'text-stackmatch-blue'
+      borderColor: 'hover:border-stackmatch-blue',
+      sparklineData: [65, 70, 75, 78, 82, 85, 87, 89]
     },
     {
-      icon: <TrendingUp className="h-5 w-5 text-trust-green" />,
-      label: 'High Budget',
+      title: 'High Budget',
       value: '34',
-      change: 'Over $100K',
+      subtitle: 'Over $100K',
+      icon: TrendingUp,
+      color: 'text-trust-green',
       bgColor: 'bg-trust-green/10',
-      textColor: 'text-trust-green'
+      borderColor: 'hover:border-trust-green',
+      sparklineData: [25, 27, 28, 30, 31, 32, 33, 34]
     },
     {
-      icon: <Clock className="h-5 w-5 text-attention-orange" />,
-      label: 'Closing Soon',
+      title: 'Closing Soon',
       value: '15',
-      change: 'Next 7 days',
+      subtitle: 'Next 7 days',
+      icon: Clock,
+      color: 'text-attention-orange',
       bgColor: 'bg-attention-orange/10',
-      textColor: 'text-attention-orange'
+      borderColor: 'hover:border-attention-orange',
+      sparklineData: [18, 17, 16, 15, 14, 15, 15, 15]
     },
     {
-      icon: <Award className="h-5 w-5 text-information-blue" />,
-      label: 'Premium Buyers',
+      title: 'Premium Buyers',
       value: '67',
-      change: 'Verified companies',
+      subtitle: 'Verified companies',
+      icon: Award,
+      color: 'text-information-blue',
       bgColor: 'bg-information-blue/10',
-      textColor: 'text-information-blue'
+      borderColor: 'hover:border-information-blue',
+      sparklineData: [55, 58, 60, 62, 63, 65, 66, 67]
     }
   ]
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       {stats.map((stat, index) => (
-        <Card 
-          key={index}
-          className="hover:shadow-lg transition-shadow duration-300 hover:border-stackmatch-blue cursor-pointer animate-fade-in"
-          style={{ animationDelay: `${index * 100}ms` }}
-        >
-          <CardContent className="p-6">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm text-medium-gray mb-1">{stat.label}</p>
-                <p className="text-3xl font-bold text-charcoal">{stat.value}</p>
-                <p className={`text-sm mt-1 ${stat.textColor}`}>{stat.change}</p>
-              </div>
-              <div className={`p-3 rounded-lg ${stat.bgColor}`}>
-                {stat.icon}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <KPICard
+          key={stat.title}
+          {...stat}
+          animationDelay={index * 100}
+        />
       ))}
     </div>
   )

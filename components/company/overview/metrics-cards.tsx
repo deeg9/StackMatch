@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { KPICard } from '@/components/shared/kpi-card'
 import { 
   DollarSign, 
   Clock, 
@@ -21,10 +21,12 @@ interface MetricData {
   icon: any
   color: string
   bgColor: string
+  borderColor: string
   trend?: {
     direction: 'up' | 'down'
     value: string
   }
+  sparklineData?: number[]
 }
 
 interface MetricsCardsProps {
@@ -45,7 +47,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         icon: DollarSign,
         color: 'text-trust-green',
         bgColor: 'bg-trust-green/10',
-        trend: { direction: 'up', value: '12%' }
+        borderColor: 'hover:border-trust-green',
+        trend: { direction: 'up', value: '12%' },
+        sparklineData: [140, 150, 160, 165, 170, 175, 178, 180]
       },
       {
         title: 'Implementation Time',
@@ -53,7 +57,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         subtitle: 'Typical deployment',
         icon: Clock,
         color: 'text-stackmatch-blue',
-        bgColor: 'bg-stackmatch-blue/10'
+        bgColor: 'bg-stackmatch-blue/10',
+        borderColor: 'hover:border-stackmatch-blue',
+        sparklineData: [6, 5, 4, 4.5, 4, 3.5, 3, 3]
       },
       {
         title: 'Customer Satisfaction',
@@ -62,7 +68,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         icon: Star,
         color: 'text-yellow-500',
         bgColor: 'bg-yellow-500/10',
-        trend: { direction: 'up', value: '0.2' }
+        borderColor: 'hover:border-yellow-500',
+        trend: { direction: 'up', value: '0.2' },
+        sparklineData: [4.6, 4.6, 4.7, 4.7, 4.7, 4.8, 4.8, 4.8]
       },
       {
         title: 'ROI Achievement',
@@ -71,7 +79,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         icon: TrendingUp,
         color: 'text-attention-orange',
         bgColor: 'bg-attention-orange/10',
-        trend: { direction: 'up', value: '25%' }
+        borderColor: 'hover:border-attention-orange',
+        trend: { direction: 'up', value: '25%' },
+        sparklineData: [200, 210, 220, 230, 235, 240, 245, 251]
       }
     ],
     'microsoft': [
@@ -82,7 +92,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         icon: DollarSign,
         color: 'text-trust-green',
         bgColor: 'bg-trust-green/10',
-        trend: { direction: 'up', value: '8%' }
+        borderColor: 'hover:border-trust-green',
+        trend: { direction: 'up', value: '8%' },
+        sparklineData: [130, 135, 140, 142, 145, 147, 148, 150]
       },
       {
         title: 'Time to Value',
@@ -90,7 +102,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         subtitle: 'Office 365 deployment',
         icon: Zap,
         color: 'text-stackmatch-blue',
-        bgColor: 'bg-stackmatch-blue/10'
+        bgColor: 'bg-stackmatch-blue/10',
+        borderColor: 'hover:border-stackmatch-blue',
+        sparklineData: [45, 40, 35, 35, 32, 30, 30, 30]
       },
       {
         title: 'Customer Satisfaction',
@@ -98,7 +112,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         subtitle: 'Gartner Peer Insights',
         icon: Star,
         color: 'text-yellow-500',
-        bgColor: 'bg-yellow-500/10'
+        bgColor: 'bg-yellow-500/10',
+        borderColor: 'hover:border-yellow-500',
+        sparklineData: [4.5, 4.5, 4.6, 4.6, 4.6, 4.7, 4.7, 4.7]
       },
       {
         title: 'Uptime Guarantee',
@@ -106,7 +122,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         subtitle: 'SLA commitment',
         icon: CheckCircle,
         color: 'text-trust-green',
-        bgColor: 'bg-trust-green/10'
+        bgColor: 'bg-trust-green/10',
+        borderColor: 'hover:border-trust-green',
+        sparklineData: [99.8, 99.9, 99.9, 99.9, 99.9, 99.9, 99.9, 99.9]
       }
     ],
     'oracle': [
@@ -117,7 +135,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         icon: DollarSign,
         color: 'text-trust-green',
         bgColor: 'bg-trust-green/10',
-        trend: { direction: 'up', value: '15%' }
+        borderColor: 'hover:border-trust-green',
+        trend: { direction: 'up', value: '15%' },
+        sparklineData: [200, 210, 220, 225, 230, 240, 245, 250]
       },
       {
         title: 'Implementation Time',
@@ -125,7 +145,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         subtitle: 'Enterprise deployment',
         icon: Clock,
         color: 'text-stackmatch-blue',
-        bgColor: 'bg-stackmatch-blue/10'
+        bgColor: 'bg-stackmatch-blue/10',
+        borderColor: 'hover:border-stackmatch-blue',
+        sparklineData: [12, 11, 10, 9, 9, 8, 7, 6]
       },
       {
         title: 'Performance Gain',
@@ -134,7 +156,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         icon: Zap,
         color: 'text-attention-orange',
         bgColor: 'bg-attention-orange/10',
-        trend: { direction: 'up', value: '200%' }
+        borderColor: 'hover:border-attention-orange',
+        trend: { direction: 'up', value: '200%' },
+        sparklineData: [3, 4, 5, 6, 7, 8, 9, 10]
       },
       {
         title: 'Industry Recognition',
@@ -142,7 +166,9 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
         subtitle: 'Gartner Magic Quadrant',
         icon: Award,
         color: 'text-yellow-500',
-        bgColor: 'bg-yellow-500/10'
+        bgColor: 'bg-yellow-500/10',
+        borderColor: 'hover:border-yellow-500',
+        sparklineData: [1, 1, 1, 1, 1, 1, 1, 1]
       }
     ]
   }
@@ -207,49 +233,21 @@ export function MetricsCards({ companyId }: MetricsCardsProps) {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {metrics.map((metric, index) => {
-          const IconComponent = metric.icon
-          return (
-            <Card key={index} className="border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`w-12 h-12 rounded-lg ${metric.bgColor} flex items-center justify-center`}>
-                    <IconComponent className={`w-6 h-6 ${metric.color}`} />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-stackmatch-navy text-sm">
-                      {metric.title}
-                    </h3>
-                    {metric.trend && (
-                      <Badge 
-                        variant="secondary" 
-                        className={`text-xs mt-1 ${
-                          metric.trend.direction === 'up' 
-                            ? 'bg-trust-green/10 text-trust-green' 
-                            : 'bg-red-500/10 text-red-600'
-                        }`}
-                      >
-                        <TrendingUp className={`w-3 h-3 mr-1 ${
-                          metric.trend.direction === 'down' ? 'rotate-180' : ''
-                        }`} />
-                        {metric.trend.value}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-                
-                <div className="space-y-1">
-                  <div className={`text-2xl font-bold ${metric.color}`}>
-                    {metric.value}
-                  </div>
-                  <div className="text-sm text-medium-gray">
-                    {metric.subtitle}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )
-        })}
+        {metrics.map((metric, index) => (
+          <KPICard
+            key={index}
+            title={metric.title}
+            value={metric.value}
+            subtitle={metric.subtitle}
+            icon={metric.icon}
+            color={metric.color}
+            bgColor={metric.bgColor}
+            borderColor={metric.borderColor}
+            trend={metric.trend}
+            sparklineData={metric.sparklineData}
+            animationDelay={index * 100}
+          />
+        ))}
       </div>
     </div>
   )

@@ -1,14 +1,9 @@
 'use client'
 
-import { Card, CardContent } from '@/components/ui/card'
+import { KPICard } from '@/components/shared/kpi-card'
 import { 
   FileText, 
-  MessageCircle, 
-  TrendingUp, 
-  CheckCircle2,
-  ArrowUp,
-  ArrowDown,
-  Activity
+  MessageCircle
 } from 'lucide-react'
 
 export function MyListingsStats() {
@@ -17,79 +12,35 @@ export function MyListingsStats() {
       title: 'Total Active Listings',
       value: '4',
       subtitle: '+2 this month',
-      trend: '+100%',
-      trendUp: true,
+      trend: { value: '+100%', direction: 'up' as const },
       icon: FileText,
       color: 'text-stackmatch-blue',
       bgColor: 'bg-stackmatch-blue/10',
-      borderColor: 'hover:border-stackmatch-blue'
+      borderColor: 'hover:border-stackmatch-blue',
+      sparklineData: [2, 2, 3, 4, 3, 4, 4, 4]
     },
     {
       title: 'Total Proposals Received',
       value: '12',
       subtitle: 'Avg. 3 per listing',
-      trend: '+50%',
-      trendUp: true,
+      trend: { value: '+50%', direction: 'up' as const },
       icon: MessageCircle,
       color: 'text-trust-green',
       bgColor: 'bg-trust-green/10',
-      borderColor: 'hover:border-trust-green'
+      borderColor: 'hover:border-trust-green',
+      sparklineData: [6, 7, 8, 9, 10, 11, 12, 12]
     }
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-      {stats.map((stat, index) => {
-        const Icon = stat.icon
-        const TrendIcon = stat.trendUp ? ArrowUp : ArrowDown
-        
-        return (
-          <Card 
-            key={stat.title}
-            className={`border-2 ${stat.borderColor} transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 animate-fade-in`}
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-xl ${stat.bgColor}`}>
-                  <Icon className={`w-6 h-6 ${stat.color}`} />
-                </div>
-                <div className={`flex items-center gap-1 text-sm ${stat.trendUp ? 'text-trust-green' : 'text-red-500'}`}>
-                  <TrendIcon className="w-3 h-3" />
-                  <span className="font-medium">{stat.trend}</span>
-                </div>
-              </div>
-              
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-stackmatch-navy">
-                  {stat.value}
-                </p>
-                <p className="text-sm font-medium text-charcoal">
-                  {stat.title}
-                </p>
-                <p className="text-xs text-medium-gray">
-                  {stat.subtitle}
-                </p>
-              </div>
-
-              {/* Sparkline placeholder */}
-              <div className="mt-4 h-8 flex items-end gap-1">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
-                  <div
-                    key={i}
-                    className={`${stat.bgColor} rounded-sm animate-pulse`}
-                    style={{
-                      height: `${Math.random() * 20 + 10}px`,
-                      width: '8px',
-                      animationDelay: `${i * 100}ms`
-                    }}
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )
-      })}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+      {stats.map((stat, index) => (
+        <KPICard
+          key={stat.title}
+          {...stat}
+          animationDelay={index * 100}
+        />
+      ))}
     </div>
   )
 }

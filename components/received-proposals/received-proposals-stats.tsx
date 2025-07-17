@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
+import { KPICard } from '@/components/shared/kpi-card'
 import { 
   MessageCircle, 
   Clock, 
   AlertCircle,
-  DollarSign,
-  ArrowUp,
-  ArrowDown
+  DollarSign
 } from 'lucide-react'
 
 interface ProposalStats {
@@ -68,74 +67,61 @@ export function ReceivedProposalsStats() {
       title: 'Total Proposals Received',
       value: stats.totalProposals.toString(),
       subtitle: '+7 this week',
-      trend: '+63%',
-      trendUp: true,
+      trend: { value: '+63%', direction: 'up' as const },
       icon: MessageCircle,
       color: 'text-stackmatch-blue',
       bgColor: 'bg-stackmatch-blue/10',
-      borderColor: 'hover:border-stackmatch-blue'
+      borderColor: 'hover:border-stackmatch-blue',
+      sparklineData: [12, 15, 13, 17, 16, 18, 17, 18]
     },
     {
       title: 'New Proposals (Last 7 Days)',
       value: stats.newProposalsLast7Days.toString(),
       subtitle: 'Strong response rate',
-      trend: '+40%',
-      trendUp: true,
+      trend: { value: '+40%', direction: 'up' as const },
       icon: Clock,
       color: 'text-trust-green',
       bgColor: 'bg-trust-green/10',
-      borderColor: 'hover:border-trust-green'
+      borderColor: 'hover:border-trust-green',
+      sparklineData: [4, 5, 6, 5, 7, 6, 8, 7]
     },
     {
       title: 'Pending Review',
       value: stats.pendingReview.toString(),
       subtitle: 'Requiring your attention',
-      trend: '+2',
-      trendUp: true,
+      trend: { value: '+2', direction: 'up' as const },
       icon: AlertCircle,
       color: 'text-attention-orange',
       bgColor: 'bg-attention-orange/10',
-      borderColor: 'hover:border-attention-orange'
+      borderColor: 'hover:border-attention-orange',
+      sparklineData: [3, 4, 3, 5, 4, 6, 5, 5]
     },
     {
       title: 'Average Proposal Value',
       value: `$${(stats.averageProposalValue / 1000).toFixed(0)}K`,
       subtitle: 'Above market average',
-      trend: '+12%',
-      trendUp: true,
+      trend: { value: '+12%', direction: 'up' as const },
       icon: DollarSign,
       color: 'text-information-blue',
       bgColor: 'bg-information-blue/10',
-      borderColor: 'hover:border-information-blue'
+      borderColor: 'hover:border-information-blue',
+      sparklineData: [55, 58, 62, 65, 64, 68, 67, 67.5]
     }
   ]
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[1, 2, 3, 4].map((i) => (
           <Card key={i} className="border-2 animate-pulse">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <div className="w-32 h-4 bg-gray-200 rounded"></div>
+                  <div className="w-16 h-8 bg-gray-200 rounded"></div>
+                  <div className="w-24 h-3 bg-gray-200 rounded"></div>
+                </div>
                 <div className="w-12 h-12 bg-gray-200 rounded-xl"></div>
-                <div className="w-16 h-4 bg-gray-200 rounded"></div>
-              </div>
-              <div className="space-y-2">
-                <div className="w-16 h-8 bg-gray-200 rounded"></div>
-                <div className="w-32 h-4 bg-gray-200 rounded"></div>
-                <div className="w-24 h-3 bg-gray-200 rounded"></div>
-              </div>
-              <div className="mt-4 h-8 flex items-end gap-1">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
-                  <div
-                    key={i}
-                    className="bg-gray-200 rounded-sm"
-                    style={{
-                      height: `${Math.random() * 20 + 10}px`,
-                      width: '8px'
-                    }}
-                  />
-                ))}
               </div>
             </CardContent>
           </Card>
@@ -145,58 +131,14 @@ export function ReceivedProposalsStats() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-      {statCards.map((stat, index) => {
-        const Icon = stat.icon
-        const TrendIcon = stat.trendUp ? ArrowUp : ArrowDown
-        
-        return (
-          <Card 
-            key={stat.title}
-            className={`border-2 ${stat.borderColor} transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 animate-fade-in`}
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-xl ${stat.bgColor}`}>
-                  <Icon className={`w-6 h-6 ${stat.color}`} />
-                </div>
-                <div className={`flex items-center gap-1 text-sm ${stat.trendUp ? 'text-trust-green' : 'text-red-500'}`}>
-                  <TrendIcon className="w-3 h-3" />
-                  <span className="font-medium">{stat.trend}</span>
-                </div>
-              </div>
-              
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-stackmatch-navy">
-                  {stat.value}
-                </p>
-                <p className="text-sm font-medium text-charcoal">
-                  {stat.title}
-                </p>
-                <p className="text-xs text-medium-gray">
-                  {stat.subtitle}
-                </p>
-              </div>
-
-              {/* Sparkline placeholder */}
-              <div className="mt-4 h-8 flex items-end gap-1">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
-                  <div
-                    key={i}
-                    className={`${stat.bgColor} rounded-sm animate-pulse`}
-                    style={{
-                      height: `${Math.random() * 20 + 10}px`,
-                      width: '8px',
-                      animationDelay: `${i * 100}ms`
-                    }}
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )
-      })}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      {statCards.map((stat, index) => (
+        <KPICard
+          key={stat.title}
+          {...stat}
+          animationDelay={index * 100}
+        />
+      ))}
     </div>
   )
 }
