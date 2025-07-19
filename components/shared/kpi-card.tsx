@@ -63,6 +63,23 @@ export function KPICard({
     return colorMap[bgColor] || '#4A73CC'
   }
   
+  // Get the saturated icon color based on the tinted background color
+  const getIconColor = () => {
+    const iconColorMap: Record<string, string> = {
+      'bg-stackmatch-blue/10': 'text-stackmatch-blue',
+      'bg-trust-green/10': 'text-trust-green',
+      'bg-attention-orange/10': 'text-attention-orange',
+      'bg-information-blue/10': 'text-information-blue',
+      'bg-charcoal/10': 'text-charcoal',
+      'bg-[#3B82F6]/10': 'text-[#3B82F6]',
+      'bg-[#16A34A]/10': 'text-[#16A34A]',
+      'bg-purple-100': 'text-purple-600',
+      'bg-orange-100': 'text-orange-600',
+      'bg-yellow-500/10': 'text-yellow-600'
+    }
+    return iconColorMap[bgColor] || 'text-stackmatch-blue'
+  }
+  
   return (
     <Card 
       className={cn(
@@ -116,7 +133,7 @@ export function KPICard({
             "p-3 rounded-lg ml-4",
             bgColor
           )}>
-            <Icon className="w-6 h-6 text-white" />
+            <Icon className={cn("w-6 h-6", getIconColor())} />
           </div>
         </div>
       </CardContent>
