@@ -1,11 +1,12 @@
 'use client'
 
 import { GridPageLayout, useGridPageState } from '@/components/layouts/grid-page-layout'
-import { ReceivedProposalsHeader } from '@/components/received-proposals/received-proposals-header'
+import { PageHeader } from '@/components/ui/page-header'
 import { ReceivedProposalsStats } from '@/components/received-proposals/received-proposals-stats'
 import { ReceivedProposalsFilters } from '@/components/received-proposals/received-proposals-filters'
 import { ReceivedProposalsGrid } from '@/components/received-proposals/received-proposals-grid'
 import { ReceivedProposalsSidebar } from '@/components/received-proposals/received-proposals-sidebar'
+import { MessageCircle } from 'lucide-react'
 
 export default function ReceivedProposalsPage() {
   const {
@@ -19,7 +20,13 @@ export default function ReceivedProposalsPage() {
 
   return (
     <GridPageLayout
-      header={<ReceivedProposalsHeader />}
+      header={
+        <PageHeader
+          icon={MessageCircle}
+          title="Received Proposals"
+          description="Review, compare, and manage all proposals submitted by vendors"
+        />
+      }
       stats={<ReceivedProposalsStats />}
       filters={
         <ReceivedProposalsFilters

@@ -2,14 +2,14 @@
 
 import { TickerBanner } from '@/components/ticker/ticker-banner';
 import { NavigationWrapper } from '@/components/navigation/navigation-wrapper';
-import { MyTechStackHeader } from '@/components/my-tech-stack/my-tech-stack-header';
+import { PageHeader } from '@/components/ui/page-header';
 import { MyTechStackStats } from '@/components/my-tech-stack/my-tech-stack-stats';
 import { MyTechStackFilters } from '@/components/my-tech-stack/my-tech-stack-filters';
 import { MyTechStackGrid } from '@/components/my-tech-stack/my-tech-stack-grid';
 import { MyTechStackSidebar } from '@/components/my-tech-stack/my-tech-stack-sidebar';
 import { AddSoftwareModal } from '@/components/my-tech-stack/add-software-modal';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Plus, Server } from 'lucide-react';
 import { useState } from 'react';
 
 export default function MyTechStackPage() {
@@ -26,17 +26,17 @@ export default function MyTechStackPage() {
       <NavigationWrapper />
       
       <div className="container mx-auto px-6 py-8 max-w-7xl">
-          {/* Page Header with Add Button */}
-          <div className="mb-8 flex items-start justify-between">
-            <MyTechStackHeader />
-            <Button
-              onClick={() => setIsAddModalOpen(true)}
-              className="bg-trust-green hover:bg-trust-green/90 text-white shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Software
-            </Button>
-          </div>
+          {/* Centered Page Header */}
+          <PageHeader
+            icon={Server}
+            title="My Tech Stack"
+            description="Manage your software inventory and optimize your technology investments"
+            action={{
+              label: "Add Software",
+              onClick: () => setIsAddModalOpen(true),
+              icon: Plus
+            }}
+          />
 
           {/* KPI Stats Section */}
           <div className="mb-8">

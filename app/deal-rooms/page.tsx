@@ -2,11 +2,12 @@
 
 import { useState } from 'react'
 import { GridPageLayout, useGridPageState } from '@/components/layouts/grid-page-layout'
-import { DealRoomsHeader } from '@/components/deal-rooms/deal-rooms-header'
+import { PageHeader } from '@/components/ui/page-header'
 import { DealRoomsFilters } from '@/components/deal-rooms/deal-rooms-filters'
 import { DealRoomsStats } from '@/components/deal-rooms/deal-rooms-stats'
 import { DealRoomsGrid } from '@/components/deal-rooms/deal-rooms-grid'
 import { DealRoomsSidebar } from '@/components/deal-rooms/deal-rooms-sidebar'
+import { Briefcase } from 'lucide-react'
 
 export default function DealRoomsPage() {
   const [selectedTab, setSelectedTab] = useState('all')
@@ -24,7 +25,13 @@ export default function DealRoomsPage() {
 
   return (
     <GridPageLayout
-      header={<DealRoomsHeader />}
+      header={
+        <PageHeader
+          icon={Briefcase}
+          title="Deal Rooms"
+          description="Manage your active negotiations and project discussions"
+        />
+      }
       stats={<DealRoomsStats />}
       filters={
         <DealRoomsFilters

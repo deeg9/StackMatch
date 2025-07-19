@@ -1,10 +1,11 @@
 import { Suspense } from 'react'
 import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 import { TickerBanner } from '@/components/ticker/ticker-banner'
-import { BrowseSellersHeader } from '@/components/browse-sellers/browse-sellers-header'
+import { PageHeader } from '@/components/ui/page-header'
 import { VendorsFiltersSection } from '@/components/browse-sellers/vendors-filters-section'
 import { VendorsGrid } from '@/components/browse-sellers/vendors-grid'
 import BrowseSellersLoading from './loading'
+import { Users } from 'lucide-react'
 
 export default function BrowseSellersPage() {
   return (
@@ -13,7 +14,11 @@ export default function BrowseSellersPage() {
       <NavigationWrapper />
       
       <div className="container mx-auto px-4 py-8">
-        <BrowseSellersHeader />
+        <PageHeader
+          icon={Users}
+          title="Browse Vendors"
+          description="Find the perfect vendor for your business"
+        />
         
         <div className="mt-8">
           <VendorsFiltersSection />
