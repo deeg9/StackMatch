@@ -13,7 +13,8 @@ import {
   AlertTriangle,
   CheckCircle2,
   User,
-  FileText
+  FileText,
+  Zap
 } from 'lucide-react'
 
 export function ReceivedProposalsSidebar() {
@@ -163,7 +164,8 @@ export function ReceivedProposalsSidebar() {
       {/* Quick Actions */}
       <Card className="border-2 hover:border-stackmatch-blue transition-all duration-300">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-bold text-stackmatch-navy">
+          <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+            <Zap className="h-4 w-4" />
             Quick Actions
           </CardTitle>
         </CardHeader>

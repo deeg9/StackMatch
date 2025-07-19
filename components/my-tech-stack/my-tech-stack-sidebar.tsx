@@ -1,6 +1,6 @@
 'use client';
 
-import { Card } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { 
@@ -12,7 +12,8 @@ import {
   TrendingUp,
   AlertCircle,
   ChevronRight,
-  PieChart
+  PieChart,
+  Zap
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -65,9 +66,14 @@ export function MyTechStackSidebar() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.1 }}
       >
-        <Card className="p-6">
-          <h3 className="font-semibold text-stackmatch-navy mb-4">Quick Actions</h3>
-          <div className="space-y-2">
+        <Card>
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+              <Zap className="h-4 w-4" />
+              Quick Actions
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
             <Button className="w-full justify-start gap-2 bg-stackmatch-blue hover:bg-stackmatch-navy text-white">
               <FileText className="h-4 w-4" />
               Generate Spend Report
@@ -80,7 +86,7 @@ export function MyTechStackSidebar() {
               <Calendar className="h-4 w-4" />
               Sync Renewal Calendar
             </button>
-          </div>
+          </CardContent>
         </Card>
       </motion.div>
 

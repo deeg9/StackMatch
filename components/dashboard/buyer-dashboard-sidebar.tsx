@@ -19,7 +19,8 @@ import {
   CalendarDays,
   Lightbulb,
   Target,
-  DollarSign
+  DollarSign,
+  Zap
 } from 'lucide-react'
 
 export function BuyerDashboardSidebar() {
@@ -209,8 +210,8 @@ export function BuyerDashboardSidebar() {
       {/* Quick Actions Card */}
       <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
         <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2 text-stackmatch-navy">
-            <Users className="w-5 h-5" />
+          <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+            <Zap className="h-4 w-4" />
             Quick Actions
           </CardTitle>
         </CardHeader>

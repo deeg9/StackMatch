@@ -12,7 +12,8 @@ import {
   Upload,
   Video,
   Bell,
-  CalendarDays
+  CalendarDays,
+  Zap
 } from 'lucide-react'
 
 export function MyListingsSidebar() {
@@ -115,7 +116,7 @@ export function MyListingsSidebar() {
       {/* Quick Actions Widget */}
       <SidebarWidget
         title="Quick Actions"
-        icon={Users}
+        icon={Zap}
       >
         <Button className="w-full justify-start bg-stackmatch-blue hover:bg-stackmatch-navy">
           <MessageSquare className="w-4 h-4 mr-2" />

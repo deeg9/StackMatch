@@ -36,7 +36,8 @@ import {
   Languages,
   ExternalLink,
   Plus,
-  Flag
+  Flag,
+  Zap
 } from 'lucide-react'
 
 interface ProfileData {
@@ -867,7 +868,10 @@ export default function ProfilePageContent() {
           {/* Quick Actions */}
           <Card className="border-0 shadow-lg">
             <CardHeader>
-              <h3 className="text-lg font-bold text-[#1A2B4C]">Quick Actions</h3>
+              <h3 className="text-lg font-normal text-medium-gray flex items-center gap-2">
+                <Zap className="h-4 w-4" />
+                Quick Actions
+              </h3>
             </CardHeader>
             <CardContent className="space-y-3">
               <ProfileEditModal profileData={profileData} onSave={handleProfileSave}>

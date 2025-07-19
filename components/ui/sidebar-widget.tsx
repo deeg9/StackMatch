@@ -28,8 +28,8 @@ export function SidebarWidget({
       className
     )}>
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 text-base font-medium text-medium-gray">
-          <Icon className="w-5 h-5" />
+        <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+          <Icon className="h-4 w-4" />
           {title}
         </CardTitle>
       </CardHeader>

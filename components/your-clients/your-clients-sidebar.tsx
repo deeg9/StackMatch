@@ -13,7 +13,8 @@ import {
   ArrowRight,
   Building2,
   Users,
-  BarChart3
+  BarChart3,
+  Zap
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -67,8 +68,8 @@ export function YourClientsSidebar() {
       {/* Quick Actions */}
       <Card className="border-2">
         <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-stackmatch-blue" />
+          <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+            <Zap className="h-4 w-4" />
             Quick Actions
           </CardTitle>
         </CardHeader>

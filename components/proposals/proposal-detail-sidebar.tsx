@@ -15,7 +15,8 @@ import {
   Calendar,
   CheckCircle,
   AlertCircle,
-  Download
+  Download,
+  Zap
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -51,7 +52,8 @@ export function ProposalDetailSidebar({ proposal, isOwner }: ProposalDetailSideb
       {isOwner && (
         <Card className="border-2">
           <CardHeader>
-            <CardTitle className="text-lg font-bold text-stackmatch-navy">
+            <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+              <Zap className="h-4 w-4" />
               Quick Actions
             </CardTitle>
           </CardHeader>

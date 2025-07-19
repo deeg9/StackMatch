@@ -14,7 +14,8 @@ import {
   ClipboardList,
   Mail,
   Phone,
-  Star
+  Star,
+  Zap
 } from 'lucide-react'
 import { ClientRecord } from '@/app/clients/[id]/page'
 
@@ -172,8 +173,8 @@ export function ClientRecordSidebar({ client }: ClientRecordSidebarProps) {
       {/* Quick Actions */}
       <Card className="border-2">
         <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <ClipboardList className="h-5 w-5 text-orange-600" />
+          <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+            <Zap className="h-4 w-4" />
             Quick Actions
           </CardTitle>
         </CardHeader>

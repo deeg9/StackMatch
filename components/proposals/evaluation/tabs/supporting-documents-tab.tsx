@@ -7,7 +7,8 @@ import {
   FileSpreadsheet, 
   Video,
   File,
-  ExternalLink
+  ExternalLink,
+  Zap
 } from 'lucide-react'
 import { AIGeneratedProposal } from '@/types/ai-proposal'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -164,7 +165,10 @@ export function SupportingDocumentsTab({ proposal }: SupportingDocumentsTabProps
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
+          <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+            <Zap className="h-4 w-4" />
+            Quick Actions
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-3">
