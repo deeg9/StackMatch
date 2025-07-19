@@ -73,17 +73,30 @@ export function YourClientsSidebar() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
-          {quickActions.map((action) => {
+          {quickActions.map((action, index) => {
             const Icon = action.icon;
+            const isPrimary = index === 0;
+            
+            if (isPrimary) {
+              return (
+                <Button
+                  key={action.id}
+                  className="w-full justify-start bg-stackmatch-blue hover:bg-stackmatch-navy text-white"
+                >
+                  <Icon className="h-4 w-4 mr-2" />
+                  {action.label}
+                </Button>
+              );
+            }
+            
             return (
-              <Button
+              <button
                 key={action.id}
-                variant="outline"
-                className="w-full justify-start hover:bg-stackmatch-blue/10 hover:text-stackmatch-blue hover:border-stackmatch-blue"
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors"
               >
-                <Icon className="h-4 w-4 mr-2" />
+                <Icon className="w-4 h-4" />
                 {action.label}
-              </Button>
+              </button>
             );
           })}
         </CardContent>

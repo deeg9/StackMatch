@@ -224,25 +224,25 @@ export function SellerDashboardSidebar() {
             Submit Proposal
           </Button>
           
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <BookmarkPlus className="w-4 h-4 mr-2" />
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <BookmarkPlus className="w-4 h-4" />
             Save Listing
-          </Button>
+          </button>
           
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Video className="w-4 h-4 mr-2" />
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <Video className="w-4 h-4" />
             Schedule Demo
-          </Button>
+          </button>
           
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <UserPlus className="w-4 h-4 mr-2" />
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <UserPlus className="w-4 h-4" />
             Invite Client
-          </Button>
+          </button>
           
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Upload className="w-4 h-4 mr-2" />
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <Upload className="w-4 h-4" />
             Upload Portfolio
-          </Button>
+          </button>
         </CardContent>
       </Card>
 

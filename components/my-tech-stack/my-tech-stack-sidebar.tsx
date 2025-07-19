@@ -68,18 +68,18 @@ export function MyTechStackSidebar() {
         <Card className="p-6">
           <h3 className="font-semibold text-stackmatch-navy mb-4">Quick Actions</h3>
           <div className="space-y-2">
-            <Button variant="outline" className="w-full justify-start gap-2">
+            <Button className="w-full justify-start gap-2 bg-stackmatch-blue hover:bg-stackmatch-navy text-white">
               <FileText className="h-4 w-4" />
               Generate Spend Report
             </Button>
-            <Button variant="outline" className="w-full justify-start gap-2">
+            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
               <Download className="h-4 w-4" />
               Export License Data
-            </Button>
-            <Button variant="outline" className="w-full justify-start gap-2">
+            </button>
+            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
               <Calendar className="h-4 w-4" />
               Sync Renewal Calendar
-            </Button>
+            </button>
           </div>
         </Card>
       </motion.div>

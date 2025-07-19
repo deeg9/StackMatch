@@ -61,19 +61,19 @@ export function ProposalDetailSidebar({ proposal, isOwner }: ProposalDetailSideb
               Shortlist This Proposal
             </Button>
             <Link href={`/deal-rooms/new?proposal=${proposal.id}`} className="block">
-              <Button variant="outline" className="w-full">
-                <Users className="h-4 w-4 mr-2" />
+              <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+                <Users className="w-4 h-4" />
                 Start Negotiation
-              </Button>
+              </button>
             </Link>
-            <Button variant="outline" className="w-full">
-              <MessageSquare className="h-4 w-4 mr-2" />
+            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+              <MessageSquare className="w-4 h-4" />
               Message Vendor
-            </Button>
-            <Button variant="outline" className="w-full">
-              <Calendar className="h-4 w-4 mr-2" />
+            </button>
+            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+              <Calendar className="w-4 h-4" />
               Schedule Meeting
-            </Button>
+            </button>
           </CardContent>
         </Card>
       )}
