@@ -1,3 +1,5 @@
+'use client'
+
 import { Suspense } from 'react'
 import { NavigationWrapper } from '@/components/navigation/navigation-wrapper'
 import { TickerBanner } from '@/components/ticker/ticker-banner'
