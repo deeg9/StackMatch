@@ -220,25 +220,25 @@ export function BuyerDashboardSidebar() {
             Send Message
           </Button>
           
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Upload className="w-4 h-4 mr-2" />
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <Upload className="w-4 h-4" />
             Upload Document
-          </Button>
+          </button>
           
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Video className="w-4 h-4 mr-2" />
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <Video className="w-4 h-4" />
             Start Meeting
-          </Button>
+          </button>
           
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <CalendarDays className="w-4 h-4 mr-2" />
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <CalendarDays className="w-4 h-4" />
             Schedule Meeting
-          </Button>
+          </button>
           
-          <Button variant="outline" className="w-full justify-start hover:bg-slate-50">
-            <Bell className="w-4 h-4 mr-2" />
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <Bell className="w-4 h-4" />
             Set Reminder
-          </Button>
+          </button>
         </CardContent>
       </Card>
 
