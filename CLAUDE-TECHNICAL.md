@@ -156,6 +156,7 @@ if (error || !user) {
 
 /components/
 ├── ui/ (Complete shadcn/ui library)
+│   ├── sidebar-widget.tsx (Centralized sidebar portlet component)
 ├── navigation/
 ├── browse-sellers/
 ├── browse-listings/
@@ -497,6 +498,8 @@ if (error || !user) {
 - Ensure mobile responsiveness
 - Add proper ARIA labels
 - Test with keyboard navigation
+- Use SidebarWidget component for all sidebar portlets
+- Maintain consistent bold navy titles (#1A2B4C) across UI
 
 ---
 

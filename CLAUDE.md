@@ -68,6 +68,7 @@ StackMatch is an intelligent, three-sided B2B software procurement marketplace c
 18. **UI Component System** - Complete design system with animations
 
 ### Recent Enhancements (January 2025):
+- **Sidebar Widget Standardization** - Complete refactoring of all sidebar portlets to use centralized SidebarWidget component
 - **Buyer Dashboard Portlet Refinements** - Professional UI/UX overhaul with improved information hierarchy
 - **RFQ Details Page** - Revolutionary "RFQ Command Center" transforming linear wizard to comprehensive tabbed interface
 - **Proposal Submission System** - Revolutionary AI-powered seller response workflow mirroring buyer's RFQ creation

@@ -782,3 +782,28 @@ This document contains detailed documentation of all completed features in the S
 - **Brand System**: Perfect StackMatch color implementation with hover states
 - **Professional Patterns**: Consistent spacing, typography, and interaction design
 - **Navigation Components**: useRouter integration for seamless page transitions
+
+## 25. Sidebar Widget System - STANDARDIZED UI COMPONENTS
+**Location**: `/components/ui/sidebar-widget.tsx`
+
+- **Centralized Widget Component**: Single source of truth for all sidebar portlet designs
+- **Consistent Styling**: Bold navy titles (#1A2B4C) with icon integration and proper spacing
+- **Flexible Architecture**: Accepts title, icon (LucideIcon), children, optional actionLabel/onAction, and custom className
+- **12 Implementations Across Platform**: 
+  - Dashboard sidebars (buyer and seller)
+  - Deal room sidebars
+  - Proposal management sidebars
+  - Client management sidebars
+  - Tech stack sidebar
+  - Listing detail sidebar
+  - Browse listings sidebar
+- **Design Improvements**:
+  - Previously inconsistent light gray titles now bold and prominent
+  - Standardized icon placement and sizing
+  - Unified hover states and action button styling
+  - Preserved special styling capabilities (e.g., colored backgrounds)
+- **Technical Benefits**:
+  - Single point of maintenance for design updates
+  - TypeScript type safety with proper interfaces
+  - Reduced code duplication across components
+  - Consistent user experience throughout platform
