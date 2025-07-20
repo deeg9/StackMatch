@@ -3,6 +3,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { SidebarWidget } from '@/components/ui/sidebar-widget';
 import { 
   Sparkles, 
   FileText, 
@@ -96,12 +97,10 @@ export function MyTechStackSidebar() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-stackmatch-navy">Cost Breakdown</h3>
-            <PieChart className="h-4 w-4 text-gray-400" />
-          </div>
-          
+        <SidebarWidget
+          title="Cost Breakdown"
+          icon={PieChart}
+        >
           <div className="space-y-3">
             {costBreakdown.map((item, index) => (
               <div key={index}>
@@ -135,12 +134,11 @@ export function MyTechStackSidebar() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-stackmatch-navy">Upcoming Renewals</h3>
-            <span className="text-xs text-gray-500">Next 90 days</span>
-          </div>
-
+        <SidebarWidget
+          title="Upcoming Renewals"
+          icon={Calendar}
+          actionLabel="Next 90 days"
+        >
           <div className="space-y-3">
             {upcomingRenewals.map((renewal, index) => (
               <div 
@@ -169,12 +167,11 @@ export function MyTechStackSidebar() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <Card className="p-6 border-2 border-purple-100 bg-purple-50/50">
-          <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="h-5 w-5 text-purple-600" />
-            <h3 className="font-semibold text-stackmatch-navy">Optimization Suggestions</h3>
-          </div>
-
+        <SidebarWidget
+          title="Optimization Suggestions"
+          icon={Sparkles}
+          className="border-2 border-purple-100 bg-purple-50/50"
+        >
           <div className="space-y-3">
             {optimizations.map((item, index) => {
               const Icon = item.icon;

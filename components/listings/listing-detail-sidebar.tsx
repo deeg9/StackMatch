@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { SidebarWidget } from '@/components/ui/sidebar-widget'
 import { 
   Calendar,
   Clock,
@@ -15,7 +16,9 @@ import {
   Download,
   Bookmark,
   MessageSquare,
-  Zap
+  Zap,
+  FileText,
+  Info
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -41,23 +44,20 @@ export function ListingDetailSidebar({ listing, isOwner, userType }: ListingDeta
   return (
     <div className="space-y-6">
       {/* Export & Share - Now at the top for all users */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg font-bold text-stackmatch-navy">
-            Export & Share
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <Button variant="outline" className="w-full">
-            <Share2 className="h-4 w-4 mr-2" />
-            Share to Socials
-          </Button>
-          <Button variant="outline" className="w-full">
-            <Download className="h-4 w-4 mr-2" />
-            Download
-          </Button>
-        </CardContent>
-      </Card>
+      <SidebarWidget
+        title="Export & Share"
+        icon={Share2}
+        className="border-2"
+      >
+        <Button variant="outline" className="w-full">
+          <Share2 className="h-4 w-4 mr-2" />
+          Share to Socials
+        </Button>
+        <Button variant="outline" className="w-full">
+          <Download className="h-4 w-4 mr-2" />
+          Download
+        </Button>
+      </SidebarWidget>
 
       {/* Quick Actions */}
       {!isOwner && userType === 'seller' && listing.status === 'ACTIVE' && (
@@ -84,13 +84,12 @@ export function ListingDetailSidebar({ listing, isOwner, userType }: ListingDeta
       )}
 
       {/* Key Information */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg font-bold text-stackmatch-navy">
-            Key Information
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <SidebarWidget
+        title="Key Information"
+        icon={Info}
+        className="border-2"
+      >
+        <div className="space-y-4">
           <div className="flex items-start gap-3">
             <Calendar className="h-5 w-5 text-stackmatch-blue mt-0.5" />
             <div>
@@ -149,13 +148,12 @@ export function ListingDetailSidebar({ listing, isOwner, userType }: ListingDeta
 
       {/* Engagement Stats */}
       {isOwner && (
-        <Card className="border-2">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold text-stackmatch-navy">
-              Engagement Stats
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        <SidebarWidget
+          title="Engagement Stats"
+          icon={TrendingUp}
+          className="border-2"
+        >
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-trust-green" />
@@ -190,31 +188,28 @@ export function ListingDetailSidebar({ listing, isOwner, userType }: ListingDeta
 
       {/* Related Listings */}
       {!isOwner && (
-        <Card className="border-2">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold text-stackmatch-navy">
-              Similar Listings
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="space-y-3">
-              {[1, 2, 3].map((i) => (
-                <Link 
-                  key={i} 
-                  href={`/listings/similar-${i}`}
-                  className="block p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
-                >
-                  <h4 className="font-medium text-sm text-charcoal mb-1">
-                    Enterprise Software Implementation
-                  </h4>
-                  <p className="text-xs text-medium-gray">
-                    $50K - $100K • 2 days left
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <SidebarWidget
+          title="Similar Listings"
+          icon={FileText}
+          className="border-2"
+        >
+          <div className="space-y-3">
+            {[1, 2, 3].map((i) => (
+              <Link 
+                key={i} 
+                href={`/listings/similar-${i}`}
+                className="block p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
+              >
+                <h4 className="font-medium text-sm text-charcoal mb-1">
+                  Enterprise Software Implementation
+                </h4>
+                <p className="text-xs text-medium-gray">
+                  $50K - $100K • 2 days left
+                </p>
+              </Link>
+            ))}
+          </div>
+        </SidebarWidget>
       )}
     </div>
   )
