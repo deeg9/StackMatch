@@ -214,7 +214,7 @@ export function SellerDashboardSidebar() {
       {/* Quick Actions Card */}
       <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+          <CardTitle className="text-lg font-bold text-stackmatch-navy flex items-center gap-2">
             <Zap className="h-4 w-4" />
             Quick Actions
           </CardTitle>
@@ -225,22 +225,22 @@ export function SellerDashboardSidebar() {
             Submit Proposal
           </Button>
           
-          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
             <BookmarkPlus className="w-4 h-4" />
             Save Listing
           </button>
           
-          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
             <Video className="w-4 h-4" />
             Schedule Demo
           </button>
           
-          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
             <UserPlus className="w-4 h-4" />
             Invite Client
           </button>
           
-          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
             <Upload className="w-4 h-4" />
             Upload Portfolio
           </button>

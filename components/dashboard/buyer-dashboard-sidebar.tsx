@@ -210,7 +210,7 @@ export function BuyerDashboardSidebar() {
       {/* Quick Actions Card */}
       <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+          <CardTitle className="text-lg font-bold text-stackmatch-navy flex items-center gap-2">
             <Zap className="h-4 w-4" />
             Quick Actions
           </CardTitle>
@@ -221,22 +221,22 @@ export function BuyerDashboardSidebar() {
             Send Message
           </Button>
           
-          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
             <Upload className="w-4 h-4" />
             Upload Document
           </button>
           
-          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
             <Video className="w-4 h-4" />
             Start Meeting
           </button>
           
-          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
             <CalendarDays className="w-4 h-4" />
             Schedule Meeting
           </button>
           
-          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+          <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
             <Bell className="w-4 h-4" />
             Set Reminder
           </button>

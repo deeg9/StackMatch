@@ -165,7 +165,7 @@ export function SupportingDocumentsTab({ proposal }: SupportingDocumentsTabProps
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+          <CardTitle className="text-lg font-bold text-stackmatch-navy flex items-center gap-2">
             <Zap className="h-4 w-4" />
             Quick Actions
           </CardTitle>

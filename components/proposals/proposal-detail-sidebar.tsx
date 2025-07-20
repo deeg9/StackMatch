@@ -52,7 +52,7 @@ export function ProposalDetailSidebar({ proposal, isOwner }: ProposalDetailSideb
       {isOwner && (
         <Card className="border-2">
           <CardHeader>
-            <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+            <CardTitle className="text-lg font-bold text-stackmatch-navy flex items-center gap-2">
               <Zap className="h-4 w-4" />
               Quick Actions
             </CardTitle>
@@ -63,16 +63,16 @@ export function ProposalDetailSidebar({ proposal, isOwner }: ProposalDetailSideb
               Shortlist This Proposal
             </Button>
             <Link href={`/deal-rooms/new?proposal=${proposal.id}`} className="block">
-              <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+              <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
                 <Users className="w-4 h-4" />
                 Start Negotiation
               </button>
             </Link>
-            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
               <MessageSquare className="w-4 h-4" />
               Message Vendor
             </button>
-            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors">
+            <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors">
               <Calendar className="w-4 h-4" />
               Schedule Meeting
             </button>

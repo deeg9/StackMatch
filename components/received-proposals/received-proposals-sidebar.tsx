@@ -164,7 +164,7 @@ export function ReceivedProposalsSidebar() {
       {/* Quick Actions */}
       <Card className="border-2 hover:border-stackmatch-blue transition-all duration-300">
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-normal text-medium-gray flex items-center gap-2">
+          <CardTitle className="text-lg font-bold text-stackmatch-navy flex items-center gap-2">
             <Zap className="h-4 w-4" />
             Quick Actions
           </CardTitle>
@@ -192,7 +192,7 @@ export function ReceivedProposalsSidebar() {
             return (
               <button
                 key={action.label}
-                className="w-full flex items-center gap-3 px-4 py-2 text-sm text-medium-gray hover:text-stackmatch-blue transition-colors animate-fade-in"
+                className="w-full flex items-center gap-3 px-4 py-2 text-sm text-charcoal hover:text-stackmatch-blue transition-colors animate-fade-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <Icon className="w-4 h-4 flex-shrink-0" />

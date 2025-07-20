@@ -868,7 +868,7 @@ export default function ProfilePageContent() {
           {/* Quick Actions */}
           <Card className="border-0 shadow-lg">
             <CardHeader>
-              <h3 className="text-lg font-normal text-medium-gray flex items-center gap-2">
+              <h3 className="text-lg font-bold text-stackmatch-navy flex items-center gap-2">
                 <Zap className="h-4 w-4" />
                 Quick Actions
               </h3>
