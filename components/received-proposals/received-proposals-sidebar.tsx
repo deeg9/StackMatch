@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { SidebarWidget } from '@/components/ui/sidebar-widget'
 import { 
   MessageSquare, 
   Upload, 
@@ -204,91 +205,83 @@ export function ReceivedProposalsSidebar() {
       </Card>
 
       {/* Pending Actions */}
-      <Card className="border-2 hover:border-attention-orange transition-all duration-300">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-bold text-stackmatch-navy flex items-center gap-2">
-            <Clock className="w-5 h-5 text-attention-orange" />
-            Pending Actions
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {pendingActions.map((action, index) => {
-            const Icon = action.icon
-            return (
-              <div
-                key={action.id}
-                className={`flex items-start gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-all duration-200 cursor-pointer animate-fade-in`}
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <div className={`w-1 h-12 rounded-full ${getPriorityColor(action.priority)} flex-shrink-0`}></div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between mb-1">
-                    <h4 className="text-sm font-medium text-stackmatch-navy line-clamp-2">
-                      {action.title}
-                    </h4>
-                    <Badge 
-                      className={`${getPriorityBadge(action.priority)} ml-2 flex-shrink-0 text-xs`}
-                    >
-                      {action.priority}
-                    </Badge>
-                  </div>
-                  <p className="text-xs text-medium-gray mb-1 line-clamp-1">
-                    {action.description}
-                  </p>
-                  <div className="flex items-center gap-1 text-xs text-charcoal">
-                    <Icon className="w-3 h-3" />
-                    <span>Due: {action.dueDate}</span>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </CardContent>
-      </Card>
-
-      {/* Upcoming Deadlines */}
-      <Card className="border-2 hover:border-red-300 transition-all duration-300">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-bold text-stackmatch-navy flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-red-500" />
-            Upcoming Deadlines
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {upcomingDeadlines.map((deadline, index) => (
+      <SidebarWidget
+        title="Pending Actions"
+        icon={Clock}
+        className="border-2 hover:border-attention-orange transition-all duration-300"
+      >
+        {pendingActions.map((action, index) => {
+          const Icon = action.icon
+          return (
             <div
-              key={deadline.id}
-              className={`flex items-start gap-3 p-3 rounded-lg ${
-                deadline.isOverdue 
-                  ? 'bg-red-50 border border-red-200' 
-                  : 'bg-slate-50 hover:bg-slate-100'
-              } transition-all duration-200 cursor-pointer animate-fade-in`}
+              key={action.id}
+              className={`flex items-start gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-all duration-200 cursor-pointer animate-fade-in`}
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              <div className={`w-1 h-12 rounded-full ${getPriorityColor(deadline.priority)} flex-shrink-0`}></div>
+              <div className={`w-1 h-12 rounded-full ${getPriorityColor(action.priority)} flex-shrink-0`}></div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between mb-1">
                   <h4 className="text-sm font-medium text-stackmatch-navy line-clamp-2">
-                    {deadline.title}
+                    {action.title}
                   </h4>
-                  {deadline.isOverdue && (
-                    <Badge className="bg-red-500 text-white ml-2 flex-shrink-0">
-                      OVERDUE
-                    </Badge>
-                  )}
+                  <Badge 
+                    className={`${getPriorityBadge(action.priority)} ml-2 flex-shrink-0 text-xs`}
+                  >
+                    {action.priority}
+                  </Badge>
                 </div>
                 <p className="text-xs text-medium-gray mb-1 line-clamp-1">
-                  {deadline.description}
+                  {action.description}
                 </p>
                 <div className="flex items-center gap-1 text-xs text-charcoal">
-                  <Calendar className="w-3 h-3" />
-                  <span>{deadline.date}</span>
+                  <Icon className="w-3 h-3" />
+                  <span>Due: {action.dueDate}</span>
                 </div>
               </div>
             </div>
-          ))}
-        </CardContent>
-      </Card>
+          )
+        })}
+      </SidebarWidget>
+
+      {/* Upcoming Deadlines */}
+      <SidebarWidget
+        title="Upcoming Deadlines"
+        icon={AlertTriangle}
+        className="border-2 hover:border-red-300 transition-all duration-300"
+      >
+        {upcomingDeadlines.map((deadline, index) => (
+          <div
+            key={deadline.id}
+            className={`flex items-start gap-3 p-3 rounded-lg ${
+              deadline.isOverdue 
+                ? 'bg-red-50 border border-red-200' 
+                : 'bg-slate-50 hover:bg-slate-100'
+            } transition-all duration-200 cursor-pointer animate-fade-in`}
+            style={{ animationDelay: `${index * 50}ms` }}
+          >
+            <div className={`w-1 h-12 rounded-full ${getPriorityColor(deadline.priority)} flex-shrink-0`}></div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between mb-1">
+                <h4 className="text-sm font-medium text-stackmatch-navy line-clamp-2">
+                  {deadline.title}
+                </h4>
+                {deadline.isOverdue && (
+                  <Badge className="bg-red-500 text-white ml-2 flex-shrink-0">
+                    OVERDUE
+                  </Badge>
+                )}
+              </div>
+              <p className="text-xs text-medium-gray mb-1 line-clamp-1">
+                {deadline.description}
+              </p>
+              <div className="flex items-center gap-1 text-xs text-charcoal">
+                <Calendar className="w-3 h-3" />
+                <span>{deadline.date}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </SidebarWidget>
     </div>
   )
 }

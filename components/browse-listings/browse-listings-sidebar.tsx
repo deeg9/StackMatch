@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { SidebarWidget } from '@/components/ui/sidebar-widget'
 import { 
   Search, 
   Bell, 
@@ -62,14 +63,11 @@ export function BrowseListingsSidebar() {
   return (
     <div className="space-y-6">
       {/* Saved Searches */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Search className="h-5 w-5 text-stackmatch-blue" />
-            Saved Searches
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
+      <SidebarWidget
+        title="Saved Searches"
+        icon={Search}
+      >
+        <div className="space-y-2">
           {savedSearches.map((search) => (
             <div
               key={search.id}
@@ -85,18 +83,16 @@ export function BrowseListingsSidebar() {
           <Button variant="outline" className="w-full mt-2" size="sm">
             Manage Alerts
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </SidebarWidget>
 
       {/* AI Recommendations */}
-      <Card className="border-2 border-stackmatch-blue/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Sparkles className="h-5 w-5 text-stackmatch-blue" />
-            AI-Matched Opportunities
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <SidebarWidget
+        title="AI-Matched Opportunities"
+        icon={Sparkles}
+        className="border-2 border-stackmatch-blue/20"
+      >
+        <div className="space-y-3">
           {recommendedListings.map((listing) => (
             <div
               key={listing.id}
@@ -123,18 +119,15 @@ export function BrowseListingsSidebar() {
               </Link>
             </div>
           ))}
-        </CardContent>
-      </Card>
+        </div>
+      </SidebarWidget>
 
       {/* Quick Stats */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <TrendingUp className="h-5 w-5 text-trust-green" />
-            Market Insights
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <SidebarWidget
+        title="Market Insights"
+        icon={TrendingUp}
+      >
+        <div className="space-y-3">
           <div className="flex items-center justify-between p-2">
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-information-blue" />
@@ -163,18 +156,15 @@ export function BrowseListingsSidebar() {
             </div>
             <span className="text-sm font-semibold text-trust-green">23% average</span>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </SidebarWidget>
 
       {/* Proposal Tips */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <BookOpen className="h-5 w-5 text-information-blue" />
-            Winning Proposal Tips
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+      <SidebarWidget
+        title="Winning Proposal Tips"
+        icon={BookOpen}
+      >
+        <div>
           <ul className="space-y-2">
             {proposalTips.map((tip, index) => (
               <li key={index} className="flex items-start gap-2 text-sm">
@@ -189,8 +179,8 @@ export function BrowseListingsSidebar() {
               <ChevronRight className="h-3 w-3 ml-1" />
             </Button>
           </Link>
-        </CardContent>
-      </Card>
+        </div>
+      </SidebarWidget>
 
       {/* CTA */}
       <Card className="bg-gradient-to-br from-stackmatch-blue to-stackmatch-navy text-white">

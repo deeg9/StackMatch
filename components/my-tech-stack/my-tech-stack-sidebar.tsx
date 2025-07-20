@@ -126,7 +126,7 @@ export function MyTechStackSidebar() {
               <span className="text-lg font-bold text-stackmatch-navy">$548,040</span>
             </div>
           </div>
-        </Card>
+        </SidebarWidget>
       </motion.div>
 
       {/* Upcoming Renewals */}
@@ -160,15 +160,7 @@ export function MyTechStackSidebar() {
               </div>
             ))}
           </div>
-
-          <Button 
-            variant="link" 
-            className="w-full mt-3 text-stackmatch-blue hover:text-stackmatch-blue/80"
-          >
-            View all renewals
-            <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
-        </Card>
+        </SidebarWidget>
       </motion.div>
 
       {/* Optimization Suggestions */}
@@ -212,7 +204,7 @@ export function MyTechStackSidebar() {
               <span className="text-lg font-bold text-purple-900">$42,750/year</span>
             </div>
           </div>
-        </Card>
+        </SidebarWidget>
       </motion.div>
     </div>
   );

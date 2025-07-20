@@ -144,8 +144,8 @@ export function ListingDetailSidebar({ listing, isOwner, userType }: ListingDeta
               </p>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </SidebarWidget>
 
       {/* Engagement Stats */}
       {isOwner && (
@@ -183,8 +183,8 @@ export function ListingDetailSidebar({ listing, isOwner, userType }: ListingDeta
               </div>
               <span className="text-sm font-semibold text-charcoal">2.4 hours</span>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </SidebarWidget>
       )}
 
 

@@ -1,10 +1,10 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { SidebarWidget } from '@/components/ui/sidebar-widget'
 import { 
   Activity,
   Calendar,
@@ -167,119 +167,96 @@ export function DealRoomsSidebar() {
   return (
     <div className="space-y-6 animate-slide-up">
       {/* Recent Activity */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Activity className="w-5 h-5 text-trust-green" />
-            Recent Activity
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {recentActivity.map((activity) => (
-              <div key={activity.id} className="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer">
-                <div className="flex-shrink-0">
-                  {getActivityIcon(activity.type)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-stackmatch-navy line-clamp-2">
-                    {activity.title}
-                  </p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Avatar className="w-4 h-4">
-                      <AvatarImage src={activity.avatar} alt={activity.user} />
-                      <AvatarFallback className="text-xs">{activity.user[0]}</AvatarFallback>
-                    </Avatar>
-                    <span className="text-xs text-medium-gray">{activity.user}</span>
-                    <span className="text-xs text-medium-gray">•</span>
-                    <span className="text-xs text-medium-gray">{activity.time}</span>
-                  </div>
-                </div>
+      <SidebarWidget
+        title="Recent Activity"
+        icon={Activity}
+        actionLabel="View All Activity"
+        onAction={() => router.push('/deal-rooms?tab=activity')}
+      >
+        {recentActivity.map((activity) => (
+          <div key={activity.id} className="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer">
+            <div className="flex-shrink-0">
+              {getActivityIcon(activity.type)}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-stackmatch-navy line-clamp-2">
+                {activity.title}
+              </p>
+              <div className="flex items-center gap-2 mt-1">
+                <Avatar className="w-4 h-4">
+                  <AvatarImage src={activity.avatar} alt={activity.user} />
+                  <AvatarFallback className="text-xs">{activity.user[0]}</AvatarFallback>
+                </Avatar>
+                <span className="text-xs text-medium-gray">{activity.user}</span>
+                <span className="text-xs text-medium-gray">•</span>
+                <span className="text-xs text-medium-gray">{activity.time}</span>
               </div>
-            ))}
+            </div>
           </div>
-          <Button variant="ghost" className="w-full mt-3 text-stackmatch-blue">
-            View All Activity
-          </Button>
-        </CardContent>
-      </Card>
+        ))}
+      </SidebarWidget>
 
       {/* Upcoming Deadlines */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Clock className="w-5 h-5 text-attention-orange" />
-            Upcoming Deadlines
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {upcomingDeadlines.map((deadline) => (
-              <div 
-                key={deadline.id} 
-                className="p-3 border border-slate-200 rounded-lg hover:shadow-sm transition-all cursor-pointer hover:border-stackmatch-blue/50 group"
-                onClick={() => handleDeadlineClick(deadline)}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <p className="font-medium text-stackmatch-navy text-sm group-hover:text-stackmatch-blue transition-colors flex items-center gap-1">
-                      {deadline.title}
-                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </p>
-                    <p className="text-xs text-medium-gray mt-1">
-                      {deadline.project}
-                    </p>
-                    <p className="text-xs text-charcoal mt-1 flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      {deadline.date}
-                    </p>
-                  </div>
-                  <Badge className={`text-xs ${getPriorityColor(deadline.priority)}`}>
-                    {deadline.priority}
-                  </Badge>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Pending Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Bell className="w-5 h-5 text-information-blue" />
-            Pending Actions
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {pendingActions.map((action) => (
-              <div 
-                key={action.id} 
-                className={`p-3 border-l-4 rounded-r-lg ${getUrgencyColor(action.urgency)} cursor-pointer hover:shadow-sm transition-all group`}
-                onClick={() => handleActionClick(action)}
-              >
+      <SidebarWidget
+        title="Upcoming Deadlines"
+        icon={Clock}
+      >
+        {upcomingDeadlines.map((deadline) => (
+          <div 
+            key={deadline.id} 
+            className="p-3 border border-slate-200 rounded-lg hover:shadow-sm transition-all cursor-pointer hover:border-stackmatch-blue/50 group"
+            onClick={() => handleDeadlineClick(deadline)}
+          >
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
                 <p className="font-medium text-stackmatch-navy text-sm group-hover:text-stackmatch-blue transition-colors flex items-center gap-1">
-                  {action.title}
+                  {deadline.title}
                   <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </p>
-                <div className="flex items-center justify-between mt-2">
-                  <Badge variant="outline" className="text-xs">
-                    {action.type}
-                  </Badge>
-                  <span className="text-xs text-medium-gray capitalize">
-                    {action.urgency} priority
-                  </span>
-                </div>
+                <p className="text-xs text-medium-gray mt-1">
+                  {deadline.project}
+                </p>
+                <p className="text-xs text-charcoal mt-1 flex items-center gap-1">
+                  <Calendar className="w-3 h-3" />
+                  {deadline.date}
+                </p>
               </div>
-            ))}
+              <Badge className={`text-xs ${getPriorityColor(deadline.priority)}`}>
+                {deadline.priority}
+              </Badge>
+            </div>
           </div>
-          <Button variant="ghost" className="w-full mt-3 text-stackmatch-blue">
-            View All Actions
-          </Button>
-        </CardContent>
-      </Card>
+        ))}
+      </SidebarWidget>
+
+      {/* Pending Actions */}
+      <SidebarWidget
+        title="Pending Actions"
+        icon={Bell}
+        actionLabel="View All Actions"
+        onAction={() => router.push('/deal-rooms?tab=actions')}
+      >
+        {pendingActions.map((action) => (
+          <div 
+            key={action.id} 
+            className={`p-3 border-l-4 rounded-r-lg ${getUrgencyColor(action.urgency)} cursor-pointer hover:shadow-sm transition-all group`}
+            onClick={() => handleActionClick(action)}
+          >
+            <p className="font-medium text-stackmatch-navy text-sm group-hover:text-stackmatch-blue transition-colors flex items-center gap-1">
+              {action.title}
+              <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </p>
+            <div className="flex items-center justify-between mt-2">
+              <Badge variant="outline" className="text-xs">
+                {action.type}
+              </Badge>
+              <span className="text-xs text-medium-gray capitalize">
+                {action.urgency} priority
+              </span>
+            </div>
+          </div>
+        ))}
+      </SidebarWidget>
     </div>
   )
 }

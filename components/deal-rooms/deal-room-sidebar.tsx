@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
+import { SidebarWidget } from '@/components/ui/sidebar-widget'
 import { 
   DollarSign, 
   Calendar, 
@@ -67,14 +68,11 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Deal Summary Card */}
-      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2 text-stackmatch-navy">
-            <BarChart3 className="w-5 h-5" />
-            Deal Summary
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
+      <SidebarWidget
+        title="Deal Summary"
+        icon={BarChart3}
+      >
+        <div className="space-y-6">
           {/* Deal Value */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
@@ -134,8 +132,8 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
               className="h-2"
             />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </SidebarWidget>
 
       {/* Quick Actions Card */}
       <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
@@ -176,47 +174,38 @@ export function DealRoomSidebar({ dealRoom }: DealRoomSidebarProps) {
       </Card>
 
       {/* Recent Activity Card */}
-      <Card className="border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center justify-between text-stackmatch-navy">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5" />
-              Recent Activity
-            </div>
-            <Button variant="ghost" size="sm" className="text-xs">
-              View All
-              <ArrowRight className="w-3 h-3 ml-1" />
-            </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {dealRoom.recentActivity.map((activity: any) => {
-            const Icon = getActivityIcon(activity.type)
-            const colorClass = getActivityColor(activity.type)
-            
-            return (
-              <div key={activity.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors duration-200">
-                <div className={`p-1.5 rounded-full bg-white border-2 ${colorClass.replace('text-', 'border-')}`}>
-                  <Icon className={`w-3 h-3 ${colorClass}`} />
+      <SidebarWidget
+        title="Recent Activity"
+        icon={TrendingUp}
+        actionLabel="View All"
+        onAction={() => console.log('View all activity')}
+      >
+        {dealRoom.recentActivity.map((activity: any) => {
+          const Icon = getActivityIcon(activity.type)
+          const colorClass = getActivityColor(activity.type)
+          
+          return (
+            <div key={activity.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors duration-200">
+              <div className={`p-1.5 rounded-full bg-white border-2 ${colorClass.replace('text-', 'border-')}`}>
+                <Icon className={`w-3 h-3 ${colorClass}`} />
+              </div>
+              
+              <div className="flex-1 min-w-0">
+                <div className="text-xs text-medium-gray">{activity.timestamp}</div>
+                <div className="text-sm font-medium text-stackmatch-navy">
+                  {activity.user}
                 </div>
-                
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs text-medium-gray">{activity.timestamp}</div>
-                  <div className="text-sm font-medium text-stackmatch-navy">
-                    {activity.user}
-                  </div>
-                  <div className="text-xs text-medium-gray">
-                    {activity.action}
-                  </div>
-                  <div className="text-xs text-charcoal font-medium mt-1">
-                    {activity.details}
-                  </div>
+                <div className="text-xs text-medium-gray">
+                  {activity.action}
+                </div>
+                <div className="text-xs text-charcoal font-medium mt-1">
+                  {activity.details}
                 </div>
               </div>
-            )
-          })}
-        </CardContent>
-      </Card>
+            </div>
+          )
+        })}
+      </SidebarWidget>
 
     </div>
   )

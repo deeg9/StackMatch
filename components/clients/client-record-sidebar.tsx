@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { SidebarWidget } from '@/components/ui/sidebar-widget'
 import { 
   Globe, 
   MapPin, 
@@ -41,14 +42,11 @@ export function ClientRecordSidebar({ client }: ClientRecordSidebarProps) {
   return (
     <div className="space-y-6">
       {/* At a Glance */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Info className="h-5 w-5 text-stackmatch-blue" />
-            At a Glance
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <SidebarWidget
+        title="At a Glance"
+        icon={Info}
+        className="border-2"
+      >
           <div className="space-y-3">
             <div>
               <p className="text-sm text-medium-gray mb-1">Website</p>
@@ -78,18 +76,16 @@ export function ClientRecordSidebar({ client }: ClientRecordSidebarProps) {
               </p>
             </div>
           </div>
-        </CardContent>
-      </Card>
+      </SidebarWidget>
 
       {/* Key Contacts */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Users className="h-5 w-5 text-purple-600" />
-            Key Contacts
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+      <SidebarWidget
+        title="Key Contacts"
+        icon={Users}
+        className="border-2"
+        actionLabel="View All Contacts"
+        onAction={() => window.location.href = `/clients/${client.id}/contacts`}
+      >
           <div className="space-y-4">
             {/* Primary Contact */}
             <div className="p-4 bg-slate-50 rounded-lg">
@@ -161,14 +157,7 @@ export function ClientRecordSidebar({ client }: ClientRecordSidebarProps) {
             </div>
           </div>
 
-          <Button 
-            variant="outline" 
-            className="w-full mt-4 text-sm hover:bg-stackmatch-blue/10 hover:text-stackmatch-blue"
-          >
-            View All Contacts
-          </Button>
-        </CardContent>
-      </Card>
+      </SidebarWidget>
 
       {/* Quick Actions */}
       <Card className="border-2">

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { SidebarWidget } from '@/components/ui/sidebar-widget';
 import { 
   FileText, 
   Calendar, 
@@ -104,14 +105,11 @@ export function YourClientsSidebar() {
       </Card>
 
       {/* Revenue Breakdown */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <DollarSign className="h-5 w-5 text-trust-green" />
-            Revenue Breakdown by Industry
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <SidebarWidget
+        title="Revenue Breakdown by Industry"
+        icon={DollarSign}
+        className="border-2"
+      >
           {revenueBreakdown.map((item, index) => (
             <div key={index} className="space-y-2">
               <div className="flex items-center justify-between text-sm">
@@ -130,18 +128,14 @@ export function YourClientsSidebar() {
               <p className="text-xs text-medium-gray">{item.percentage}% of total</p>
             </div>
           ))}
-        </CardContent>
-      </Card>
+      </SidebarWidget>
 
       {/* Upcoming Client Reviews */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-orange-600" />
-            Upcoming Client Reviews
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <SidebarWidget
+        title="Upcoming Client Reviews"
+        icon={Calendar}
+        className="border-2"
+      >
           {upcomingReviews.map((review) => (
             <div 
               key={review.id} 
@@ -162,18 +156,16 @@ export function YourClientsSidebar() {
               </p>
             </div>
           ))}
-        </CardContent>
-      </Card>
+      </SidebarWidget>
 
       {/* Client Health Scores */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Users className="h-5 w-5 text-purple-600" />
-            Client Health Scores
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <SidebarWidget
+        title="Client Health Scores"
+        icon={Users}
+        className="border-2"
+        actionLabel="View All Health Scores"
+        onAction={() => window.location.href = '/your-clients/health-scores'}
+      >
           {clientHealthScores.map((item, index) => (
             <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-slate-50">
               <div className="flex-1">
@@ -193,14 +185,7 @@ export function YourClientsSidebar() {
               </div>
             </div>
           ))}
-          <Button 
-            variant="outline" 
-            className="w-full text-sm hover:bg-stackmatch-blue/10 hover:text-stackmatch-blue"
-          >
-            View All Health Scores
-          </Button>
-        </CardContent>
-      </Card>
+      </SidebarWidget>
     </div>
   );
 }

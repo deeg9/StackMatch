@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
+import { SidebarWidget } from '@/components/ui/sidebar-widget'
 import { 
   Star,
   Shield,
@@ -16,7 +17,9 @@ import {
   CheckCircle,
   AlertCircle,
   Download,
-  Zap
+  Zap,
+  Target,
+  Info
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -81,13 +84,11 @@ export function ProposalDetailSidebar({ proposal, isOwner }: ProposalDetailSideb
       )}
 
       {/* Proposal Score */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg font-bold text-stackmatch-navy">
-            Proposal Score
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+      <SidebarWidget
+        title="Proposal Score"
+        icon={Target}
+        className="border-2"
+      >
           <div className="text-center mb-4">
             <div className="text-4xl font-bold text-stackmatch-navy mb-2">
               {proposalScore}%
@@ -132,17 +133,14 @@ export function ProposalDetailSidebar({ proposal, isOwner }: ProposalDetailSideb
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+      </SidebarWidget>
 
       {/* Vendor Highlights */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg font-bold text-stackmatch-navy">
-            Vendor Highlights
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <SidebarWidget
+        title="Vendor Highlights"
+        icon={Award}
+        className="border-2"
+      >
           <div className="flex items-center gap-3">
             <Shield className="h-5 w-5 text-trust-green" />
             <div>
@@ -174,17 +172,14 @@ export function ProposalDetailSidebar({ proposal, isOwner }: ProposalDetailSideb
               <p className="text-xs text-medium-gray">Avg. 2hr response time</p>
             </div>
           </div>
-        </CardContent>
-      </Card>
+      </SidebarWidget>
 
       {/* Important Dates */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg font-bold text-stackmatch-navy">
-            Important Dates
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <SidebarWidget
+        title="Important Dates"
+        icon={Calendar}
+        className="border-2"
+      >
           <div>
             <p className="text-sm font-medium text-charcoal">Proposal Submitted</p>
             <p className="text-sm text-medium-gray">
@@ -213,46 +208,36 @@ export function ProposalDetailSidebar({ proposal, isOwner }: ProposalDetailSideb
               Available immediately
             </p>
           </div>
-        </CardContent>
-      </Card>
+      </SidebarWidget>
 
       {/* Comparison Tip */}
       {isOwner && (
-        <Card className="border-2 border-information-blue">
-          <CardContent className="p-4">
-            <div className="flex gap-3">
-              <AlertCircle className="h-5 w-5 text-information-blue flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium text-charcoal mb-1">
-                  Pro Tip
-                </p>
-                <p className="text-xs text-medium-gray">
-                  Use the comparison view to evaluate this proposal against others for your listing.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <SidebarWidget
+          title="Pro Tip"
+          icon={Info}
+          className="border-2 border-information-blue"
+        >
+          <p className="text-xs text-medium-gray">
+            Use the comparison view to evaluate this proposal against others for your listing.
+          </p>
+        </SidebarWidget>
       )}
 
       {/* Export Options */}
-      <Card className="border-2">
-        <CardHeader>
-          <CardTitle className="text-lg font-bold text-stackmatch-navy">
-            Export Options
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <Button variant="outline" className="w-full justify-start">
-            <Download className="h-4 w-4 mr-2" />
-            Download PDF
-          </Button>
-          <Button variant="outline" className="w-full justify-start">
-            <Download className="h-4 w-4 mr-2" />
-            Export to Excel
-          </Button>
-        </CardContent>
-      </Card>
+      <SidebarWidget
+        title="Export Options"
+        icon={Download}
+        className="border-2"
+      >
+        <Button variant="outline" className="w-full justify-start">
+          <Download className="h-4 w-4 mr-2" />
+          Download PDF
+        </Button>
+        <Button variant="outline" className="w-full justify-start">
+          <Download className="h-4 w-4 mr-2" />
+          Export to Excel
+        </Button>
+      </SidebarWidget>
     </div>
   )
 }
