@@ -294,9 +294,6 @@ if (error || !user) {
 - **Environment Security**: All keys in .env.local (never committed)
 - **Type Safety**: TypeScript throughout prevents data structure errors
 
-## Testing Credentials
-- **Buyer**: buyer@example.com / 123456 (Christopher Fill, StackMatch)
-- **Seller**: seller@example.com / [password] (Diego Fill, BiltLocal)
 
 ## Recent Technical Improvements
 

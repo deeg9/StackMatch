@@ -41,7 +41,6 @@ StackMatch is an intelligent, three-sided B2B software procurement marketplace c
 ### Diego Fill - Seller
 - **User ID**: `bc6d4653-f0e5-4f10-ba4e-10c81aed0b9e`
 - **Company**: BiltLocal
-- **Email**: seller@example.com
 
 ## Completed Features Summary
 
@@ -133,9 +132,6 @@ StackMatch is an intelligent, three-sided B2B software procurement marketplace c
 - **Type Check**: `npm run type-check`
 - **Lint**: `npm run lint`
 
-### Testing Credentials
-- **Buyer**: buyer@example.com / 123456 (Christopher Fill, StackMatch)
-- **Seller**: seller@example.com / [password] (Diego Fill, BiltLocal)
 
 ## Technical Documentation
 
